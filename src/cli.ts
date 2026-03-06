@@ -73,10 +73,10 @@ program
   });
 
 program
-  .command('repos')
-  .description('List all tracked repos')
-  .action(async () => {
-    await reposCommand();
+  .command('repos [action] [target]')
+  .description('List or manage tracked repos (remove <name|number>)')
+  .action(async (action?: string, target?: string) => {
+    await reposCommand(action, target);
   });
 
 program

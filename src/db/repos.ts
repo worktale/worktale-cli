@@ -46,6 +46,14 @@ export function getAllRepos(): Repo[] {
   return db.prepare('SELECT * FROM repos ORDER BY name').all() as Repo[];
 }
 
+export function removeRepo(repoId: number): void {
+  const db = getDb();
+  db.prepare('DELETE FROM file_activity WHERE repo_id = ?').run(repoId);
+  db.prepare('DELETE FROM daily_summaries WHERE repo_id = ?').run(repoId);
+  db.prepare('DELETE FROM commits WHERE repo_id = ?').run(repoId);
+  db.prepare('DELETE FROM repos WHERE id = ?').run(repoId);
+}
+
 export function updateLastSynced(repoId: number): void {
   const db = getDb();
   const now = new Date().toISOString();
