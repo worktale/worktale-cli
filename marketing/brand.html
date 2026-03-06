@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brand Guidelines — Worktale</title>
+  <meta name="description" content="Worktale brand guidelines. Logo, wordmark, colors, and usage rules."/>
+  <meta property="og:title" content="Brand Guidelines — Worktale"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/brand"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Brand Guidelines</h1>
+      <p class="text-text-muted text-sm font-mono mb-16">How to represent Worktale.</p>
+
+      <!-- Logo Mark -->
+      <div class="space-y-16">
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Logo Mark</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">The Worktale icon is a terminal prompt symbol inside a rounded square. It represents the CLI-first, developer-native nature of the product.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Dark background -->
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-surface-0">
+              <div class="w-20 h-20 rounded-2xl bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-3xl font-bold">&gt;_</div>
+              <span class="text-text-muted text-xs font-mono">On dark</span>
+            </div>
+            <!-- Light background -->
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-white">
+              <div class="w-20 h-20 rounded-2xl bg-[#0A0A0A] flex items-center justify-center font-mono text-[#00FF41] text-3xl font-bold">&gt;_</div>
+              <span class="text-[#999] text-xs font-mono">On light</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wordmark -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Wordmark</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">The Worktale wordmark is always set in <strong class="text-text-primary">JetBrains Mono</strong> with wide letter-spacing. Always lowercase. Never capitalize, hyphenate, or split into two words.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-surface-0">
+              <span class="font-mono text-3xl tracking-wider text-text-primary">worktale</span>
+              <span class="text-text-muted text-xs font-mono">On dark</span>
+            </div>
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-white">
+              <span class="font-mono text-3xl tracking-wider text-[#0A0A0A]">worktale</span>
+              <span class="text-[#999] text-xs font-mono">On light</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lockup -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Lockup</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">The preferred brand lockup combines the icon and wordmark horizontally. Maintain the spacing shown below.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-surface-0">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-lg font-bold">&gt;_</div>
+                <span class="font-mono text-2xl tracking-wider text-text-primary">worktale</span>
+              </div>
+              <span class="text-text-muted text-xs font-mono">On dark</span>
+            </div>
+            <div class="rounded-xl border border-border-dim p-10 flex flex-col items-center gap-6 bg-white">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-[#0A0A0A] flex items-center justify-center font-mono text-[#00FF41] text-lg font-bold">&gt;_</div>
+                <span class="font-mono text-2xl tracking-wider text-[#0A0A0A]">worktale</span>
+              </div>
+              <span class="text-[#999] text-xs font-mono">On light</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Colors -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Colors</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">The Worktale palette is built around terminal green on a near-black surface. These are the core brand colors.</p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <div class="h-24 rounded-xl bg-[#00FF41] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Terminal Green</p>
+              <p class="text-text-muted text-xs font-mono">#00FF41</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#0A0A0A] border border-border-dim mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Surface Black</p>
+              <p class="text-text-muted text-xs font-mono">#0A0A0A</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#E8E8E8] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Text Primary</p>
+              <p class="text-text-muted text-xs font-mono">#E8E8E8</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#888888] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Text Secondary</p>
+              <p class="text-text-muted text-xs font-mono">#888888</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+            <div>
+              <div class="h-24 rounded-xl bg-[#FBBF24] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Neon Amber</p>
+              <p class="text-text-muted text-xs font-mono">#FBBF24</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#00D4FF] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Cyber Cyan</p>
+              <p class="text-text-muted text-xs font-mono">#00D4FF</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#111111] border border-border-dim mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Surface 1</p>
+              <p class="text-text-muted text-xs font-mono">#111111</p>
+            </div>
+            <div>
+              <div class="h-24 rounded-xl bg-[#2A2A2A] mb-3"></div>
+              <p class="text-text-primary text-sm font-semibold">Border</p>
+              <p class="text-text-muted text-xs font-mono">#2A2A2A</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Typography -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Typography</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">Worktale uses two typefaces. Monospace for brand elements, code, and UI labels. Sans-serif for body text and long-form content.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="rounded-xl border border-border-dim p-8">
+              <p class="text-text-muted text-xs font-mono uppercase tracking-widest mb-4">Primary — Monospace</p>
+              <p class="font-mono text-2xl text-text-primary mb-2">JetBrains Mono</p>
+              <p class="font-mono text-sm text-text-secondary leading-relaxed">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br/>abcdefghijklmnopqrstuvwxyz<br/>0123456789 &gt;_$./</p>
+            </div>
+            <div class="rounded-xl border border-border-dim p-8">
+              <p class="text-text-muted text-xs font-mono uppercase tracking-widest mb-4">Secondary — Sans-Serif</p>
+              <p class="font-sans text-2xl text-text-primary mb-2">Inter</p>
+              <p class="font-sans text-sm text-text-secondary leading-relaxed">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br/>abcdefghijklmnopqrstuvwxyz<br/>0123456789</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Usage Rules -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Usage Rules</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">Keep it consistent. A few things to remember.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="rounded-xl border border-terminal-green/20 bg-terminal-green/5 p-6">
+              <p class="text-terminal-green text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Do
+              </p>
+              <ul class="space-y-2 text-text-secondary text-sm">
+                <li>Use the lockup or icon as provided</li>
+                <li>Write "worktale" in lowercase monospace</li>
+                <li>Keep generous clear space around the logo</li>
+                <li>Use on dark backgrounds for best contrast</li>
+                <li>Use the solid black icon on light backgrounds</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-6">
+              <p class="text-red-400 text-sm font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                Don't
+              </p>
+              <ul class="space-y-2 text-text-secondary text-sm">
+                <li>Capitalize as "WorkTale" or "Worktale"</li>
+                <li>Hyphenate as "work-tale"</li>
+                <li>Change the icon colors or shape</li>
+                <li>Add effects like shadows or gradients to the logo</li>
+                <li>Place on busy or low-contrast backgrounds</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tagline -->
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-2">Tagline</h2>
+          <p class="text-text-secondary text-sm leading-relaxed mb-8">Use one of these when describing Worktale in a single line.</p>
+
+          <div class="space-y-4">
+            <div class="rounded-xl border border-border-dim p-6 flex items-center justify-between">
+              <p class="font-mono text-text-primary text-sm">Your dev story, told beautifully.</p>
+              <span class="text-text-muted text-xs font-mono ml-4 shrink-0">Primary</span>
+            </div>
+            <div class="rounded-xl border border-border-dim p-6 flex items-center justify-between">
+              <p class="font-mono text-text-primary text-sm">A local-first CLI journal for developers.</p>
+              <span class="text-text-muted text-xs font-mono ml-4 shrink-0">Descriptive</span>
+            </div>
+            <div class="rounded-xl border border-border-dim p-6 flex items-center justify-between">
+              <p class="font-mono text-text-primary text-sm">Turn git history into a personal record of everything you built.</p>
+              <span class="text-text-muted text-xs font-mono ml-4 shrink-0">Expanded</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<%footer%>
+
+</body>
+</html>

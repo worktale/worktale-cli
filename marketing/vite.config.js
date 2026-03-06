@@ -35,6 +35,8 @@ export default defineConfig({
         docs: resolve(__dirname, 'docs.html'),
         terms: resolve(__dirname, 'terms.html'),
         privacy: resolve(__dirname, 'privacy.html'),
+        contact: resolve(__dirname, 'contact.html'),
+        brand: resolve(__dirname, 'brand.html'),
       },
     },
   },
