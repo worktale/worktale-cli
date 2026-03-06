@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale Docs — Complete CLI & TUI Reference</title>
+  <meta name="description" content="Complete documentation for every Worktale CLI command, TUI dashboard view, configuration option, and data storage location."/>
+  <meta property="og:title" content="Worktale Docs — Complete CLI & TUI Reference"/>
+  <meta property="og:description" content="Every command, flag, config key, and keyboard shortcut documented."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/docs"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- Page header -->
+  <section class="py-12 md:py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
+        <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.0.0</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
+      <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="py-8 border-b border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <nav class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <a href="#getting-started" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">01 Getting Started</a>
+        <a href="#cli-reference" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">02 CLI Reference</a>
+        <a href="#tui-dashboard" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">03 TUI Dashboard</a>
+        <a href="#configuration" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">04 Configuration</a>
+        <a href="#data-storage" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">05 Data Storage</a>
+        <a href="#git-hooks" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">06 Git Hooks</a>
+        <a href="#nudge" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">07 End-of-Day Nudge</a>
+        <a href="#ai-integration" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">08 AI Integration</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- GETTING STARTED -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="getting-started" class="py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">01</div>
+        <h2 class="text-2xl md:text-3xl font-bold">Getting Started</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Prerequisites</h3>
+          <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+            <li>Node.js 18 or later</li>
+            <li>Git installed and configured (<code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">git config user.email</code> set)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Install</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm">
+            <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale</span></p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Initialize a repo</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm space-y-1">
+            <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">cd /path/to/your/repo</span></p>
+            <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale init</span></p>
+          </div>
+          <p class="text-text-secondary text-sm mt-2">This scans your entire git history, installs a silent post-commit hook, creates a <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">.worktale/</code> directory in your repo (auto-added to <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">.gitignore</code>), and registers the repo in your local database.</p>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Open the dashboard</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm">
+            <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale</span></p>
+          </div>
+          <p class="text-text-secondary text-sm mt-2">Running <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale</code> with no arguments opens the interactive TUI dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CLI REFERENCE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="cli-reference" class="py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">02</div>
+        <h2 class="text-2xl md:text-3xl font-bold">CLI Reference</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-8">All 11 commands with exact flags, arguments, and output descriptions. Every command shown here is fully implemented.</p>
+
+      <div class="space-y-8">
+
+        <!-- worktale init -->
+        <div id="cmd-init" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale init</code>
+            <span class="font-mono text-xs text-text-muted">Initialize repo</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Initialize Worktale in the current git repository. Must be run from a directory containing a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">.git</code> folder.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--global</code>
+                  <p class="text-text-secondary text-sm">Set up the global end-of-day nudge (appends to your shell profile). Does not require a git repo.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">WHAT IT DOES</p>
+              <ol class="text-text-secondary text-sm space-y-1.5 list-decimal list-inside">
+                <li>Displays the Worktale ASCII banner</li>
+                <li>Detects the git repo and resolves your <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">git config user.email</code></li>
+                <li>Saves your email to the global config (<code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.worktale/config.json</code>)</li>
+                <li>Registers the repo in the SQLite database</li>
+                <li>Creates the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">.worktale/</code> directory and adds it to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">.gitignore</code></li>
+                <li>Installs a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> hook (bash + PowerShell) for automatic capture</li>
+                <li>Runs historical analysis using a worker thread &mdash; scans all commits with a live progress bar</li>
+                <li>Displays summary: total commits, lines added, lines removed, files tracked, branches, days active, first commit date</li>
+                <li>Prompts to open the TUI dashboard</li>
+              </ol>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p class="text-cyber-cyan">  ╔══════════════════════════════════╗</p>
+                <p class="text-cyber-cyan">  ║  <span class="text-neon-amber">⚡</span>  <span class="font-bold text-cyber-cyan">W O R K T A L E</span>             ║</p>
+                <p class="text-cyber-cyan">  ╚══════════════════════════════════╝</p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">my-project</span>  <span class="text-terminal-green">git detected ✓</span></p>
+                <p>  <span class="text-text-muted">User:</span>  <span class="text-text-secondary">dev@company.com</span></p>
+                <p>  <span class="text-text-muted">Repo ID:</span>  <span class="text-text-secondary">1</span></p>
+                <p class="mt-2">  <span class="text-terminal-green">✓</span>  .worktale/ directory created</p>
+                <p>  <span class="text-terminal-green">✓</span>  Post-commit hook installed</p>
+                <p class="mt-2">  <span class="text-cyber-cyan">Analyzing git history...</span></p>
+                <p class="mt-1">  <span class="text-terminal-green">████████████████████████</span>  1,204 commits  [100%]</p>
+                <p class="mt-2">  <span class="text-terminal-green">✓</span>  Analysis complete!</p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">Summary</span></p>
+                <p>  <span class="text-text-muted">────────────────────────────────────────</span></p>
+                <p>  Commits:       <span class="text-text-primary font-bold">1,204</span></p>
+                <p>  Lines added:   <span class="text-terminal-green">+247,892</span></p>
+                <p>  Lines removed: <span class="text-red-400">-98,441</span></p>
+                <p>  Files tracked:  3,847</p>
+                <p>  Branches:      12</p>
+                <p>  Days active:   287</p>
+                <p>  First commit:  June 3, 2021</p>
+                <p class="mt-2">  <span class="text-neon-amber">⚡</span>  <span class="text-text-primary font-bold">Worktale is ready!</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale / worktale dash -->
+        <div id="cmd-dash" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale</code> <span class="font-mono text-xs text-text-muted mx-3">or</span> <code class="font-mono text-base text-terminal-green">worktale dash</code>
+            <span class="font-mono text-xs text-text-muted">TUI Dashboard</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Opens the interactive terminal dashboard built with <a href="https://github.com/vadimdemedes/ink" class="text-terminal-green hover:underline">Ink</a> (React for CLIs). Requires the repo to be initialized.</p>
+            <p class="text-text-secondary text-sm">Running <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale</code> with no arguments is equivalent to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale dash</code>. See the <a href="#tui-dashboard" class="text-terminal-green hover:underline">TUI Dashboard</a> section for full details on each view and keyboard shortcuts.</p>
+            <p class="text-text-secondary text-sm">If the TUI fails to render (e.g., non-interactive terminal), it automatically falls back to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale today</code> output.</p>
+          </div>
+        </div>
+
+        <!-- worktale today -->
+        <div id="cmd-today" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale today</code>
+            <span class="font-mono text-xs text-text-muted">Today's summary</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Print a quick, non-interactive summary of today's activity in the current repo.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">OUTPUT INCLUDES</p>
+              <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+                <li>Today's date</li>
+                <li>Commit count</li>
+                <li>Lines added / removed</li>
+                <li>Files touched</li>
+                <li>Estimated coding time (span from first to last commit of the day)</li>
+                <li>Up to 10 most recent commits with relative timestamps</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p>  <span class="text-neon-amber">⚡</span> <span class="text-text-primary font-bold">WORKTALE</span> <span class="text-text-muted">&mdash;</span> Today, Mar 6, 2026</p>
+                <p class="mt-2">  <span class="text-text-muted">Commits:</span>  <span class="text-text-primary font-bold">7</span>          <span class="text-text-muted">Lines:</span>  <span class="text-terminal-green">+1,204</span> / <span class="text-red-400">-389</span></p>
+                <p>  <span class="text-text-muted">Files:</span>    <span class="text-text-primary font-bold">23</span>         <span class="text-text-muted">Time:</span>   <span class="text-text-primary font-bold">4h 12m</span></p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">Recent:</span></p>
+                <p>  <span class="text-terminal-green">&bullet;</span> <span class="text-text-muted">2m ago    </span> <span class="text-text-primary">fix: resolve auth token expiry edge case</span></p>
+                <p>  <span class="text-terminal-green">&bullet;</span> <span class="text-text-muted">47m ago   </span> <span class="text-text-primary">feat: add retry logic to payment processor</span></p>
+                <p>  <span class="text-terminal-green">&bullet;</span> <span class="text-text-muted">2h ago    </span> <span class="text-text-primary">refactor: extract email service into module</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale status -->
+        <div id="cmd-status" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale status</code>
+            <span class="font-mono text-xs text-text-muted">One-line status</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Print a single-line status showing today's commit count, line stats, and current streak. Designed for embedding in shell prompts or status bars.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs">
+                <p><span class="text-neon-amber">⚡</span> worktale: 7 commits today &middot; <span class="text-terminal-green">+1,204</span>/<span class="text-red-400">-389</span> &middot; 🔥 streak: 14 days</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale log -->
+        <div id="cmd-log" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale log</code>
+            <span class="font-mono text-xs text-text-muted">Historical log</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Browse daily activity history. Shows a summary for each day that had commits, including commit count, line stats, and up to 8 commit messages per day.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-d, --days &lt;n&gt;</code>
+                  <p class="text-text-secondary text-sm">Number of days to look back. Default: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">7</code></p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-r, --repo &lt;path&gt;</code>
+                  <p class="text-text-secondary text-sm">Path to repo. Default: current working directory.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p><span class="text-terminal-green/60">$</span> worktale log --days 14</p>
+                <p class="mt-2">  <span class="text-neon-amber">⚡</span> <span class="text-text-primary font-bold">WORKTALE LOG</span> <span class="text-text-muted">&mdash; Last 14 days</span></p>
+                <p class="mt-2">  <span class="text-text-muted">─── Mar 6, 2026 ───</span></p>
+                <p>  7 commits &middot; <span class="text-terminal-green">+1,204</span> / <span class="text-red-400">-389</span> &middot; 23 files</p>
+                <p>  <span class="text-terminal-green">&bullet;</span> fix: resolve auth token expiry edge case</p>
+                <p>  <span class="text-terminal-green">&bullet;</span> feat: add retry logic to payment processor</p>
+                <p>  <span class="text-terminal-green">&bullet;</span> refactor: extract email service into module</p>
+                <p class="mt-2">  <span class="text-text-muted">─── Mar 5, 2026 ───</span></p>
+                <p>  4 commits &middot; <span class="text-terminal-green">+442</span> / <span class="text-red-400">-88</span> &middot; 11 files</p>
+                <p>  <span class="text-terminal-green">&bullet;</span> feat: implement webhook retry backoff</p>
+                <p>  <span class="text-terminal-green">&bullet;</span> test: add retry test coverage</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale digest -->
+        <div id="cmd-digest" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale digest</code>
+            <span class="font-mono text-xs text-text-muted">Daily summary</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Generate a daily work summary from today's commits. Two modes:</p>
+            <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+              <li><span class="text-text-primary font-medium">Template mode</span> (default) &mdash; structures commits into a markdown digest with "What I built", "Stats", and "Areas" sections. Conventional commit prefixes (<code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">feat:</code>, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">fix:</code>, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">refactor:</code>) are automatically transformed into human-readable descriptions.</li>
+              <li><span class="text-text-primary font-medium">Ollama mode</span> &mdash; sends commit data to your local Ollama instance for AI-enhanced summaries. Falls back to template mode if Ollama is unavailable. See <a href="#ai-integration" class="text-terminal-green hover:underline">AI Integration</a>.</li>
+            </ul>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">WORKFLOW</p>
+              <ol class="text-text-secondary text-sm space-y-1 list-decimal list-inside">
+                <li>Generates the digest (template or Ollama)</li>
+                <li>Displays the formatted markdown in your terminal</li>
+                <li>Prompts <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">Save this digest? (Y/n)</code></li>
+                <li>Saves to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">daily_summaries.user_notes</code> in the SQLite database</li>
+                <li>Shows a Worktale Cloud upsell prompt</li>
+              </ol>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE TEMPLATE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p>  <span class="text-text-primary font-bold">March 6, 2026</span></p>
+                <p class="mt-1">  <span class="text-terminal-green">What I built</span></p>
+                <p>  &bullet; Added retry logic to payment processor</p>
+                <p>  &bullet; Fixed auth token expiry edge case</p>
+                <p>  &bullet; Refactored email service into module</p>
+                <p class="mt-1">  <span class="text-terminal-green">Stats</span></p>
+                <p>  &bullet; 7 commits, +1,204 / -389 lines, 23 files touched</p>
+                <p class="mt-1">  <span class="text-terminal-green">Areas</span></p>
+                <p>  &bullet; api (38%), ui (21%), tests (18%)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale repos -->
+        <div id="cmd-repos" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale repos</code>
+            <span class="font-mono text-xs text-text-muted">List tracked repos</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">List all repositories that have been initialized with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init</code>. Shows the repo name, path, last sync time, and total commit count.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p>  <span class="text-neon-amber">⚡</span> <span class="text-text-primary font-bold">WORKTALE REPOS</span></p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">1.</span> <span class="text-terminal-green">my-saas</span>    <span class="text-text-muted">/home/dev/projects/my-saas</span></p>
+                <p>     <span class="text-text-muted">Last synced: 2m ago &middot; 1,204 commits</span></p>
+                <p class="mt-1">  <span class="text-text-primary font-bold">2.</span> <span class="text-terminal-green">api-gateway</span>    <span class="text-text-muted">/home/dev/projects/api-gateway</span></p>
+                <p>     <span class="text-text-muted">Last synced: 1h ago &middot; 847 commits</span></p>
+                <p class="mt-2">  <span class="text-text-muted">Total: 2 repos tracked</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale config -->
+        <div id="cmd-config" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale config [action] [key] [value]</code>
+            <span class="font-mono text-xs text-text-muted">Configuration</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">View or modify Worktale configuration. Settings are stored in <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.worktale/config.json</code>.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">SUBCOMMANDS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">worktale config</code>
+                  <p class="text-text-secondary text-sm">Show the full config with all values, formatted with color.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">worktale config get &lt;key&gt;</code>
+                  <p class="text-text-secondary text-sm">Get a single value. Supports dot-notation: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">ai.provider</code>, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">git.userEmail</code></p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">worktale config set &lt;key&gt; &lt;value&gt;</code>
+                  <p class="text-text-secondary text-sm">Set a value. Auto-parses booleans (<code class="text-text-muted">true</code>/<code class="text-text-muted">false</code>), numbers, and <code class="text-text-muted">null</code>.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">worktale config path</code>
+                  <p class="text-text-secondary text-sm">Print the absolute path to the config file.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLES</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs space-y-1.5">
+                <p><span class="text-terminal-green/60">$</span> worktale config set ai.provider ollama</p>
+                <p><span class="text-terminal-green">✓</span>  ai.provider = ollama</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale config set nudgeTime "18:00"</p>
+                <p><span class="text-terminal-green">✓</span>  nudgeTime = 18:00</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale config get ai.ollamaUrl</p>
+                <p>http://localhost:11434</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale capture -->
+        <div id="cmd-capture" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale capture</code>
+            <span class="font-mono text-xs text-text-muted">Capture commit</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Capture the latest commit in the current repo. This is the command called by the git <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> hook. You generally don't need to run this manually.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-s, --silent</code>
+                  <p class="text-text-secondary text-sm">Suppress all output. Used by the post-commit hook to be invisible.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">BEHAVIOR</p>
+              <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+                <li>Reads the latest commit via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">git log -1</code></li>
+                <li>Skips if the commit is already captured (idempotent)</li>
+                <li>Inserts into the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">commits</code> table, updates <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">daily_summaries</code> aggregate, inserts <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">file_activity</code> records</li>
+                <li>Without <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--silent</code>, prints: <code class="text-text-muted">⚡ worktale: captured "commit msg" (+N / -N)</code></li>
+                <li>Always exits with code 0 &mdash; the hook must never fail</li>
+                <li>All errors are silently swallowed</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale nudge -->
+        <div id="cmd-nudge" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale nudge</code>
+            <span class="font-mono text-xs text-text-muted">End-of-day nudge</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Manage the end-of-day reminder system. See <a href="#nudge" class="text-terminal-green hover:underline">End-of-Day Nudge</a> section for full details.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--check</code>
+                  <p class="text-text-secondary text-sm">Run the nudge check (used by shell profile injection). Shows a reminder if: it's past <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">nudgeTime</code>, commits exist today, and no digest has been written.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--install</code>
+                  <p class="text-text-secondary text-sm">Append the nudge line to your shell profile (<code class="text-text-muted">.bashrc</code>, <code class="text-text-muted">.zshrc</code>, <code class="text-text-muted">.bash_profile</code>, or <code class="text-text-muted">.profile</code>).</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--remove</code>
+                  <p class="text-text-secondary text-sm">Remove the nudge line from all shell profiles.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--status</code>
+                  <p class="text-text-secondary text-sm">Check whether the nudge is currently installed in any shell profile.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale publish -->
+        <div id="cmd-publish" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale publish</code>
+            <span class="font-mono text-xs text-text-muted">Coming soon</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Placeholder for the upcoming Worktale Cloud publishing feature. Currently displays an informational message about the upcoming cloud service where you'll be able to publish polished, shareable digests.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- TUI DASHBOARD -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="tui-dashboard" class="py-16 border-b border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">03</div>
+        <h2 class="text-2xl md:text-3xl font-bold">TUI Dashboard</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">The dashboard is a full-screen interactive terminal UI built with <a href="https://github.com/vadimdemedes/ink" class="text-terminal-green hover:underline">Ink 5</a> (React for CLIs). Three views, keyboard-driven navigation.</p>
+
+      <!-- Keyboard shortcuts -->
+      <div class="mb-8">
+        <h3 class="font-mono text-sm text-terminal-green mb-3">Global Keyboard Shortcuts</h3>
+        <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">1</code>
+            <p class="text-text-secondary text-sm">Switch to Overview</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">2</code>
+            <p class="text-text-secondary text-sm">Switch to Daily Log</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">3</code>
+            <p class="text-text-secondary text-sm">Switch to History</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">Tab</code>
+            <p class="text-text-secondary text-sm">Cycle to next view (1 &rarr; 2 &rarr; 3 &rarr; 1)</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">q</code>
+            <p class="text-text-secondary text-sm">Quit the dashboard</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 1: Overview -->
+      <div class="mb-8">
+        <h3 class="font-mono text-sm text-terminal-green mb-3">[1] Overview</h3>
+        <p class="text-text-secondary text-sm mb-3">Today's activity at a glance. Shows everything you need to see how your day is going.</p>
+        <div class="rounded-lg border border-border-dim bg-surface-0 p-5">
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li><span class="text-text-primary font-medium">Today's Stats</span> &mdash; Commit count, lines added/removed, files touched, estimated coding time (time span from first to last commit)</li>
+            <li><span class="text-text-primary font-medium">Streak Counter</span> &mdash; Current streak (consecutive days with commits) and best streak ever, with visual bar comparison</li>
+            <li><span class="text-text-primary font-medium">Week Chart</span> &mdash; Monday&ndash;Friday bar chart showing lines added per day this week, with today highlighted</li>
+            <li><span class="text-text-primary font-medium">Recent Commits</span> &mdash; Last 5 commits with relative timestamps and commit messages</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- View 2: Daily Log -->
+      <div class="mb-8">
+        <h3 class="font-mono text-sm text-terminal-green mb-3">[2] Daily Log</h3>
+        <p class="text-text-secondary text-sm mb-3">Browse any day's activity. Navigate backward and forward through your history.</p>
+        <div class="rounded-lg border border-border-dim bg-surface-0 p-5 mb-3">
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li><span class="text-text-primary font-medium">Day Navigation</span> &mdash; Left/right arrow keys to move between days. Shows "(today)" label when on the current day.</li>
+            <li><span class="text-text-primary font-medium">Activity Summary</span> &mdash; Commits, lines added/removed, files touched for the selected day</li>
+            <li><span class="text-text-primary font-medium">Notes Editor</span> &mdash; Press <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">E</code> to add or edit personal notes for the day. Press <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">Enter</code> to save, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">Esc</code> to cancel.</li>
+            <li><span class="text-text-primary font-medium">AI Summary</span> &mdash; If an AI-generated summary exists for the day, it is displayed separately</li>
+            <li><span class="text-text-primary font-medium">Commit Timeline</span> &mdash; All commits for the selected day with timestamps and messages</li>
+          </ul>
+        </div>
+        <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">&larr; / &rarr;</code>
+            <p class="text-text-secondary text-sm">Navigate to previous / next day</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">E</code>
+            <p class="text-text-secondary text-sm">Edit notes for the current day</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">Enter</code>
+            <p class="text-text-secondary text-sm">Save notes (while editing)</p>
+          </div>
+          <div class="px-4 py-2.5 flex items-center gap-6">
+            <code class="font-mono text-xs text-terminal-green w-20">Esc</code>
+            <p class="text-text-secondary text-sm">Cancel editing and revert</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 3: History -->
+      <div>
+        <h3 class="font-mono text-sm text-terminal-green mb-3">[3] History</h3>
+        <p class="text-text-secondary text-sm mb-3">Long-term view of your entire tracked history.</p>
+        <div class="rounded-lg border border-border-dim bg-surface-0 p-5">
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li><span class="text-text-primary font-medium">Activity Heatmap</span> &mdash; A 7&times;52 grid showing the last 52 weeks of activity using 4 intensity levels: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">░</code> none, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">▒</code> 1&ndash;2 commits, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">▓</code> 3&ndash;5 commits, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">█</code> 6+ commits</li>
+            <li><span class="text-text-primary font-medium">Milestones</span> &mdash; Git tags detected in your history, displayed as version markers with dates</li>
+            <li><span class="text-text-primary font-medium">All-Time Stats</span> &mdash; Total commits, days active, avg commits/day, most active month, lines written, lines removed, longest streak</li>
+            <li><span class="text-text-primary font-medium">Top Modules</span> &mdash; Horizontal bar chart showing the most-changed code areas (classified from file paths: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">src/api/</code>, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">tests/</code>, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">config</code>, etc.)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CONFIGURATION -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="configuration" class="py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">04</div>
+        <h2 class="text-2xl md:text-3xl font-bold">Configuration</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">Global config is stored at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">~/.worktale/config.json</code>. Use <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale config</code> to view or edit.</p>
+
+      <h3 class="font-mono text-sm text-terminal-green mb-3">Config Schema (with defaults)</h3>
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-8">
+        <div class="px-5 py-3 border-b border-border-dim bg-surface-2 font-mono text-xs text-text-muted">~/.worktale/config.json</div>
+        <div class="p-5 font-mono text-xs leading-relaxed">
+          <pre class="text-text-secondary"><span class="text-text-muted">{</span>
+  <span class="text-terminal-green">"cloudEnabled"</span>:             <span class="text-neon-amber">false</span>,
+  <span class="text-terminal-green">"cloudToken"</span>:               <span class="text-text-muted">null</span>,
+  <span class="text-terminal-green">"nudgeTime"</span>:                <span class="text-cyber-cyan">"17:00"</span>,
+  <span class="text-terminal-green">"timezone"</span>:                 <span class="text-cyber-cyan">"auto"</span>,
+  <span class="text-terminal-green">"colorScheme"</span>:              <span class="text-cyber-cyan">"default"</span>,
+  <span class="text-terminal-green">"showCaptureConfirmation"</span>:  <span class="text-neon-amber">false</span>,
+  <span class="text-terminal-green">"ai"</span>: <span class="text-text-muted">{</span>
+    <span class="text-terminal-green">"provider"</span>:    <span class="text-cyber-cyan">"template"</span>,
+    <span class="text-terminal-green">"model"</span>:       <span class="text-text-muted">null</span>,
+    <span class="text-terminal-green">"ollamaUrl"</span>:   <span class="text-cyber-cyan">"http://localhost:11434"</span>
+  <span class="text-text-muted">}</span>,
+  <span class="text-terminal-green">"git"</span>: <span class="text-text-muted">{</span>
+    <span class="text-terminal-green">"userEmail"</span>:          <span class="text-text-muted">null</span>,
+    <span class="text-terminal-green">"userEmailOverride"</span>:  <span class="text-text-muted">null</span>
+  <span class="text-text-muted">}</span>
+<span class="text-text-muted">}</span></pre>
+        </div>
+      </div>
+
+      <h3 class="font-mono text-sm text-terminal-green mb-3">All Config Keys</h3>
+      <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim text-sm">
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">cloudEnabled</code>
+          <p class="text-text-secondary">Enable cloud sync (Phase 2). Default: <code class="text-text-muted">false</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">cloudToken</code>
+          <p class="text-text-secondary">Cloud authentication token (Phase 2). Default: <code class="text-text-muted">null</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">nudgeTime</code>
+          <p class="text-text-secondary">Time of day to show the nudge reminder (24h format). Default: <code class="text-text-muted">"17:00"</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">timezone</code>
+          <p class="text-text-secondary">Timezone for date calculations. Default: <code class="text-text-muted">"auto"</code> (uses system timezone)</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">colorScheme</code>
+          <p class="text-text-secondary">Color scheme for TUI output. Default: <code class="text-text-muted">"default"</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">showCaptureConfirmation</code>
+          <p class="text-text-secondary">Show a confirmation line after each capture. Default: <code class="text-text-muted">false</code> (the hook runs silently)</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">ai.provider</code>
+          <p class="text-text-secondary">Digest generation mode. Values: <code class="text-text-muted">"template"</code> (default) or <code class="text-text-muted">"ollama"</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">ai.model</code>
+          <p class="text-text-secondary">Ollama model name (e.g., <code class="text-text-muted">"llama3"</code>, <code class="text-text-muted">"mistral"</code>, <code class="text-text-muted">"codellama"</code>). Default: <code class="text-text-muted">null</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">ai.ollamaUrl</code>
+          <p class="text-text-secondary">URL for your Ollama instance. Default: <code class="text-text-muted">"http://localhost:11434"</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">git.userEmail</code>
+          <p class="text-text-secondary">Your git email (auto-detected from <code class="text-text-muted">git config user.email</code> during init). Default: <code class="text-text-muted">null</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">git.userEmailOverride</code>
+          <p class="text-text-secondary">Override email for filtering commits (useful if you commit under multiple emails). Default: <code class="text-text-muted">null</code></p>
+        </div>
+      </div>
+
+      <h3 class="font-mono text-sm text-terminal-green mt-8 mb-3">Per-Repo Config</h3>
+      <p class="text-text-secondary text-sm mb-3">Each initialized repo also has a local config at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">&lt;repo&gt;/.worktale/config.json</code>:</p>
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+        <div class="px-5 py-3 border-b border-border-dim bg-surface-2 font-mono text-xs text-text-muted">.worktale/config.json</div>
+        <div class="p-5 font-mono text-xs leading-relaxed">
+          <pre class="text-text-secondary"><span class="text-text-muted">{</span>
+  <span class="text-terminal-green">"repoId"</span>:        <span class="text-neon-amber">1</span>,
+  <span class="text-terminal-green">"initialized"</span>:   <span class="text-neon-amber">true</span>,
+  <span class="text-terminal-green">"lastAnalysis"</span>:  <span class="text-cyber-cyan">"2026-03-06T10:42:00.000Z"</span>
+<span class="text-text-muted">}</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- DATA STORAGE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="data-storage" class="py-16 border-b border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">05</div>
+        <h2 class="text-2xl md:text-3xl font-bold">Data Storage</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">All data is stored locally. No network calls are made (except optional Ollama). Nothing is ever sent to any server unless you explicitly opt in to Cloud (Phase 2).</p>
+
+      <h3 class="font-mono text-sm text-terminal-green mb-3">File Locations</h3>
+      <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim text-sm mb-8">
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">~/.worktale/</code>
+          <p class="text-text-secondary">Global Worktale directory. Created automatically on first use.</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">~/.worktale/config.json</code>
+          <p class="text-text-secondary">Global configuration file.</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">~/.worktale/data.db</code>
+          <p class="text-text-secondary">SQLite database (WAL mode) containing all commits, summaries, and file activity across all repos.</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">&lt;repo&gt;/.worktale/</code>
+          <p class="text-text-secondary">Per-repo directory. Auto-added to <code class="text-text-muted">.gitignore</code>. Never committed.</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">&lt;repo&gt;/.worktale/config.json</code>
+          <p class="text-text-secondary">Per-repo config (repo ID, init status, last analysis timestamp).</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">&lt;repo&gt;/.git/hooks/post-commit</code>
+          <p class="text-text-secondary">Bash post-commit hook installed by Worktale.</p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[220px] mt-0.5">&lt;repo&gt;/.git/hooks/post-commit.ps1</code>
+          <p class="text-text-secondary">PowerShell post-commit hook for Windows.</p>
+        </div>
+      </div>
+
+      <h3 class="font-mono text-sm text-terminal-green mb-3">Database Tables</h3>
+      <p class="text-text-secondary text-sm mb-3">The SQLite database at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">~/.worktale/data.db</code> uses WAL mode for concurrent access. It contains 4 tables:</p>
+      <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim text-sm">
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[160px] mt-0.5">repos</code>
+          <p class="text-text-secondary">Tracked repositories. Columns: <code class="text-text-muted">id, path, name, last_synced</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[160px] mt-0.5">commits</code>
+          <p class="text-text-secondary">Individual commits. Columns: <code class="text-text-muted">id, repo_id, sha, message, author, timestamp, lines_added, lines_removed, files_changed, branch, is_merge, tags</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[160px] mt-0.5">daily_summaries</code>
+          <p class="text-text-secondary">Aggregated daily stats. Columns: <code class="text-text-muted">id, repo_id, date, commits_count, lines_added, lines_removed, files_touched, user_notes, ai_draft, published</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[160px] mt-0.5">file_activity</code>
+          <p class="text-text-secondary">Per-file change tracking. Columns: <code class="text-text-muted">id, repo_id, path, module, date, changes</code></p>
+        </div>
+      </div>
+
+      <h3 class="font-mono text-sm text-terminal-green mt-8 mb-3">What Data Is Collected</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-xs text-terminal-green mb-2">STORED</p>
+          <ul class="text-text-secondary text-sm space-y-1">
+            <li>Commit SHA, message, author, timestamp</li>
+            <li>Lines added/removed counts (numbers only)</li>
+            <li>File paths changed (names only)</li>
+            <li>Branch name, tags</li>
+            <li>Your personal notes and digests</li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-lg border border-red-400/20 bg-red-400/5">
+          <p class="font-mono text-xs text-red-400 mb-2">NEVER STORED</p>
+          <ul class="text-text-secondary text-sm space-y-1">
+            <li>Source code / file contents</li>
+            <li>Diffs or patches</li>
+            <li>Credentials or tokens</li>
+            <li>Any data from outside git metadata</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- GIT HOOKS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="git-hooks" class="py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">06</div>
+        <h2 class="text-2xl md:text-3xl font-bold">Git Hooks</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">Worktale uses git hooks for automatic commit capture. Hooks are installed by <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> and can be removed cleanly.</p>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">post-commit (Bash)</h3>
+          <p class="text-text-secondary text-sm mb-3">Installed at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">.git/hooks/post-commit</code>. Runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale capture --silent</code> after every commit. On Windows, it delegates to the PowerShell hook.</p>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs leading-relaxed">
+            <pre class="text-text-secondary">#!/bin/sh
+# Worktale post-commit hook
+if [ -n "$PSVersionTable" ] || [ "$OS" = "Windows_NT" ]; then
+  powershell.exe -ExecutionPolicy Bypass -File \
+    "$(git rev-parse --git-dir)/hooks/post-commit.ps1" 2>/dev/null
+else
+  worktale capture --silent 2>/dev/null || true
+fi</pre>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">post-commit.ps1 (PowerShell)</h3>
+          <p class="text-text-secondary text-sm mb-3">Installed alongside the bash hook at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">.git/hooks/post-commit.ps1</code> for native Windows support.</p>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs leading-relaxed">
+            <pre class="text-text-secondary"># Worktale post-commit hook (Windows)
+$worktale = (Get-Command worktale -ErrorAction SilentlyContinue)
+if ($worktale) {
+  & worktale capture --silent
+}</pre>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Existing Hooks</h3>
+          <p class="text-text-secondary text-sm">If you already have a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> hook, Worktale appends its section between marker comments (<code class="text-text-muted"># --- Worktale hook start ---</code> / <code class="text-text-muted"># --- Worktale hook end ---</code>) without overwriting your existing hook. Removal via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init</code> cleanly removes only the Worktale section.</p>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">post-push (Optional)</h3>
+          <p class="text-text-secondary text-sm">A <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-push</code> hook that prints a friendly reminder: <code class="text-text-muted">Tip: run 'worktale digest' to review today's work</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- NUDGE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="nudge" class="py-16 border-b border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">07</div>
+        <h2 class="text-2xl md:text-3xl font-bold">End-of-Day Nudge</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">A lightweight shell profile integration that reminds you to write a digest at the end of your workday. No daemon, no background process &mdash; it runs a quick check each time you open a new terminal.</p>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">How It Works</h3>
+          <ol class="text-text-secondary text-sm space-y-2 list-decimal list-inside">
+            <li>Run <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init --global</code> or <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale nudge --install</code></li>
+            <li>Worktale appends one line to your shell profile (<code class="text-text-muted">.bashrc</code>, <code class="text-text-muted">.zshrc</code>, <code class="text-text-muted">.bash_profile</code>, or <code class="text-text-muted">.profile</code>)</li>
+            <li>Each time you open a terminal, the nudge check runs in the background</li>
+            <li>If all conditions are met, a one-line reminder is printed</li>
+          </ol>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Conditions for Display</h3>
+          <p class="text-text-secondary text-sm mb-2">The nudge only appears when ALL of these are true:</p>
+          <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+            <li>Current time is past <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">nudgeTime</code> (default: 17:00 / 5 PM)</li>
+            <li>At least one commit was captured today (across any repo)</li>
+            <li>No digest has been saved today (<code class="text-text-muted">daily_summaries.user_notes</code> is empty)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Example Output</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs">
+            <p><span class="text-neon-amber">  ⚡ Worktale</span> <span class="text-text-muted">&mdash; You shipped <span class="text-text-primary font-bold">1,204</span> lines today. Want to log it?</span></p>
+            <p><span class="text-text-muted">     Run: </span><span class="text-terminal-green">worktale digest</span></p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Shell Profile Line</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs">
+            <p class="text-text-muted"># Worktale nudge</p>
+            <p class="text-text-secondary">[ -x "$(command -v worktale)" ] && worktale nudge --check 2>/dev/null &</p>
+          </div>
+          <p class="text-text-muted text-xs mt-2">Runs in the background (<code class="text-text-muted">&</code>), redirects stderr to null, only if <code class="text-text-muted">worktale</code> is installed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- AI INTEGRATION -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="ai-integration" class="py-16 border-b border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">08</div>
+        <h2 class="text-2xl md:text-3xl font-bold">AI Integration (Ollama)</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">Worktale optionally integrates with <a href="https://ollama.ai" class="text-terminal-green hover:underline">Ollama</a> for AI-enhanced daily digests. Everything runs locally &mdash; your data never leaves your machine.</p>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Setup</h3>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs space-y-1.5">
+            <p class="text-text-muted"># 1. Install Ollama (https://ollama.ai)</p>
+            <p class="text-text-muted"># 2. Pull a model</p>
+            <p><span class="text-terminal-green/60">$</span> ollama pull llama3</p>
+            <p class="mt-2 text-text-muted"># 3. Configure Worktale</p>
+            <p><span class="text-terminal-green/60">$</span> worktale config set ai.provider ollama</p>
+            <p><span class="text-terminal-green/60">$</span> worktale config set ai.model llama3</p>
+            <p class="mt-2 text-text-muted"># 4. (Optional) Custom Ollama URL</p>
+            <p><span class="text-terminal-green/60">$</span> worktale config set ai.ollamaUrl http://localhost:11434</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">How It Works</h3>
+          <ol class="text-text-secondary text-sm space-y-2 list-decimal list-inside">
+            <li>When you run <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale digest</code> with <code class="text-text-muted">ai.provider: "ollama"</code></li>
+            <li>Worktale checks connectivity by calling <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">{ollamaUrl}/api/tags</code> (3-second timeout)</li>
+            <li>If Ollama is reachable, it sends your commit messages, stats, and module activity to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/api/generate</code></li>
+            <li>The AI generates a concise markdown summary (&lt;200 words)</li>
+            <li>If Ollama is unreachable, it silently falls back to template mode</li>
+          </ol>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Compatible Models</h3>
+          <p class="text-text-secondary text-sm">Any model available through Ollama works. Popular choices:</p>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded-full border border-border-dim bg-surface-1 font-mono text-xs text-text-secondary">llama3</span>
+            <span class="px-3 py-1 rounded-full border border-border-dim bg-surface-1 font-mono text-xs text-text-secondary">mistral</span>
+            <span class="px-3 py-1 rounded-full border border-border-dim bg-surface-1 font-mono text-xs text-text-secondary">codellama</span>
+            <span class="px-3 py-1 rounded-full border border-border-dim bg-surface-1 font-mono text-xs text-text-secondary">phi3</span>
+            <span class="px-3 py-1 rounded-full border border-border-dim bg-surface-1 font-mono text-xs text-text-secondary">gemma2</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Fallback Behavior</h3>
+          <p class="text-text-secondary text-sm">If Ollama is not running or the model isn't available, Worktale automatically falls back to the built-in template mode. You'll see a yellow warning: <code class="text-neon-amber text-xs">⚠ Ollama not available: [reason]</code> followed by the template-generated digest. No action needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to top -->
+  <section class="py-12">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-terminal-green/10 border border-terminal-green/30 font-mono text-sm text-terminal-green hover:bg-terminal-green/20 transition-all">
+        Back to top &uarr;
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

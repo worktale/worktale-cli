@@ -1,0 +1,7 @@
+node_modules/
+dist/
+bun.lock
+bun.lockb
+CLAUDE.md
+**/CLAUDE.md
+marketing/

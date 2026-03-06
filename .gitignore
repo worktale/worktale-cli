@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.worktale/
+*.db
+*.db-journal
+*.db-wal
+.env
+.env.*
+*.tsbuildinfo
+coverage/
+
+# Internal docs (not for public repo)
+DEVGUIDE.md
+TASKS.md
+worktale-cli-prd.md
+
+# Claude Code / AI tooling
+CLAUDE.md
+**/CLAUDE.md
+
+# Lock files (project uses npm, not bun)
+bun.lock
+bun.lockb

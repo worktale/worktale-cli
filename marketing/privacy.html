@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — Worktale</title>
+  <meta name="description" content="Privacy Policy for Worktale. Your code stays on your machine. Always."/>
+  <meta property="og:title" content="Privacy Policy — Worktale"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/privacy"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Privacy Policy</h1>
+      <p class="text-text-muted text-sm font-mono mb-12">Last updated: March 6, 2026</p>
+
+      <div class="space-y-8 text-text-secondary leading-relaxed">
+
+        <section>
+          <div class="flex items-start gap-3 p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5 mb-8">
+            <svg class="w-5 h-5 text-terminal-green mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <p class="text-sm text-terminal-green"><strong>TL;DR:</strong> Worktale is local-first. No account required. No telemetry. No analytics. No code or data leaves your machine. Everything is stored in a local SQLite database that only you can access.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">1. Our Philosophy</h2>
+          <p>Worktale is built on a simple principle: <strong class="text-text-primary">your development activity is your private data</strong>. We designed Worktale to be local-first because we believe developers should own their work history completely, without depending on external services or trusting third parties with sensitive information about their codebase.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">2. Data We Collect</h2>
+          <p class="font-semibold text-text-primary mb-2">None.</p>
+          <p>Worktale does not collect, transmit, or store any data on external servers. The Software has no telemetry, no analytics, no crash reporting, and no phone-home behavior. There are no network requests made by the core CLI.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">3. Data Stored Locally</h2>
+          <p class="mb-3">Worktale stores the following data on your local machine:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-text-primary">Git commit metadata:</strong> SHA hash, commit message, author name/email, timestamp, lines added/removed, files changed count, branch name, merge status, and tags</li>
+            <li><strong class="text-text-primary">File activity:</strong> File paths, per-file line changes, and auto-classified module names</li>
+            <li><strong class="text-text-primary">Daily summaries:</strong> Aggregated daily statistics, user-written notes, and AI-generated drafts</li>
+            <li><strong class="text-text-primary">Repository info:</strong> File system paths and names of tracked repositories</li>
+            <li><strong class="text-text-primary">Configuration:</strong> Your preferences (nudge time, color scheme, AI provider settings)</li>
+          </ul>
+          <p class="mt-3">All data is stored in:</p>
+          <ul class="list-disc list-inside space-y-1 ml-2 font-mono text-sm">
+            <li>~/.worktale/worktale.db (SQLite database)</li>
+            <li>~/.worktale/config.json (global configuration)</li>
+            <li>&lt;repo&gt;/.worktale/config.json (per-repo configuration, auto-gitignored)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">4. Source Code Access</h2>
+          <p>Worktale does <strong class="text-text-primary">not</strong> read, copy, or analyze the contents of your source code files. It only captures metadata from git log output (commit messages, line counts, file paths). No file contents are ever stored or transmitted.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">5. AI Digest Feature</h2>
+          <p>Worktale offers optional AI-powered digest generation using <strong class="text-text-primary">Ollama</strong>, a locally-running AI engine. When enabled:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2 mt-2">
+            <li>Commit messages are sent to your <strong class="text-text-primary">local</strong> Ollama instance (default: <code class="font-mono text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-sm">localhost:11434</code>)</li>
+            <li>No data is sent to OpenAI, Anthropic, Google, or any external AI service</li>
+            <li>The default mode ("template") does not use AI at all and makes zero network requests</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">6. Marketing Website</h2>
+          <p>The Worktale marketing website (worktale.org) is a static site hosted on Cloudflare Pages. We do not use cookies, tracking pixels, or analytics services on this website. The email signup form submits to our form handler; if you provide your email address for updates, it is stored solely for the purpose of sending you product updates. You may request removal at any time.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">7. Worktale Cloud (Future)</h2>
+          <p>A cloud publishing feature is planned for a future release. It will be <strong class="text-text-primary">strictly opt-in</strong> and will require explicit account creation and consent. The local-first CLI will always remain fully functional without any cloud dependency. This Privacy Policy will be updated before any cloud features are released.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">8. Data Deletion</h2>
+          <p>Since all data is stored locally, you have complete control:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2 mt-2">
+            <li>Delete the <code class="font-mono text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-sm">~/.worktale/</code> directory to remove all Worktale data</li>
+            <li>Delete <code class="font-mono text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-sm">&lt;repo&gt;/.worktale/</code> to remove per-repo configuration</li>
+            <li>Uninstall with <code class="font-mono text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-sm">npm uninstall -g worktale</code></li>
+          </ul>
+          <p class="mt-3">There is nothing to delete on our end because we never had your data.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">9. Third-Party Dependencies</h2>
+          <p>Worktale uses open-source npm packages (better-sqlite3, commander, chalk, ink, react, simple-git). These dependencies are bundled and run locally. None of them transmit data externally as part of Worktale's operation.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">10. Children's Privacy</h2>
+          <p>Worktale is a developer tool and is not directed at children under the age of 13. We do not knowingly collect any personal information.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">11. Changes to This Policy</h2>
+          <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Since Worktale is local-first and collects no data, changes will primarily relate to the marketing website or future cloud features.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">12. Contact</h2>
+          <p>For privacy questions or concerns, contact us at <a href="https://plurral.com" class="text-terminal-green hover:underline">plurral.com</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<%footer%>
+
+</body>
+</html>

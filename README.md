@@ -1,0 +1,121 @@
+# Worktale
+
+**Your dev story, told beautifully.**
+
+You ship code behind firewalls. To private repos. In silence. Months of brilliant work — invisible. Even to you.
+
+Worktale is a local-first CLI that turns your git history into a personal record of everything you actually built. No account. No cloud. No code leaves your machine.
+
+One command to set up. Zero friction after that.
+
+```
+npm install -g worktale
+cd your-repo
+worktale init
+```
+
+That's it. Worktale installs a silent post-commit hook, scans your existing history, and starts tracking. Every commit you make from that point forward is captured automatically.
+
+---
+
+## What You Get
+
+**A daily journal you never have to write.** Worktale captures commit metadata — messages, line counts, files changed, timestamps — and organizes it into a browsable, searchable personal work log.
+
+**An interactive dashboard in your terminal.** Three views: today's overview, a day-by-day log with editable notes, and a full history with heatmaps and streak tracking. Navigate with keyboard shortcuts. No browser required.
+
+**AI-powered digests (optional, local-only).** Generate end-of-day summaries using a local Ollama instance. Your commit messages never leave your machine. The default template mode doesn't use AI at all.
+
+**End-of-day nudges.** A shell prompt reminder that asks if you want to write up your day. Configurable time, easy to install or remove.
+
+---
+
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| `worktale init` | Initialize in current repo — hooks, history scan, config |
+| `worktale dash` | Interactive TUI dashboard |
+| `worktale today` | Today's commits, lines, files, coding time |
+| `worktale status` | One-line summary with streak |
+| `worktale log` | Multi-day history (default 7 days) |
+| `worktale digest` | Generate a work summary (template or AI) |
+| `worktale repos` | List all tracked repositories |
+| `worktale config` | View or modify settings |
+| `worktale capture` | Capture latest commit (used by git hooks) |
+| `worktale nudge` | Manage end-of-day reminders |
+| `worktale publish` | Cloud publishing (coming soon) |
+
+Run `worktale --help` or `worktale <command> --help` for full details.
+
+---
+
+## Privacy
+
+This isn't a privacy policy checkbox. It's the architecture.
+
+- All data lives in a local SQLite database (`~/.worktale/worktale.db`)
+- No telemetry. No analytics. No network requests.
+- The `.worktale/` directory is auto-added to `.gitignore`
+- Git hooks capture metadata only — never file contents
+- AI digests run against a local Ollama instance. Nothing external.
+
+Your code stays on your machine. Always.
+
+---
+
+## How It Works
+
+1. `worktale init` detects your repo, creates a `.worktale/` config directory, installs a post-commit git hook, and scans your entire commit history using a background worker thread
+2. Every `git commit` silently triggers `worktale capture` — recording the SHA, message, line counts, file changes, branch, and tags
+3. Data is stored in a SQLite database with WAL mode for performance
+4. Use the CLI or TUI to browse, search, and summarize your activity
+
+The hook supports both bash and PowerShell for cross-platform compatibility (Windows, macOS, Linux).
+
+---
+
+## Configuration
+
+Global config lives at `~/.worktale/config.json`. Per-repo config lives at `<repo>/.worktale/config.json`.
+
+```bash
+worktale config get nudgeTime        # "17:00"
+worktale config set ai.provider ollama
+worktale config path                 # show config file location
+```
+
+Supports dot-notation for nested keys. Values are auto-parsed (booleans, numbers, null).
+
+---
+
+## Requirements
+
+- Node.js >= 18.0.0
+- A git repository
+
+That's the whole list.
+
+---
+
+## Development
+
+```bash
+git clone https://github.com/worktale/worktale-cli.git
+cd worktale-cli
+npm install
+npm run build    # tsup dual build (CLI + worker)
+npm test         # vitest — 385 tests
+```
+
+The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.
+
+---
+
+## License
+
+MIT
+
+---
+
+Built by [Plu(rr)al](https://plurral.com).

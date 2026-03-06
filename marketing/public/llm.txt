@@ -1,0 +1,163 @@
+# Worktale
+
+> Your dev story, told beautifully.
+
+Worktale is a zero-friction, local-first developer work journal. It is a CLI tool (installed via npm) that turns your git commit history into a personal, private record of everything you built.
+
+Website: https://worktale.org
+npm: https://www.npmjs.com/package/worktale
+GitHub: https://github.com/worktale/worktale-cli
+License: MIT
+Author: George Rios
+Company: Plu(rr)al (https://plurral.com)
+
+## What Worktale Does
+
+Worktale installs a post-commit git hook that silently captures every commit you make. It stores commit metadata (message, lines added/removed, files changed, timestamps) in a local SQLite database on your machine. It then provides CLI commands and an interactive terminal dashboard (TUI) to browse, visualize, and summarize your development activity.
+
+The core value proposition: developers do months of brilliant work behind firewalls and in private repos that is invisible — even to themselves. Worktale makes that work visible as a personal developer journal without requiring any cloud account, any code leaving your machine, or any change to your workflow.
+
+## Installation
+
+```
+npm install -g worktale
+```
+
+Requires Node.js >= 18.0.0.
+
+## How It Works
+
+1. Run `worktale init` inside any git repository
+2. Worktale creates a `.worktale/` directory (auto-added to .gitignore), registers the repo in a global SQLite database at `~/.worktale/worktale.db`, installs a post-commit git hook, and performs an initial scan of all existing commit history
+3. From that point forward, every `git commit` silently triggers `worktale capture` via the hook, recording the commit metadata
+4. Use CLI commands or the TUI dashboard to view your activity
+
+## CLI Commands
+
+Worktale provides 11 commands:
+
+### worktale init
+Initialize Worktale in the current git repository. Detects the repo, creates local config, installs git hooks (bash and PowerShell for cross-platform support), and performs initial historical analysis of all existing commits using a worker thread.
+
+Options: `--global` (set up global nudge configuration)
+
+### worktale dash
+Open the interactive TUI dashboard built with Ink 5 (React 18 for terminals). Provides three tab-navigable views: Overview, Daily Log, and History. Falls back to `worktale today` output if the terminal does not support interactive mode.
+
+Keyboard shortcuts: `1`/`2`/`3` or `Tab` to switch views, `q` to quit. In Daily Log view: left/right arrows to navigate days, `E` to edit notes.
+
+### worktale today
+Show today's activity summary: commit count, lines added/removed, files touched, estimated coding time (calculated from first to last commit timestamps), and the 10 most recent commits.
+
+### worktale status
+Show a one-line status: commit count today with line changes and current streak.
+
+### worktale log
+Browse historical activity over multiple days. Each day shows commit count, line totals, file count, and individual commit messages.
+
+Options: `-d, --days <n>` (number of days, default 7), `-r, --repo <path>` (path to specific repo)
+
+### worktale digest
+Generate a work digest for today. Supports two modes: template-based (default, no external dependencies) or AI-powered via local Ollama. The AI mode sends commit messages to a locally-running Ollama instance — no data leaves your machine. Offers to save the generated digest.
+
+### worktale repos
+List all tracked repositories with their stats: commit count, date range, and path.
+
+### worktale config [action] [key] [value]
+View or modify configuration. Actions: `get <key>`, `set <key> <value>`, `path` (show config file location). Supports dot-notation for nested keys (e.g., `ai.provider`). Auto-parses values (booleans, numbers, null).
+
+### worktale capture
+Capture the latest commit. This is the command called by the git post-commit hook. It is idempotent — duplicate commits are silently skipped.
+
+Options: `-s, --silent` (suppress output)
+
+### worktale publish
+Publish your digest to Worktale Cloud. This is a Phase 2 feature that is not yet implemented — the command currently displays an informational message about the upcoming cloud service.
+
+### worktale nudge
+End-of-day nudge system that reminds you to write your daily summary. Installs a check into your shell profile (.bashrc, .zshrc, or PowerShell profile) that triggers after a configurable time (default 5:00 PM).
+
+Options: `--check` (run nudge check), `--install` (install to shell profile), `--remove` (remove from shell profile), `--status` (check installation status)
+
+## Data Storage
+
+All data is stored locally on the user's machine:
+
+- Global config: `~/.worktale/config.json`
+- SQLite database: `~/.worktale/worktale.db` (WAL mode for performance)
+- Per-repo config: `<repo>/.worktale/config.json` (auto-added to .gitignore)
+
+### Database Schema
+
+The SQLite database has 4 tables:
+
+- **repos**: id, path, name, created_at — tracks registered repositories
+- **commits**: id, repo_id, sha, message, author, timestamp, lines_added, lines_removed, files_changed, branch, is_merge, tags — stores commit metadata
+- **daily_summaries**: id, repo_id, date, commits_count, lines_added, lines_removed, files_touched, user_notes, ai_draft, published, published_at — aggregated daily stats and user content
+- **file_activity**: id, repo_id, commit_sha, file_path, lines_added, lines_removed, module — per-file change tracking with automatic module classification
+
+## Configuration
+
+Default configuration:
+
+```json
+{
+  "cloudEnabled": false,
+  "cloudToken": null,
+  "nudgeTime": "17:00",
+  "timezone": "auto",
+  "colorScheme": "default",
+  "ai": {
+    "provider": "template",
+    "model": null,
+    "ollamaUrl": "http://localhost:11434"
+  },
+  "git": {
+    "userEmail": null,
+    "userEmailOverride": null
+  },
+  "showCaptureConfirmation": false
+}
+```
+
+## TUI Dashboard Views
+
+### Overview (Tab 1)
+Today's stats (commits, lines, files), current coding streak, weekly activity bar chart, and recent commit list.
+
+### Daily Log (Tab 2)
+Navigate day-by-day with arrow keys. Shows commit timeline, daily stats, and an editable notes field (press E).
+
+### History (Tab 3)
+Heatmap visualization of activity over time (using Unicode block characters for intensity), milestone markers, all-time statistics, and top modules breakdown.
+
+## Technical Architecture
+
+- **Language**: TypeScript, compiled to ESM with tsup
+- **CLI framework**: Commander.js
+- **TUI framework**: Ink 5 (React 18 for terminals)
+- **Database**: better-sqlite3 (native SQLite bindings, WAL mode)
+- **Git integration**: Custom log parser using `git log --format` + `--numstat`
+- **Worker threads**: Node.js worker_threads for initial historical commit analysis (processes in batches of 500)
+- **Cross-platform**: Bash and PowerShell git hooks, Windows/macOS/Linux support
+- **Testing**: Vitest with 385 tests across 28 test files, in-memory SQLite for test isolation
+
+## Privacy Model
+
+Worktale is private by default:
+- No account required
+- No telemetry or analytics
+- No network requests (except optional local Ollama for AI digests)
+- All data stored in local SQLite database
+- No code or commit content leaves your machine
+- The `.worktale/` directory is automatically added to `.gitignore`
+- Git hooks only capture metadata (SHA, message, line counts), not file contents
+
+## Key Differentiators
+
+1. **Zero friction**: One command to set up (`worktale init`), then it works silently via git hooks
+2. **Local-first**: Everything runs on your machine, no cloud dependency
+3. **Private by default**: No account, no telemetry, no data leaves your machine
+4. **Beautiful output**: Terminal dashboard with heatmaps, streak counters, and activity charts
+5. **AI-optional**: Digest generation works without AI (template mode), or with local Ollama — never sends data to external AI services
+6. **Cross-platform**: Works on Windows, macOS, and Linux with both bash and PowerShell hook support

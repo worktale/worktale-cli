@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Service — Worktale</title>
+  <meta name="description" content="Terms of Service for Worktale, a local-first developer work journal."/>
+  <meta property="og:title" content="Terms of Service — Worktale"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/terms"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Terms of Service</h1>
+      <p class="text-text-muted text-sm font-mono mb-12">Last updated: March 6, 2026</p>
+
+      <div class="space-y-8 text-text-secondary leading-relaxed">
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">1. Acceptance of Terms</h2>
+          <p>By downloading, installing, or using Worktale ("the Software"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Software.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">2. Description of Service</h2>
+          <p>Worktale is a local-first command-line tool that captures git commit metadata and organizes it into a personal developer work journal. The Software runs entirely on your local machine. No account registration is required for the core CLI functionality.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">3. License</h2>
+          <p>Worktale is released under the MIT License. You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the conditions of the MIT License included with the source code.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">4. Local Data</h2>
+          <p>Worktale stores all data locally on your machine in a SQLite database. You are solely responsible for the security and backup of your local data. Worktale does not transmit, collect, or store any of your data on external servers (unless you explicitly opt into a future Cloud feature, which will be governed by separate terms).</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">5. Git Hooks</h2>
+          <p>Worktale installs a post-commit git hook in repositories where you run <code class="font-mono text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale init</code>. This hook executes <code class="font-mono text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale capture</code> after each commit to record metadata. You may remove these hooks at any time by running <code class="font-mono text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale init</code> again or manually deleting them from <code class="font-mono text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">.git/hooks/</code>.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">6. AI Features</h2>
+          <p>Worktale optionally integrates with Ollama, a locally-running AI inference engine, for digest generation. When using this feature, commit messages are sent to your local Ollama instance. No data is sent to external AI services. You are responsible for your own Ollama installation and configuration.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">7. Cloud Service (Future)</h2>
+          <p>A cloud publishing feature ("Worktale Cloud") is planned for a future release. Use of Worktale Cloud will require account creation and will be governed by additional terms. The local-first CLI will always remain fully functional without any cloud dependency.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">8. Disclaimer of Warranties</h2>
+          <p>The Software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the Software or the use or other dealings in the Software.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">9. Limitation of Liability</h2>
+          <p>To the maximum extent permitted by applicable law, Plu(rr)al and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenue, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of the Software.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">10. Changes to Terms</h2>
+          <p>We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated revision date. Your continued use of the Software after any changes constitutes acceptance of the new Terms.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">11. Contact</h2>
+          <p>For questions about these Terms, contact us at <a href="https://plurral.com" class="text-terminal-green hover:underline">plurral.com</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<%footer%>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale — Your Dev Story, Told Beautifully</title>
+  <meta name="description" content="A local-first CLI journal that turns your git history into a personal record of everything you built. Private by default. No account required."/>
+  <meta property="og:title" content="Worktale — Your Dev Story, Told Beautifully"/>
+  <meta property="og:description" content="Turn months of silent git history into a beautiful, personal record of what you actually built."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Scanline overlay -->
+    <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,0.08) 2px,rgba(0,255,65,0.08) 4px)"></div>
+    <!-- Grid background -->
+    <div class="pointer-events-none absolute inset-0 opacity-[0.04]" style="background-image:linear-gradient(rgba(0,255,65,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,0.1) 1px,transparent 1px);background-size:60px 60px"></div>
+    <!-- Glow orb -->
+    <div class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-terminal-green/[0.03] blur-[120px]"></div>
+
+    <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
+      <!-- Terminal badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-8">
+        <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">LOCAL-FIRST &middot; PRIVATE BY DEFAULT</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6">
+        <span class="text-text-primary">Your dev story,</span><br/>
+        <span class="bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green bg-clip-text text-transparent">told beautifully.</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed">
+        You ship code behind firewalls. To private repos. In silence.<br class="hidden md:block"/>
+        Months of brilliant work&mdash;invisible. Even to you.
+      </p>
+      <p class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
+        Worktale turns your git history into a personal record of what you actually built. One command. Zero setup. No code leaves your machine.
+      </p>
+
+      <!-- Install CTA -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+                  class="relative flex items-center gap-3 px-6 py-3.5 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-base hover:border-terminal-green/60 transition-all cursor-pointer">
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span class="text-text-muted ml-2 text-xs" x-text="copied ? 'copied!' : 'click to copy'" x-bind:class="copied && 'text-terminal-green'"></span>
+          </button>
+        </div>
+        <a href="#how-it-works" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors flex items-center gap-1">
+          see how it works <span class="text-terminal-green">&darr;</span>
+        </a>
+      </div>
+
+      <!-- Terminal mockup -->
+      <div class="mx-auto max-w-3xl">
+        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]">
+          <!-- Title bar -->
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+            </div>
+            <span class="font-mono text-xs text-text-muted ml-2">~/my-project</span>
+          </div>
+          <!-- Terminal content -->
+          <div class="p-5 font-mono text-sm leading-relaxed text-left overflow-x-auto" x-data="{ show: false }" x-intersect.once="show = true">
+            <div x-show="show" x-transition.duration.300ms>
+              <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale init</span></p>
+              <p class="mt-3 text-cyber-cyan">  ╔══════════════════════════════════════════════════════╗</p>
+              <p class="text-cyber-cyan">  ║  <span class="text-neon-amber">⚡</span>  <span class="font-bold text-cyber-cyan">W O R K T A L E</span>                                 ║</p>
+              <p class="text-cyber-cyan">  ║     <span class="text-text-secondary">Your dev story starts here.</span>                      ║</p>
+              <p class="text-cyber-cyan">  ╚══════════════════════════════════════════════════════╝</p>
+              <p class="mt-3">  <span class="text-text-primary font-bold">my-project</span>  <span class="text-terminal-green">git detected ✓</span></p>
+              <p class="text-text-secondary">  <span class="text-text-muted">User:</span>  dev@company.com</p>
+              <p class="mt-2 text-terminal-green">  ✓  .worktale/ directory created</p>
+              <p class="text-terminal-green">  ✓  Post-commit hook installed</p>
+              <p class="mt-2 text-cyber-cyan">  Analyzing git history...</p>
+              <p class="mt-1 text-terminal-green">  ████████████████████████  <span class="text-text-primary">1,204 commits</span>  <span class="text-text-muted">[100%]</span></p>
+              <p class="mt-2 text-terminal-green">  ✓  Analysis complete!</p>
+              <p class="mt-2 text-text-primary font-bold">  Summary</p>
+              <p class="text-text-muted">  ────────────────────────────────────────</p>
+              <p class="text-text-secondary">  Commits:       <span class="text-text-primary font-bold">1,204</span></p>
+              <p class="text-text-secondary">  Lines added:   <span class="text-terminal-green">+247,892</span></p>
+              <p class="text-text-secondary">  Lines removed: <span class="text-red-400">-98,441</span></p>
+              <p class="text-text-secondary">  Days active:   <span class="text-text-primary">287</span></p>
+              <p class="text-text-secondary">  First commit:  <span class="text-text-primary">June 3, 2021</span></p>
+              <p class="mt-3 text-neon-amber">  ⚡  <span class="text-text-primary font-bold">Worktale is ready!</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PROBLEM / THESIS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-6">
+            Most developers<br/><span class="text-terminal-green">build in silence.</span>
+          </h2>
+          <div class="space-y-4 text-text-secondary leading-relaxed">
+            <p>Behind firewalls. Inside private repos. Under NDAs. Your best work is invisible&mdash;even to you.</p>
+            <p>Six months from now, you won't remember the race condition you debugged at 2 AM, the architecture you redesigned, or the migration that saved the sprint.</p>
+            <p class="text-text-primary font-medium">With AI restructuring entire teams overnight, the developers who can articulate what they built&mdash;and why&mdash;are the ones who survive.</p>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+            <p class="font-mono text-sm text-text-muted mb-1">&gt; performance_review.txt</p>
+            <p class="text-text-secondary text-sm italic">"What did you ship this quarter?"</p>
+            <p class="text-text-muted text-sm mt-2">You: "Um... a lot of stuff. Let me check Jira..."</p>
+          </div>
+          <div class="p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <p class="font-mono text-sm text-terminal-green/60 mb-1">&gt; worktale_digest.md</p>
+            <p class="text-terminal-green text-sm font-medium">"287 days active. 4,847 commits. Redesigned the payment pipeline, eliminated 3 critical race conditions, shipped v2.0."</p>
+            <p class="text-terminal-dim text-sm mt-2">Worktale had your back.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HOW IT WORKS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="how-it-works" class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="text-center mb-16">
+        <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">How it works</p>
+        <h2 class="text-3xl md:text-4xl font-bold">Three commands. That's it.</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors">01</div>
+          <h3 class="font-mono text-lg text-text-primary mb-2">worktale init</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Run once per repo. Worktale scans your entire git history and builds your story in seconds. Installs a silent post-commit hook.</p>
+          <div class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3">
+            <p><span class="text-terminal-green/60">$</span> cd my-project</p>
+            <p><span class="text-terminal-green/60">$</span> worktale init</p>
+            <p class="text-terminal-green mt-1">✓ 847 commits analyzed in 2.1s</p>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors">02</div>
+          <h3 class="font-mono text-lg text-text-primary mb-2">Just code.</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Every commit is captured automatically. Zero friction. No extra commands. Your dashboard updates in real-time with streaks, stats, and activity heatmaps.</p>
+          <div class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3">
+            <p><span class="text-terminal-green/60">$</span> git commit -m "fix: auth token"</p>
+            <p class="text-neon-amber mt-1">⚡ worktale: captured (+42 / -12)</p>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors">03</div>
+          <h3 class="font-mono text-lg text-text-primary mb-2">worktale digest</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">End of day, Worktale compiles your work into a clean summary. Add your own notes. Build a log you'll actually want to read.</p>
+          <div class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3">
+            <p><span class="text-terminal-green/60">$</span> worktale digest</p>
+            <p class="text-terminal-green mt-1">✓ Today's log saved locally.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FEATURES -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="features" class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="text-center mb-16">
+        <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">Features</p>
+        <h2 class="text-3xl md:text-4xl font-bold">Everything a developer journal should be.</h2>
+        <p class="text-text-secondary mt-3 max-w-xl mx-auto">No browser. No cloud. No signup. Just a beautiful CLI that surfaces the story hidden in your git data.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">🔍</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Historical Analysis</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> and instantly discover years of hidden work. Your longest streak, most productive month, total lines shipped&mdash;all surfaced in seconds.</p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">📊</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Interactive TUI Dashboard</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">A rich terminal UI with three views: Overview (today's stats + streak), Daily Log (browse by day, add notes), and History (year-long heatmap + milestones).</p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">🔥</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Streaks &amp; Heatmaps</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">See your consistency visualized. A GitHub-style contribution heatmap right in your terminal. Track current streaks, best streaks, and daily output patterns.</p>
+        </div>
+        <!-- Feature 4 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">📝</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Daily Digest</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Generate an end-of-day summary from your commits. Add personal notes about decisions, challenges, and wins. Build a work log you'll actually want to reference.</p>
+        </div>
+        <!-- Feature 5 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">🤖</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Local AI (Ollama)</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Point Worktale at your local Ollama instance and get AI-enhanced digests&mdash;entirely offline. Llama, Mistral, CodeLlama. Your data never leaves the machine.</p>
+        </div>
+        <!-- Feature 6 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">⚡</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Zero-Friction Capture</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">A silent <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">post-commit</code> hook captures every commit automatically. No extra commands. No workflow changes. Just code.</p>
+        </div>
+        <!-- Feature 7 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">📁</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Multi-Repo Support</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Track every repo you work on. Run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale repos</code> to see all your projects and their stats across your entire machine.</p>
+        </div>
+        <!-- Feature 8 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">🔔</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">End-of-Day Nudge</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">A gentle terminal reminder at 5 PM: "You shipped 1,204 lines today. Want to log it?" Never forget to capture a productive day.</p>
+        </div>
+        <!-- Feature 9 -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group">
+          <div class="text-2xl mb-3">🖥️</div>
+          <h3 class="font-mono text-base text-text-primary mb-2">Cross-Platform</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Works on macOS, Linux, and Windows. Git Bash, PowerShell, WSL2&mdash;Worktale adapts. Dual hook strategy for seamless Windows support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- DASHBOARD PREVIEW -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="text-center mb-12">
+        <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">The Dashboard</p>
+        <h2 class="text-3xl md:text-4xl font-bold">Your terminal, alive.</h2>
+        <p class="text-text-secondary mt-3">Tab between three views. Keyboard-driven. Renders in under 300ms.</p>
+      </div>
+
+      <!-- Dashboard mockup -->
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]" x-data="{ tab: 1 }">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+          </div>
+          <span class="font-mono text-xs text-text-muted ml-2">worktale &mdash; my-saas-project</span>
+        </div>
+        <!-- Tab bar -->
+        <div class="px-5 pt-4 pb-2 border-b border-border-dim bg-surface-1 flex items-center gap-6 font-mono text-xs">
+          <span class="text-neon-amber mr-2">⚡ WORKTALE</span>
+          <span class="text-text-muted">│</span>
+          <button @click="tab = 1" class="transition-colors cursor-pointer" :class="tab === 1 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'">[1] Overview</button>
+          <button @click="tab = 2" class="transition-colors cursor-pointer" :class="tab === 2 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'">[2] Daily Log</button>
+          <button @click="tab = 3" class="transition-colors cursor-pointer" :class="tab === 3 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'">[3] History</button>
+          <span class="text-text-muted ml-auto">🔥 Streak: <span class="text-neon-amber">14 days</span></span>
+        </div>
+        <!-- Tab content -->
+        <div class="p-5 font-mono text-xs leading-relaxed min-h-[340px]">
+          <!-- Overview -->
+          <div x-show="tab === 1" x-transition.opacity>
+            <p class="text-text-secondary mb-3">TODAY  &middot;  Tuesday, March 4, 2025</p>
+            <div class="grid grid-cols-5 gap-4 mb-4">
+              <div><p class="text-text-muted">Commits</p><p class="text-text-primary text-lg font-bold">7</p></div>
+              <div><p class="text-text-muted">Lines +</p><p class="text-terminal-green text-lg font-bold">+1,204</p></div>
+              <div><p class="text-text-muted">Lines -</p><p class="text-red-400 text-lg font-bold">-389</p></div>
+              <div><p class="text-text-muted">Files</p><p class="text-text-primary text-lg font-bold">23</p></div>
+              <div><p class="text-text-muted">Time</p><p class="text-text-primary text-lg font-bold">4h 12m</p></div>
+            </div>
+            <p class="text-neon-amber mb-1">🔥 STREAK  <span class="text-terminal-green">━━━━━━━━━━━━━━━━━━━━━</span>  14 days</p>
+            <p class="text-text-muted mb-4">📈 BEST    <span class="text-terminal-green/40">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  31 days</p>
+            <p class="text-text-muted mb-1">THIS WEEK</p>
+            <p class="text-text-secondary">Mon  <span class="text-terminal-green">████████████</span>  892 lines</p>
+            <p class="text-text-secondary">Tue  <span class="text-terminal-green">███████████████████</span>  1,204 lines  <span class="text-neon-amber">&larr; today</span></p>
+            <p class="text-text-secondary">Wed  <span class="text-text-muted">░░░░</span></p>
+            <p class="text-text-secondary">Thu  <span class="text-text-muted">░░░░</span></p>
+            <p class="text-text-secondary">Fri  <span class="text-text-muted">░░░░</span></p>
+            <p class="mt-3 text-text-secondary">RECENT COMMITS</p>
+            <p class="text-text-secondary"><span class="text-terminal-green">&bullet;</span> 2m ago    <span class="text-text-primary">fix: resolve auth token expiry edge case</span></p>
+            <p class="text-text-secondary"><span class="text-terminal-green">&bullet;</span> 47m ago   <span class="text-text-primary">feat: add retry logic to payment processor</span></p>
+            <p class="text-text-secondary"><span class="text-terminal-green">&bullet;</span> 2h ago    <span class="text-text-primary">refactor: extract email service into module</span></p>
+          </div>
+          <!-- Daily Log -->
+          <div x-show="tab === 2" x-transition.opacity>
+            <p class="text-text-secondary mb-3">DAILY LOG  &middot;  &larr; &rarr; to navigate days</p>
+            <p class="text-text-secondary mb-4">◀  Monday, March 3, 2025  ▶</p>
+            <div class="p-3 rounded-lg border border-border-dim bg-surface-2 mb-4">
+              <p class="text-text-secondary">8 commits  &middot;  <span class="text-terminal-green">+892</span> / <span class="text-red-400">-201</span> lines  &middot;  14 files touched</p>
+            </div>
+            <p class="text-text-muted mb-1">Your Notes</p>
+            <div class="p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5 mb-4">
+              <p class="text-terminal-dim text-xs leading-relaxed">Spent the morning tracking down a race condition in the payment webhook handler. The root cause was a missing mutex around the idempotency key check. Classic.</p>
+              <p class="text-text-muted mt-2">[E to edit]</p>
+            </div>
+            <p class="text-text-muted mb-1">Commit Timeline</p>
+            <p class="text-text-secondary"> 09:14  <span class="text-text-primary">fix: webhook race condition (idempotency key)</span></p>
+            <p class="text-text-secondary"> 10:02  <span class="text-text-primary">fix: add mutex to payment handler</span></p>
+            <p class="text-text-secondary"> 11:33  <span class="text-text-primary">test: add race condition regression test</span></p>
+            <p class="text-text-secondary"> 14:17  <span class="text-text-primary">feat: implement retry backoff for failed webhooks</span></p>
+            <p class="text-text-secondary"> 16:45  <span class="text-text-primary">docs: update webhook integration guide</span></p>
+          </div>
+          <!-- History -->
+          <div x-show="tab === 3" x-transition.opacity>
+            <p class="text-text-secondary mb-3">HISTORY  &middot;  2024 &ndash; 2025</p>
+            <p class="text-text-muted mb-1 tracking-[0.4em]">     Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec</p>
+            <p class="text-text-secondary">Mon  <span class="text-text-muted">░</span><span class="text-text-muted/60">▒</span><span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">█████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░░░</span><span class="text-text-muted/60">▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">████████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░</span><span class="text-text-muted/60">▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">███████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted">░░</span><span class="text-text-muted/60">▒▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">█████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span></p>
+            <p class="text-text-secondary">Wed  <span class="text-text-muted">░</span><span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░░</span><span class="text-text-muted/60">▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">█████████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░</span><span class="text-text-muted/60">▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">████████</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░░</span><span class="text-text-muted/60">▒▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">██████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted">░░</span></p>
+            <p class="text-text-secondary">Fri  <span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">███</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░░░</span><span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">███████████</span><span class="text-cyber-cyan/60">▓</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░</span><span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">█████████</span><span class="text-text-muted">░░░</span><span class="text-text-muted/60">▒</span><span class="text-cyber-cyan/60">▓</span><span class="text-cyber-cyan">███████</span><span class="text-text-muted/60">▒</span><span class="text-text-muted">░░</span></p>
+            <p class="text-text-muted mt-1 text-[10px]">░ none   ▒ light   ▓ moderate   █ heavy</p>
+            <p class="mt-3 text-text-muted mb-1">ALL-TIME STATS</p>
+            <div class="grid grid-cols-2 gap-x-8 gap-y-1">
+              <p class="text-text-secondary">Total commits      <span class="text-text-primary">4,847</span></p>
+              <p class="text-text-secondary">Most active month   <span class="text-text-primary">August 2024</span></p>
+              <p class="text-text-secondary">Lines written     <span class="text-terminal-green">892,044</span></p>
+              <p class="text-text-secondary">Longest streak      <span class="text-neon-amber">31 days</span></p>
+              <p class="text-text-secondary">Days active         <span class="text-text-primary">287</span></p>
+              <p class="text-text-secondary">Avg commits/day     <span class="text-text-primary">4.2</span></p>
+            </div>
+            <p class="mt-3 text-text-muted mb-1">TOP MODULES</p>
+            <p class="text-text-secondary">src/api/       <span class="text-terminal-green">████████████████████</span>  38%</p>
+            <p class="text-text-secondary">src/ui/        <span class="text-terminal-green">██████████</span><span class="text-text-muted">░░░░░░░░░░</span>  21%</p>
+            <p class="text-text-secondary">tests/         <span class="text-terminal-green">████████</span><span class="text-text-muted">░░░░░░░░░░░░</span>  18%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- USE CASES -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="text-center mb-16">
+        <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">Use Cases</p>
+        <h2 class="text-3xl md:text-4xl font-bold">Built for the real world.</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Performance Reviews</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Walk into your review with exact data. "I shipped 2,847 commits across 3 repos, resolved 12 production incidents, and led the v2.0 migration." Worktale gives you the receipts.</p>
+        </div>
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Job Transitions</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Laid off? Restructured? Your private repo history doesn't follow you. But your Worktale digests do. A portable record of your real engineering output, NDA-safe.</p>
+        </div>
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Learning from the Past</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">"Why did we build it this way?" Browse your daily log from 6 months ago and find the exact reasoning. Your future self will thank you.</p>
+        </div>
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Personal Motivation</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">That 14-day streak. The month you shipped 40k lines. The heatmap that shows you showed up every day. Sometimes you just need to see what you're capable of.</p>
+        </div>
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Consulting &amp; Freelance</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Show clients exactly what you delivered. Time estimates backed by actual coding time data. Module breakdowns showing where the effort went.</p>
+        </div>
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <h3 class="font-mono text-base text-terminal-green mb-2">Enterprise Developers</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">Working on classified or air-gapped systems? Worktale runs entirely local. No network calls. No telemetry. Just you and your SQLite database.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PRIVACY -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="privacy" class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">Privacy First</p>
+          <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-6">Your code never<br/><span class="text-terminal-green">leaves your machine.</span></h2>
+          <p class="text-text-secondary leading-relaxed mb-4">Worktale only reads git metadata&mdash;commit timestamps, messages, and diff stats. It never reads file contents, diffs, or source code. Ever.</p>
+          <p class="text-text-secondary leading-relaxed">Your SQLite database lives at <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">~/.worktale/data.db</code>&mdash;outside any repo, never committed, never synced (unless you opt in).</p>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">No account required</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">No network calls. No telemetry.</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">Source code is never read or stored</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">Database stored locally, outside repos</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">.worktale/ auto-added to .gitignore</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <span class="text-terminal-green font-mono text-lg">✓</span>
+            <span class="text-sm text-text-primary">Cloud sync is opt-in, metadata only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- ALL COMMANDS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="install" class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center mb-12">
+        <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">Command Reference</p>
+        <h2 class="text-3xl md:text-4xl font-bold">Every command you need.</h2>
+        <p class="text-text-secondary mt-3">Requires Node.js 18+. That's it.</p>
+      </div>
+
+      <div class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden">
+        <div class="px-5 py-3 border-b border-border-dim bg-surface-2 font-mono text-xs text-text-muted flex items-center gap-2">
+          <span class="text-terminal-green/60">$</span> npm install -g worktale
+        </div>
+        <div class="divide-y divide-border-dim">
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale init</code>
+            <p class="text-text-secondary text-sm">Initialize in current repo. Scans entire git history, installs hooks, builds your story.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale</code>
+            <p class="text-text-secondary text-sm">Open the interactive TUI dashboard with Overview, Daily Log, and History views.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale today</code>
+            <p class="text-text-secondary text-sm">Quick summary of today's commits, lines, files, and coding time.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale status</code>
+            <p class="text-text-secondary text-sm">One-line status: commits today, line stats, current streak.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale log</code>
+            <p class="text-text-secondary text-sm">Browse daily activity log. Use <code class="text-text-muted">--days 30</code> to look further back.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale digest</code>
+            <p class="text-text-secondary text-sm">Generate today's work summary. Supports local templates and Ollama AI.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale repos</code>
+            <p class="text-text-secondary text-sm">List all tracked repositories with stats and last sync time.</p>
+          </div>
+          <div class="px-5 py-4 flex items-start gap-4">
+            <code class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]">worktale config set &lt;k&gt; &lt;v&gt;</code>
+            <p class="text-text-secondary text-sm">Configure Worktale. Set AI provider, nudge time, color scheme, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CLOUD TEASER -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section id="cloud" class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="relative rounded-2xl border border-cyber-cyan/20 bg-gradient-to-br from-cyber-cyan/5 via-surface-1 to-cyber-blue/5 p-8 md:p-12 overflow-hidden">
+        <!-- Glow -->
+        <div class="pointer-events-none absolute top-0 right-0 w-64 h-64 bg-cyber-cyan/[0.06] rounded-full blur-[80px]"></div>
+        <div class="relative z-10">
+          <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-3">Coming Soon</p>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Worktale Cloud</h2>
+          <p class="text-text-secondary max-w-xl leading-relaxed mb-6">Everything stays local by default. But when you're ready to share your story, Worktale Cloud gives you a beautiful public profile.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div class="flex items-start gap-3">
+              <span class="text-cyber-cyan mt-0.5">◆</span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">Public Heatmap</p>
+                <p class="text-text-muted text-xs">GitHub-style but for everything&mdash;private repos included.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-cyber-cyan mt-0.5">◆</span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">AI-Polished Digests</p>
+                <p class="text-text-muted text-xs">Your raw commits, rewritten into compelling narratives.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-cyber-cyan mt-0.5">◆</span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">Shareable Profile</p>
+                <p class="text-text-muted text-xs">worktale.org/yourname &mdash; proof of what you built.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-cyber-cyan mt-0.5">◆</span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">Cross-Repo Timeline</p>
+                <p class="text-text-muted text-xs">All your repos, one unified view of your engineering journey.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email signup -->
+          <div x-data="{
+            email: '',
+            status: 'idle',
+            message: '',
+            async submit() {
+              if (!this.email || !this.email.includes('@')) {
+                this.status = 'error';
+                this.message = 'Please enter a valid email.';
+                return;
+              }
+              this.status = 'loading';
+              try {
+                const form = new FormData();
+                form.append('email', this.email);
+                await fetch('https://forms.noundry.com/f/worktale', {
+                  method: 'POST',
+                  body: form,
+                  mode: 'no-cors',
+                });
+                // no-cors means we can't read the response, but the request goes through
+                this.status = 'success';
+                this.message = 'You\'re on the list. We\'ll be in touch.';
+                this.email = '';
+              } catch {
+                this.status = 'error';
+                this.message = 'Network error. Try again.';
+              }
+            }
+          }">
+            <p class="text-text-secondary text-sm mb-3">Get early access when Cloud launches:</p>
+            <form @submit.prevent="submit()" class="flex flex-col sm:flex-row gap-3 max-w-md">
+              <input type="email" x-model="email" placeholder="dev@example.com"
+                     class="flex-1 px-4 py-2.5 rounded-lg bg-surface-0 border border-border-dim text-text-primary font-mono text-sm placeholder:text-text-muted focus:outline-none focus:border-cyber-cyan/50 focus:ring-1 focus:ring-cyber-cyan/20 transition-all"
+                     :disabled="status === 'loading' || status === 'success'"/>
+              <button type="submit"
+                      class="px-6 py-2.5 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all disabled:opacity-50 cursor-pointer whitespace-nowrap"
+                      :disabled="status === 'loading' || status === 'success'">
+                <span x-show="status === 'idle' || status === 'error'">Notify Me</span>
+                <span x-show="status === 'loading'">Sending...</span>
+                <span x-show="status === 'success'">✓ Done</span>
+              </button>
+            </form>
+            <p x-show="message" x-text="message" class="mt-2 font-mono text-xs" :class="status === 'success' ? 'text-terminal-green' : 'text-red-400'" x-transition></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FINAL CTA -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-24 md:py-32 border-t border-border-dim">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-4">
+        Let Worktale tell<br/><span class="bg-gradient-to-r from-terminal-green to-cyber-cyan bg-clip-text text-transparent">your tale.</span>
+      </h2>
+      <p class="text-text-secondary text-lg mb-8 max-w-lg mx-auto">
+        One command. Your entire dev history, surfaced and beautiful. Start building the record you deserve.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/40 to-cyber-cyan/40 blur-sm opacity-60 group-hover:opacity-100 transition-opacity"></div>
+          <button @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+                  class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/40 font-mono text-lg hover:border-terminal-green/70 transition-all cursor-pointer">
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span x-show="copied" class="text-terminal-green text-sm ml-2" x-transition>✓</span>
+          </button>
+        </div>
+      </div>
+      <p class="text-text-muted text-xs font-mono mt-6">Requires Node.js 18+ &middot; Free forever &middot; Open source</p>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>
