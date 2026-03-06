@@ -82,29 +82,10 @@
             <span class="font-mono text-xs text-text-muted ml-2">~/my-project</span>
           </div>
           <!-- Terminal content -->
-          <div class="p-5 font-mono text-sm leading-relaxed text-left overflow-x-auto" x-data="{ show: false }" x-intersect.once="show = true">
-            <div x-show="show" x-transition.duration.300ms>
-              <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale init</span></p>
-              <p class="mt-3 text-cyber-cyan">  ╔══════════════════════════════════════════════════════╗</p>
-              <p class="text-cyber-cyan">  ║  <span class="text-neon-amber">⚡</span>  <span class="font-bold text-cyber-cyan">W O R K T A L E</span>                                 ║</p>
-              <p class="text-cyber-cyan">  ║     <span class="text-text-secondary">Your dev story starts here.</span>                      ║</p>
-              <p class="text-cyber-cyan">  ╚══════════════════════════════════════════════════════╝</p>
-              <p class="mt-3">  <span class="text-text-primary font-bold">my-project</span>  <span class="text-terminal-green">git detected ✓</span></p>
-              <p class="text-text-secondary">  <span class="text-text-muted">User:</span>  dev@company.com</p>
-              <p class="mt-2 text-terminal-green">  ✓  .worktale/ directory created</p>
-              <p class="text-terminal-green">  ✓  Post-commit hook installed</p>
-              <p class="mt-2 text-cyber-cyan">  Analyzing git history...</p>
-              <p class="mt-1 text-terminal-green">  ████████████████████████  <span class="text-text-primary">1,204 commits</span>  <span class="text-text-muted">[100%]</span></p>
-              <p class="mt-2 text-terminal-green">  ✓  Analysis complete!</p>
-              <p class="mt-2 text-text-primary font-bold">  Summary</p>
-              <p class="text-text-muted">  ────────────────────────────────────────</p>
-              <p class="text-text-secondary">  Commits:       <span class="text-text-primary font-bold">1,204</span></p>
-              <p class="text-text-secondary">  Lines added:   <span class="text-terminal-green">+247,892</span></p>
-              <p class="text-text-secondary">  Lines removed: <span class="text-red-400">-98,441</span></p>
-              <p class="text-text-secondary">  Days active:   <span class="text-text-primary">287</span></p>
-              <p class="text-text-secondary">  First commit:  <span class="text-text-primary">June 3, 2021</span></p>
-              <p class="mt-3 text-neon-amber">  ⚡  <span class="text-text-primary font-bold">Worktale is ready!</span></p>
-            </div>
+          <div class="p-5 font-mono text-sm leading-relaxed text-left overflow-x-auto">
+              <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale</span></p>
+              <p class="mt-2"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale init</span></p>
+              <p class="mt-2"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale dash</span></p>
           </div>
         </div>
       </div>
