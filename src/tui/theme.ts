@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 export const colors = {
-  brand: '#00D4FF',
+  brand: '#4ADE80',
   positive: '#4ADE80',
   negative: '#FB7185',
   streak: '#FBBF24',
@@ -10,8 +10,8 @@ export const colors = {
   textSecondary: '#9CA3AF',
   heatNone: '#374151',
   heatLight: '#64748B',
-  heatModerate: '#00D4FF',
-  heatHeavy: '#00D4FF',
+  heatModerate: '#4ADE80',
+  heatHeavy: '#4ADE80',
 } as const;
 
 export function brandText(text: string): string {

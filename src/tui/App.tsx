@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, useApp, useInput } from 'ink';
+import { Box, Text, useApp, useInput, useStdout } from 'ink';
 import { getRepo } from '../db/repos.js';
 import { getStreakInfo } from '../utils/streaks.js';
 import { colors } from './theme.js';
@@ -58,18 +58,21 @@ export default function App({ repoPath }: AppProps) {
     );
   }
 
+  const { stdout } = useStdout();
+  const termHeight = stdout.rows || 24;
+
   if (!repo) {
     return (
-      <Box paddingX={1}>
+      <Box paddingX={1} height={termHeight}>
         <Text color={colors.textSecondary}>Loading...</Text>
       </Box>
     );
   }
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" height={termHeight}>
       <Header repoName={repo.name} streak={streak} activeView={activeView} />
-      <Box>
+      <Box flexGrow={1}>
         {activeView === 1 && <Overview repoId={repo.id} />}
         {activeView === 2 && <DailyLog repoId={repo.id} />}
         {activeView === 3 && <History repoId={repo.id} />}
