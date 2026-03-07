@@ -27,6 +27,7 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org
       - run: npm ci --legacy-peer-deps
+      - run: npm install --no-save --legacy-peer-deps @rollup/rollup-linux-x64-gnu
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
