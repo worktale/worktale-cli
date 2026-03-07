@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { Command } from 'commander';
 import { initCommand } from './commands/init.js';
 import { todayCommand } from './commands/today.js';
@@ -13,12 +16,15 @@ import { captureCommand } from './commands/capture.js';
 import { dashCommand } from './commands/dash.js';
 import { installNudge, removeNudge, checkNudge, isNudgeInstalled } from './nudge/index.js';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf-8'));
+
 const program = new Command();
 
 program
   .name('worktale')
   .description('Zero-friction, local-first developer work journal')
-  .version('1.0.0');
+  .version(pkg.version);
 
 program
   .command('init')
