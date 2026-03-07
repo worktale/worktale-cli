@@ -11,9 +11,10 @@ import type { Repo } from '../db/repos.js';
 
 interface AppProps {
   repoPath: string;
+  onAction?: (action: 'digest' | 'publish') => void;
 }
 
-export default function App({ repoPath }: AppProps) {
+export default function App({ repoPath, onAction }: AppProps) {
   const { exit } = useApp();
   const [activeView, setActiveView] = useState<1 | 2 | 3>(1);
   const [repo, setRepo] = useState<Repo | undefined>(undefined);
@@ -38,6 +39,16 @@ export default function App({ repoPath }: AppProps) {
 
   useInput((input, key) => {
     if (input === 'q') {
+      exit();
+      return;
+    }
+    if (input === 'd' || input === 'D') {
+      onAction?.('digest');
+      exit();
+      return;
+    }
+    if (input === 'p' || input === 'P') {
+      onAction?.('publish');
       exit();
       return;
     }

@@ -32,7 +32,7 @@ export default function Header({ repoName, streak, activeView }: HeaderProps) {
         </Box>
         <Box>
           <Text color={colors.streak}>
-            {'\uD83D\uDD25'} Streak: {streak} day{streak !== 1 ? 's' : ''}
+            {'\u26A1'} Streak: {streak} day{streak !== 1 ? 's' : ''}
           </Text>
         </Box>
       </Box>

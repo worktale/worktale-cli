@@ -40,8 +40,25 @@ export async function dashCommand(): Promise<void> {
       // Close DB before handing off to TUI (it will manage its own connection)
       closeDb();
 
-      const { waitUntilExit } = render(React.createElement(App, { repoPath }));
+      let pendingAction: 'digest' | 'publish' | null = null;
+      const { waitUntilExit } = render(
+        React.createElement(App, {
+          repoPath,
+          onAction: (action: 'digest' | 'publish') => { pendingAction = action; },
+        }),
+      );
       await waitUntilExit();
+
+      if (pendingAction === 'digest') {
+        const { digestCommand } = await import('./digest.js');
+        await digestCommand();
+        return;
+      }
+      if (pendingAction === 'publish') {
+        const { publishCommand } = await import('./publish.js');
+        await publishCommand();
+        return;
+      }
     } catch {
       // If TUI import fails (e.g., App.tsx not yet built), fall back to today command
       closeDb();
