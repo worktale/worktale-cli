@@ -35,25 +35,25 @@ describe('publishCommand', () => {
     expect(mockExit).toHaveBeenCalledWith(0);
   });
 
-  it('mentions public heatmap feature', async () => {
+  it('mentions developer portfolio feature', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('Public heatmap');
+    expect(joined).toContain('developer portfolio');
   });
 
-  it('mentions AI-polished digests', async () => {
+  it('mentions AI weekly digests', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('AI-polished');
+    expect(joined).toContain('AI weekly digests');
   });
 
-  it('mentions shareable link', async () => {
+  it('mentions worktale.dev profile link', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('worktale.org/yourname');
+    expect(joined).toContain('worktale.dev/you');
   });
 
   it('mentions early access signup', async () => {
@@ -61,7 +61,7 @@ describe('publishCommand', () => {
 
     const joined = output.join('\n');
     expect(joined).toContain('early access');
-    expect(joined).toContain('worktale.org');
+    expect(joined).toContain('worktale.dev');
   });
 
   it('displays the Publish heading', async () => {
