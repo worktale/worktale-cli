@@ -6,6 +6,8 @@ import { loadConfig } from '../config/index.js';
 import { getDb } from '../db/index.js';
 import { getDateString } from '../utils/formatting.js';
 
+const isWindows = process.platform === 'win32';
+
 // Shell profiles to check
 const SHELL_PROFILES = [
   '.bashrc',
@@ -17,7 +19,11 @@ const SHELL_PROFILES = [
 const NUDGE_MARKER = '# Worktale nudge';
 const NUDGE_LINE = '[ -x "$(command -v worktale)" ] && worktale nudge --check 2>/dev/null &';
 
-export function installNudge(): { installed: boolean; profile: string | null } {
+export function installNudge(): { installed: boolean; profile: string | null; unsupported?: boolean } {
+  if (isWindows) {
+    return { installed: false, profile: null, unsupported: true };
+  }
+
   const home = homedir();
 
   for (const profile of SHELL_PROFILES) {
@@ -38,6 +44,8 @@ export function installNudge(): { installed: boolean; profile: string | null } {
 }
 
 export function removeNudge(): void {
+  if (isWindows) return;
+
   const home = homedir();
   for (const profile of SHELL_PROFILES) {
     const profilePath = join(home, profile);
@@ -55,6 +63,8 @@ export function removeNudge(): void {
 }
 
 export function checkNudge(): void {
+  if (isWindows) return;
+
   try {
     const config = loadConfig();
     const now = new Date();
@@ -96,6 +106,8 @@ export function checkNudge(): void {
 }
 
 export function isNudgeInstalled(): boolean {
+  if (isWindows) return false;
+
   const home = homedir();
   for (const profile of SHELL_PROFILES) {
     const profilePath = join(home, profile);

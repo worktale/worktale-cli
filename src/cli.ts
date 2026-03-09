@@ -112,7 +112,9 @@ program
       checkNudge();
     } else if (opts.install) {
       const result = installNudge();
-      if (result.installed) {
+      if (result.unsupported) {
+        console.log('Nudge requires a Unix shell (macOS/Linux). Windows support coming soon.');
+      } else if (result.installed) {
         console.log(`Nudge installed to ~/${result.profile}`);
       } else {
         console.log('No shell profile found. Create a .bashrc or .zshrc and try again.');

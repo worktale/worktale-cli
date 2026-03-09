@@ -44,7 +44,9 @@ export async function initCommand(options: { global?: boolean } = {}): Promise<v
       console.log('');
 
       const nudgeResult = installNudge();
-      if (nudgeResult.installed) {
+      if (nudgeResult.unsupported) {
+        console.log('  ' + dimText('Nudge requires a Unix shell (macOS/Linux). Windows support coming soon.'));
+      } else if (nudgeResult.installed) {
         console.log('  ' + positiveText('\u2713') + '  Nudge installed to ~/' + nudgeResult.profile);
       } else {
         console.log('  ' + dimText('No shell profile found. Create a .bashrc or .zshrc first.'));
