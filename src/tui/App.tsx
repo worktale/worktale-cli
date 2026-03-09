@@ -20,6 +20,7 @@ export default function App({ repoPath, onAction }: AppProps) {
   const [repo, setRepo] = useState<Repo | undefined>(undefined);
   const [streak, setStreak] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     try {
@@ -38,6 +39,8 @@ export default function App({ repoPath, onAction }: AppProps) {
   }, [repoPath]);
 
   useInput((input, key) => {
+    if (isEditing) return;
+
     if (input === 'q') {
       exit();
       return;
@@ -85,7 +88,7 @@ export default function App({ repoPath, onAction }: AppProps) {
       <Header repoName={repo.name} streak={streak} activeView={activeView} />
       <Box flexGrow={1}>
         {activeView === 1 && <Overview repoId={repo.id} />}
-        {activeView === 2 && <DailyLog repoId={repo.id} />}
+        {activeView === 2 && <DailyLog repoId={repo.id} onEditingChange={setIsEditing} />}
         {activeView === 3 && <History repoId={repo.id} />}
       </Box>
     </Box>

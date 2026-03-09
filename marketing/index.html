@@ -151,6 +151,20 @@
                         </a>
                     </div>
 
+                    <!-- GitHub + version badges -->
+                    <div class="flex items-center justify-center gap-4 mb-12">
+                        <a
+                            href="https://github.com/worktale/worktale-cli"
+                            target="_blank"
+                            rel="noopener"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border-dim bg-surface-1/50 font-mono text-xs text-text-secondary hover:border-terminal-green/30 hover:text-terminal-green transition-all"
+                        >
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                            <span>Star on GitHub</span>
+                        </a>
+                        <span class="font-mono text-xs text-text-muted">v1.0.5</span>
+                    </div>
+
                     <!-- Terminal mockup -->
                     <div class="mx-auto max-w-3xl">
                         <div
@@ -658,7 +672,19 @@
                     <!-- Dashboard mockup -->
                     <div
                         class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]"
-                        x-data="{ tab: 1 }"
+                        x-data="{
+                            tab: 1,
+                            timer: null,
+                            start() {
+                                this.timer = setInterval(() => { this.tab = this.tab % 3 + 1 }, 4000)
+                            },
+                            pick(t) {
+                                this.tab = t;
+                                clearInterval(this.timer);
+                                this.start();
+                            }
+                        }"
+                        x-init="start()"
                     >
                         <div
                             class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2"
@@ -680,34 +706,34 @@
                         </div>
                         <!-- Tab bar -->
                         <div
-                            class="px-5 pt-4 pb-2 border-b border-border-dim bg-surface-1 flex items-center gap-6 font-mono text-xs"
+                            class="px-5 pt-4 border-b border-border-dim bg-surface-1 flex items-center gap-1 font-mono text-xs"
                         >
-                            <span class="text-neon-amber mr-2"
+                            <span class="text-neon-amber mr-3"
                                 >⚡ WORKTALE</span
                             >
-                            <span class="text-text-muted">│</span>
+                            <span class="text-text-muted mr-2">│</span>
                             <button
-                                @click="tab = 1"
-                                class="transition-colors cursor-pointer"
-                                :class="tab === 1 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'"
+                                @click="pick(1)"
+                                class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2"
+                                :class="tab === 1 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'"
                             >
                                 [1] Overview
                             </button>
                             <button
-                                @click="tab = 2"
-                                class="transition-colors cursor-pointer"
-                                :class="tab === 2 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'"
+                                @click="pick(2)"
+                                class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2"
+                                :class="tab === 2 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'"
                             >
                                 [2] Daily Log
                             </button>
                             <button
-                                @click="tab = 3"
-                                class="transition-colors cursor-pointer"
-                                :class="tab === 3 ? 'text-terminal-green' : 'text-text-muted hover:text-text-secondary'"
+                                @click="pick(3)"
+                                class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2"
+                                :class="tab === 3 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'"
                             >
                                 [3] History
                             </button>
-                            <span class="text-text-muted ml-auto"
+                            <span class="text-text-muted ml-auto py-2"
                                 >🔥 Streak:
                                 <span class="text-neon-amber"
                                     >14 days</span
@@ -1162,15 +1188,15 @@
                             <h3
                                 class="font-mono text-base text-terminal-green mb-2"
                             >
-                                Personal Motivation
+                                Self-Assessments &amp; Reviews
                             </h3>
                             <p
                                 class="text-text-secondary text-sm leading-relaxed"
                             >
-                                That 14-day streak. The month you shipped 40k
-                                lines. The heatmap that shows you showed up
-                                every day. Sometimes you just need to see what
-                                you're capable of.
+                                Annual review season? Pull up your Worktale
+                                digest. Exact dates, real stats, zero
+                                guesswork. Walk in with receipts instead of
+                                vague recollections.
                             </p>
                         </div>
                         <div
@@ -1462,7 +1488,7 @@
                             <p
                                 class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-3"
                             >
-                                Coming Soon
+                                What's Next
                             </p>
                             <h2 class="text-3xl md:text-4xl font-bold mb-4">
                                 Worktale Cloud
@@ -1597,12 +1623,12 @@
                                     >
                                         <span
                                             x-show="status === 'idle' || status === 'error'"
-                                            >Notify Me</span
+                                            >Get Early Access</span
                                         >
-                                        <span x-show="status === 'loading'"
+                                        <span x-cloak x-show="status === 'loading'"
                                             >Sending...</span
                                         >
-                                        <span x-show="status === 'success'"
+                                        <span x-cloak x-show="status === 'success'"
                                             >✓ Done</span
                                         >
                                     </button>
@@ -1614,6 +1640,209 @@
                                     :class="status === 'success' ? 'text-terminal-green' : 'text-red-400'"
                                     x-transition
                                 ></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- FAQ -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section
+                id="faq"
+                class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20"
+            >
+                <div class="mx-auto max-w-3xl px-6">
+                    <div class="text-center mb-16">
+                        <p
+                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
+                        >
+                            FAQ
+                        </p>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            Common questions.
+                        </h2>
+                    </div>
+                    <div
+                        class="space-y-4"
+                        x-data="{ open: null }"
+                    >
+                        <!-- Q1 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 1 ? null : 1"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Does it work with monorepos?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 1 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 1"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Yes. Run
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >worktale init</code
+                                    >
+                                    at the repo root and Worktale tracks all
+                                    commits across the entire monorepo. Each
+                                    commit is attributed to the files it touched,
+                                    so your digest reflects cross-package work
+                                    accurately.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q2 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 2 ? null : 2"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >What about GitLab, Bitbucket, or
+                                    self-hosted Git?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 2 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 2"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Worktale reads from your local git
+                                    history&mdash;it never talks to a remote.
+                                    GitHub, GitLab, Bitbucket, Gitea, bare
+                                    repos&mdash;if
+                                    <code class="text-text-muted">git log</code>
+                                    works, Worktale works.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q3 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 3 ? null : 3"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Will it work on a repo with 10 years of
+                                    history?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 3 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 3"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Absolutely. Worktale streams through git log
+                                    output efficiently. Repos with 50k+ commits
+                                    typically initialize in under 10 seconds.
+                                    The older the repo, the better your
+                                    story.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q4 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 4 ? null : 4"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Does Worktale read my source code?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 4 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 4"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Never. Worktale only reads git
+                                    metadata&mdash;commit hashes, timestamps,
+                                    messages, and diff stats (lines
+                                    added/removed). It never opens, reads, or
+                                    stores any file contents.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q5 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 5 ? null : 5"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Is it really free?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 5 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 5"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    The CLI is free and open source, forever.
+                                    Worktale Cloud (shareable profiles, AI
+                                    digests, cross-repo timelines) will be a
+                                    paid product when it launches.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1764,8 +1993,8 @@
                     <p
                         class="text-text-secondary text-lg mb-8 max-w-lg mx-auto"
                     >
-                        One command. Your entire dev history, surfaced and
-                        beautiful. Start building the record you deserve.
+                        Features can be copied. Stories can't.<br />
+                        Start building the record you deserve.
                     </p>
                     <div
                         class="flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -1808,7 +2037,7 @@
                         </div>
                     </div>
                     <p class="text-text-muted text-xs font-mono mt-6">
-                        Requires Node.js 18+ &middot; Free forever &middot; Open
+                        v1.0.5 &middot; March 2026 &middot; Requires Node.js 18+ &middot; Free forever &middot; Open
                         source
                     </p>
                 </div>

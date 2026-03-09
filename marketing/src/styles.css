@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+[x-cloak] { display: none !important; }
+
 @theme {
   --color-terminal-green: #00FF41;
   --color-terminal-dim: #00CC33;

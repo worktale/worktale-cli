@@ -15,14 +15,19 @@ import type { DailySummary } from '../../db/daily-summaries.js';
 
 interface DailyLogProps {
   repoId: number;
+  onEditingChange?: (editing: boolean) => void;
 }
 
-export default function DailyLog({ repoId }: DailyLogProps) {
+export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
   const [currentDate, setCurrentDate] = useState(() => new Date());
   const [commits, setCommits] = useState<Commit[]>([]);
   const [summary, setSummary] = useState<DailySummary | undefined>(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [notesDraft, setNotesDraft] = useState('');
+
+  useEffect(() => {
+    onEditingChange?.(isEditing);
+  }, [isEditing, onEditingChange]);
 
   const dateStr = getDateString(currentDate);
 

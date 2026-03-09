@@ -4,7 +4,11 @@
       "Bash(git filter-branch:*)",
       "Bash(git:*)",
       "Bash(echo EXIT: $?:*)",
-      "Bash(do echo:*)"
+      "Bash(do echo:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(bun install:*)",
+      "Bash(bun run:*)"
     ]
   }
 }
