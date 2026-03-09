@@ -8,6 +8,7 @@ dist/
 .env.*
 *.tsbuildinfo
 coverage/
+ignore/ 
 
 # Internal docs (not for public repo)
 DEVGUIDE.md

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git filter-branch:*)",
+      "Bash(git:*)",
+      "Bash(echo EXIT: $?:*)",
+      "Bash(do echo:*)"
+    ]
+  }
+}
