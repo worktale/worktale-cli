@@ -17,6 +17,7 @@ interface WorkerInput {
   repoPath: string;
   repoId: number;
   userEmail: string;
+  since?: string;
 }
 
 interface GitCommitData {
@@ -245,7 +246,7 @@ function openDb(): InstanceType<typeof import('better-sqlite3')> {
 // ---------------------------------------------------------------------------
 
 async function run(input: WorkerInput): Promise<void> {
-  const { repoPath, repoId, userEmail } = input;
+  const { repoPath, repoId, userEmail, since } = input;
   const port = parentPort!;
 
   // ------------------------------------------------------------------
@@ -254,12 +255,16 @@ async function run(input: WorkerInput): Promise<void> {
   port.postMessage({ type: 'progress', total: 0, processed: 0, phase: 'scanning' });
 
   const git = simpleGit(repoPath);
-  const rawLog = await git.raw([
+  const logArgs = [
     'log',
     '--format=%H%n%s%n%an%n%ae%n%aI%n%P%n%D',
     '--numstat',
     `--author=${userEmail}`,
-  ]);
+  ];
+  if (since) {
+    logArgs.push(`--since=${since}`);
+  }
+  const rawLog = await git.raw(logArgs);
 
   const commits = parseGitLogOutput(rawLog);
   const totalCommits = commits.length;

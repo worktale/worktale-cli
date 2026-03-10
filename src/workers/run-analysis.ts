@@ -24,6 +24,7 @@ export function runAnalysis(
   repoId: number,
   userEmail: string,
   onProgress: (progress: AnalysisProgress) => void,
+  since?: string,
 ): Promise<AnalysisResult> {
   return new Promise((resolve, reject) => {
     // Worker is always at dist/workers/analysis-worker.js relative to the dist root
@@ -53,6 +54,6 @@ export function runAnalysis(
       if (code !== 0) reject(new Error(`Worker exited with code ${code}`));
     });
 
-    worker.postMessage({ repoPath, repoId, userEmail });
+    worker.postMessage({ repoPath, repoId, userEmail, since });
   });
 }

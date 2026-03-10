@@ -28,6 +28,10 @@
         <link rel="stylesheet" href="/src/styles.css" />
         <script
             defer
+            src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script
+            defer
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
         ></script>
     </head>
@@ -162,7 +166,7 @@
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                             <span>Star on GitHub</span>
                         </a>
-                        <span class="font-mono text-xs text-text-muted">v1.0.7</span>
+                        <span class="font-mono text-xs text-text-muted">v1.0.9</span>
                     </div>
 
                     <!-- Terminal mockup -->
@@ -219,431 +223,6 @@
                                     >
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- PROBLEM / THESIS -->
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <section class="py-24 md:py-32 border-t border-border-dim">
-                <div class="mx-auto max-w-4xl px-6">
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
-                    >
-                        <div>
-                            <h2
-                                class="text-3xl md:text-4xl font-bold leading-tight mb-6"
-                            >
-                                Most developers<br /><span
-                                    class="text-terminal-green"
-                                    >build in silence.</span
-                                >
-                            </h2>
-                            <div
-                                class="space-y-4 text-text-secondary leading-relaxed"
-                            >
-                                <p>
-                                    Behind firewalls. Inside private repos.
-                                    Under NDAs. Your best work is
-                                    invisible&mdash;even to you.
-                                </p>
-                                <p>
-                                    Six months from now, you won't remember the
-                                    race condition you debugged at 2 AM, the
-                                    architecture you redesigned, or the
-                                    migration that saved the sprint.
-                                </p>
-                                <p class="text-text-primary font-medium">
-                                    With AI restructuring entire teams
-                                    overnight, the developers who can articulate
-                                    what they built&mdash;and why&mdash;are the
-                                    ones who survive.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div
-                                class="p-4 rounded-lg border border-border-dim bg-surface-1/50"
-                            >
-                                <p
-                                    class="font-mono text-sm text-text-muted mb-1"
-                                >
-                                    &gt; performance_review.txt
-                                </p>
-                                <p class="text-text-secondary text-sm italic">
-                                    "What did you ship this quarter?"
-                                </p>
-                                <p class="text-text-muted text-sm mt-2">
-                                    You: "Um... a lot of stuff. Let me check
-                                    Jira..."
-                                </p>
-                            </div>
-                            <div
-                                class="p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5"
-                            >
-                                <p
-                                    class="font-mono text-sm text-terminal-green/60 mb-1"
-                                >
-                                    &gt; worktale_digest.md
-                                </p>
-                                <p
-                                    class="text-terminal-green text-sm font-medium"
-                                >
-                                    "287 days active. 4,847 commits. Redesigned
-                                    the payment pipeline, eliminated 3 critical
-                                    race conditions, shipped v2.0."
-                                </p>
-                                <p class="text-terminal-dim text-sm mt-2">
-                                    Worktale had your back.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- HOW IT WORKS -->
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <section
-                id="how-it-works"
-                class="py-24 md:py-32 border-t border-border-dim"
-            >
-                <div class="mx-auto max-w-5xl px-6">
-                    <div class="text-center mb-16">
-                        <p
-                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
-                        >
-                            How it works
-                        </p>
-                        <h2 class="text-3xl md:text-4xl font-bold">
-                            Three commands. That's it.
-                        </h2>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <!-- Step 1 -->
-                        <div
-                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
-                        >
-                            <div
-                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
-                            >
-                                01
-                            </div>
-                            <h3
-                                class="font-mono text-lg text-text-primary mb-2"
-                            >
-                                worktale init
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Run once per repo. Worktale scans your entire
-                                git history and builds your story in seconds.
-                                Installs a silent post-commit hook.
-                            </p>
-                            <div
-                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
-                            >
-                                <p>
-                                    <span class="text-terminal-green/60"
-                                        >$</span
-                                    >
-                                    cd my-project
-                                </p>
-                                <p>
-                                    <span class="text-terminal-green/60"
-                                        >$</span
-                                    >
-                                    worktale init
-                                </p>
-                                <p class="text-terminal-green mt-1">
-                                    ✓ 847 commits analyzed in 2.1s
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Step 2 -->
-                        <div
-                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
-                        >
-                            <div
-                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
-                            >
-                                02
-                            </div>
-                            <h3
-                                class="font-mono text-lg text-text-primary mb-2"
-                            >
-                                Just code.
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Every commit is captured automatically. Zero
-                                friction. No extra commands. Your dashboard
-                                updates in real-time with streaks, stats, and
-                                activity heatmaps.
-                            </p>
-                            <div
-                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
-                            >
-                                <p>
-                                    <span class="text-terminal-green/60"
-                                        >$</span
-                                    >
-                                    git commit -m "fix: auth token"
-                                </p>
-                                <p class="text-neon-amber mt-1">
-                                    ⚡ worktale: captured (+42 / -12)
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Step 3 -->
-                        <div
-                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
-                        >
-                            <div
-                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
-                            >
-                                03
-                            </div>
-                            <h3
-                                class="font-mono text-lg text-text-primary mb-2"
-                            >
-                                worktale digest
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                End of day, Worktale compiles your work into a
-                                clean summary. Add your own notes. Build a log
-                                you'll actually want to read.
-                            </p>
-                            <div
-                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
-                            >
-                                <p>
-                                    <span class="text-terminal-green/60"
-                                        >$</span
-                                    >
-                                    worktale digest
-                                </p>
-                                <p class="text-terminal-green mt-1">
-                                    ✓ Today's log saved locally.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- FEATURES -->
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <section
-                id="features"
-                class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20"
-            >
-                <div class="mx-auto max-w-6xl px-6">
-                    <div class="text-center mb-16">
-                        <p
-                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
-                        >
-                            Features
-                        </p>
-                        <h2 class="text-3xl md:text-4xl font-bold">
-                            Everything a developer journal should be.
-                        </h2>
-                        <p class="text-text-secondary mt-3 max-w-xl mx-auto">
-                            A beautiful CLI that surfaces the story hidden in
-                            your git data.
-                        </p>
-                    </div>
-
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    >
-                        <!-- Feature 1 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">🔍</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Historical Analysis
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Run
-                                <code
-                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
-                                    >worktale init</code
-                                >
-                                and instantly discover years of hidden work.
-                                Your longest streak, most productive month,
-                                total lines shipped&mdash;all surfaced in
-                                seconds.
-                            </p>
-                        </div>
-                        <!-- Feature 2 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">📊</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Interactive TUI Dashboard
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                A rich terminal UI with three views: Overview
-                                (today's stats + streak), Daily Log (browse by
-                                day, add notes), and History (year-long heatmap
-                                + milestones).
-                            </p>
-                        </div>
-                        <!-- Feature 3 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">🔥</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Streaks &amp; Heatmaps
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                See your consistency visualized. A GitHub-style
-                                contribution heatmap right in your terminal.
-                                Track current streaks, best streaks, and daily
-                                output patterns.
-                            </p>
-                        </div>
-                        <!-- Feature 4 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">📝</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Daily Digest
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Generate an end-of-day summary from your
-                                commits. Add personal notes about decisions,
-                                challenges, and wins. Build a work log you'll
-                                actually want to reference.
-                            </p>
-                        </div>
-                        <!-- Feature 5 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">🤖</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Local AI (Ollama)
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Point Worktale at your local Ollama instance and
-                                get AI-enhanced digests&mdash;entirely offline.
-                                Llama, Mistral, CodeLlama. Your data never
-                                leaves the machine.
-                            </p>
-                        </div>
-                        <!-- Feature 6 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">⚡</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Zero-Friction Capture
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                A silent
-                                <code
-                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
-                                    >post-commit</code
-                                >
-                                hook captures every commit automatically. No
-                                extra commands. No workflow changes. Just code.
-                            </p>
-                        </div>
-                        <!-- Feature 7 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">📁</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Multi-Repo Support
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Track every repo you work on. Run
-                                <code
-                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
-                                    >worktale repos</code
-                                >
-                                to see all your projects and their stats across
-                                your entire machine.
-                            </p>
-                        </div>
-                        <!-- Feature 8 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">🔔</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                End-of-Day Nudge
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                A gentle terminal reminder at 5 PM: "You shipped
-                                1,204 lines today. Want to log it?" Never forget
-                                to capture a productive day.
-                            </p>
-                        </div>
-                        <!-- Feature 9 -->
-                        <div
-                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
-                        >
-                            <div class="text-2xl mb-3">🖥️</div>
-                            <h3
-                                class="font-mono text-base text-text-primary mb-2"
-                            >
-                                Cross-Platform
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Works on macOS, Linux, and Windows. Git Bash,
-                                PowerShell, WSL2&mdash;Worktale adapts. Dual
-                                hook strategy for seamless Windows support.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -1109,6 +688,432 @@
                                     18%
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- PROBLEM / THESIS -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-24 md:py-32 border-t border-border-dim">
+                <div class="mx-auto max-w-4xl px-6">
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
+                    >
+                        <div>
+                            <h2
+                                class="text-3xl md:text-4xl font-bold leading-tight mb-6"
+                            >
+                                Most developers<br /><span
+                                    class="text-terminal-green"
+                                    >build in silence.</span
+                                >
+                            </h2>
+                            <div
+                                class="space-y-4 text-text-secondary leading-relaxed"
+                            >
+                                <p>
+                                    Behind firewalls. Inside private repos.
+                                    Under NDAs. Your best work is
+                                    invisible&mdash;even to you.
+                                </p>
+                                <p>
+                                    Six months from now, you won't remember the
+                                    race condition you debugged at 2 AM, the
+                                    architecture you redesigned, or the
+                                    migration that saved the sprint.
+                                </p>
+                                <p class="text-text-primary font-medium">
+                                    With AI restructuring entire teams
+                                    overnight, the developers who can articulate
+                                    what they built&mdash;and why&mdash;are the
+                                    ones who survive.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div
+                                class="p-4 rounded-lg border border-border-dim bg-surface-1/50"
+                            >
+                                <p
+                                    class="font-mono text-sm text-text-muted mb-1"
+                                >
+                                    &gt; performance_review.txt
+                                </p>
+                                <p class="text-text-secondary text-sm italic">
+                                    "What did you ship this quarter?"
+                                </p>
+                                <p class="text-text-muted text-sm mt-2">
+                                    You: "Um... a lot of stuff. Let me check
+                                    Jira..."
+                                </p>
+                            </div>
+                            <div
+                                class="p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5"
+                            >
+                                <p
+                                    class="font-mono text-sm text-terminal-green/60 mb-1"
+                                >
+                                    &gt; worktale_digest.md
+                                </p>
+                                <p
+                                    class="text-terminal-green text-sm font-medium"
+                                >
+                                    "287 days active. 4,847 commits. Redesigned
+                                    the payment pipeline, eliminated 3 critical
+                                    race conditions, shipped v2.0."
+                                </p>
+                                <p class="text-terminal-dim text-sm mt-2">
+                                    Worktale had your back.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- HOW IT WORKS -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section
+                id="how-it-works"
+                class="py-24 md:py-32 border-t border-border-dim"
+            >
+                <div class="mx-auto max-w-5xl px-6">
+                    <div class="text-center mb-16">
+                        <p
+                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
+                        >
+                            How it works
+                        </p>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            Three commands. That's it.
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Step 1 -->
+                        <div
+                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
+                            >
+                                01
+                            </div>
+                            <h3
+                                class="font-mono text-lg text-text-primary mb-2"
+                            >
+                                worktale init
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Run once per repo. Worktale scans your entire
+                                git history and builds your story in seconds.
+                                Installs a silent post-commit hook.
+                            </p>
+                            <div
+                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
+                            >
+                                <p>
+                                    <span class="text-terminal-green/60"
+                                        >$</span
+                                    >
+                                    cd my-project
+                                </p>
+                                <p>
+                                    <span class="text-terminal-green/60"
+                                        >$</span
+                                    >
+                                    worktale init
+                                </p>
+                                <p class="text-terminal-green mt-1">
+                                    ✓ 847 commits analyzed in 2.1s
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div
+                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
+                            >
+                                02
+                            </div>
+                            <h3
+                                class="font-mono text-lg text-text-primary mb-2"
+                            >
+                                Just code.
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Every commit is captured automatically. Zero
+                                friction. No extra commands. Your dashboard
+                                updates in real-time with streaks, stats, and
+                                activity heatmaps.
+                            </p>
+                            <div
+                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
+                            >
+                                <p>
+                                    <span class="text-terminal-green/60"
+                                        >$</span
+                                    >
+                                    git commit -m "fix: auth token"
+                                </p>
+                                <p class="text-neon-amber mt-1">
+                                    ⚡ worktale: captured (+42 / -12)
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div
+                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
+                            >
+                                03
+                            </div>
+                            <h3
+                                class="font-mono text-lg text-text-primary mb-2"
+                            >
+                                worktale digest
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                End of day, Worktale compiles your work into a
+                                clean summary. Add your own notes. Build a log
+                                you'll actually want to read.
+                            </p>
+                            <div
+                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
+                            >
+                                <p>
+                                    <span class="text-terminal-green/60"
+                                        >$</span
+                                    >
+                                    worktale digest
+                                </p>
+                                <p class="text-terminal-green mt-1">
+                                    ✓ Today's log saved locally.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- FEATURES -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section
+                id="features"
+                class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20"
+            >
+                <div class="mx-auto max-w-6xl px-6">
+                    <div class="text-center mb-16">
+                        <p
+                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
+                        >
+                            Features
+                        </p>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            Everything a developer journal should be.
+                        </h2>
+                        <p class="text-text-secondary mt-3 max-w-xl mx-auto">
+                            A beautiful CLI that surfaces the story hidden in
+                            your git data.
+                        </p>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        <!-- Feature 1 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">🔍</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Historical Analysis
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Run
+                                <code
+                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                    >worktale init</code
+                                >
+                                and instantly discover years of hidden work.
+                                Your longest streak, most productive month,
+                                total lines shipped&mdash;all surfaced in
+                                seconds.
+                            </p>
+                        </div>
+                        <!-- Feature 2 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">📊</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Interactive TUI Dashboard
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                A rich terminal UI with three views: Overview
+                                (today's stats + streak), Daily Log (browse by
+                                day, add notes), and History (year-long heatmap
+                                + milestones).
+                            </p>
+                        </div>
+                        <!-- Feature 3 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">🔥</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Streaks &amp; Heatmaps
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                See your consistency visualized. A GitHub-style
+                                contribution heatmap right in your terminal.
+                                Track current streaks, best streaks, and daily
+                                output patterns.
+                            </p>
+                        </div>
+                        <!-- Feature 4 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">📝</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Daily Digest
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Generate an end-of-day summary from your
+                                commits. Add personal notes about decisions,
+                                challenges, and wins. Build a work log you'll
+                                actually want to reference.
+                            </p>
+                        </div>
+                        <!-- Feature 5 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">🤖</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Local AI (Ollama)
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Point Worktale at your local Ollama instance and
+                                get AI-enhanced digests&mdash;entirely offline.
+                                Llama, Mistral, CodeLlama. Your data never
+                                leaves the machine.
+                            </p>
+                        </div>
+                        <!-- Feature 6 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">⚡</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Zero-Friction Capture
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                A silent
+                                <code
+                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                    >post-commit</code
+                                >
+                                hook captures every commit automatically. No
+                                extra commands. No workflow changes. Just code.
+                            </p>
+                        </div>
+                        <!-- Feature 7 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">📁</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Multi-Repo Support
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Track every repo you work on. Run
+                                <code
+                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                    >worktale repos</code
+                                >
+                                to see all your projects and their stats across
+                                your entire machine.
+                            </p>
+                        </div>
+                        <!-- Feature 8 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">🔔</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                End-of-Day Nudge
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                A gentle terminal reminder at 5 PM: "You shipped
+                                1,204 lines today. Want to log it?" Never forget
+                                to capture a productive day.
+                            </p>
+                        </div>
+                        <!-- Feature 9 -->
+                        <div
+                            class="p-6 rounded-xl border border-border-dim bg-surface-0 hover:border-terminal-green/20 transition-all group"
+                        >
+                            <div class="text-2xl mb-3">🖥️</div>
+                            <h3
+                                class="font-mono text-base text-text-primary mb-2"
+                            >
+                                Cross-Platform
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                Works on macOS, Linux, and Windows. Git Bash,
+                                PowerShell, WSL2&mdash;Worktale adapts. Dual
+                                hook strategy for seamless Windows support.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -2037,7 +2042,7 @@
                         </div>
                     </div>
                     <p class="text-text-muted text-xs font-mono mt-6">
-                        v1.0.7 &middot; March 2026 &middot; Requires Node.js 18+ &middot; Free forever &middot; Open
+                        v1.0.9 &middot; March 2026 &middot; Requires Node.js 18+ &middot; Free forever &middot; Open
                         source
                     </p>
                 </div>

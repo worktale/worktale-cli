@@ -14,6 +14,8 @@ import { digestCommand } from './commands/digest.js';
 import { publishCommand } from './commands/publish.js';
 import { captureCommand } from './commands/capture.js';
 import { dashCommand } from './commands/dash.js';
+import { batchCommand } from './commands/batch.js';
+import { hookCommand } from './commands/hook.js';
 import { installNudge, removeNudge, checkNudge, isNudgeInstalled } from './nudge/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -90,6 +92,22 @@ program
   .description('View or modify configuration')
   .action(async (action?: string, key?: string, value?: string) => {
     await configCommand(action, key, value);
+  });
+
+program
+  .command('batch')
+  .description('Scan for git repos and import history (no hooks)')
+  .option('-d, --depth <n>', 'Max directory depth to search', '5')
+  .option('-s, --since <period>', 'Only import commits from this period (e.g. 30d, 6w, 3m, 1y)')
+  .action(async (options: { depth?: string; since?: string }) => {
+    await batchCommand(options);
+  });
+
+program
+  .command('hook [action] [path]')
+  .description('Manage git hooks (install, uninstall, status)')
+  .action(async (action?: string, path?: string) => {
+    await hookCommand(action, path);
   });
 
 program

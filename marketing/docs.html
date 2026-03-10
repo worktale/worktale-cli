@@ -27,7 +27,7 @@
     <div class="mx-auto max-w-4xl px-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
-        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.0.0</span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.0.9</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
       <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
@@ -106,7 +106,7 @@
         <h2 class="text-2xl md:text-3xl font-bold">CLI Reference</h2>
       </div>
 
-      <p class="text-text-secondary text-sm mb-8">All 11 commands with exact flags, arguments, and output descriptions. Every command shown here is fully implemented.</p>
+      <p class="text-text-secondary text-sm mb-8">All 13 commands with exact flags, arguments, and output descriptions. Every command shown here is fully implemented.</p>
 
       <div class="space-y-8">
 
@@ -456,6 +456,130 @@
           </div>
         </div>
 
+        <!-- worktale batch -->
+        <div id="cmd-batch" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale batch</code>
+            <span class="font-mono text-xs text-text-muted">Bulk import</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Recursively scan for git repositories starting from the current directory, import their commit history into the Worktale database, and display an aggregate summary. <strong class="text-text-primary">No hooks are installed</strong> &mdash; repos are tracked read-only. Perfect for getting an at-a-glance view of all your work without committing to per-repo setup.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-d, --depth &lt;n&gt;</code>
+                  <p class="text-text-secondary text-sm">Maximum directory depth to search. Default: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">5</code>.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-s, --since &lt;period&gt;</code>
+                  <p class="text-text-secondary text-sm">Only import commits from this period. Accepts shorthand: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">30d</code> (days), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">6w</code> (weeks), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">3m</code> (months), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">1y</code> (years), or any git date string. <strong class="text-text-primary">Recommended for faster scans</strong> &mdash; without this flag, all-time history is imported which can be slow for large repos.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">WHAT IT DOES</p>
+              <ol class="text-text-secondary text-sm space-y-1.5 list-decimal list-inside">
+                <li>Walks the filesystem from the current directory with a live directory counter, looking for folders containing <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">.git</code></li>
+                <li>Skips common non-repo directories for speed: <code class="text-text-muted">node_modules</code>, <code class="text-text-muted">bin</code>, <code class="text-text-muted">obj</code>, <code class="text-text-muted">dist</code>, <code class="text-text-muted">build</code>, <code class="text-text-muted">target</code>, <code class="text-text-muted">vendor</code>, <code class="text-text-muted">__pycache__</code>, <code class="text-text-muted">venv</code>, <code class="text-text-muted">packages</code>, hidden directories, and more</li>
+                <li>Does not recurse into found repos (treats each as a leaf)</li>
+                <li>Registers each repo in the database and runs historical analysis via a worker thread, filtered by <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--since</code> if provided</li>
+                <li>Shows per-repo progress bars and a final aggregate summary (total repos, commits, lines added/removed)</li>
+                <li>Gracefully handles errors per-repo &mdash; failures don't stop the remaining repos</li>
+              </ol>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLES</p>
+              <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs leading-relaxed space-y-1">
+                <p><span class="text-terminal-green/60">$</span> cd ~/projects</p>
+                <p><span class="text-terminal-green/60">$</span> worktale batch --since 3m</p>
+                <p class="text-text-muted"># Fast scan &mdash; only last 3 months of commits across all repos</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch</p>
+                <p class="text-text-muted"># Full history (slower for large repos)</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch --depth 2 --since 6w</p>
+                <p class="text-text-muted"># Shallow search, last 6 weeks only</p>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p class="text-text-muted">  Since:  3 months ago</p>
+                <p class="mt-1 text-terminal-green">  Found 3 repos <span class="text-text-muted">(scanned 1,204 directories)</span>:</p>
+                <p class="mt-1">    <span class="text-text-muted">&bull;</span>  <span class="text-text-secondary">my-api</span>  <span class="text-text-muted">~/projects/my-api</span></p>
+                <p>    <span class="text-text-muted">&bull;</span>  <span class="text-text-secondary">frontend</span>  <span class="text-text-muted">~/projects/frontend</span></p>
+                <p>    <span class="text-text-muted">&bull;</span>  <span class="text-text-secondary">infra</span>  <span class="text-text-muted">~/projects/infra</span></p>
+                <p class="mt-2">  <span class="text-text-muted">[1/3]</span>  <span class="text-text-primary font-bold">my-api</span>  <span class="text-terminal-green">&#10003;</span>  142 commits  <span class="text-terminal-green">+18,401</span> / <span class="text-red-400">-6,203</span></p>
+                <p>  <span class="text-text-muted">[2/3]</span>  <span class="text-text-primary font-bold">frontend</span>  <span class="text-terminal-green">&#10003;</span>  204 commits  <span class="text-terminal-green">+32,892</span> / <span class="text-red-400">-12,441</span></p>
+                <p>  <span class="text-text-muted">[3/3]</span>  <span class="text-text-primary font-bold">infra</span>  <span class="text-terminal-green">&#10003;</span>  56 commits  <span class="text-terminal-green">+2,402</span> / <span class="text-red-400">-800</span></p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">Batch Summary</span></p>
+                <p>  <span class="text-text-muted">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span></p>
+                <p>  Repos:         <span class="text-text-primary font-bold">3</span></p>
+                <p>  Commits:       <span class="text-text-primary font-bold">402</span></p>
+                <p>  Lines added:   <span class="text-terminal-green">+53,695</span></p>
+                <p>  Lines removed: <span class="text-red-400">-19,444</span></p>
+                <p class="mt-2">  <span class="text-neon-amber">&#9889;</span>  <span class="text-text-primary font-bold">Batch scan complete!</span></p>
+                <p class="mt-1 text-text-muted">  No hooks were installed. Repos are tracked read-only.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale hook -->
+        <div id="cmd-hook" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale hook [action] [path]</code>
+            <span class="font-mono text-xs text-text-muted">Manage hooks</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Manually install, remove, or check the status of Worktale git hooks in any repository. Useful for repos imported via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale batch</code> (which skips hooks), or for managing hooks independently of <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init</code>.</p>
+            <div class="flex items-start gap-2 px-4 py-2.5 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+              <span class="text-terminal-green text-sm mt-0.5">&#9432;</span>
+              <p class="text-text-secondary text-sm">If the repo isn't tracked yet, <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">hook install</code> will automatically register it in the database so commits are captured immediately. You'll see a message confirming the registration.</p>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">ACTIONS</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">install [path]</code>
+                  <p class="text-text-secondary text-sm">Install <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> and <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-push</code> hooks. Uses the current directory if no path is given. Idempotent &mdash; will not duplicate if already installed. Automatically registers untracked repos in the database.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">uninstall [path]</code>
+                  <p class="text-text-secondary text-sm">Remove all Worktale hook sections. Preserves any non-Worktale content in shared hook files. Also removes the PowerShell <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit.ps1</code>.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">status [path]</code>
+                  <p class="text-text-secondary text-sm">Check whether <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> and <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-push</code> hooks are installed.</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLES</p>
+              <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs leading-relaxed space-y-1">
+                <p><span class="text-terminal-green/60">$</span> worktale hook install</p>
+                <p class="text-text-muted"># Install hooks in the current repo</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale hook install /path/to/repo</p>
+                <p class="text-text-muted"># Install hooks in a specific repo</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale hook uninstall</p>
+                <p class="text-text-muted"># Remove hooks from the current repo</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale hook status</p>
+                <p class="text-text-muted"># Check hook installation status</p>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE OUTPUT (install on untracked repo)</p>
+              <div class="rounded-lg border border-border-dim bg-surface-0 p-4 font-mono text-xs leading-relaxed">
+                <p>  <span class="text-neon-amber">Repo not tracked.</span>  Registering <span class="text-text-primary font-bold">my-project</span>  <span class="text-text-muted">(id: 4)</span></p>
+                <p class="text-text-muted">  Run <span class="text-terminal-green">worktale init</span> or <span class="text-terminal-green">worktale batch</span> to import commit history.</p>
+                <p class="mt-2">  <span class="text-terminal-green">&#10003;</span>  Hooks installed in <span class="text-text-primary font-bold">my-project</span></p>
+                <p class="mt-1 text-text-muted">  Installed:</p>
+                <p>    <span class="text-text-muted">&bull;</span>  post-commit  <span class="text-text-muted">(auto-captures commits)</span></p>
+                <p>    <span class="text-text-muted">&bull;</span>  post-push    <span class="text-text-muted">(digest reminder)</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -761,7 +885,7 @@
         <h2 class="text-2xl md:text-3xl font-bold">Git Hooks</h2>
       </div>
 
-      <p class="text-text-secondary text-sm mb-6">Worktale uses git hooks for automatic commit capture. Hooks are installed by <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> and can be removed cleanly.</p>
+      <p class="text-text-secondary text-sm mb-6">Worktale uses git hooks for automatic commit capture. Hooks are installed by <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> or <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale hook install</code>, and can be removed cleanly with <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale hook uninstall</code>.</p>
 
       <div class="space-y-6">
         <div>
@@ -793,7 +917,7 @@ if ($worktale) {
 
         <div>
           <h3 class="font-mono text-sm text-terminal-green mb-3">Existing Hooks</h3>
-          <p class="text-text-secondary text-sm">If you already have a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> hook, Worktale appends its section between marker comments (<code class="text-text-muted"># --- Worktale hook start ---</code> / <code class="text-text-muted"># --- Worktale hook end ---</code>) without overwriting your existing hook. Removal via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init</code> cleanly removes only the Worktale section.</p>
+          <p class="text-text-secondary text-sm">If you already have a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">post-commit</code> hook, Worktale appends its section between marker comments (<code class="text-text-muted"># --- Worktale hook start ---</code> / <code class="text-text-muted"># --- Worktale hook end ---</code>) without overwriting your existing hook. Removal via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale hook uninstall</code> cleanly removes only the Worktale section, preserving your other hooks.</p>
         </div>
 
         <div>
