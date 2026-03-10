@@ -16,6 +16,15 @@ worktale init
 
 That's it. Worktale installs a silent post-commit hook, scans your existing history, and starts tracking. Every commit you make from that point forward is captured automatically.
 
+Or scan all your repos at once — no hooks, no commitment:
+
+```
+cd ~/projects
+worktale batch --since 3m
+```
+
+This recursively finds every git repo under the current directory and imports the last 3 months of commit history. Nothing is modified in your repos.
+
 ---
 
 ## What You Get
@@ -35,6 +44,7 @@ That's it. Worktale installs a silent post-commit hook, scans your existing hist
 | Command | What it does |
 |---------|-------------|
 | `worktale init` | Initialize in current repo — hooks, history scan, config |
+| `worktale batch` | Recursively scan for repos and import history (no hooks) |
 | `worktale dash` | Interactive TUI dashboard |
 | `worktale today` | Today's commits, lines, files, coding time |
 | `worktale status` | One-line summary with streak |
@@ -42,11 +52,38 @@ That's it. Worktale installs a silent post-commit hook, scans your existing hist
 | `worktale digest` | Generate a work summary (template or AI) |
 | `worktale repos` | List all tracked repositories |
 | `worktale config` | View or modify settings |
+| `worktale hook` | Install, uninstall, or check status of git hooks |
 | `worktale capture` | Capture latest commit (used by git hooks) |
 | `worktale nudge` | Manage end-of-day reminders |
 | `worktale publish` | Cloud publishing (coming soon) |
 
 Run `worktale --help` or `worktale <command> --help` for full details.
+
+### Batch mode
+
+Scan all your repos at once without installing hooks. Great for getting an at-a-glance view of everything you've built.
+
+```bash
+worktale batch                    # All history (can be slow for large repos)
+worktale batch --since 3m         # Last 3 months only (fast)
+worktale batch --since 6w         # Last 6 weeks
+worktale batch --depth 2          # Only search 2 levels deep
+```
+
+Accepts shorthand periods: `30d` (days), `6w` (weeks), `3m` (months), `1y` (years).
+
+### Hook management
+
+Manage git hooks independently of `worktale init`. Useful after a batch scan when you decide you want live capture on specific repos.
+
+```bash
+worktale hook install             # Install hooks in current repo
+worktale hook install /path/to    # Install in a specific repo
+worktale hook uninstall           # Remove hooks (preserves other hooks)
+worktale hook status              # Check if hooks are installed
+```
+
+If the repo isn't tracked yet, `hook install` automatically registers it in the database.
 
 ---
 
@@ -66,10 +103,17 @@ Your code stays on your machine. Always.
 
 ## How It Works
 
-1. `worktale init` detects your repo, creates a `.worktale/` config directory, installs a post-commit git hook, and scans your entire commit history using a background worker thread
+**Per-repo setup (`worktale init`):**
+1. Detects your repo, creates a `.worktale/` config directory, installs a post-commit git hook, and scans your entire commit history using a background worker thread
 2. Every `git commit` silently triggers `worktale capture` — recording the SHA, message, line counts, file changes, branch, and tags
 3. Data is stored in a SQLite database with WAL mode for performance
 4. Use the CLI or TUI to browse, search, and summarize your activity
+
+**Bulk import (`worktale batch`):**
+1. Recursively walks from the current directory, finding all git repos
+2. Skips build output (`bin`, `obj`, `dist`, `target`, `build`), dependencies (`node_modules`, `vendor`, `packages`), and other non-repo directories for speed
+3. Imports commit history for each repo into the shared database — optionally filtered by `--since`
+4. No hooks installed, no files created in your repos. Read-only scan.
 
 The hook supports both bash and PowerShell for cross-platform compatibility (Windows, macOS, Linux).
 
@@ -105,7 +149,7 @@ git clone https://github.com/worktale/worktale-cli.git
 cd worktale-cli
 npm install
 npm run build    # tsup dual build (CLI + worker)
-npm test         # vitest — 385 tests
+npm test         # vitest — 407 tests
 ```
 
 The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.
