@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale vs WakaTime — Local-First Alternative for Developer Activity Tracking</title>
+  <meta name="description" content="Worktale is a free, local-first alternative to WakaTime. Track developer activity from git commits — no account, no IDE plugins, no data sent to the cloud. Private by default."/>
+  <meta property="og:title" content="Worktale vs WakaTime — Local-First Alternative for Developer Activity Tracking"/>
+  <meta property="og:description" content="Compare Worktale and WakaTime side by side. Commit-based local tracking vs cloud keystroke tracking."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/worktale-vs-wakatime"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale vs WakaTime — Local-First Alternative"/>
+  <meta name="twitter:description" content="Compare Worktale and WakaTime. Commit-based local tracking vs cloud keystroke tracking."/>
+  <link rel="canonical" href="https://worktale.org/worktale-vs-wakatime"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="George Rios"/>
+  <meta name="keywords" content="wakatime alternative local, wakatime alternative privacy, wakatime alternative free, wakatime vs worktale, developer activity tracking, coding time tracker private, local developer journal, git commit tracker"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-4">Comparison</p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">Worktale vs WakaTime</h1>
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        WakaTime tracks keystrokes in your IDE and sends data to the cloud.
+        Worktale reads your local git commits and never phones home.
+        Same goal&mdash;different philosophy.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SIDE-BY-SIDE COMPARISON CARDS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-20 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- WakaTime -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-1/30">
+          <p class="font-mono text-xs text-text-muted tracking-widest uppercase mb-4">WakaTime</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-text-muted mt-0.5 shrink-0">&bull;</span>
+              Cloud-hosted dashboard &mdash; data stored on their servers
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-text-muted mt-0.5 shrink-0">&bull;</span>
+              Account required to use
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-text-muted mt-0.5 shrink-0">&bull;</span>
+              IDE plugin required for each editor
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-text-muted mt-0.5 shrink-0">&bull;</span>
+              Tracks keystrokes, file opens, and editor heartbeats
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-text-muted mt-0.5 shrink-0">&bull;</span>
+              Free tier limited to 2 weeks &mdash; premium starts at $8.25/mo
+            </li>
+          </ul>
+        </div>
+        <!-- Worktale -->
+        <div class="p-6 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-4">Worktale</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&#10003;</span>
+              100% local &mdash; SQLite on your machine, zero network requests
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&#10003;</span>
+              No account, no sign-up, no API keys
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&#10003;</span>
+              No IDE plugins &mdash; works with any editor, any workflow
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&#10003;</span>
+              Tracks git commits, not keystrokes &mdash; measures output, not activity
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&#10003;</span>
+              Free forever, open source, MIT licensed
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FEATURE COMPARISON TABLE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold">Feature-by-Feature</h2>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-border-dim">
+        <table class="w-full text-sm text-left border-collapse">
+          <thead>
+            <tr class="bg-surface-2 border-b border-border-dim">
+              <th class="px-5 py-3 font-mono text-xs text-text-muted font-medium tracking-wider">Feature</th>
+              <th class="px-5 py-3 font-mono text-xs text-terminal-green font-medium tracking-wider text-center">Worktale</th>
+              <th class="px-5 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center">WakaTime</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border-dim bg-surface-0">
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">100% local / offline</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">No account required</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Free &amp; open source</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Tracks git commits</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-text-muted">Partial</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Tracks coding time</td>
+              <td class="px-5 py-3 text-center text-text-muted">Via commits</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Streaks &amp; heatmaps</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Daily work summaries</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">AI digest generation</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003; Local</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">IDE plugin required</td>
+              <td class="px-5 py-3 text-center text-terminal-green">No</td>
+              <td class="px-5 py-3 text-center text-red-400">Yes</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Works offline</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+            <tr class="hover:bg-surface-1/30">
+              <td class="px-5 py-3 text-text-secondary">Privacy &mdash; no data sent</td>
+              <td class="px-5 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-5 py-3 text-center text-red-400">&#10007;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- WHEN TO USE EACH -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-20 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold">When to Use Each</h2>
+        <p class="text-text-secondary mt-3 max-w-2xl mx-auto">Both tools solve real problems. Here&rsquo;s an honest breakdown.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- WakaTime is better if -->
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-1/30">
+          <p class="font-mono text-xs text-text-muted tracking-widest uppercase mb-4">WakaTime is better if you want&hellip;</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-cyber-cyan mt-0.5 shrink-0">&rarr;</span>
+              Per-language and per-project time breakdowns
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyber-cyan mt-0.5 shrink-0">&rarr;</span>
+              Team leaderboards and manager dashboards
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyber-cyan mt-0.5 shrink-0">&rarr;</span>
+              IDE-level granularity (time per file, per branch)
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyber-cyan mt-0.5 shrink-0">&rarr;</span>
+              Integrations with Slack, GitHub, and project management tools
+            </li>
+          </ul>
+        </div>
+        <!-- Worktale is better if -->
+        <div class="p-6 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-4">Worktale is better if you want&hellip;</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&rarr;</span>
+              Complete privacy &mdash; nothing leaves your machine, ever
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&rarr;</span>
+              Commit-based journaling and AI-generated work digests
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&rarr;</span>
+              No accounts, no API keys, no IDE plugins to manage
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&rarr;</span>
+              Works behind corporate firewalls and air-gapped networks
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-terminal-green mt-0.5 shrink-0">&rarr;</span>
+              A free tool that works with any editor and any git host
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CTA -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Try Worktale in 30 Seconds</h2>
+      <p class="text-text-secondary mb-8 max-w-xl mx-auto">One command. No sign-up. Your git history stays on your machine.</p>
+      <div class="flex flex-col items-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span
+              class="text-text-muted ml-2 text-xs"
+              x-text="copied ? 'copied!' : 'click to copy'"
+              x-bind:class="copied && 'text-terminal-green'"
+            ></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">
+          Free &middot; Open Source &middot; MIT License &middot; Node.js 18+
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale vs ActivityWatch — Git-Based Dev Journal vs General Time Tracker</title>
+  <meta name="description" content="Worktale and ActivityWatch are both local-first and open source. Compare the developer-specific git journal against the general-purpose time tracker."/>
+  <meta property="og:title" content="Worktale vs ActivityWatch — Git-Based Dev Journal vs General Time Tracker"/>
+  <meta property="og:description" content="Both local-first and open source. ActivityWatch tracks all computer usage. Worktale tracks what you actually built."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/worktale-vs-activitywatch"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale vs ActivityWatch"/>
+  <meta name="twitter:description" content="Both local-first and open source. ActivityWatch tracks all computer usage. Worktale tracks what you actually built."/>
+  <meta name="keywords" content="activitywatch alternative developer, developer activity tracker local, activitywatch vs worktale, git commit tracker, local time tracker developer, developer journal cli"/>
+  <link rel="canonical" href="https://worktale.org/worktale-vs-activitywatch"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="font-mono text-sm text-terminal-green mb-4">comparison</p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+        Worktale vs ActivityWatch
+      </h1>
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        Both are local-first and open source. ActivityWatch tracks all computer usage.
+        Worktale tracks what you actually built.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SIDE-BY-SIDE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12">
+    <div class="mx-auto max-w-5xl px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- ActivityWatch -->
+      <div class="rounded-xl border border-border-dim bg-surface-1 p-8">
+        <h2 class="text-xl font-bold mb-1">ActivityWatch</h2>
+        <p class="font-mono text-xs text-text-muted mb-6">General-purpose time tracker</p>
+        <ul class="space-y-3 text-sm text-text-secondary">
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> Tracks all apps, windows &amp; AFK time</li>
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> Local-first &amp; open source</li>
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> General purpose &mdash; not developer-specific</li>
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> Web dashboard UI</li>
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> Requires a background daemon</li>
+          <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#9642;</span> Browser extension for tab tracking</li>
+        </ul>
+      </div>
+
+      <!-- Worktale -->
+      <div class="rounded-xl border border-terminal-green/30 bg-surface-1 p-8">
+        <h2 class="text-xl font-bold mb-1">Worktale</h2>
+        <p class="font-mono text-xs text-terminal-green mb-6">Git-based developer journal</p>
+        <ul class="space-y-3 text-sm text-text-secondary">
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> Tracks git commits across all your repos</li>
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> Local-first &amp; open source</li>
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> Built specifically for developers</li>
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> Terminal TUI dashboard</li>
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> No background daemon required</li>
+          <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#9642;</span> Bulk repo import in one command</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FEATURE COMPARISON TABLE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-2xl font-bold text-center mb-8">Feature Comparison</h2>
+      <div class="rounded-xl border border-border-dim overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-surface-1 border-b border-border-dim">
+              <th class="text-left px-6 py-3 font-mono text-text-muted font-normal">Feature</th>
+              <th class="px-6 py-3 font-mono text-text-muted font-normal text-center">ActivityWatch</th>
+              <th class="px-6 py-3 font-mono text-terminal-green font-normal text-center">Worktale</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border-dim">
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">Local / offline</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-1">
+              <td class="px-6 py-3 text-text-secondary">Open source</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">Developer-specific</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-1">
+              <td class="px-6 py-3 text-text-secondary">Tracks git commits</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">Tracks all apps</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+            </tr>
+            <tr class="bg-surface-1">
+              <td class="px-6 py-3 text-text-secondary">Streaks &amp; heatmaps</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">Daily work summaries</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-1">
+              <td class="px-6 py-3 text-text-secondary">AI digest generation</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">CLI-native</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-1">
+              <td class="px-6 py-3 text-text-secondary">No background daemon</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+            <tr class="bg-surface-0">
+              <td class="px-6 py-3 text-text-secondary">Bulk repo import</td>
+              <td class="px-6 py-3 text-center text-text-muted">&mdash;</td>
+              <td class="px-6 py-3 text-center text-terminal-green">&#10003;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- WHEN TO USE EACH -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="text-2xl font-bold text-center mb-8">When to Use Each</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- ActivityWatch is better if -->
+        <div class="rounded-xl border border-border-dim bg-surface-1 p-8">
+          <h3 class="font-mono text-sm text-text-muted mb-4">ActivityWatch is better if you&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#8594;</span> Want to monitor all computer usage across every app</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#8594;</span> Need to track non-coding time (meetings, research, browsing)</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#8594;</span> Want browser tab and URL tracking</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&#8594;</span> Prefer a web-based dashboard</li>
+          </ul>
+        </div>
+
+        <!-- Worktale is better if -->
+        <div class="rounded-xl border border-terminal-green/30 bg-surface-1 p-8">
+          <h3 class="font-mono text-sm text-terminal-green mb-4">Worktale is better if you&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#8594;</span> Want a focused developer journal built from your commits</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#8594;</span> Don&rsquo;t want a daemon running in the background</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#8594;</span> Prefer a CLI-first, terminal-native workflow</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#8594;</span> Care about git-centric tracking &mdash; not screen time</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#8594;</span> Want streaks, heatmaps, and AI-generated daily digests</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CTA -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Try Worktale in 30 Seconds</h2>
+      <p class="text-text-secondary mb-8">One command. No account. Nothing leaves your machine.</p>
+      <div class="flex flex-col items-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span
+              class="text-text-muted ml-2 text-xs"
+              x-text="copied ? 'copied!' : 'click to copy'"
+              x-bind:class="copied && 'text-terminal-green'"
+            ></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">
+          Free &middot; Open Source &middot; MIT License &middot; Node.js 18+
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

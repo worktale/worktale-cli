@@ -1,0 +1,29 @@
+# Worktale LLM Context
+
+> Your dev story, told beautifully.
+
+Worktale is a local-first CLI developer journal. It turns git commit history into a personal, private record of everything you built.
+
+## Links
+
+- Full LLM context: https://worktale.org/llm.txt
+- Website: https://worktale.org
+- Documentation: https://worktale.org/docs
+- GitHub: https://github.com/worktale/worktale-cli
+- npm: https://www.npmjs.com/package/worktale
+
+## Install
+
+```
+npm install -g worktale
+```
+
+## Key Facts
+
+- Free and open source (MIT license)
+- Local-first: all data stored in local SQLite, no cloud required
+- Private by default: no account, no telemetry, no network requests
+- Reads only git metadata, never source code
+- Works with any git remote: GitHub, GitLab, Bitbucket, self-hosted
+- Cross-platform: Windows, macOS, Linux
+- Requires Node.js >= 18

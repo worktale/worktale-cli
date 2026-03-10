@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale vs RescueTime — Developer-First Activity Tracking Without Surveillance</title>
+  <meta name="description" content="Comparing Worktale and RescueTime for developers. Worktale is a free, local-first coding activity tracker — no cloud, no account, no surveillance. A rescuetime alternative developer teams trust."/>
+  <meta property="og:title" content="Worktale vs RescueTime — Developer-First Activity Tracking Without Surveillance"/>
+  <meta property="og:description" content="RescueTime monitors everything. Worktale only tracks what you ship. See the full comparison."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/worktale-vs-rescuetime"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale vs RescueTime — Developer-First Activity Tracking"/>
+  <meta name="twitter:description" content="RescueTime monitors everything. Worktale only tracks what you ship. Free, local, private."/>
+  <link rel="canonical" href="https://worktale.org/worktale-vs-rescuetime"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="keywords" content="rescuetime alternative developer, coding activity tracker no cloud, rescuetime vs worktale, developer time tracking private, local productivity tracker, git commit tracker free"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2CV3DXVT2Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2CV3DXVT2Z');
+</script>
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-20">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="font-mono text-xs text-terminal-green/70 uppercase tracking-widest mb-4">Comparison</p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+        Worktale vs RescueTime
+      </h1>
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        RescueTime monitors everything you do on your computer.<br class="hidden md:block"/>
+        Worktale only tracks what you ship.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SIDE-BY-SIDE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- RescueTime -->
+        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-8">
+          <h2 class="text-xl font-bold text-text-primary mb-1">RescueTime</h2>
+          <p class="font-mono text-xs text-text-muted mb-6">General productivity tracker</p>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">-</span> Tracks all apps &amp; websites</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">-</span> Cloud-based &mdash; data stored on their servers</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">-</span> Account required</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">-</span> General productivity scoring</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">-</span> Freemium &mdash; $9&ndash;15/mo for full features</li>
+          </ul>
+        </div>
+        <!-- Worktale -->
+        <div class="rounded-xl border border-terminal-green/30 bg-terminal-green/[0.03] p-8">
+          <h2 class="text-xl font-bold text-terminal-green mb-1">Worktale</h2>
+          <p class="font-mono text-xs text-text-muted mb-6">Developer work journal</p>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Tracks git commits only</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> 100% local &mdash; nothing leaves your machine</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> No account required</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Developer-specific metrics &amp; insights</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Free forever &mdash; open source, MIT</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FEATURE COMPARISON TABLE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">Feature-by-Feature</h2>
+      <div class="rounded-xl border border-border-dim overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-surface-1 border-b border-border-dim">
+              <th class="text-left py-3 px-5 font-mono text-xs text-text-muted font-normal">Feature</th>
+              <th class="text-center py-3 px-4 font-mono text-xs text-text-muted font-normal w-28">RescueTime</th>
+              <th class="text-center py-3 px-4 font-mono text-xs text-terminal-green/70 font-normal w-28">Worktale</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border-dim">
+            <tr><td class="py-3 px-5 text-text-secondary">Local / offline</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">No account required</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Free &amp; open source</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Developer-specific</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Tracks git commits</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Tracks all apps/websites</td><td class="text-center text-terminal-green">Yes</td><td class="text-center text-text-muted">No</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Daily work summaries</td><td class="text-center text-terminal-green">Yes</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">AI digest generation</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Privacy &mdash; no data sent</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Streaks &amp; heatmaps</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="py-3 px-5 text-text-secondary">Works behind firewalls</td><td class="text-center text-text-muted">No</td><td class="text-center text-terminal-green">Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- WHEN TO USE EACH -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">When to Use Each</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- RescueTime -->
+        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-8">
+          <h3 class="font-mono text-sm text-text-muted mb-4">RescueTime is better if you&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&bull;</span> Want to track <strong>all</strong> computer usage across every app</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&bull;</span> Need website-blocking or distraction alerts</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&bull;</span> Want a productivity score across non-dev tools</li>
+          </ul>
+        </div>
+        <!-- Worktale -->
+        <div class="rounded-xl border border-terminal-green/30 bg-terminal-green/[0.03] p-8">
+          <h3 class="font-mono text-sm text-terminal-green/70 mb-4">Worktale is better if you&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&bull;</span> You're a developer who wants <strong>commit-based</strong> work logging</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&bull;</span> Privacy matters &mdash; no data leaves your machine, ever</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&bull;</span> You don't want surveillance software on your workstation</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&bull;</span> You want something free, open source, and permanent</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CTA -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Try Worktale in 30 seconds</h2>
+      <p class="text-text-secondary mb-8">One command. No signup. Nothing leaves your machine.</p>
+      <div class="flex flex-col items-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span
+              class="text-text-muted ml-2 text-xs"
+              x-text="copied ? 'copied!' : 'click to copy'"
+              x-bind:class="copied && 'text-terminal-green'"
+            ></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">
+          Free &middot; Open Source &middot; MIT License &middot; Node.js 18+
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

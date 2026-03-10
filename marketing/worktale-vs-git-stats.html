@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale vs git-stats — Full Developer Journal vs Terminal Heatmap</title>
+  <meta name="description" content="Compare Worktale and git-stats. git-stats gives you a CLI commit heatmap. Worktale gives you that plus streaks, daily summaries, AI digests, and a TUI dashboard — all local and open source."/>
+  <meta property="og:title" content="Worktale vs git-stats — Full Developer Journal vs Terminal Heatmap"/>
+  <meta property="og:description" content="git-stats is a terminal heatmap. Worktale is the full developer journal. See the side-by-side comparison."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/worktale-vs-git-stats"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale vs git-stats — Full Developer Journal vs Terminal Heatmap"/>
+  <meta name="twitter:description" content="git-stats is a terminal heatmap. Worktale is the full developer journal. See the side-by-side comparison."/>
+  <link rel="canonical" href="https://worktale.org/worktale-vs-git-stats"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="George Rios"/>
+  <meta name="keywords" content="git-stats alternative, git commit heatmap cli, worktale vs git-stats, terminal heatmap, developer journal, coding streaks tracker, git activity dashboard, local developer tools"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="relative py-16 md:py-24 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,0.08) 2px,rgba(0,255,65,0.08) 4px)"></div>
+    <div class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-terminal-green/[0.03] blur-[120px]"></div>
+
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <p class="font-mono text-xs text-terminal-green/70 tracking-widest uppercase mb-4">Comparison</p>
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-6">
+        Worktale <span class="text-text-muted">vs</span> git-stats
+      </h1>
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        git-stats gives you a GitHub-style heatmap in your terminal.<br class="hidden md:block"/>
+        Worktale gives you that plus a full developer journal.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SIDE-BY-SIDE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- git-stats -->
+        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-8">
+          <h2 class="font-mono text-lg font-semibold text-text-primary mb-1">git-stats</h2>
+          <p class="text-xs font-mono text-text-muted mb-6">Terminal heatmap</p>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> GitHub-style commit heatmap in the terminal</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Local &amp; open source</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> npm install</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&minus;</span> <span class="text-text-muted">No daily work summaries</span></li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&minus;</span> <span class="text-text-muted">No streaks tracking</span></li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&minus;</span> <span class="text-text-muted">No TUI dashboard</span></li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&minus;</span> <span class="text-text-muted">No AI digest generation</span></li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&minus;</span> <span class="text-text-muted">No bulk repo import</span></li>
+          </ul>
+        </div>
+
+        <!-- Worktale -->
+        <div class="rounded-xl border border-terminal-green/30 bg-surface-1/50 p-8">
+          <h2 class="font-mono text-lg font-semibold text-terminal-green mb-1">Worktale</h2>
+          <p class="text-xs font-mono text-text-muted mb-6">Full developer journal</p>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Terminal commit heatmap</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Coding streaks &amp; streak tracking</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Daily work log with editable notes</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> AI-generated digests</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Interactive TUI dashboard</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Batch import across repos</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> Local &amp; open source</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">+</span> npm install</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- FEATURE COMPARISON TABLE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">Feature-by-Feature</h2>
+
+      <div class="overflow-x-auto rounded-xl border border-border-dim">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border-dim bg-surface-1/60">
+              <th class="text-left px-5 py-3 font-mono text-text-muted font-medium">Feature</th>
+              <th class="text-center px-5 py-3 font-mono text-text-muted font-medium">git-stats</th>
+              <th class="text-center px-5 py-3 font-mono text-terminal-green font-medium">Worktale</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border-dim">
+            <tr><td class="px-5 py-3 text-text-secondary">Terminal heatmap</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Coding streaks</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Daily work summaries</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Interactive TUI dashboard</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">AI digest generation</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Bulk repo import (batch mode)</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Commit timeline</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Editable daily notes</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Cross-repo stats</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+            <tr><td class="px-5 py-3 text-text-secondary">Git hook management</td><td class="px-5 py-3 text-center text-text-muted">&mdash;</td><td class="px-5 py-3 text-center text-terminal-green">Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- WHEN TO USE EACH -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">When to Use Each</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-8">
+          <h3 class="font-mono text-base font-semibold text-text-primary mb-4">git-stats is great if&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&rsaquo;</span> You just want a quick heatmap visualization</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&rsaquo;</span> You only need a single-repo overview</li>
+            <li class="flex items-start gap-2"><span class="text-text-muted mt-0.5">&rsaquo;</span> You don't need daily summaries or notes</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border border-terminal-green/30 bg-surface-1/50 p-8">
+          <h3 class="font-mono text-base font-semibold text-terminal-green mb-4">Worktale is better if&hellip;</h3>
+          <ul class="space-y-3 text-sm text-text-secondary">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&rsaquo;</span> You want the full package &mdash; heatmap + journal + streaks</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&rsaquo;</span> You need AI-generated summaries of your work</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&rsaquo;</span> You work across multiple repos</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&rsaquo;</span> You want an interactive TUI dashboard</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&rsaquo;</span> You need a record for standups or performance reviews</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- CTA -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to go beyond the heatmap?</h2>
+      <p class="text-text-secondary mb-8">One command. Everything stays on your machine.</p>
+
+      <div class="flex flex-col items-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span
+              class="text-text-muted ml-2 text-xs"
+              x-text="copied ? 'copied!' : 'click to copy'"
+              x-bind:class="copied && 'text-terminal-green'"
+            ></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">
+          Free &middot; Open Source &middot; MIT License &middot; Node.js 18+
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

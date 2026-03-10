@@ -34,7 +34,7 @@ Requires Node.js >= 18.0.0.
 
 ## CLI Commands
 
-Worktale provides 11 commands:
+Worktale provides 13 commands:
 
 ### worktale init
 Initialize Worktale in the current git repository. Detects the repo, creates local config, installs git hooks (bash and PowerShell for cross-platform support), and performs initial historical analysis of all existing commits using a worker thread.
@@ -66,6 +66,16 @@ List all tracked repositories with their stats: commit count, date range, and pa
 ### worktale config [action] [key] [value]
 View or modify configuration. Actions: `get <key>`, `set <key> <value>`, `path` (show config file location). Supports dot-notation for nested keys (e.g., `ai.provider`). Auto-parses values (booleans, numbers, null).
 
+### worktale batch
+Recursively scan for git repositories starting from the current directory, import their commit history into the Worktale database, and display an aggregate summary. No hooks are installed — repos are tracked read-only. Perfect for getting an at-a-glance view of all your work without committing to per-repo setup.
+
+Options: `-d, --depth <n>` (maximum directory depth to search, default 5), `-s, --since <period>` (only import commits from this period — accepts shorthand like `30d`, `6w`, `3m`, `1y`, or any git date string; recommended for faster scans)
+
+### worktale hook [action] [path]
+Manually install, remove, or check the status of Worktale git hooks in any repository. Useful for repos imported via `worktale batch` (which skips hooks), or for managing hooks independently of `worktale init`. If the repo isn't tracked yet, `hook install` will automatically register it in the database.
+
+Actions: `install` (install hooks), `uninstall` (remove hooks), `status` (check hook installation status). Optionally pass a repo path to target a specific repository instead of the current directory.
+
 ### worktale capture
 Capture the latest commit. This is the command called by the git post-commit hook. It is idempotent — duplicate commits are silently skipped.
 
@@ -73,6 +83,18 @@ Options: `-s, --silent` (suppress output)
 
 ### worktale publish
 Publish your digest to Worktale Cloud. This is a Phase 2 feature that is not yet implemented — the command currently displays an informational message about the upcoming cloud service.
+
+## Worktale Cloud (Coming Soon)
+
+Worktale Cloud (worktale.dev) transforms the local dev journal into a living developer portfolio. Phase 2 features:
+
+1. **Public Profile & Heatmap**: Developer portfolio at worktale.dev/username — GitHub-style heatmap including private repos
+2. **Cross-Repo Unified Timeline**: All repos in one stream, giving the full picture of your engineering journey
+3. **Weekly Auto-Digest**: AI rolls up your week into a polished, publishable post
+4. **Standup & Retro Generator**: "What did I do yesterday?" — answered instantly
+5. **Email Weekly Summary**: Your week's work delivered to your inbox — no login required
+
+The CLI remains free and open source forever. Worktale Cloud will be a paid product.
 
 ### worktale nudge
 End-of-day nudge system that reminds you to write your daily summary. Installs a check into your shell profile (.bashrc, .zshrc, or PowerShell profile) that triggers after a configurable time (default 5:00 PM).
@@ -155,7 +177,7 @@ Worktale is private by default:
 
 ## Key Differentiators
 
-1. **Zero friction**: One command to set up (`worktale init`), then it works silently via git hooks
+1. **Zero friction**: One command to set up (`worktale init`), then it works silently via git hooks. Or use `worktale batch` for read-only bulk import with no hooks at all
 2. **Local-first**: Everything runs on your machine, no cloud dependency
 3. **Private by default**: No account, no telemetry, no data leaves your machine
 4. **Beautiful output**: Terminal dashboard with heatmaps, streak counters, and activity charts

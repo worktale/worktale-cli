@@ -18,6 +18,141 @@
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://worktale.org" />
+        <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png" />
+        <meta property="og:site_name" content="Worktale" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Worktale — Your Dev Story, Told Beautifully" />
+        <meta name="twitter:description" content="A local-first CLI that turns your git history into a personal dev journal. Private by default. No account required." />
+        <meta name="twitter:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png" />
+        <link rel="canonical" href="https://worktale.org/" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="George Rios" />
+        <meta name="keywords" content="developer journal, developer work log, git commit tracker, git activity dashboard, developer portfolio, performance review developer tool, coding activity tracker, wakatime alternative local, git history visualizer, developer time tracking private, git commit summary generator, cli developer tools, local-first, npm, terminal dashboard, track coding work, developer productivity" />
+
+        <!-- JSON-LD: SoftwareApplication -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Worktale",
+            "description": "A local-first CLI journal that turns your git history into a personal record of everything you built. Private by default. No account required.",
+            "url": "https://worktale.org",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Windows, macOS, Linux",
+            "softwareVersion": "1.0.10",
+            "downloadUrl": "https://www.npmjs.com/package/worktale",
+            "installUrl": "https://www.npmjs.com/package/worktale",
+            "softwareRequirements": "Node.js >= 18.0.0",
+            "license": "https://opensource.org/licenses/MIT",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "George Rios",
+                "url": "https://plurral.com"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Plu(rr)al",
+                "url": "https://plurral.com"
+            },
+            "codeRepository": "https://github.com/worktale/worktale-cli"
+        }
+        </script>
+
+        <!-- JSON-LD: FAQPage -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Does Worktale work with monorepos?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Run worktale init at the repo root and Worktale tracks all commits across the entire monorepo. Each commit is attributed to the files it touched, so your digest reflects cross-package work accurately."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does Worktale work with GitLab, Bitbucket, or self-hosted Git?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Worktale reads from your local git history — it never talks to a remote. GitHub, GitLab, Bitbucket, Gitea, bare repos — if git log works, Worktale works."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Will Worktale work on a repo with 10 years of history?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Absolutely. Worktale streams through git log output efficiently. Repos with 50k+ commits typically initialize in under 10 seconds. The older the repo, the better your story."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does Worktale read my source code?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Never. Worktale only reads git metadata — commit hashes, timestamps, messages, and diff stats (lines added/removed). It never opens, reads, or stores any file contents."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is Worktale really free?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The CLI is free and open source, forever. Worktale Cloud (shareable profiles, AI digests, cross-repo timelines) will be a paid product when it launches."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if I don't want hooks installed in my repos?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Use worktale batch instead of init. Batch imports your commit history read-only — no hooks, no file changes, nothing touches your repos. If you later decide you want live tracking, run worktale hook install on specific repos. And worktale hook uninstall removes them cleanly. Full control, zero commitment."
+                    }
+                }
+            ]
+        }
+        </script>
+
+        <!-- JSON-LD: HowTo -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "How to set up Worktale as your developer journal",
+            "description": "Three commands to turn your git history into a personal dev journal with streaks, stats, and daily summaries.",
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "name": "Install Worktale",
+                    "text": "Run npm install -g worktale to install the CLI globally. Requires Node.js 18 or higher."
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Initialize in your repo",
+                    "text": "Run worktale init inside any git repository. Worktale scans your entire git history and installs a silent post-commit hook."
+                },
+                {
+                    "@type": "HowToStep",
+                    "name": "Generate your digest",
+                    "text": "Run worktale digest at end of day to compile your work into a clean summary. Add your own notes and build a log you'll actually want to read."
+                }
+            ],
+            "tool": {
+                "@type": "SoftwareApplication",
+                "name": "Node.js",
+                "softwareVersion": "18+"
+            }
+        }
+        </script>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1053,8 +1188,13 @@
                                     class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
                                     >post-commit</code
                                 >
-                                hook captures every commit automatically. No
-                                extra commands. No workflow changes. Just code.
+                                hook captures every commit automatically. Or
+                                use
+                                <code
+                                    class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                    >batch</code
+                                >
+                                to import read-only&mdash;hooks are optional.
                             </p>
                         </div>
                         <!-- Feature 7 -->
@@ -1899,6 +2039,60 @@
                                 </p>
                             </div>
                         </div>
+                        <!-- Q6 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 6 ? null : 6"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >What if I don't want hooks installed
+                                    in my repos?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 6 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 6"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Use
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >worktale batch</code
+                                    >
+                                    instead of
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >init</code
+                                    >. Batch imports your commit history
+                                    read-only&mdash;no hooks, no file changes,
+                                    nothing touches your repos. If you later
+                                    decide you want live tracking, run
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >worktale hook install</code
+                                    >
+                                    on specific repos. And
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >worktale hook uninstall</code
+                                    >
+                                    removes them cleanly. Full control, zero
+                                    commitment.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -2028,6 +2222,569 @@
                             </p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- COMPARISON -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section
+                id="compare"
+                class="py-24 md:py-32 border-t border-border-dim"
+            >
+                <div class="mx-auto max-w-6xl px-6">
+                    <div class="text-center mb-12">
+                        <p
+                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
+                        >
+                            How Worktale Compares
+                        </p>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            Not another time tracker.
+                        </h2>
+                        <p class="text-text-secondary mt-3 max-w-2xl mx-auto">
+                            Most developer tools track keystrokes, require
+                            accounts, or send data to the cloud. Worktale is
+                            different&mdash;it reads your git history locally
+                            and builds your story from what you actually
+                            shipped.
+                        </p>
+                    </div>
+
+                    <div
+                        class="overflow-x-auto rounded-xl border border-border-dim"
+                    >
+                        <table
+                            class="w-full text-sm text-left border-collapse"
+                        >
+                            <thead>
+                                <tr
+                                    class="bg-surface-2 border-b border-border-dim"
+                                >
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider"
+                                    >
+                                        Feature
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-terminal-green font-medium tracking-wider text-center"
+                                    >
+                                        Worktale
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        WakaTime
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        ActivityWatch
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        git&#8209;stats
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        git&#8209;standup
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        RescueTime
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 font-mono text-xs text-text-muted font-medium tracking-wider text-center"
+                                    >
+                                        GitClear
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                class="divide-y divide-border-dim bg-surface-0"
+                            >
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        100% local / offline
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        No account required
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Free &amp; open source
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-neon-amber"
+                                    >
+                                        freemium
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-neon-amber"
+                                    >
+                                        freemium
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        paid
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Tracks git commits
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Streaks &amp; heatmaps
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Daily work summaries
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-neon-amber"
+                                    >
+                                        basic
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        AI digest generation
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Interactive TUI dashboard
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        web only
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        web only
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        web only
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        web only
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        No IDE plugin required
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Bulk import (batch mode)
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-surface-1/30">
+                                    <td
+                                        class="px-4 py-3 text-text-secondary"
+                                    >
+                                        Works with any git host
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-text-muted"
+                                    >
+                                        n/a
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-terminal-green"
+                                    >
+                                        &#10003;
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-text-muted"
+                                    >
+                                        n/a
+                                    </td>
+                                    <td
+                                        class="px-4 py-3 text-center text-red-400"
+                                    >
+                                        &#10007;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p
+                        class="text-text-muted text-xs text-center mt-6 max-w-2xl mx-auto leading-relaxed"
+                    >
+                        WakaTime and RescueTime track active coding
+                        time via editor plugins or desktop agents.
+                        ActivityWatch monitors all computer usage.
+                        git&#8209;stats provides terminal heatmaps.
+                        git&#8209;standup shows yesterday&rsquo;s commits.
+                        GitClear is an engineering analytics platform
+                        for teams. Worktale is the only tool that
+                        combines local git commit tracking, persistent
+                        journaling, streaks, heatmaps, AI digests, and
+                        bulk repo import in a single privacy-first CLI.
+                    </p>
                 </div>
             </section>
 
