@@ -1461,6 +1461,37 @@
                             <div class="px-5 py-4 flex items-start gap-4">
                                 <code
                                     class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]"
+                                    >worktale batch</code
+                                >
+                                <p class="text-text-secondary text-sm">
+                                    Recursively scan for git repos and bulk-import
+                                    their history. Use
+                                    <code class="text-text-muted"
+                                        >--since 3m</code
+                                    >
+                                    to limit to recent commits,
+                                    <code class="text-text-muted"
+                                        >--depth &lt;n&gt;</code
+                                    >
+                                    to control search depth. No hooks installed.
+                                </p>
+                            </div>
+                            <div class="px-5 py-4 flex items-start gap-4">
+                                <code
+                                    class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]"
+                                    >worktale hook</code
+                                >
+                                <p class="text-text-secondary text-sm">
+                                    Manage git hooks manually. Actions:
+                                    <code class="text-text-muted">install</code>,
+                                    <code class="text-text-muted">uninstall</code>,
+                                    <code class="text-text-muted">status</code>.
+                                    Optionally pass a repo path.
+                                </p>
+                            </div>
+                            <div class="px-5 py-4 flex items-start gap-4">
+                                <code
+                                    class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]"
                                     >worktale config set &lt;k&gt;
                                     &lt;v&gt;</code
                                 >
@@ -1516,44 +1547,12 @@
                                         <p
                                             class="text-text-primary text-sm font-medium"
                                         >
-                                            Public Heatmap
+                                            Public Profile &amp; Heatmap
                                         </p>
                                         <p class="text-text-muted text-xs">
-                                            GitHub-style but for
-                                            everything&mdash;private repos
-                                            included.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="text-cyber-cyan mt-0.5"
-                                        >◆</span
-                                    >
-                                    <div>
-                                        <p
-                                            class="text-text-primary text-sm font-medium"
-                                        >
-                                            AI-Polished Digests
-                                        </p>
-                                        <p class="text-text-muted text-xs">
-                                            Your raw commits, rewritten into
-                                            compelling narratives.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="text-cyber-cyan mt-0.5"
-                                        >◆</span
-                                    >
-                                    <div>
-                                        <p
-                                            class="text-text-primary text-sm font-medium"
-                                        >
-                                            Shareable Profile
-                                        </p>
-                                        <p class="text-text-muted text-xs">
-                                            worktale.org/yourname &mdash; proof
-                                            of what you built.
+                                            worktale.dev/yourname &mdash;
+                                            GitHub-style heatmap including
+                                            private repos.
                                         </p>
                                     </div>
                                 </div>
@@ -1568,8 +1567,58 @@
                                             Cross-Repo Timeline
                                         </p>
                                         <p class="text-text-muted text-xs">
-                                            All your repos, one unified view of
+                                            All your repos in one unified
+                                            stream&mdash;the full picture of
                                             your engineering journey.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-cyber-cyan mt-0.5"
+                                        >◆</span
+                                    >
+                                    <div>
+                                        <p
+                                            class="text-text-primary text-sm font-medium"
+                                        >
+                                            Weekly Auto-Digest
+                                        </p>
+                                        <p class="text-text-muted text-xs">
+                                            AI rolls up your week into a
+                                            polished, publishable post.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-cyber-cyan mt-0.5"
+                                        >◆</span
+                                    >
+                                    <div>
+                                        <p
+                                            class="text-text-primary text-sm font-medium"
+                                        >
+                                            Standup &amp; Retro Generator
+                                        </p>
+                                        <p class="text-text-muted text-xs">
+                                            &ldquo;What did I do
+                                            yesterday?&rdquo;&mdash;answered
+                                            instantly.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 sm:col-span-2 sm:max-w-[50%]">
+                                    <span class="text-cyber-cyan mt-0.5"
+                                        >◆</span
+                                    >
+                                    <div>
+                                        <p
+                                            class="text-text-primary text-sm font-medium"
+                                        >
+                                            Email Weekly Summary
+                                        </p>
+                                        <p class="text-text-muted text-xs">
+                                            Your week&rsquo;s work delivered to
+                                            your inbox&mdash;no login required.
                                         </p>
                                     </div>
                                 </div>
