@@ -43,6 +43,8 @@ export default defineConfig({
         vsRescuetime: resolve(__dirname, 'worktale-vs-rescuetime.html'),
         vsActivitywatch: resolve(__dirname, 'worktale-vs-activitywatch.html'),
         vsGitStats: resolve(__dirname, 'worktale-vs-git-stats.html'),
+        blog: resolve(__dirname, 'blog.html'),
+        blogLaunch: resolve(__dirname, 'blog/worktale-v1-launch.html'),
       },
     },
   },

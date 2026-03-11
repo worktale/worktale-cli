@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Worktale</title>
+  <meta name="description" content="Dev productivity insights, Worktale updates, and guides for tracking your engineering work. From the team behind the local-first developer journal."/>
+  <meta property="og:title" content="Blog — Worktale"/>
+  <meta property="og:description" content="Dev productivity insights, Worktale updates, and guides for tracking your engineering work."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/blog"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Blog — Worktale"/>
+  <meta name="twitter:description" content="Dev productivity insights, Worktale updates, and guides for tracking your engineering work."/>
+  <link rel="canonical" href="https://worktale.org/blog"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="George Rios"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- Page header -->
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3">Blog</p>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">From the terminal.</h1>
+      <p class="text-text-secondary max-w-xl leading-relaxed">Updates, guides, and thoughts on developer productivity, git workflows, and building in public.</p>
+    </div>
+  </section>
+
+  <!-- Post list -->
+  <section class="pb-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="space-y-8">
+
+        <!-- POST TEMPLATE — duplicate this block for each new post -->
+        <!--
+        <article class="group">
+          <a href="/blog/your-post-slug.html" class="block p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="font-mono text-xs text-text-muted">YYYY-MM-DD</span>
+              <span class="text-border-dim">&middot;</span>
+              <span class="font-mono text-xs text-terminal-green">tag</span>
+            </div>
+            <h2 class="text-xl font-bold text-text-primary group-hover:text-terminal-green transition-colors mb-2">Post title here</h2>
+            <p class="text-text-secondary text-sm leading-relaxed">One or two sentence excerpt that hooks the reader into clicking through.</p>
+          </a>
+        </article>
+        -->
+
+        <!-- Post 1 — launch post -->
+        <article class="group">
+          <a href="/blog/worktale-v1-launch.html" class="block p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="font-mono text-xs text-text-muted">2026-03-10</span>
+              <span class="text-border-dim">&middot;</span>
+              <span class="font-mono text-xs text-terminal-green">launch</span>
+            </div>
+            <h2 class="text-xl font-bold text-text-primary group-hover:text-terminal-green transition-colors mb-2">Introducing Worktale: Your Dev Story, Told Beautifully</h2>
+            <p class="text-text-secondary text-sm leading-relaxed">Why we built a local-first CLI journal for developers who ship in silence, and what v1.0.10 includes.</p>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="pb-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="p-8 rounded-xl border border-border-dim bg-surface-1/30 text-center">
+        <p class="font-mono text-sm text-text-primary mb-2">Stay in the loop.</p>
+        <p class="text-text-muted text-sm mb-4">Follow <a href="https://x.com/worktaleapp" class="text-terminal-green hover:underline">@worktaleapp</a> on X for new posts and updates.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>
