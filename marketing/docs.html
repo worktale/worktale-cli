@@ -36,7 +36,7 @@
     <div class="mx-auto max-w-4xl px-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
-        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.0.10</span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.1.0</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
       <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
@@ -54,7 +54,7 @@
         <a href="#data-storage" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">05 Data Storage</a>
         <a href="#git-hooks" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">06 Git Hooks</a>
         <a href="#nudge" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">07 End-of-Day Nudge</a>
-        <a href="#ai-integration" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">08 AI Integration</a>
+        <a href="#ai-integration" class="p-3 rounded-lg border border-border-dim bg-surface-0 hover:border-terminal-green/30 transition-colors font-mono text-xs text-text-secondary hover:text-terminal-green">08 AI Integration (Claude Code + Ollama)</a>
       </nav>
     </div>
   </section>
@@ -383,6 +383,37 @@
                 <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale config get ai.ollamaUrl</p>
                 <p>http://localhost:11434</p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale note -->
+        <div id="cmd-note" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale note</code>
+            <span class="font-mono text-xs text-text-muted">Append narrative</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Append a note to today's work narrative. Designed for AI coding agents (like Claude Code) to narrate session context &mdash; the "why" behind each commit.</p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">USAGE</p>
+              <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
+                <pre class="text-sm text-text-secondary font-mono"><code>worktale note "Refactored auth middleware for compliance"
+worktale note "Fixed race condition — root cause was missing mutex"</code></pre>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">BEHAVIOR</p>
+              <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+                <li>Appends (never overwrites) to the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">user_notes</code> field in today's daily summary</li>
+                <li>Creates the daily summary row if none exists yet</li>
+                <li>Auto-registers the repo if it has a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">.git</code> directory but isn't tracked</li>
+                <li>Notes appear in <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale digest</code> and the TUI dashboard</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">AI AGENT INTEGRATION</p>
+              <p class="text-text-secondary text-sm">Use the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill in Claude Code to automatically narrate every commit during a coding session. The skill instructs the AI to run <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> after each commit with rich context about intent, decisions, and problems solved.</p>
             </div>
           </div>
         </div>
@@ -1001,10 +1032,41 @@ if ($worktale) {
     <div class="mx-auto max-w-4xl px-6">
       <div class="flex items-center gap-3 mb-8">
         <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">08</div>
-        <h2 class="text-2xl md:text-3xl font-bold">AI Integration (Ollama)</h2>
+        <h2 class="text-2xl md:text-3xl font-bold">AI Integration</h2>
       </div>
 
-      <p class="text-text-secondary text-sm mb-6">Worktale optionally integrates with <a href="https://ollama.ai" class="text-terminal-green hover:underline">Ollama</a> for AI-enhanced daily digests. Everything runs locally &mdash; your data never leaves your machine.</p>
+      <p class="text-text-secondary text-sm mb-6">Worktale integrates with AI tools to enhance your daily narrative. Two paths: Claude Code for live session narration, and Ollama for local digest generation.</p>
+
+      <div class="space-y-6 mb-12">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Claude Code Skill &mdash; Session Narration</h3>
+          <p class="text-text-secondary text-sm mb-3">The <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill turns Claude Code into a session narrator. When activated, the AI agent automatically runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> after each commit, capturing the intent, decisions, and context that git diffs can't show.</p>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs space-y-1.5">
+            <p class="text-text-muted"># In Claude Code, activate the skill:</p>
+            <p><span class="text-terminal-green/60">$</span> /worktale</p>
+            <p class="mt-2 text-text-muted"># The agent narrates each commit automatically:</p>
+            <p class="text-text-secondary"># "Refactored auth middleware for compliance &mdash; replaced session token storage"</p>
+            <p class="text-text-secondary"># "Fixed race condition in job queue &mdash; workers were claiming same job"</p>
+          </div>
+          <div class="mt-3 space-y-2">
+            <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">What gets captured:</span> Intent behind changes, key decisions and trade-offs, problems solved and root causes, high-level description of what was built.</p>
+            <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">Where it appears:</span> Notes show up in <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale digest</code>, the TUI dashboard daily log, and the eventual cloud-published portfolio.</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Manual Notes &mdash; Any Script or CI</h3>
+          <p class="text-text-secondary text-sm mb-3">Use <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> directly from any script, CI pipeline, or terminal session:</p>
+          <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs space-y-1.5">
+            <p><span class="text-terminal-green/60">$</span> worktale note "Deployed v2.1.0 to production"</p>
+            <p><span class="text-terminal-green/60">$</span> worktale note "Started migration to new payment provider"</p>
+          </div>
+          <p class="text-text-secondary text-sm mt-2">Notes are appended (never overwritten) to today's narrative. Multiple notes accumulate in order throughout the day.</p>
+        </div>
+      </div>
+
+      <h3 class="font-mono text-lg text-text-primary mb-4">Ollama &mdash; Local Digest Generation</h3>
+      <p class="text-text-secondary text-sm mb-6">Optionally integrate with <a href="https://ollama.ai" class="text-terminal-green hover:underline">Ollama</a> for AI-enhanced daily digests. Everything runs locally &mdash; your data never leaves your machine.</p>
 
       <div class="space-y-6">
         <div>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claude Code Plugin — Worktale</title>
+  <meta name="description" content="Install the Worktale plugin for Claude Code. Your AI coding agent automatically narrates every commit with context, decisions, and intent."/>
+  <meta property="og:title" content="Worktale Plugin for Claude Code"/>
+  <meta property="og:description" content="AI session narration — your coding agent captures the 'why' behind every commit, automatically."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/plugin"/>
+  <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png"/>
+  <link rel="canonical" href="https://worktale.org/plugin.html"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- Hero -->
+  <section class="py-16 md:py-24 relative overflow-hidden">
+    <div class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-cyber-cyan/[0.04] blur-[100px]"></div>
+    <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 mb-6">
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Plugin</span>
+        <span class="font-mono text-xs text-cyber-cyan/80">Claude Code Marketplace</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">
+        Worktale for<br/>
+        <span class="bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan bg-clip-text text-transparent">Claude Code</span>
+      </h1>
+      <p class="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
+        Your AI coding agent automatically narrates every commit &mdash; adding intent, decisions, and context to your daily work journal.
+      </p>
+
+      <!-- Install CTA -->
+      <div class="flex flex-col items-center gap-4" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-cyber-cyan/30 to-terminal-green/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('/plugin install worktale@worktale/worktale-plugin'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-6 py-3.5 rounded-xl bg-surface-1 border border-cyber-cyan/30 font-mono text-base hover:border-cyber-cyan/60 transition-all cursor-pointer"
+          >
+            <span class="text-cyber-cyan/60">&gt;</span>
+            <span class="text-cyber-cyan">/plugin install worktale@worktale/worktale-plugin</span>
+            <span
+              class="text-text-muted ml-2 text-xs"
+              x-text="copied ? 'copied!' : 'click to copy'"
+              x-bind:class="copied && 'text-cyber-cyan'"
+            ></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">Run this in Claude Code to install</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prerequisites -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">01</div>
+        <h2 class="text-2xl font-bold">Prerequisites</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Worktale CLI</h3>
+          <p class="text-text-secondary text-sm mb-3">The plugin requires the Worktale CLI to be installed globally. It uses <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> to write to your local journal.</p>
+          <div class="rounded-lg bg-surface-0 border border-border-dim p-4 font-mono text-sm">
+            <p><span class="text-terminal-green/60">$</span> npm install -g worktale</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Initialize your repo</h3>
+          <p class="text-text-secondary text-sm mb-3">Run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> in any git repository you want to track. This scans your history and sets up capture hooks.</p>
+          <div class="rounded-lg bg-surface-0 border border-border-dim p-4 font-mono text-sm">
+            <p><span class="text-terminal-green/60">$</span> cd your-project</p>
+            <p><span class="text-terminal-green/60">$</span> worktale init</p>
+            <p class="text-terminal-green mt-1">&#10003; 847 commits analyzed in 2.1s</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+          <h3 class="font-mono text-sm text-terminal-green mb-2">Claude Code</h3>
+          <p class="text-text-secondary text-sm">You need <a href="https://claude.ai/download" class="text-terminal-green hover:underline">Claude Code</a> (Anthropic's CLI for Claude) installed and authenticated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">02</div>
+        <h2 class="text-2xl font-bold">Installation</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">In any Claude Code session, run:</p>
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-6">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+          </div>
+          <span class="font-mono text-xs text-text-muted ml-2">claude code</span>
+        </div>
+        <div class="p-5 font-mono text-sm">
+          <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin install worktale@worktale/worktale-plugin</span></p>
+          <p class="text-terminal-green mt-2">&#10003; Plugin "worktale" installed successfully</p>
+        </div>
+      </div>
+
+      <p class="text-text-secondary text-sm">The plugin is installed globally and available in all future sessions. You only need to run this once.</p>
+    </div>
+  </section>
+
+  <!-- Usage -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">03</div>
+        <h2 class="text-2xl font-bold">Usage</h2>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-6">At the start of any coding session, activate narration:</p>
+
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-8">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+          </div>
+          <span class="font-mono text-xs text-text-muted ml-2">claude code &mdash; ~/my-project</span>
+        </div>
+        <div class="p-5 font-mono text-xs leading-relaxed space-y-3">
+          <div>
+            <p><span class="text-cyber-cyan/70">&gt;</span> <span class="text-cyber-cyan">/worktale</span></p>
+            <p class="text-text-muted mt-1">Worktale narration active. I'll add context to your daily narrative after each commit.</p>
+          </div>
+
+          <div class="border-t border-border-dim/50 pt-3">
+            <p class="text-text-muted"># ... you ask Claude to build features, fix bugs, refactor code ...</p>
+          </div>
+
+          <div class="border-t border-border-dim/50 pt-3">
+            <p><span class="text-terminal-green/60">$</span> git commit -m "feat: add rate limiting to upload endpoint"</p>
+            <p class="text-neon-amber mt-1">&#9889; worktale: captured "feat: add rate limiting..." (+89 / -12)</p>
+          </div>
+
+          <div>
+            <p><span class="text-terminal-green/60">$</span> worktale note "<span class="text-terminal-green">Added rate limiting to /api/upload &mdash; previous impl allowed unlimited requests causing OOM crashes in production</span>"</p>
+            <p class="text-terminal-green mt-1">&#10003;  Note added to 2026-03-12</p>
+          </div>
+
+          <div class="border-t border-border-dim/50 pt-3">
+            <p><span class="text-terminal-green/60">$</span> git commit -m "fix: race condition in job queue"</p>
+            <p class="text-neon-amber mt-1">&#9889; worktale: captured "fix: race condition..." (+34 / -8)</p>
+          </div>
+
+          <div>
+            <p><span class="text-terminal-green/60">$</span> worktale note "<span class="text-terminal-green">Fixed race condition &mdash; workers claimed same job because claim query wasn't using SELECT FOR UPDATE</span>"</p>
+            <p class="text-terminal-green mt-1">&#10003;  Note added to 2026-03-12</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-text-secondary text-sm mb-4">You can also pass an initial note when activating:</p>
+      <div class="rounded-lg bg-surface-0 border border-border-dim p-4 font-mono text-sm mb-8">
+        <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/worktale "Starting work on the payment pipeline redesign"</span></p>
+      </div>
+
+      <h3 class="font-mono text-base text-text-primary mb-4">Viewing your notes</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl border border-border-dim bg-surface-1/30">
+          <p class="font-mono text-sm text-terminal-green mb-2">worktale digest</p>
+          <p class="text-text-secondary text-sm">Compile today's commits and notes into a clean end-of-day summary. Save it to your journal.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-border-dim bg-surface-1/30">
+          <p class="font-mono text-sm text-terminal-green mb-2">worktale dash</p>
+          <p class="text-text-secondary text-sm">Interactive TUI dashboard. Browse notes by day, view streaks, heatmaps, and commit timelines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What gets captured -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">04</div>
+        <h2 class="text-2xl font-bold">What gets captured</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">The agent writes</h3>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-text-secondary text-sm">
+              <span class="text-terminal-green mt-0.5">&#10003;</span>
+              <span><strong class="text-text-primary">Intent</strong> &mdash; why the change was made</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-secondary text-sm">
+              <span class="text-terminal-green mt-0.5">&#10003;</span>
+              <span><strong class="text-text-primary">Decisions</strong> &mdash; trade-offs and alternatives considered</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-secondary text-sm">
+              <span class="text-terminal-green mt-0.5">&#10003;</span>
+              <span><strong class="text-text-primary">Root causes</strong> &mdash; bugs found and how they were fixed</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-secondary text-sm">
+              <span class="text-terminal-green mt-0.5">&#10003;</span>
+              <span><strong class="text-text-primary">Context</strong> &mdash; the high-level story of each change</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-mono text-sm text-text-muted mb-3">The agent does NOT write</h3>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-text-muted text-sm">
+              <span class="mt-0.5">&#10007;</span>
+              <span>File paths or line counts (git has this)</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-muted text-sm">
+              <span class="mt-0.5">&#10007;</span>
+              <span>Raw diffs or code snippets</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-muted text-sm">
+              <span class="mt-0.5">&#10007;</span>
+              <span>Mechanical descriptions ("Updated 3 files")</span>
+            </li>
+            <li class="flex items-start gap-2 text-text-muted text-sm">
+              <span class="mt-0.5">&#10007;</span>
+              <span>Source code or secrets</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works technically -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">05</div>
+        <h2 class="text-2xl font-bold">How it works</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-border-dim bg-surface-1/30">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold">1</div>
+          <div>
+            <p class="text-text-primary text-sm font-medium">Plugin installs the <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill</p>
+            <p class="text-text-secondary text-sm mt-1">The skill is a prompt template that instructs Claude how to narrate commits. It runs inside the existing Claude Code session &mdash; no background processes, no extra infrastructure.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-border-dim bg-surface-1/30">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold">2</div>
+          <div>
+            <p class="text-text-primary text-sm font-medium">After each <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">git commit</code>, the agent runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note "..."</code></p>
+            <p class="text-text-secondary text-sm mt-1">The agent composes a 1-2 sentence note from the session context &mdash; what it was asked to do, what it decided, what problems it solved.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-border-dim bg-surface-1/30">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold">3</div>
+          <div>
+            <p class="text-text-primary text-sm font-medium">Notes are stored in your local Worktale database</p>
+            <p class="text-text-secondary text-sm mt-1">Each note is appended to the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">user_notes</code> field in the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">daily_summaries</code> table at <code class="text-text-muted">~/.worktale/data.db</code>. Nothing leaves your machine.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-border-dim bg-surface-1/30">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold">4</div>
+          <div>
+            <p class="text-text-primary text-sm font-medium">Review everything in <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale digest</code> or the dashboard</p>
+            <p class="text-text-secondary text-sm mt-1">At end of day, your AI-narrated notes appear alongside commit stats, module activity, and streak data. Save the digest to build a long-term record of your work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">06</div>
+        <h2 class="text-2xl font-bold">Privacy</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-sm text-terminal-green mb-1">Local-first</p>
+          <p class="text-text-secondary text-sm">All notes are stored in a local SQLite database at <code class="text-text-muted text-xs">~/.worktale/data.db</code>. No cloud, no API calls, no telemetry.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-sm text-terminal-green mb-1">No code exfiltration</p>
+          <p class="text-text-secondary text-sm">Notes contain narrative text, not source code. The agent writes about <em>intent</em>, not implementation details.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-sm text-terminal-green mb-1">Open source</p>
+          <p class="text-text-secondary text-sm">Both the <a href="https://github.com/worktale/worktale-cli" class="text-terminal-green hover:underline">CLI</a> and the <a href="https://github.com/worktale/worktale-plugin" class="text-terminal-green hover:underline">plugin</a> are MIT-licensed. Read every line.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-sm text-terminal-green mb-1">You own your data</p>
+          <p class="text-text-secondary text-sm">Delete <code class="text-text-muted text-xs">~/.worktale/</code> and everything is gone. No account to close, no data retention policy to worry about.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="text-2xl font-bold mb-8">FAQ</h2>
+
+      <div class="space-y-4">
+        <div class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" x-data="{ open: false }">
+          <button @click="open = !open" class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer">
+            <span class="font-mono text-sm text-text-primary">Does the plugin work with repos that aren't initialized with Worktale?</span>
+            <span class="text-text-muted transition-transform" :class="open && 'rotate-180'">&#9662;</span>
+          </button>
+          <div x-show="open" x-collapse>
+            <p class="px-5 pb-4 text-text-secondary text-sm">The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> command auto-registers repos that have a <code class="text-text-muted">.git</code> directory. However, for best results, run <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale init</code> first to scan your history and install capture hooks.</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" x-data="{ open: false }">
+          <button @click="open = !open" class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer">
+            <span class="font-mono text-sm text-text-primary">Can I use this without Claude Code?</span>
+            <span class="text-text-muted transition-transform" :class="open && 'rotate-180'">&#9662;</span>
+          </button>
+          <div x-show="open" x-collapse>
+            <p class="px-5 pb-4 text-text-secondary text-sm">Yes. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> command is a standard CLI. You can call it from any script, CI pipeline, git hook, or AI tool. The plugin is just a convenient wrapper for Claude Code users.</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" x-data="{ open: false }">
+          <button @click="open = !open" class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer">
+            <span class="font-mono text-sm text-text-primary">Will this slow down my coding sessions?</span>
+            <span class="text-text-muted transition-transform" :class="open && 'rotate-180'">&#9662;</span>
+          </button>
+          <div x-show="open" x-collapse>
+            <p class="px-5 pb-4 text-text-secondary text-sm">No. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> command writes to a local SQLite database and completes in under 50ms. The agent runs it right after each commit as a single shell command.</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" x-data="{ open: false }">
+          <button @click="open = !open" class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer">
+            <span class="font-mono text-sm text-text-primary">How do I uninstall?</span>
+            <span class="text-text-muted transition-transform" :class="open && 'rotate-180'">&#9662;</span>
+          </button>
+          <div x-show="open" x-collapse>
+            <div class="px-5 pb-4">
+              <p class="text-text-secondary text-sm mb-2">In Claude Code:</p>
+              <div class="rounded-lg bg-surface-0 border border-border-dim p-3 font-mono text-sm">
+                <p><span class="text-cyber-cyan/60">&gt;</span> /plugin uninstall worktale</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" x-data="{ open: false }">
+          <button @click="open = !open" class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer">
+            <span class="font-mono text-sm text-text-primary">Can I customize what the agent writes?</span>
+            <span class="text-text-muted transition-transform" :class="open && 'rotate-180'">&#9662;</span>
+          </button>
+          <div x-show="open" x-collapse>
+            <p class="px-5 pb-4 text-text-secondary text-sm">The skill prompt is open source. Fork the <a href="https://github.com/worktale/worktale-plugin" class="text-terminal-green hover:underline">plugin repo</a>, edit <code class="text-text-muted text-xs">skills/worktale/SKILL.md</code> to change the narration style, and install your fork instead.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="text-2xl font-bold mb-6">Resources</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <a href="https://github.com/worktale/worktale-plugin" class="p-4 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/30 transition-colors group">
+          <p class="font-mono text-sm text-terminal-green group-hover:text-terminal-green mb-1">Plugin source</p>
+          <p class="text-text-muted text-xs">github.com/worktale/worktale-plugin</p>
+        </a>
+        <a href="https://github.com/worktale/worktale-cli" class="p-4 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/30 transition-colors group">
+          <p class="font-mono text-sm text-terminal-green group-hover:text-terminal-green mb-1">Worktale CLI</p>
+          <p class="text-text-muted text-xs">github.com/worktale/worktale-cli</p>
+        </a>
+        <a href="/docs.html#ai-integration" class="p-4 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/30 transition-colors group">
+          <p class="font-mono text-sm text-terminal-green group-hover:text-terminal-green mb-1">Full documentation</p>
+          <p class="text-text-muted text-xs">worktale.org/docs &mdash; AI Integration</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

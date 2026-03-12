@@ -73,6 +73,21 @@ export function updateUserNotes(repoId: number, date: string, notes: string): vo
   db.prepare('UPDATE daily_summaries SET user_notes = ? WHERE repo_id = ? AND date = ?').run(notes, repoId, date);
 }
 
+export function appendUserNotes(repoId: number, date: string, note: string): void {
+  const db = getDb();
+  const existing = getDailySummary(repoId, date);
+
+  if (!existing) {
+    // Create a daily_summaries row if none exists yet
+    upsertDailySummary({ repo_id: repoId, date, user_notes: note });
+    return;
+  }
+
+  const current = existing.user_notes?.trim() ?? '';
+  const updated = current ? `${current}\n${note}` : note;
+  db.prepare('UPDATE daily_summaries SET user_notes = ? WHERE repo_id = ? AND date = ?').run(updated, repoId, date);
+}
+
 export function updateAiDraft(repoId: number, date: string, draft: string): void {
   const db = getDb();
   db.prepare('UPDATE daily_summaries SET ai_draft = ? WHERE repo_id = ? AND date = ?').run(draft, repoId, date);

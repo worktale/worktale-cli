@@ -44,6 +44,7 @@ export default defineConfig({
         vsActivitywatch: resolve(__dirname, 'worktale-vs-activitywatch.html'),
         vsGitStats: resolve(__dirname, 'worktale-vs-git-stats.html'),
         blog: resolve(__dirname, 'blog.html'),
+        plugin: resolve(__dirname, 'plugin.html'),
         blogLaunch: resolve(__dirname, 'blog/worktale-v1-launch.html'),
       },
     },

@@ -50,6 +50,7 @@ This recursively finds every git repo under the current directory and imports th
 | `worktale status` | One-line summary with streak |
 | `worktale log` | Multi-day history (default 7 days) |
 | `worktale digest` | Generate a work summary (template or AI) |
+| `worktale note` | Append a note to today's work narrative |
 | `worktale repos` | List all tracked repositories |
 | `worktale config` | View or modify settings |
 | `worktale hook` | Install, uninstall, or check status of git hooks |
@@ -84,6 +85,27 @@ worktale hook status              # Check if hooks are installed
 ```
 
 If the repo isn't tracked yet, `hook install` automatically registers it in the database.
+
+### AI agent integration
+
+Worktale ships with a Claude Code skill that automatically narrates your coding sessions. When activated, the AI agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
+
+```bash
+# In Claude Code, type:
+/worktale
+
+# The agent will then narrate each commit:
+# worktale note "Refactored auth middleware for compliance — replaced session token storage"
+# worktale note "Fixed race condition in job queue — workers were claiming same job"
+```
+
+The notes appear in `worktale digest` and the TUI dashboard alongside your git stats, giving you a complete picture of what you built and why.
+
+You can also use `worktale note` manually from any script or CI pipeline:
+
+```bash
+worktale note "Deployed v2.1.0 to production"
+```
 
 ---
 
@@ -149,7 +171,7 @@ git clone https://github.com/worktale/worktale-cli.git
 cd worktale-cli
 npm install
 npm run build    # tsup dual build (CLI + worker)
-npm test         # vitest — 407 tests
+npm test         # vitest — 425 tests
 ```
 
 The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.

@@ -16,6 +16,7 @@ import { captureCommand } from './commands/capture.js';
 import { dashCommand } from './commands/dash.js';
 import { batchCommand } from './commands/batch.js';
 import { hookCommand } from './commands/hook.js';
+import { noteCommand } from './commands/note.js';
 import { installNudge, removeNudge, checkNudge, isNudgeInstalled } from './nudge/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -108,6 +109,13 @@ program
   .description('Manage git hooks (install, uninstall, status)')
   .action(async (action?: string, path?: string) => {
     await hookCommand(action, path);
+  });
+
+program
+  .command('note [message]')
+  .description('Append a note to today\'s work narrative')
+  .action(async (message?: string) => {
+    await noteCommand(message);
   });
 
 program
