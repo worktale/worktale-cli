@@ -104,16 +104,23 @@ If the repo isn't tracked yet, `hook install` automatically registers it in the 
 
 ### AI agent integration (v1.1.0+)
 
-Worktale ships with a [Claude Code plugin](https://worktale.org/plugin.html) that automatically narrates your coding sessions. When activated, the AI agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
+Worktale integrates with every major AI coding agent. The agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
+
+| Platform | Install | Type |
+|----------|---------|------|
+| **Claude Code** | `/plugin install worktale@worktale/worktale-plugin` | Plugin |
+| **Copilot CLI** | `/plugin install worktale/worktale-copilot-plugin` | Plugin + hooks |
+| **Codex CLI** | `git clone` → `~/.codex/skills/worktale/` | Skill |
+| **Cursor** | Copy `integrations/cursor-rules.md` → `.cursor/rules/worktale.md` | Rules |
+| **Cline** | Copy `integrations/cline-rules.md` → `.clinerules/worktale.md` | Rules |
+| **Windsurf** | Copy `integrations/windsurf-rules.md` → `.windsurf/rules/worktale.md` | Rules |
 
 ```bash
-# Install the plugin (one-time):
+# Claude Code example:
 /plugin install worktale@worktale/worktale-plugin
-
-# Activate in any session:
 /worktale
 
-# The agent will then narrate each commit:
+# The agent narrates each commit:
 # worktale note "Refactored auth middleware for compliance — replaced session token storage"
 # worktale note "Fixed race condition in job queue — workers were claiming same job"
 ```
@@ -126,7 +133,7 @@ You can also use `worktale note` manually from any script or CI pipeline:
 worktale note "Deployed v2.1.0 to production"
 ```
 
-> **Note:** `worktale note` and Claude Code integration require **v1.1.0 or higher**.
+> **Requires Worktale CLI v1.1.0+** — [Full integration docs →](https://worktale.org/plugin.html)
 
 ---
 

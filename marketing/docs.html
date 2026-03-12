@@ -1035,19 +1035,76 @@ if ($worktale) {
         <h2 class="text-2xl md:text-3xl font-bold">AI Integration</h2>
       </div>
 
-      <p class="text-text-secondary text-sm mb-6">Worktale integrates with AI tools to enhance your daily narrative. Two paths: Claude Code for live session narration, and Ollama for local digest generation.</p>
+      <p class="text-text-secondary text-sm mb-2">Worktale integrates with every major AI coding agent for live session narration, plus Ollama for local digest generation.</p>
+      <p class="text-amber-400/80 text-xs font-mono mb-6 flex items-center gap-1.5"><span>⚠</span> AI agent narration requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.1.0+</span> &mdash; run <code class="bg-surface-0 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code> to update.</p>
 
       <div class="space-y-6 mb-12">
+
+        <!-- Supported platforms table -->
         <div>
-          <h3 class="font-mono text-sm text-terminal-green mb-3">Claude Code Skill &mdash; Session Narration</h3>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Supported Platforms</h3>
+          <div class="overflow-x-auto rounded-lg border border-border-dim">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-surface-2 border-b border-border-dim">
+                  <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Platform</th>
+                  <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Install</th>
+                  <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Reliability</th>
+                </tr>
+              </thead>
+              <tbody class="text-text-secondary bg-surface-1/30">
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Claude Code</td>
+                  <td class="py-2.5 px-4 font-mono text-xs text-cyber-cyan">/plugin install worktale@worktale/worktale-plugin</td>
+                  <td class="py-2.5 px-4 text-terminal-green text-xs">Deterministic</td>
+                </tr>
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Copilot CLI</td>
+                  <td class="py-2.5 px-4 font-mono text-xs text-cyber-cyan">/plugin install worktale/worktale-copilot-plugin</td>
+                  <td class="py-2.5 px-4 text-terminal-green text-xs">Deterministic</td>
+                </tr>
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Codex CLI</td>
+                  <td class="py-2.5 px-4 font-mono text-xs">git clone &rarr; <code class="text-text-muted">~/.codex/skills/worktale/</code></td>
+                  <td class="py-2.5 px-4 text-neon-amber text-xs">Advisory</td>
+                </tr>
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Cursor</td>
+                  <td class="py-2.5 px-4 font-mono text-xs">Copy to <code class="text-text-muted">.cursor/rules/worktale.md</code></td>
+                  <td class="py-2.5 px-4 text-neon-amber text-xs">Advisory</td>
+                </tr>
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Cline</td>
+                  <td class="py-2.5 px-4 font-mono text-xs">Copy to <code class="text-text-muted">.clinerules/worktale.md</code></td>
+                  <td class="py-2.5 px-4 text-neon-amber text-xs">Advisory</td>
+                </tr>
+                <tr class="border-b border-border-dim/50">
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Windsurf</td>
+                  <td class="py-2.5 px-4 font-mono text-xs">Copy to <code class="text-text-muted">.windsurf/rules/worktale.md</code></td>
+                  <td class="py-2.5 px-4 text-neon-amber text-xs">Advisory</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 text-text-primary font-medium">Any (git hook)</td>
+                  <td class="py-2.5 px-4 font-mono text-xs text-terminal-green">worktale init</td>
+                  <td class="py-2.5 px-4 text-terminal-green text-xs">Deterministic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-text-muted text-xs mt-2"><a href="/plugin.html" class="text-terminal-green hover:underline">Full integration docs with install commands &rarr;</a></p>
+        </div>
+
+        <!-- Claude Code (primary example) -->
+        <div>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Claude Code &mdash; Session Narration</h3>
           <p class="text-text-secondary text-sm mb-3">The <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill turns Claude Code into a session narrator. When activated, the AI agent automatically runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> after each commit, capturing the intent, decisions, and context that git diffs can't show.</p>
-          <p class="text-amber-400/80 text-xs font-mono mt-2 flex items-center gap-1.5"><span>⚠</span> Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.1.0+</span> &mdash; run <code class="bg-surface-0 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code> to update.</p>
           <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs space-y-1.5">
-            <p class="text-text-muted"># In Claude Code, activate the skill:</p>
-            <p><span class="text-terminal-green/60">$</span> /worktale</p>
+            <p class="text-text-muted"># Install plugin (one-time):</p>
+            <p><span class="text-cyber-cyan/60">&gt;</span> /plugin install worktale@worktale/worktale-plugin</p>
+            <p class="mt-2 text-text-muted"># Activate in any session:</p>
+            <p><span class="text-cyber-cyan/60">&gt;</span> /worktale</p>
             <p class="mt-2 text-text-muted"># The agent narrates each commit automatically:</p>
             <p class="text-text-secondary"># "Refactored auth middleware for compliance &mdash; replaced session token storage"</p>
-            <p class="text-text-secondary"># "Fixed race condition in job queue &mdash; workers were claiming same job"</p>
           </div>
           <div class="mt-3 space-y-2">
             <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">What gets captured:</span> Intent behind changes, key decisions and trade-offs, problems solved and root causes, high-level description of what was built.</p>
@@ -1055,6 +1112,7 @@ if ($worktale) {
           </div>
         </div>
 
+        <!-- Manual notes -->
         <div>
           <h3 class="font-mono text-sm text-terminal-green mb-3">Manual Notes &mdash; Any Script or CI</h3>
           <p class="text-text-secondary text-sm mb-3">Use <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> directly from any script, CI pipeline, or terminal session:</p>
