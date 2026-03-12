@@ -394,7 +394,7 @@
             <span class="font-mono text-xs text-text-muted">Append narrative</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Append a note to today's work narrative. Designed for AI coding agents (like Claude Code) to narrate session context &mdash; the "why" behind each commit.</p>
+            <p class="text-text-secondary text-sm">Append a note to today's work narrative. Designed for AI coding agents (like Claude Code) to narrate session context &mdash; the "why" behind each commit. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] text-cyber-cyan font-bold">Requires v1.1.0+</span></p>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">USAGE</p>
               <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
@@ -1041,6 +1041,7 @@ if ($worktale) {
         <div>
           <h3 class="font-mono text-sm text-terminal-green mb-3">Claude Code Skill &mdash; Session Narration</h3>
           <p class="text-text-secondary text-sm mb-3">The <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill turns Claude Code into a session narrator. When activated, the AI agent automatically runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> after each commit, capturing the intent, decisions, and context that git diffs can't show.</p>
+          <p class="text-amber-400/80 text-xs font-mono mt-2 flex items-center gap-1.5"><span>⚠</span> Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.1.0+</span> &mdash; run <code class="bg-surface-0 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code> to update.</p>
           <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-xs space-y-1.5">
             <p class="text-text-muted"># In Claude Code, activate the skill:</p>
             <p><span class="text-terminal-green/60">$</span> /worktale</p>

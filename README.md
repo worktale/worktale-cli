@@ -25,6 +25,22 @@ worktale batch --since 3m
 
 This recursively finds every git repo under the current directory and imports the last 3 months of commit history. Nothing is modified in your repos.
 
+### 🤖 NEW: Claude Code Integration (v1.1.0+)
+
+Worktale has a **Claude Code plugin** that turns your AI coding agent into a session narrator. After every commit, the agent automatically adds rich context — intent, decisions, trade-offs — to your daily work log.
+
+```
+# In Claude Code:
+/plugin install worktale@worktale/worktale-plugin
+/worktale
+```
+
+That's it. The agent narrates as you code. Your end-of-day digest writes itself.
+
+> **Requires Worktale CLI v1.1.0+** — `npm install -g worktale@latest`
+
+[Full plugin docs →](https://worktale.org/plugin.html)
+
 ---
 
 ## What You Get
@@ -86,12 +102,15 @@ worktale hook status              # Check if hooks are installed
 
 If the repo isn't tracked yet, `hook install` automatically registers it in the database.
 
-### AI agent integration
+### AI agent integration (v1.1.0+)
 
-Worktale ships with a Claude Code skill that automatically narrates your coding sessions. When activated, the AI agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
+Worktale ships with a [Claude Code plugin](https://worktale.org/plugin.html) that automatically narrates your coding sessions. When activated, the AI agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
 
 ```bash
-# In Claude Code, type:
+# Install the plugin (one-time):
+/plugin install worktale@worktale/worktale-plugin
+
+# Activate in any session:
 /worktale
 
 # The agent will then narrate each commit:
@@ -106,6 +125,8 @@ You can also use `worktale note` manually from any script or CI pipeline:
 ```bash
 worktale note "Deployed v2.1.0 to production"
 ```
+
+> **Note:** `worktale note` and Claude Code integration require **v1.1.0 or higher**.
 
 ---
 
