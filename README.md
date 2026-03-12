@@ -31,7 +31,8 @@ Worktale has a **Claude Code plugin** that turns your AI coding agent into a ses
 
 ```
 # In Claude Code:
-/plugin install worktale@worktale/worktale-plugin
+/plugin marketplace add worktale/worktale-plugin
+/plugin install worktale-plugin@worktale-plugin
 /worktale
 ```
 
@@ -108,7 +109,7 @@ Worktale integrates with every major AI coding agent. The agent runs `worktale n
 
 | Platform | Install | Type |
 |----------|---------|------|
-| **Claude Code** | `/plugin install worktale@worktale/worktale-plugin` | Plugin |
+| **Claude Code** | See two-step install below | Plugin |
 | **Copilot CLI** | `/plugin install worktale/worktale-copilot-plugin` | Plugin + hooks |
 | **Codex CLI** | `git clone` → `~/.codex/skills/worktale/` | Skill |
 | **Cursor** | Copy `integrations/cursor-rules.md` → `.cursor/rules/worktale.md` | Rules |
@@ -117,7 +118,8 @@ Worktale integrates with every major AI coding agent. The agent runs `worktale n
 
 ```bash
 # Claude Code example:
-/plugin install worktale@worktale/worktale-plugin
+/plugin marketplace add worktale/worktale-plugin
+/plugin install worktale-plugin@worktale-plugin
 /worktale
 
 # The agent narrates each commit:

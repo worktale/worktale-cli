@@ -866,27 +866,29 @@
                         </p>
 
                         <!-- Install CTA -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8" x-data="{ copied: false }">
-                            <div class="relative group">
-                                <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-cyber-cyan/30 to-terminal-green/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                                <button
-                                    @click="navigator.clipboard.writeText('/plugin install worktale@worktale/worktale-plugin'); copied = true; setTimeout(() => copied = false, 2000)"
-                                    class="relative flex items-center gap-3 px-6 py-3.5 rounded-xl bg-surface-1 border border-cyber-cyan/30 font-mono text-sm hover:border-cyber-cyan/60 transition-all cursor-pointer"
-                                >
-                                    <span class="text-cyber-cyan/60">&gt;</span>
-                                    <span class="text-cyber-cyan">/plugin install worktale@worktale/worktale-plugin</span>
-                                    <span
-                                        class="text-text-muted ml-2 text-xs"
-                                        x-text="copied ? 'copied!' : 'click to copy'"
-                                        x-bind:class="copied && 'text-cyber-cyan'"
-                                    ></span>
-                                </button>
+                        <div class="flex flex-col items-center gap-3 mt-8" x-data="{ copied: false }">
+                            <div class="flex flex-col sm:flex-row items-center gap-2">
+                                <div class="relative group">
+                                    <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-cyber-cyan/30 to-terminal-green/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                                    <button
+                                        @click="navigator.clipboard.writeText('/plugin marketplace add worktale/worktale-plugin\n/plugin install worktale-plugin@worktale-plugin'); copied = true; setTimeout(() => copied = false, 2000)"
+                                        class="relative flex flex-col items-start gap-1 px-6 py-3.5 rounded-xl bg-surface-1 border border-cyber-cyan/30 font-mono text-sm hover:border-cyber-cyan/60 transition-all cursor-pointer"
+                                    >
+                                        <span><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin marketplace add worktale/worktale-plugin</span></span>
+                                        <span><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin install worktale-plugin@worktale-plugin</span></span>
+                                        <span
+                                            class="text-text-muted text-xs self-end"
+                                            x-text="copied ? 'copied!' : 'click to copy'"
+                                            x-bind:class="copied && 'text-cyber-cyan'"
+                                        ></span>
+                                    </button>
+                                </div>
                             </div>
                             <a
                                 href="/plugin.html"
                                 class="font-mono text-xs text-text-secondary hover:text-cyber-cyan transition-colors flex items-center gap-1"
                             >
-                                plugin docs &rarr;
+                                all integrations &rarr;
                             </a>
                         </div>
                     </div>
@@ -897,8 +899,8 @@
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">01</div>
                                 <div>
-                                    <h3 class="font-mono text-base text-text-primary mb-1">Install the plugin</h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed">Run <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">/plugin install worktale@worktale/worktale-plugin</code> in Claude Code. Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono text-xs font-bold">v1.1.0+</span></p>
+                                    <h3 class="font-mono text-base text-text-primary mb-1">Add the marketplace &amp; install</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed">Run <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">/plugin marketplace add worktale/worktale-plugin</code> then <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">/plugin install worktale-plugin@worktale-plugin</code>. Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono text-xs font-bold">v1.1.0+</span></p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
