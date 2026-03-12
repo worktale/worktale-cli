@@ -111,7 +111,7 @@ Worktale integrates with every major AI coding agent. The agent runs `worktale n
 |----------|---------|------|
 | **Claude Code** | See two-step install below | Plugin |
 | **Copilot CLI** | `/plugin install worktale/worktale-copilot-plugin` | Plugin + hooks |
-| **Codex CLI** | `git clone` → `~/.codex/skills/worktale/` | Skill |
+| **Codex CLI** | `git clone` → `~/.agents/skills/worktale/` | Skill |
 | **Cursor** | Copy `integrations/cursor-rules.md` → `.cursor/rules/worktale.md` | Rules |
 | **Cline** | Copy `integrations/cline-rules.md` → `.clinerules/worktale.md` | Rules |
 | **Windsurf** | Copy `integrations/windsurf-rules.md` → `.windsurf/rules/worktale.md` | Rules |

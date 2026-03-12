@@ -158,7 +158,7 @@
         <h2 class="text-2xl font-bold">OpenAI Codex CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Skill</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Codex uses the same SKILL.md format. Install the skill to <code class="text-text-muted text-xs">~/.codex/skills/worktale/</code> and enable skills mode.</p>
+      <p class="text-text-secondary text-sm mb-4">Codex uses the same SKILL.md format. Install the skill to <code class="text-text-muted text-xs">~/.agents/skills/worktale/</code> and enable skills mode.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -168,7 +168,7 @@
         <div class="p-5 font-mono text-sm space-y-1">
           <p class="text-text-muted text-xs"># Install:</p>
           <p><span class="text-terminal-green/60">$</span> git clone https://github.com/worktale/worktale-codex-plugin.git</p>
-          <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale ~/.codex/skills/worktale</p>
+          <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale ~/.agents/skills/worktale</p>
           <p class="text-text-muted text-xs mt-3"># Run with skills enabled:</p>
           <p><span class="text-terminal-green/60">$</span> codex --enable skills</p>
         </div>
@@ -185,7 +185,7 @@
         <h2 class="text-2xl font-bold">GitHub Copilot CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Plugin + Hooks</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Native plugin with a <code class="text-text-muted text-xs">postToolUse</code> hook that deterministically captures every commit. Also ships the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">@worktale</code> agent for session narration.</p>
+      <p class="text-text-secondary text-sm mb-4">Native plugin with a <code class="text-text-muted text-xs">postToolUse</code> hook that deterministically captures every commit. Also ships a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale</code> agent for session narration.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -196,7 +196,8 @@
           <p class="text-text-muted text-xs"># Install (one-time):</p>
           <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin install worktale/worktale-copilot-plugin</span></p>
           <p class="text-text-muted text-xs mt-3"># Activate narration agent:</p>
-          <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">@worktale</span></p>
+          <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/agent</span></p>
+          <p class="text-text-muted text-xs"># Select "worktale" from the list</p>
         </div>
       </div>
       <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-copilot-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-copilot-plugin</a></p>
@@ -276,6 +277,7 @@
           <p class="pl-4">https://raw.githubusercontent.com/worktale/worktale-cli/main/integrations/windsurf-rules.md</p>
         </div>
       </div>
+      <p class="text-text-muted text-xs">For older Windsurf versions (pre-Wave 8), use <code class="text-text-secondary">.windsurfrules</code> single file at project root instead. Rule files are limited to 6,000 characters each.</p>
     </div>
   </section>
 
