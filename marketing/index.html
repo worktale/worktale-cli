@@ -3,32 +3,32 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Worktale — Your Dev Story, Told Beautifully</title>
+        <title>Worktale — Proof of What You Actually Shipped</title>
         <meta
             name="description"
-            content="A local-first CLI journal that turns your git history into a personal record of everything you built. Private by default. No account required."
+            content="A local-first CLI that turns your git history into a portable record of your engineering output. Reviews, job transitions, consulting proof. Private by default."
         />
         <meta
             property="og:title"
-            content="Worktale — Your Dev Story, Told Beautifully"
+            content="Worktale — Proof of What You Actually Shipped"
         />
         <meta
             property="og:description"
-            content="Turn months of silent git history into a beautiful, personal record of what you actually built."
+            content="Private repos don't build public proof. Worktale turns your git history into a portable record of your engineering output. Local-first. No account required."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://worktale.org" />
-        <meta property="og:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png" />
+        <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <meta property="og:site_name" content="Worktale" />
         <meta property="og:locale" content="en_US" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Worktale — Your Dev Story, Told Beautifully" />
-        <meta name="twitter:description" content="A local-first CLI that turns your git history into a personal dev journal. Private by default. No account required." />
-        <meta name="twitter:image" content="https://worktale.org/logo/blk-worktale-logo-wordmark.png" />
+        <meta name="twitter:title" content="Worktale — Proof of What You Actually Shipped" />
+        <meta name="twitter:description" content="Private repos don't build public proof. Worktale turns your git history into a portable record of your engineering output. Local-first. No account required." />
+        <meta name="twitter:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <link rel="canonical" href="https://worktale.org/" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="George Rios" />
-        <meta name="keywords" content="developer journal, developer work log, git commit tracker, git activity dashboard, developer portfolio, performance review developer tool, coding activity tracker, wakatime alternative local, git history visualizer, developer time tracking private, git commit summary generator, cli developer tools, local-first, npm, terminal dashboard, track coding work, developer productivity" />
+        <meta name="keywords" content="proof of work developer, developer performance review tool, developer work log, git commit tracker, developer portfolio, performance review developer tool, coding activity tracker, wakatime alternative local, git history visualizer, developer time tracking private, git commit summary generator, cli developer tools, local-first, npm, terminal dashboard, track coding work, developer career proof, engineering output record" />
 
         <!-- JSON-LD: SoftwareApplication -->
         <script type="application/ld+json">
@@ -36,7 +36,7 @@
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
             "name": "Worktale",
-            "description": "A local-first CLI journal that turns your git history into a personal record of everything you built. Private by default. No account required.",
+            "description": "A local-first CLI that turns your git history into a portable record of your engineering output. Reviews, job transitions, consulting proof. Private by default.",
             "url": "https://worktale.org",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "Windows, macOS, Linux",
@@ -91,7 +91,7 @@
                     "name": "Will Worktale work on a repo with 10 years of history?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Absolutely. Worktale streams through git log output efficiently. Repos with 50k+ commits typically initialize in under 10 seconds. The older the repo, the better your story."
+                        "text": "Absolutely. Worktale streams through git log output efficiently. Repos with 50k+ commits typically initialize in under 10 seconds. The older the repo, the deeper your record."
                     }
                 },
                 {
@@ -117,6 +117,38 @@
                         "@type": "Answer",
                         "text": "Use worktale batch instead of init. Batch imports your commit history read-only — no hooks, no file changes, nothing touches your repos. If you later decide you want live tracking, run worktale hook install on specific repos. And worktale hook uninstall removes them cleanly. Full control, zero commitment."
                     }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I use Worktale for my performance review?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "That's exactly what it's built for. Run worktale digest and you get exact dates, commit counts, repos touched, and your own notes — everything you need to walk into a review with receipts instead of vague recollections."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What happens to my data if I leave a company?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Your Worktale database lives at ~/.worktale/data.db — it's yours, on your machine, outside any repo. When you lose access to a company's repos, your record of what you shipped stays with you. That's the whole point."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a management surveillance tool?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Worktale is a personal tool that runs on your machine, stores data locally, and has no server component. There is no team dashboard, no manager view, no way for anyone else to see your data unless you explicitly choose to share it. You own your record."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I share my record without exposing proprietary code?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Worktale only stores metadata — commit messages, timestamps, and line counts. No file contents, no diffs, no source code. Your digests show what you shipped and how much, never how. Safe to share in interviews, reviews, or with clients under NDA."
+                    }
                 }
             ]
         }
@@ -127,8 +159,8 @@
         {
             "@context": "https://schema.org",
             "@type": "HowTo",
-            "name": "How to set up Worktale as your developer journal",
-            "description": "Three commands to turn your git history into a personal dev journal with streaks, stats, and daily summaries.",
+            "name": "How to set up Worktale to track your engineering output",
+            "description": "Three commands to turn your git history into a portable record of what you shipped — with stats, digests, and daily summaries.",
             "step": [
                 {
                     "@type": "HowToStep",
@@ -244,27 +276,24 @@
                     <h1
                         class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6"
                     >
-                        <span class="text-text-primary">Your dev story,</span
+                        <span class="text-text-primary">Proof of what you</span
                         ><br />
                         <span
                             class="bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green bg-clip-text text-transparent"
-                            >told beautifully.</span
+                            >actually shipped.</span
                         >
                     </h1>
 
                     <p
                         class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed"
                     >
-                        You ship code behind firewalls. To private repos. In
-                        silence.<br class="hidden md:block" />
-                        Months of brilliant work&mdash;invisible. Even to you.
+                        Private repos don't build public proof.<br class="hidden md:block" />
+                        Worktale turns your git history into a portable record of your engineering output.
                     </p>
                     <p
                         class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
                     >
-                        Worktale turns your git history into a personal record
-                        of what you actually built. One command. Zero setup. No
-                        code leaves your machine.
+                        Reviews. Job transitions. Consulting deliverables. Career-proof your work&mdash;locally, privately, automatically.
                     </p>
 
                     <!-- Install CTA -->
@@ -385,10 +414,10 @@
                             The Dashboard
                         </p>
                         <h2 class="text-3xl md:text-4xl font-bold">
-                            Your terminal, alive.
+                            Your work. Always accessible.
                         </h2>
                         <p class="text-text-secondary mt-3">
-                            Tab between three views. Keyboard-driven. Renders in
+                            Browse daily context, notes, and stats. Keyboard-driven. Renders in
                             under 300ms.
                         </p>
                     </div>
@@ -397,7 +426,7 @@
                     <div
                         class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]"
                         x-data="{
-                            tab: 1,
+                            tab: 2,
                             timer: null,
                             start() {
                                 this.timer = setInterval(() => { this.tab = this.tab % 3 + 1 }, 4000)
@@ -900,7 +929,11 @@
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">01</div>
                                 <div>
                                     <h3 class="font-mono text-base text-text-primary mb-1">Add the marketplace &amp; install</h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed">Run <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">/plugin marketplace add worktale/worktale-plugin</code> then <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">/plugin install worktale-plugin@worktale-plugin</code>. Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono text-xs font-bold">v1.1.0+</span></p>
+                                    <p class="text-text-secondary text-sm leading-relaxed mb-2">Two quick commands inside Claude Code to add the skill:</p>
+                                    <div class="font-mono text-xs bg-surface-2 rounded-lg p-3 space-y-1">
+                                        <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin marketplace add worktale/worktale-plugin</span></p>
+                                        <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin install worktale-plugin@worktale-plugin</span></p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -924,6 +957,7 @@
                                     The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> command is a standard CLI&mdash;use it from Claude Code, scripts, CI pipelines, or any tool that can run shell commands.
                                 </p>
                             </div>
+                            <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.1.0+</span></p>
                         </div>
 
                         <!-- Right: terminal mockup -->
@@ -1086,6 +1120,41 @@
                             <h3
                                 class="font-mono text-lg text-text-primary mb-2"
                             >
+                                npm install -g worktale
+                            </h3>
+                            <p
+                                class="text-text-secondary text-sm leading-relaxed"
+                            >
+                                One command to install Worktale globally.
+                                Works on macOS, Linux, and Windows. No
+                                dependencies, no runtime needed.
+                            </p>
+                            <div
+                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
+                            >
+                                <p>
+                                    <span class="text-terminal-green/60"
+                                        >$</span
+                                    >
+                                    npm install -g worktale
+                                </p>
+                                <p class="text-terminal-green mt-1">
+                                    ✓ worktale installed globally
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div
+                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
+                        >
+                            <div
+                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
+                            >
+                                02
+                            </div>
+                            <h3
+                                class="font-mono text-lg text-text-primary mb-2"
+                            >
                                 worktale init
                             </h3>
                             <p
@@ -1112,42 +1181,6 @@
                                 </p>
                                 <p class="text-terminal-green mt-1">
                                     ✓ 847 commits analyzed in 2.1s
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Step 2 -->
-                        <div
-                            class="relative p-6 rounded-xl border border-border-dim bg-surface-1/30 hover:border-terminal-green/20 transition-colors group"
-                        >
-                            <div
-                                class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold mb-4 group-hover:bg-terminal-green/20 transition-colors"
-                            >
-                                02
-                            </div>
-                            <h3
-                                class="font-mono text-lg text-text-primary mb-2"
-                            >
-                                Just code.
-                            </h3>
-                            <p
-                                class="text-text-secondary text-sm leading-relaxed"
-                            >
-                                Every commit is captured automatically. Zero
-                                friction. No extra commands. Your dashboard
-                                updates in real-time with streaks, stats, and
-                                activity heatmaps.
-                            </p>
-                            <div
-                                class="mt-4 font-mono text-xs text-text-muted bg-surface-2 rounded-lg p-3"
-                            >
-                                <p>
-                                    <span class="text-terminal-green/60"
-                                        >$</span
-                                    >
-                                    git commit -m "fix: auth token"
-                                </p>
-                                <p class="text-neon-amber mt-1">
-                                    ⚡ worktale: captured (+42 / -12)
                                 </p>
                             </div>
                         </div>
@@ -1191,11 +1224,125 @@
             </section>
 
             <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- SAMPLE DIGEST OUTPUT -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20">
+                <div class="mx-auto max-w-4xl px-6">
+                    <div class="text-center mb-12">
+                        <p
+                            class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-3"
+                        >
+                            The Output
+                        </p>
+                        <h2 class="text-3xl md:text-4xl font-bold">
+                            This is what proof looks like.
+                        </h2>
+                        <p class="text-text-secondary mt-3 max-w-xl mx-auto">
+                            Run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale digest</code> at end of day. This is real output&mdash;the artifact you'd paste into a review, send to a client, or keep for yourself.
+                        </p>
+                    </div>
+
+                    <!-- Terminal mockup -->
+                    <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]">
+                        <!-- Title bar -->
+                        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+                            <div class="flex gap-1.5">
+                                <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                            </div>
+                            <span class="font-mono text-xs text-text-muted ml-2">~/my-saas-project</span>
+                        </div>
+                        <!-- Terminal content -->
+                        <div class="p-5 font-mono text-xs sm:text-sm leading-relaxed text-left">
+                            <!-- Command -->
+                            <p>
+                                <span class="text-terminal-green/60">$</span>
+                                <span class="text-text-primary">worktale digest</span>
+                            </p>
+
+                            <!-- Header -->
+                            <p class="mt-4">
+                                <span class="text-neon-amber">&#9889;</span>
+                                <span class="text-text-primary font-bold"> WORKTALE DIGEST</span>
+                                <span class="text-text-muted"> &mdash; Friday, March 14, 2026</span>
+                            </p>
+
+                            <!-- Separator -->
+                            <p class="text-text-muted/40 mt-3">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+
+                            <!-- Date -->
+                            <p class="mt-3 text-text-primary font-bold">Friday, March 14, 2026</p>
+
+                            <!-- What I built -->
+                            <p class="mt-3 text-terminal-green font-bold">What I built</p>
+                            <p class="mt-1">
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> Added rate limiting to /api/upload endpoint</span>
+                            </p>
+                            <p>
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> Fixed race condition in job queue worker</span>
+                            </p>
+                            <p>
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> Refactored payment webhook handler into separate module</span>
+                            </p>
+                            <p>
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> Added regression tests for idempotency key check</span>
+                            </p>
+                            <p>
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> Fixed auth token expiry edge case on refresh</span>
+                            </p>
+
+                            <!-- Stats -->
+                            <p class="mt-3 text-terminal-green font-bold">Stats</p>
+                            <p class="mt-1">
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> 7 commits, </span>
+                                <span class="text-terminal-green">+1,204</span>
+                                <span class="text-text-secondary"> / </span>
+                                <span class="text-red-400">-389</span>
+                                <span class="text-text-secondary"> lines, 23 files touched</span>
+                            </p>
+
+                            <!-- Areas -->
+                            <p class="mt-3 text-terminal-green font-bold">Areas</p>
+                            <p class="mt-1">
+                                <span class="text-text-muted">&bullet;</span>
+                                <span class="text-text-secondary"> src/api/ (38%), src/workers/ (24%), tests/ (21%), src/auth/ (11%), src/webhooks/ (6%)</span>
+                            </p>
+
+                            <!-- Separator -->
+                            <p class="text-text-muted/40 mt-3">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+
+                            <!-- Save prompt -->
+                            <p class="mt-3">
+                                <span class="text-text-secondary">Save this digest?</span>
+                                <span class="text-text-muted"> (Y/n) </span>
+                                <span class="text-terminal-green">Y</span>
+                            </p>
+                            <p class="mt-1">
+                                <span class="text-terminal-green">&#10003;</span>
+                                <span class="text-terminal-green"> Digest saved!</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="text-text-muted text-xs text-center mt-6">
+                        This is template mode. With Ollama configured, the digest is AI-narrated with richer context.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
             <!-- FEATURES -->
             <!-- ═══════════════════════════════════════════════════════ -->
             <section
                 id="features"
-                class="py-24 md:py-32 border-t border-border-dim bg-surface-1/20"
+                class="py-24 md:py-32 border-t border-border-dim"
             >
                 <div class="mx-auto max-w-6xl px-6">
                     <div class="text-center mb-16">
@@ -1205,11 +1352,11 @@
                             Features
                         </p>
                         <h2 class="text-3xl md:text-4xl font-bold">
-                            Everything a developer journal should be.
+                            Everything you need to prove what you built.
                         </h2>
                         <p class="text-text-secondary mt-3 max-w-xl mx-auto">
-                            A beautiful CLI that surfaces the story hidden in
-                            your git data.
+                            A CLI that turns git metadata into a structured
+                            record of your engineering output.
                         </p>
                     </div>
 
@@ -1434,7 +1581,7 @@
                             <h3
                                 class="font-mono text-base text-terminal-green mb-2"
                             >
-                                Performance Reviews
+                                Performance Reviews &amp; Self-Assessments
                             </h3>
                             <p
                                 class="text-text-secondary text-sm leading-relaxed"
@@ -1442,7 +1589,7 @@
                                 Walk into your review with exact data. "I
                                 shipped 2,847 commits across 3 repos, resolved
                                 12 production incidents, and led the v2.0
-                                migration." Worktale gives you the receipts.
+                                migration." Annual review season? Pull up your digest. Exact dates, real stats, zero guesswork.
                             </p>
                         </div>
                         <div
@@ -1484,15 +1631,16 @@
                             <h3
                                 class="font-mono text-base text-terminal-green mb-2"
                             >
-                                Self-Assessments &amp; Reviews
+                                AI-Assisted Coding
                             </h3>
                             <p
                                 class="text-text-secondary text-sm leading-relaxed"
                             >
-                                Annual review season? Pull up your Worktale
-                                digest. Exact dates, real stats, zero
-                                guesswork. Walk in with receipts instead of
-                                vague recollections.
+                                Using Claude Code, Copilot, or local agents?
+                                AI writes the code, but who remembers the
+                                decisions? Worktale captures the context
+                                behind every commit&mdash;your audit trail
+                                for AI-assisted work.
                             </p>
                         </div>
                         <div
@@ -1742,6 +1890,17 @@
                             <div class="px-5 py-4 flex items-start gap-4">
                                 <code
                                     class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]"
+                                    >worktale note</code
+                                >
+                                <p class="text-text-secondary text-sm">
+                                    Append a note to today's narrative. Used by
+                                    AI agents to capture the <em>why</em> behind
+                                    each commit. <span class="text-cyber-cyan font-mono text-[10px]">v1.1.0+</span>
+                                </p>
+                            </div>
+                            <div class="px-5 py-4 flex items-start gap-4">
+                                <code
+                                    class="font-mono text-sm text-terminal-green whitespace-nowrap min-w-[180px]"
                                     >worktale repos</code
                                 >
                                 <p class="text-text-secondary text-sm">
@@ -1824,12 +1983,29 @@
                                 class="text-text-secondary max-w-xl leading-relaxed mb-6"
                             >
                                 Everything stays local by default. But when
-                                you're ready to share your story, Worktale Cloud
-                                gives you a beautiful public profile.
+                                you're ready to prove what you shipped, Worktale Cloud
+                                turns your local record into shareable, professional artifacts.
                             </p>
                             <div
-                                class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
+                                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"
                             >
+                                <div class="flex items-start gap-3">
+                                    <span class="text-cyber-cyan mt-0.5"
+                                        >◆</span
+                                    >
+                                    <div>
+                                        <p
+                                            class="text-text-primary text-sm font-medium"
+                                        >
+                                            Review &amp; Promotion Packets
+                                        </p>
+                                        <p class="text-text-muted text-xs">
+                                            One-click export of your quarterly or
+                                            annual output&mdash;ready to paste into
+                                            any self-review or promotion doc.
+                                        </p>
+                                    </div>
+                                </div>
                                 <div class="flex items-start gap-3">
                                     <span class="text-cyber-cyan mt-0.5"
                                         >◆</span
@@ -1842,8 +2018,25 @@
                                         </p>
                                         <p class="text-text-muted text-xs">
                                             worktale.dev/yourname &mdash;
-                                            GitHub-style heatmap including
-                                            private repos.
+                                            a portable engineering profile that
+                                            includes private repo work.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-cyber-cyan mt-0.5"
+                                        >◆</span
+                                    >
+                                    <div>
+                                        <p
+                                            class="text-text-primary text-sm font-medium"
+                                        >
+                                            Client &amp; Consulting Summaries
+                                        </p>
+                                        <p class="text-text-muted text-xs">
+                                            Sanitized delivery reports for clients.
+                                            Prove what you shipped without exposing
+                                            code or internals.
                                         </p>
                                     </div>
                                 </div>
@@ -1860,7 +2053,7 @@
                                         <p class="text-text-muted text-xs">
                                             All your repos in one unified
                                             stream&mdash;the full picture of
-                                            your engineering journey.
+                                            your engineering output.
                                         </p>
                                     </div>
                                 </div>
@@ -1872,11 +2065,12 @@
                                         <p
                                             class="text-text-primary text-sm font-medium"
                                         >
-                                            Weekly Auto-Digest
+                                            Weekly AI Digest &amp; Email
                                         </p>
                                         <p class="text-text-muted text-xs">
-                                            AI rolls up your week into a
-                                            polished, publishable post.
+                                            AI rolls up your week into a polished
+                                            summary&mdash;published or delivered
+                                            to your inbox.
                                         </p>
                                     </div>
                                 </div>
@@ -1893,23 +2087,8 @@
                                         <p class="text-text-muted text-xs">
                                             &ldquo;What did I do
                                             yesterday?&rdquo;&mdash;answered
-                                            instantly.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3 sm:col-span-2 sm:max-w-[50%]">
-                                    <span class="text-cyber-cyan mt-0.5"
-                                        >◆</span
-                                    >
-                                    <div>
-                                        <p
-                                            class="text-text-primary text-sm font-medium"
-                                        >
-                                            Email Weekly Summary
-                                        </p>
-                                        <p class="text-text-muted text-xs">
-                                            Your week&rsquo;s work delivered to
-                                            your inbox&mdash;no login required.
+                                            instantly. Export for standups, retros,
+                                            or status updates.
                                         </p>
                                     </div>
                                 </div>
@@ -2118,8 +2297,8 @@
                                     Absolutely. Worktale streams through git log
                                     output efficiently. Repos with 50k+ commits
                                     typically initialize in under 10 seconds.
-                                    The older the repo, the better your
-                                    story.
+                                    The older the repo, the deeper your
+                                    record.
                                 </p>
                             </div>
                         </div>
@@ -2241,6 +2420,147 @@
                                     >
                                     removes them cleanly. Full control, zero
                                     commitment.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q7 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 7 ? null : 7"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Can I use Worktale for my performance review?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 7 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 7"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    That's exactly what it's built for. Run
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >worktale digest</code
+                                    >
+                                    and you get exact dates, commit counts, repos touched,
+                                    and your own notes&mdash;everything you need to walk into
+                                    a review with receipts instead of vague recollections.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q8 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 8 ? null : 8"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >What happens to my data if I leave a company?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 8 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 8"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Your Worktale database lives at
+                                    <code
+                                        class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs"
+                                        >~/.worktale/data.db</code
+                                    >&mdash;it's yours, on your machine, outside any repo.
+                                    When you lose access to a company's repos, your record
+                                    of what you shipped stays with you. That's the whole point.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q9 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 9 ? null : 9"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Is this a management surveillance tool?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 9 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 9"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    No. Worktale is a personal tool that runs on your machine,
+                                    stores data locally, and has no server component. There is
+                                    no team dashboard, no manager view, no way for anyone else
+                                    to see your data unless you explicitly choose to share it.
+                                    You own your record.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Q10 -->
+                        <div
+                            class="rounded-xl border border-border-dim bg-surface-0 overflow-hidden"
+                        >
+                            <button
+                                @click="open = open === 10 ? null : 10"
+                                class="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer"
+                            >
+                                <span
+                                    class="font-mono text-sm text-text-primary"
+                                    >Can I share my record without exposing proprietary code?</span
+                                >
+                                <span
+                                    class="text-text-muted text-sm transition-transform"
+                                    :class="open === 10 && 'rotate-45'"
+                                    >+</span
+                                >
+                            </button>
+                            <div
+                                x-show="open === 10"
+                                x-collapse
+                                class="px-6 pb-4"
+                            >
+                                <p
+                                    class="text-text-secondary text-sm leading-relaxed"
+                                >
+                                    Yes. Worktale only stores metadata&mdash;commit messages,
+                                    timestamps, and line counts. No file contents, no diffs,
+                                    no source code. Your digests show <em>what you shipped</em>
+                                    and <em>how much</em>, never <em>how</em>. Safe to share
+                                    in interviews, reviews, or with clients under NDA.
                                 </p>
                             </div>
                         </div>
@@ -2397,7 +2717,7 @@
                             Most developer tools track keystrokes, require
                             accounts, or send data to the cloud. Worktale is
                             different&mdash;it reads your git history locally
-                            and builds your story from what you actually
+                            and builds a portable record of what you actually
                             shipped.
                         </p>
                     </div>
@@ -2932,8 +3252,8 @@
                         git&#8209;standup shows yesterday&rsquo;s commits.
                         GitClear is an engineering analytics platform
                         for teams. Worktale is the only tool that
-                        combines local git commit tracking, persistent
-                        journaling, streaks, heatmaps, AI digests, and
+                        combines local git commit tracking, structured
+                        work records, daily digests, AI narration, and
                         bulk repo import in a single privacy-first CLI.
                     </p>
                 </div>
@@ -2947,15 +3267,15 @@
                     <h2
                         class="text-3xl md:text-5xl font-bold leading-tight mb-4"
                     >
-                        Let Worktale tell<br /><span
+                        Your best work is<br /><span
                             class="bg-gradient-to-r from-terminal-green to-cyber-cyan bg-clip-text text-transparent"
-                            >your tale.</span
+                            >worth remembering.</span
                         >
                     </h2>
                     <p
                         class="text-text-secondary text-lg mb-8 max-w-lg mx-auto"
                     >
-                        Features can be copied. Stories can't.<br />
+                        Stop guessing what you shipped last quarter.<br />
                         Start building the record you deserve.
                     </p>
                     <div
