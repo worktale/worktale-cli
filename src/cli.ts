@@ -100,7 +100,10 @@ program
   .description('Scan for git repos and import history (no hooks)')
   .option('-d, --depth <n>', 'Max directory depth to search', '5')
   .option('-s, --since <period>', 'Only import commits from this period (e.g. 30d, 6w, 3m, 1y)')
-  .action(async (options: { depth?: string; since?: string }) => {
+  .option('-a, --annotate', 'Generate AI annotations for days lacking notes')
+  .option('--auto', 'Auto-annotate all days without prompting (use with --annotate)')
+  .option('--overwrite', 'Overwrite existing AI annotations (use with --annotate)')
+  .action(async (options: { depth?: string; since?: string; annotate?: boolean; auto?: boolean; overwrite?: boolean }) => {
     await batchCommand(options);
   });
 

@@ -8,8 +8,9 @@ import { getDailySummary, updateUserNotes } from '../db/daily-summaries.js';
 import { getModuleActivityByDate } from '../db/file-activity.js';
 import { loadConfig } from '../config/index.js';
 import { closeDb } from '../db/index.js';
-import { formatNumber, formatDate, getDateString } from '../utils/formatting.js';
+import { formatDate, getDateString } from '../utils/formatting.js';
 import { brandText, positiveText, negativeText, dimText, streakText, secondaryText } from '../tui/theme.js';
+import { generateTemplateDigest, generateWithOllama, buildOllamaPrompt } from '../utils/digest-generator.js';
 
 function promptYesNo(question: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -20,82 +21,6 @@ function promptYesNo(question: string): Promise<boolean> {
       resolve(trimmed === '' || trimmed === 'y' || trimmed === 'yes');
     });
   });
-}
-
-function generateTemplateDigest(
-  date: Date,
-  commits: Array<{ message: string | null }>,
-  summary: { commits_count: number; lines_added: number; lines_removed: number; files_touched: number },
-  modules: Array<{ module: string; percentage: number }>,
-): string {
-  const dateStr = date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  let md = `## ${dateStr}\n\n`;
-
-  // What I built
-  md += '### What I built\n';
-  const uniqueMessages = new Set<string>();
-  for (const commit of commits) {
-    if (commit.message) {
-      // Clean up commit message: strip conventional commit prefixes for readability
-      let msg = commit.message;
-      const prefixMatch = msg.match(/^(?:feat|fix|refactor|chore|docs|test|style|perf|ci|build|revert)(?:\(.+?\))?:\s*/i);
-      if (prefixMatch) {
-        // Capitalize the action based on the prefix
-        const prefix = prefixMatch[0].toLowerCase();
-        msg = msg.slice(prefixMatch[0].length);
-
-        if (prefix.startsWith('feat')) {
-          msg = 'Added ' + msg.charAt(0).toLowerCase() + msg.slice(1);
-        } else if (prefix.startsWith('fix')) {
-          msg = 'Fixed ' + msg.charAt(0).toLowerCase() + msg.slice(1);
-        } else if (prefix.startsWith('refactor')) {
-          msg = 'Refactored ' + msg.charAt(0).toLowerCase() + msg.slice(1);
-        } else {
-          msg = msg.charAt(0).toUpperCase() + msg.slice(1);
-        }
-      } else {
-        msg = msg.charAt(0).toUpperCase() + msg.slice(1);
-      }
-
-      if (!uniqueMessages.has(msg)) {
-        uniqueMessages.add(msg);
-        md += `- ${msg}\n`;
-      }
-    }
-  }
-
-  md += '\n';
-
-  // Stats
-  md += '### Stats\n';
-  md += `- ${summary.commits_count} commits, +${formatNumber(summary.lines_added)} / -${formatNumber(summary.lines_removed)} lines, ${summary.files_touched} files touched\n`;
-  md += '\n';
-
-  // Areas
-  if (modules.length > 0) {
-    md += '### Areas\n';
-    const topModules = modules.slice(0, 5);
-    const parts = topModules.map((m) => `${m.module} (${Math.round(m.percentage)}%)`);
-    md += `- ${parts.join(', ')}\n`;
-  }
-
-  return md;
-}
-
-async function generateWithOllama(prompt: string, model: string, url: string): Promise<string> {
-  const response = await fetch(`${url}/api/generate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model, prompt, stream: false }),
-  });
-  if (!response.ok) throw new Error('Ollama request failed');
-  const data = await response.json() as { response: string };
-  return data.response;
 }
 
 export async function digestCommand(): Promise<void> {
@@ -163,24 +88,7 @@ export async function digestCommand(): Promise<void> {
       console.log('  ' + dimText('Using Ollama (' + model + ')...'));
       console.log('');
 
-      // Build prompt
-      const commitList = commits.map((c) => `- ${c.message || '(no message)'}`).join('\n');
-      const moduleList = modules.slice(0, 5).map((m) => `${m.module} (${Math.round(m.percentage)}%)`).join(', ');
-
-      const prompt = `You are writing a daily developer work summary. Be concise, factual, and focus on what was actually accomplished.
-
-Here are today's git commits:
-${commitList}
-
-Stats: ${summaryData.commits_count} commits, +${summaryData.lines_added}/-${summaryData.lines_removed} lines, ${summaryData.files_touched} files
-Active areas: ${moduleList || 'various'}
-
-Write a brief markdown summary with:
-1. "What I built" section (bullet points of accomplishments, not raw commit messages)
-2. Key stats
-3. Areas of focus
-
-Keep it under 200 words. No fluff.`;
+      const prompt = buildOllamaPrompt(commits, summaryData, modules);
 
       try {
         // Quick connectivity check

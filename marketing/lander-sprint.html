@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Worktale — Proof of What You Actually Shipped</title>
+        <title>Worktale — What Did You Actually Ship This Sprint?</title>
         <meta
             name="description"
-            content="A free CLI that turns your git history into a portable record of your engineering output. Reviews, job transitions, consulting proof. 100% local. No account."
+            content="Sprint review and you can't remember what you shipped? Worktale watches your actual commits and builds a searchable work log with AI digests and heatmaps. 100% local."
         />
-        <meta property="og:title" content="Worktale — Proof of What You Actually Shipped" />
-        <meta property="og:description" content="Private repos don't build public proof. A free CLI that turns your git history into a portable record of your engineering output. 100% local. No account." />
+        <meta property="og:title" content="Worktale — What Did You Actually Ship This Sprint?" />
+        <meta property="og:description" content="Sprint review and you can't remember what you shipped? Worktale turns your git history into a searchable work log with AI digests. 100% local. No account." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://worktale.org/lander" />
+        <meta property="og:url" content="https://worktale.org/lander-sprint" />
         <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Worktale — Proof of What You Actually Shipped" />
-        <meta name="twitter:description" content="Private repos don't build public proof. A free CLI that turns your git history into a portable record of your engineering output. 100% local. No account." />
+        <meta name="twitter:title" content="Worktale — What Did You Actually Ship This Sprint?" />
+        <meta name="twitter:description" content="Sprint review and you can't remember what you shipped? Worktale turns your git history into a searchable work log with AI digests. 100% local. No account." />
         <meta name="twitter:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -57,7 +57,7 @@
 
         <main>
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- HERO — single pain point, single CTA -->
+            <!-- HERO — Dev pain / sprint review angle -->
             <!-- ═══════════════════════════════════════════════════════ -->
             <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-8 pb-16">
                 <!-- Scanline overlay -->
@@ -88,20 +88,20 @@
                     <h1
                         class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] mb-6"
                     >
-                        <span class="text-text-primary">&ldquo;What did you ship<br />this quarter?&rdquo;</span>
+                        <span class="text-text-primary">&ldquo;What did you work on<br />this sprint?&rdquo;</span>
                     </h1>
 
                     <p
-                        class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-3 leading-relaxed"
+                        class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-3 leading-relaxed italic"
                     >
-                        You know the answer. You just can&rsquo;t prove it.
+                        *stares at Jira tickets that don&rsquo;t reflect reality*
                     </p>
                     <p
                         class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
                     >
-                        Worktale is a free CLI that turns your git history into a
-                        portable record of your engineering output. Commits, stats, daily
-                        summaries&mdash;all local, all private. One command to install. Nothing leaves your machine.
+                        Worktale watches your actual commits across every repo and builds a
+                        searchable work log&mdash;with AI digests, streaks, and heatmaps. All local.
+                        Nothing leaves your machine.
                     </p>
 
                     <!-- Install CTA -->
@@ -160,7 +160,7 @@
             </section>
 
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- PROBLEM → SOLUTION (fast scroll) -->
+            <!-- PROBLEM → SOLUTION (sprint/standup-focused) -->
             <!-- ═══════════════════════════════════════════════════════ -->
             <section class="py-16 md:py-20 border-t border-border-dim">
                 <div class="mx-auto max-w-4xl px-6">
@@ -171,23 +171,23 @@
                             <ul class="space-y-3 text-text-secondary text-sm">
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    Months of work behind firewalls&mdash;invisible
+                                    Standups: &ldquo;Yesterday I&hellip; worked on stuff&rdquo;
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    Performance reviews: &ldquo;I did&hellip; a lot of stuff&rdquo;
+                                    Sprint demos where you forget half of what you shipped
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    Private repos don&rsquo;t show on GitHub&rsquo;s contribution graph
+                                    Jira tickets that don&rsquo;t reflect the real work
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    Time trackers that feel like surveillance
+                                    End of quarter: scrambling to reconstruct what happened
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    No record of what you actually built
+                                    No single place to see everything you actually did
                                 </li>
                             </ul>
                         </div>
@@ -197,23 +197,23 @@
                             <ul class="space-y-3 text-text-secondary text-sm">
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Every commit tracked automatically via git hooks
+                                    Open <code class="text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-xs">worktale today</code> and nail every standup
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Daily summaries, streaks, and heatmaps in your terminal
+                                    Daily summaries, streaks, and heatmaps built automatically
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    AI-generated digests from local Ollama&mdash;no data sent anywhere
+                                    AI digests turn commits into readable work summaries
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    100% local SQLite database. Zero network requests
+                                    Browse any day, any week&mdash;searchable history across all repos
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Proof of what you shipped&mdash;on your terms
+                                    100% local. Not a time tracker. Not surveillance. Just your git log, organized.
                                 </li>
                             </ul>
                         </div>
@@ -389,20 +389,20 @@
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-terminal-green mb-2">Hate writing status updates</p>
+                            <p class="text-text-secondary text-sm">Worktale builds your daily summary automatically from git. Open <code class="text-terminal-green bg-terminal-green/10 px-1 py-0.5 rounded text-xs">worktale today</code> and you&rsquo;re done.</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-terminal-green mb-2">Work across multiple repos</p>
+                            <p class="text-text-secondary text-sm">Frontend, backend, infra&mdash;all tracked in one place. See your complete engineering output, not fragments.</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
                             <p class="font-mono text-sm text-terminal-green mb-2">Performance reviews</p>
                             <p class="text-text-secondary text-sm">Walk in with a complete record of everything you shipped. Commits, lines, daily summaries&mdash;no more guessing.</p>
                         </div>
                         <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
-                            <p class="font-mono text-sm text-terminal-green mb-2">Private repo work</p>
-                            <p class="text-text-secondary text-sm">Your contributions don&rsquo;t show on GitHub? Worktale captures everything locally&mdash;firewalls, NDAs, and all.</p>
-                        </div>
-                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
-                            <p class="font-mono text-sm text-terminal-green mb-2">Job searching</p>
-                            <p class="text-text-secondary text-sm">Build an evidence trail of your real engineering work. Worktale Cloud will turn it into a shareable portfolio.</p>
-                        </div>
-                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
-                            <p class="font-mono text-sm text-terminal-green mb-2">Personal accountability</p>
-                            <p class="text-text-secondary text-sm">See your streak. Track your momentum. End each day knowing exactly what you accomplished.</p>
+                            <p class="font-mono text-sm text-terminal-green mb-2">Want to track momentum</p>
+                            <p class="text-text-secondary text-sm">See your streak. Browse your heatmap. End each day knowing exactly what you accomplished&mdash;not what Jira says you did.</p>
                         </div>
                     </div>
                 </div>
@@ -414,7 +414,7 @@
             <section class="py-20 md:py-28 border-t border-border-dim bg-surface-1/20">
                 <div class="mx-auto max-w-3xl px-6 text-center">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Start recording your story.
+                        Never blank on a standup again.
                     </h2>
                     <p class="text-text-secondary mb-8">
                         One command. Takes 10 seconds. Works with any git repo.

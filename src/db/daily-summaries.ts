@@ -99,6 +99,22 @@ export function markPublished(repoId: number, date: string): void {
   db.prepare('UPDATE daily_summaries SET published = 1, published_at = ? WHERE repo_id = ? AND date = ?').run(now, repoId, date);
 }
 
+export function getDatesNeedingAnnotation(repoId: number, overwrite: boolean): DailySummary[] {
+  const db = getDb();
+  if (overwrite) {
+    return db.prepare(`
+      SELECT * FROM daily_summaries
+      WHERE repo_id = ? AND commits_count > 0
+      ORDER BY date ASC
+    `).all(repoId) as DailySummary[];
+  }
+  return db.prepare(`
+    SELECT * FROM daily_summaries
+    WHERE repo_id = ? AND commits_count > 0 AND (ai_draft IS NULL OR ai_draft = '')
+    ORDER BY date ASC
+  `).all(repoId) as DailySummary[];
+}
+
 export function getTodaySummary(repoId: number): DailySummary | undefined {
   const today = new Date().toISOString().slice(0, 10);
   return getDailySummary(repoId, today);

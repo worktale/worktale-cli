@@ -503,7 +503,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
             <span class="font-mono text-xs text-text-muted">Bulk import</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Recursively scan for git repositories starting from the current directory, import their commit history into the Worktale database, and display an aggregate summary. <strong class="text-text-primary">No hooks are installed</strong> &mdash; repos are tracked read-only. Perfect for getting an at-a-glance view of all your work without committing to per-repo setup.</p>
+            <p class="text-text-secondary text-sm">Recursively scan for git repositories starting from the current directory, import their commit history into the Worktale database, and display an aggregate summary. <strong class="text-text-primary">No hooks are installed</strong> &mdash; repos are tracked read-only. With <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--annotate</code>, retroactively generate AI-powered daily summaries for historical commits &mdash; filling in the narrative for work done before you started using Worktale.</p>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
               <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
@@ -514,6 +514,18 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
                 <div class="px-4 py-2.5 flex items-start gap-4">
                   <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-s, --since &lt;period&gt;</code>
                   <p class="text-text-secondary text-sm">Only import commits from this period. Accepts shorthand: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">30d</code> (days), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">6w</code> (weeks), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">3m</code> (months), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">1y</code> (years), or any git date string. <strong class="text-text-primary">Recommended for faster scans</strong> &mdash; without this flag, all-time history is imported which can be slow for large repos.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">-a, --annotate</code>
+                  <p class="text-text-secondary text-sm">After importing, generate AI-powered daily summaries for days that lack annotations. In interactive mode (default), prompts per day with options: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">y</code> (annotate), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">n</code> (skip), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">all</code> (switch to auto), <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">skip-rest</code> (stop annotating). Uses your configured AI provider (Ollama) or falls back to template mode.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--auto</code>
+                  <p class="text-text-secondary text-sm">Use with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--annotate</code>. Skip all prompts and auto-generate annotations for every unannotated day.</p>
+                </div>
+                <div class="px-4 py-2.5 flex items-start gap-4">
+                  <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--overwrite</code>
+                  <p class="text-text-secondary text-sm">Use with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--annotate</code>. Re-generate annotations even for days that already have them. Manual notes added via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> are never overwritten.</p>
                 </div>
               </div>
             </div>
@@ -526,6 +538,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
                 <li>Registers each repo in the database and runs historical analysis via a worker thread, filtered by <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--since</code> if provided</li>
                 <li>Shows per-repo progress bars and a final aggregate summary (total repos, commits, lines added/removed)</li>
                 <li>Gracefully handles errors per-repo &mdash; failures don't stop the remaining repos</li>
+                <li>With <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--annotate</code>, runs an annotation pass: groups commits by day, generates &ldquo;What I built&rdquo; summaries using AI or template mode, and saves them to the dashboard</li>
               </ol>
             </div>
             <div>
@@ -538,6 +551,12 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
                 <p class="text-text-muted"># Full history (slower for large repos)</p>
                 <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch --depth 2 --since 6w</p>
                 <p class="text-text-muted"># Shallow search, last 6 weeks only</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch --since 1y --annotate</p>
+                <p class="text-text-muted"># Import + interactive annotation &mdash; prompts per day</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch --since 1y --annotate --auto</p>
+                <p class="text-text-muted"># Import + auto-annotate all days (no prompts)</p>
+                <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale batch --annotate --auto --overwrite</p>
+                <p class="text-text-muted"># Re-generate all annotations (preserves manual notes)</p>
               </div>
             </div>
             <div>
@@ -558,7 +577,19 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
                 <p>  Lines added:   <span class="text-terminal-green">+53,695</span></p>
                 <p>  Lines removed: <span class="text-red-400">-19,444</span></p>
                 <p class="mt-2">  <span class="text-neon-amber">&#9889;</span>  <span class="text-text-primary font-bold">Batch scan complete!</span></p>
-                <p class="mt-1 text-text-muted">  No hooks were installed. Repos are tracked read-only.</p>
+                <p class="mt-3">  <span class="text-neon-amber">&#9889;</span>  <span class="text-text-primary font-bold">Annotation Pass</span></p>
+                <p class="text-text-muted">  Using template mode</p>
+                <p class="text-text-muted">  Auto mode &mdash; generating all annotations</p>
+                <p class="text-text-muted">  &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                <p class="mt-1">  <span class="text-text-primary font-bold">my-api</span>  <span class="text-terminal-green">47 days</span> <span class="text-text-muted">to annotate</span></p>
+                <p>    <span class="text-terminal-green">&#10003;</span>  47 days annotated</p>
+                <p>  <span class="text-text-primary font-bold">frontend</span>  <span class="text-terminal-green">62 days</span> <span class="text-text-muted">to annotate</span></p>
+                <p>    <span class="text-terminal-green">&#10003;</span>  62 days annotated</p>
+                <p>  <span class="text-text-primary font-bold">infra</span>  <span class="text-text-muted">all days already annotated</span></p>
+                <p class="mt-2">  <span class="text-text-primary font-bold">Annotation Summary</span></p>
+                <p>  <span class="text-text-muted">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</span></p>
+                <p>  Annotated:  <span class="text-text-primary font-bold">109</span> days</p>
+                <p class="mt-2 text-text-muted">  No hooks were installed. Repos are tracked read-only.</p>
               </div>
             </div>
           </div>

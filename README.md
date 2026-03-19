@@ -1,12 +1,10 @@
 # Worktale
 
-**Your dev story, told beautifully.**
+**Proof of what you actually shipped.**
 
-You ship code behind firewalls. To private repos. In silence. Months of brilliant work — invisible. Even to you.
+Private repos don't build public proof. You ship code behind firewalls, to classified systems, under NDAs — and months of brilliant engineering stays invisible. When it's time for a performance review, a job search, or a client handoff, you're left reconstructing from memory.
 
-Worktale is a local-first CLI that turns your git history into a personal record of everything you actually built. No account. No cloud. No code leaves your machine.
-
-One command to set up. Zero friction after that.
+Worktale is a local-first CLI that turns your git history into a portable record of your engineering output. No account. No cloud. No code leaves your machine.
 
 ```
 npm install -g worktale
@@ -25,30 +23,15 @@ worktale batch --since 3m
 
 This recursively finds every git repo under the current directory and imports the last 3 months of commit history. Nothing is modified in your repos.
 
-### 🤖 NEW: Claude Code Integration (v1.1.0+)
-
-Worktale has a **Claude Code plugin** that turns your AI coding agent into a session narrator. After every commit, the agent automatically adds rich context — intent, decisions, trade-offs — to your daily work log.
-
-```
-# In Claude Code:
-/plugin marketplace add worktale/worktale-plugin
-/plugin install worktale-plugin@worktale-plugin
-/worktale
-```
-
-That's it. The agent narrates as you code. Your end-of-day digest writes itself.
-
-> **Requires Worktale CLI v1.1.0+** — `npm install -g worktale@latest`
-
-[Full plugin docs →](https://worktale.org/plugin.html)
-
 ---
 
 ## What You Get
 
-**A daily journal you never have to write.** Worktale captures commit metadata — messages, line counts, files changed, timestamps — and organizes it into a browsable, searchable personal work log.
+**A portable record you actually own.** Worktale captures commit metadata — messages, line counts, files changed, timestamps — and organizes it into a browsable, searchable work log. Walk into your next review with exact receipts, not vague recollections.
 
-**An interactive dashboard in your terminal.** Three views: today's overview, a day-by-day log with editable notes, and a full history with heatmaps and streak tracking. Navigate with keyboard shortcuts. No browser required.
+**An interactive dashboard in your terminal.** Three views: today's overview, a day-by-day log with editable notes, and a full history with GitHub-style heatmaps and streak tracking. Navigate with keyboard shortcuts. No browser required.
+
+**AI session narration.** Connect your AI coding agent — Claude Code, Copilot, Codex, Cursor, Cline, or Windsurf — and it narrates each commit automatically: intent, decisions, trade-offs, problems solved. Your end-of-day digest writes itself.
 
 **AI-powered digests (optional, local-only).** Generate end-of-day summaries using a local Ollama instance. Your commit messages never leave your machine. The default template mode doesn't use AI at all.
 
@@ -61,7 +44,7 @@ That's it. The agent narrates as you code. Your end-of-day digest writes itself.
 | Command | What it does |
 |---------|-------------|
 | `worktale init` | Initialize in current repo — hooks, history scan, config |
-| `worktale batch` | Recursively scan for repos and import history (no hooks) |
+| `worktale batch` | Recursively scan for repos, import history, and optionally annotate (no hooks) |
 | `worktale dash` | Interactive TUI dashboard |
 | `worktale today` | Today's commits, lines, files, coding time |
 | `worktale status` | One-line summary with streak |
@@ -73,7 +56,7 @@ That's it. The agent narrates as you code. Your end-of-day digest writes itself.
 | `worktale hook` | Install, uninstall, or check status of git hooks |
 | `worktale capture` | Capture latest commit (used by git hooks) |
 | `worktale nudge` | Manage end-of-day reminders |
-| `worktale publish` | Cloud publishing (coming soon) |
+| `worktale publish` | Share your work record (coming soon) |
 
 Run `worktale --help` or `worktale <command> --help` for full details.
 
@@ -89,6 +72,18 @@ worktale batch --depth 2          # Only search 2 levels deep
 ```
 
 Accepts shorthand periods: `30d` (days), `6w` (weeks), `3m` (months), `1y` (years).
+
+### Retroactive annotation
+
+Use `--annotate` to generate AI-powered daily summaries for historical commits — filling in the narrative for work done before you started using Worktale.
+
+```bash
+worktale batch --since 1y --annotate         # Interactive — prompts per day (y/n/all/skip-rest)
+worktale batch --since 1y --annotate --auto  # Auto — annotates all days without prompting
+worktale batch --annotate --auto --overwrite # Re-generate existing annotations
+```
+
+Uses your configured AI provider (Ollama) or template mode. Each day's commits are grouped and summarized into a "What I built" digest, saved to the dashboard. Manual notes (`worktale note`) are never overwritten.
 
 ### Hook management
 
@@ -139,15 +134,26 @@ worktale note "Deployed v2.1.0 to production"
 
 ---
 
+## Who It's For
+
+- **Enterprise developers** — Private repos and classified systems don't build public proof. Worktale does.
+- **Performance reviews** — Walk in with exact receipts: commits, lines shipped, streaks, modules touched.
+- **Job transitions** — A portable record that follows you after you leave. NDA-safe — no code, just metadata.
+- **AI-assisted development** — Capture the *why* behind AI-generated code, not just the diff.
+- **Freelancers & consultants** — Show clients exactly what was delivered and when.
+
+---
+
 ## Privacy
 
 This isn't a privacy policy checkbox. It's the architecture.
 
-- All data lives in a local SQLite database (`~/.worktale/worktale.db`)
-- No telemetry. No analytics. No network requests.
+- All data lives in a local SQLite database (`~/.worktale/data.db`)
+- No telemetry. No analytics. No network requests
 - The `.worktale/` directory is auto-added to `.gitignore`
-- Git hooks capture metadata only — never file contents
-- AI digests run against a local Ollama instance. Nothing external.
+- Git hooks capture metadata only — never file contents or diffs
+- AI digests run against a local Ollama instance. Nothing external
+- Delete `~/.worktale/` and all data is gone. Permanently.
 
 Your code stays on your machine. Always.
 
@@ -165,7 +171,8 @@ Your code stays on your machine. Always.
 1. Recursively walks from the current directory, finding all git repos
 2. Skips build output (`bin`, `obj`, `dist`, `target`, `build`), dependencies (`node_modules`, `vendor`, `packages`), and other non-repo directories for speed
 3. Imports commit history for each repo into the shared database — optionally filtered by `--since`
-4. No hooks installed, no files created in your repos. Read-only scan.
+4. With `--annotate`, generates per-day AI summaries for historical commits — retroactively building your work narrative
+5. No hooks installed, no files created in your repos. Read-only scan.
 
 The hook supports both bash and PowerShell for cross-platform compatibility (Windows, macOS, Linux).
 
@@ -201,7 +208,7 @@ git clone https://github.com/worktale/worktale-cli.git
 cd worktale-cli
 npm install
 npm run build    # tsup dual build (CLI + worker)
-npm test         # vitest — 425 tests
+npm test         # vitest — 448 tests
 ```
 
 The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.

@@ -14,6 +14,7 @@ import {
   getAllDailySummaries,
   updateUserNotes,
   updateAiDraft,
+  getDatesNeedingAnnotation,
   markPublished,
   getTodaySummary,
 } from '../../src/db/daily-summaries.js';
@@ -221,6 +222,70 @@ describe('daily-summaries', () => {
 
       const row = getDailySummary(repoId, '2025-06-01');
       expect(row!.ai_draft).toBe('v2');
+    });
+  });
+
+  // ---------- getDatesNeedingAnnotation ----------
+
+  describe('getDatesNeedingAnnotation', () => {
+    it('returns dates with commits but no ai_draft', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 5, ai_draft: 'existing' });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-03', commits_count: 2 });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates).toHaveLength(2);
+      expect(dates.map((d) => d.date)).toEqual(['2025-06-01', '2025-06-03']);
+    });
+
+    it('returns all dates with commits when overwrite is true', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 5, ai_draft: 'existing' });
+
+      const dates = getDatesNeedingAnnotation(repoId, true);
+      expect(dates).toHaveLength(2);
+    });
+
+    it('excludes dates with zero commits', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 0 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 3 });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates).toHaveLength(1);
+      expect(dates[0].date).toBe('2025-06-02');
+    });
+
+    it('treats empty string ai_draft as needing annotation', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3, ai_draft: '' });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates).toHaveLength(1);
+    });
+
+    it('returns empty array when all dates are annotated', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3, ai_draft: 'done' });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates).toHaveLength(0);
+    });
+
+    it('returns dates ordered by date ascending', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-03', commits_count: 1 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 1 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 1 });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates.map((d) => d.date)).toEqual(['2025-06-01', '2025-06-02', '2025-06-03']);
+    });
+
+    it('is scoped to the repo', () => {
+      const otherRepo = seedRepo('/other', 'other');
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: otherRepo, date: '2025-06-01', commits_count: 5 });
+
+      const dates = getDatesNeedingAnnotation(repoId, false);
+      expect(dates).toHaveLength(1);
+      expect(dates[0].commits_count).toBe(3);
     });
   });
 

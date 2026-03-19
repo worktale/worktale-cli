@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join, basename, resolve } from 'node:path';
+import { createInterface } from 'node:readline';
 import chalk from 'chalk';
 import { banner, brandText, positiveText, dimText, streakText, secondaryText } from '../tui/theme.js';
 import { getCurrentUserEmail } from '../git/log.js';
@@ -9,6 +10,10 @@ import { runAnalysis } from '../workers/run-analysis.js';
 import type { AnalysisProgress, AnalysisResult } from '../workers/run-analysis.js';
 import { closeDb } from '../db/index.js';
 import { formatNumber } from '../utils/formatting.js';
+import { getCommitsByDate } from '../db/commits.js';
+import { getDatesNeedingAnnotation, updateAiDraft } from '../db/daily-summaries.js';
+import { getModuleActivityByDate } from '../db/file-activity.js';
+import { generateTemplateDigest, generateWithOllama, buildOllamaPrompt } from '../utils/digest-generator.js';
 
 function renderProgressBar(current: number, total: number, label: string): string {
   const width = 24;
@@ -108,7 +113,187 @@ function parseSinceValue(value: string): string {
   }
 }
 
-export async function batchCommand(options: { depth?: string; since?: string } = {}): Promise<void> {
+/**
+ * Prompt the user with an annotation choice.
+ * Returns 'y', 'n', 'all', or 'skip'.
+ */
+function promptAnnotateChoice(question: string): Promise<'y' | 'n' | 'all' | 'skip'> {
+  return new Promise((resolve) => {
+    const rl = createInterface({ input: process.stdin, output: process.stdout });
+    rl.question(question, (answer) => {
+      rl.close();
+      const trimmed = answer.trim().toLowerCase();
+      if (trimmed === 'all' || trimmed === 'a') resolve('all');
+      else if (trimmed === 'skip' || trimmed === 'skip-rest' || trimmed === 's') resolve('skip');
+      else if (trimmed === 'n' || trimmed === 'no') resolve('n');
+      else resolve('y'); // default (enter) = yes
+    });
+  });
+}
+
+/**
+ * Generate a digest for a single day's commits using the configured AI provider.
+ */
+async function generateAnnotation(
+  repoId: number,
+  date: string,
+  summary: { commits_count: number; lines_added: number; lines_removed: number; files_touched: number },
+  ollamaConfig: { available: boolean; model: string; url: string } | null,
+): Promise<string> {
+  const dateObj = new Date(date + 'T12:00:00');
+  const commits = getCommitsByDate(repoId, date);
+  const modules = getModuleActivityByDate(repoId, date);
+
+  if (ollamaConfig?.available) {
+    try {
+      const prompt = buildOllamaPrompt(commits, summary, modules);
+      return await generateWithOllama(prompt, ollamaConfig.model, ollamaConfig.url);
+    } catch {
+      // Fall back to template
+    }
+  }
+
+  return generateTemplateDigest(dateObj, commits, summary, modules);
+}
+
+/**
+ * Run the annotation pass: generate AI annotations for historical days that lack them.
+ */
+async function annotatePass(
+  repos: Array<{ id: number; name: string }>,
+  options: { auto?: boolean; overwrite?: boolean },
+): Promise<void> {
+  const config = loadConfig();
+  const aiProvider = config.ai.provider;
+  const ollamaUrl = config.ai.ollamaUrl || 'http://localhost:11434';
+  const ollamaModel = config.ai.model;
+  const useOllama = aiProvider === 'ollama' && !!ollamaModel;
+
+  // Check Ollama connectivity if needed
+  let ollamaConfig: { available: boolean; model: string; url: string } | null = null;
+  if (useOllama) {
+    let available = false;
+    try {
+      const checkResponse = await fetch(`${ollamaUrl}/api/tags`, {
+        signal: AbortSignal.timeout(3000),
+      });
+      available = checkResponse.ok;
+    } catch {
+      available = false;
+    }
+    ollamaConfig = { available, model: ollamaModel!, url: ollamaUrl };
+  }
+
+  console.log('');
+  console.log('  ' + streakText('\u26A1') + '  ' + chalk.bold('Annotation Pass'));
+  if (useOllama && ollamaConfig?.available) {
+    console.log('  ' + dimText(`Using Ollama (${ollamaModel})`));
+  } else if (useOllama && !ollamaConfig?.available) {
+    console.log('  ' + chalk.yellow('\u26A0') + '  ' + chalk.yellow('Ollama not available, using template mode'));
+  } else {
+    console.log('  ' + dimText('Using template mode'));
+  }
+  if (options.auto) {
+    console.log('  ' + dimText('Auto mode \u2014 generating all annotations'));
+  }
+  if (options.overwrite) {
+    console.log('  ' + dimText('Overwrite mode \u2014 replacing existing annotations'));
+  }
+  console.log('  ' + dimText('\u2500'.repeat(40)));
+  console.log('');
+
+  let totalAnnotated = 0;
+  let totalSkipped = 0;
+  let autoMode = options.auto ?? false;
+  let skipRest = false;
+
+  for (const repo of repos) {
+    const dates = getDatesNeedingAnnotation(repo.id, options.overwrite ?? false);
+
+    if (dates.length === 0) {
+      console.log('  ' + chalk.bold(repo.name) + '  ' + dimText('all days already annotated'));
+      continue;
+    }
+
+    console.log('  ' + chalk.bold(repo.name) + '  ' + positiveText(`${dates.length} day${dates.length === 1 ? '' : 's'}`) + dimText(' to annotate'));
+
+    let repoAnnotated = 0;
+
+    for (let i = 0; i < dates.length; i++) {
+      if (skipRest) {
+        totalSkipped++;
+        continue;
+      }
+
+      const ds = dates[i];
+      const summaryData = {
+        commits_count: ds.commits_count,
+        lines_added: ds.lines_added,
+        lines_removed: ds.lines_removed,
+        files_touched: ds.files_touched,
+      };
+
+      if (!autoMode) {
+        // Interactive mode: show day info and prompt
+        const commits = getCommitsByDate(repo.id, ds.date);
+        console.log('');
+        console.log('    ' + chalk.bold(ds.date) + '  ' + dimText(`(${ds.commits_count} commit${ds.commits_count === 1 ? '' : 's'})`));
+        const preview = commits.slice(0, 5);
+        for (const c of preview) {
+          console.log('      ' + dimText('\u2022') + '  ' + (c.message || dimText('(no message)')));
+        }
+        if (commits.length > 5) {
+          console.log('      ' + dimText(`... and ${commits.length - 5} more`));
+        }
+
+        const answer = await promptAnnotateChoice('    Annotate? (Y/n/all/skip-rest) ');
+
+        if (answer === 'skip') {
+          skipRest = true;
+          totalSkipped++;
+          console.log('    ' + dimText('Skipping remaining days'));
+          continue;
+        }
+        if (answer === 'all') {
+          autoMode = true;
+          // Fall through to generate this day and all remaining
+        }
+        if (answer === 'n') {
+          totalSkipped++;
+          continue;
+        }
+      }
+
+      // Generate and save annotation
+      const digest = await generateAnnotation(repo.id, ds.date, summaryData, ollamaConfig);
+      updateAiDraft(repo.id, ds.date, digest);
+      totalAnnotated++;
+      repoAnnotated++;
+
+      if (autoMode) {
+        process.stdout.write(`\r    ${dimText('Annotating...')}  ${repoAnnotated}/${dates.length} days   `);
+      } else {
+        console.log('    ' + positiveText('\u2713') + '  Annotated');
+      }
+    }
+
+    if (autoMode && repoAnnotated > 0) {
+      process.stdout.write('\r' + ' '.repeat(60) + '\r');
+      console.log('    ' + positiveText('\u2713') + '  ' + `${repoAnnotated} day${repoAnnotated === 1 ? '' : 's'} annotated`);
+    }
+  }
+
+  // Annotation summary
+  console.log('');
+  console.log('  ' + chalk.bold('Annotation Summary'));
+  console.log('  ' + dimText('\u2500'.repeat(40)));
+  console.log('  Annotated:  ' + chalk.bold(String(totalAnnotated)) + ' days');
+  if (totalSkipped > 0) {
+    console.log('  Skipped:    ' + dimText(String(totalSkipped)) + ' days');
+  }
+}
+
+export async function batchCommand(options: { depth?: string; since?: string; annotate?: boolean; auto?: boolean; overwrite?: boolean } = {}): Promise<void> {
   try {
     const startPath = resolve(process.cwd());
     const maxDepth = parseInt(options.depth ?? '5', 10);
@@ -185,6 +370,7 @@ export async function batchCommand(options: { depth?: string; since?: string } =
     let totalLinesAdded = 0;
     let totalLinesRemoved = 0;
     const errors: { repo: string; error: string }[] = [];
+    const processedRepos: Array<{ id: number; name: string }> = [];
 
     for (let i = 0; i < repoPaths.length; i++) {
       const repoPath = repoPaths[i];
@@ -221,6 +407,7 @@ export async function batchCommand(options: { depth?: string; since?: string } =
         totalCommits += stats.totalCommits;
         totalLinesAdded += stats.linesAdded;
         totalLinesRemoved += stats.linesRemoved;
+        processedRepos.push({ id: repoId, name: repoName });
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         console.log(chalk.red('\u2717') + '  ' + dimText(msg));
@@ -246,6 +433,12 @@ export async function batchCommand(options: { depth?: string; since?: string } =
 
     console.log('');
     console.log('  ' + streakText('\u26A1') + '  ' + chalk.bold('Batch scan complete!'));
+
+    // Step 5: Annotation pass (if requested)
+    if (options.annotate && processedRepos.length > 0) {
+      await annotatePass(processedRepos, { auto: options.auto, overwrite: options.overwrite });
+    }
+
     console.log('');
     console.log('  ' + secondaryText('No hooks were installed. Repos are tracked read-only.'));
     console.log('  ' + secondaryText('Run') + ' ' + brandText('worktale hook install') + ' ' + secondaryText('in any repo to add auto-capture.'));
