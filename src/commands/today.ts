@@ -7,6 +7,7 @@ import { getCommitsByDate } from '../db/commits.js';
 import { getDailySummary } from '../db/daily-summaries.js';
 import { closeDb } from '../db/index.js';
 import { formatNumber, formatDate, formatRelativeTime, formatDuration, getDateString } from '../utils/formatting.js';
+import { showCatchupBanner } from '../utils/catchup-banner.js';
 
 export async function todayCommand(): Promise<void> {
   try {
@@ -108,6 +109,7 @@ export async function todayCommand(): Promise<void> {
     }
 
     console.log('');
+    showCatchupBanner();
     closeDb();
     process.exit(0);
   } catch (err: unknown) {

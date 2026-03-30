@@ -82,11 +82,11 @@ Capture the latest commit. This is the command called by the git post-commit hoo
 Options: `-s, --silent` (suppress output)
 
 ### worktale publish
-Publish your digest to Worktale Cloud. This is a Phase 2 feature that is not yet implemented — the command currently displays an informational message about the upcoming cloud service.
+Publish your digest to Worktale Cloud. Syncs your local work record to your cloud profile at worktale.dev. Requires `cloudEnabled: true` and a valid `cloudToken` in config.
 
-## Worktale Cloud (Coming Soon)
+## Worktale Cloud (Beta)
 
-Worktale Cloud (worktale.dev) transforms the local dev journal into a living developer portfolio. Phase 2 features:
+Worktale Cloud (worktale.dev) is now live in beta. It transforms the local dev journal into a living developer portfolio:
 
 1. **Public Profile & Heatmap**: Developer portfolio at worktale.dev/username — GitHub-style heatmap including private repos
 2. **Cross-Repo Unified Timeline**: All repos in one stream, giving the full picture of your engineering journey
@@ -94,7 +94,7 @@ Worktale Cloud (worktale.dev) transforms the local dev journal into a living dev
 4. **Standup & Retro Generator**: "What did I do yesterday?" — answered instantly
 5. **Email Weekly Summary**: Your week's work delivered to your inbox — no login required
 
-The CLI remains free and open source forever. Worktale Cloud will be a paid product.
+The CLI remains free and open source forever. Worktale Cloud is free during beta.
 
 ### worktale nudge
 End-of-day nudge system that reminds you to write your daily summary. Installs a check into your shell profile (.bashrc, .zshrc, or PowerShell profile) that triggers after a configurable time (default 5:00 PM).

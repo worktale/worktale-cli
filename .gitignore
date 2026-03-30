@@ -10,6 +10,9 @@ dist/
 coverage/
 ignore/ 
 
+# Cloud backend (private, separate repo)
+cloud/
+
 # Internal docs (not for public repo)
 DEVGUIDE.md
 TASKS.md

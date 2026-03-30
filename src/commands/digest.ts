@@ -11,6 +11,7 @@ import { closeDb } from '../db/index.js';
 import { formatDate, getDateString } from '../utils/formatting.js';
 import { brandText, positiveText, negativeText, dimText, streakText, secondaryText } from '../tui/theme.js';
 import { generateTemplateDigest, generateWithOllama, buildOllamaPrompt } from '../utils/digest-generator.js';
+import { showCatchupBanner } from '../utils/catchup-banner.js';
 
 function promptYesNo(question: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -149,15 +150,8 @@ export async function digestCommand(): Promise<void> {
       console.log('  ' + dimText('Digest discarded.'));
     }
 
-    // Upsell message
     console.log('');
-    console.log('  ' + dimText('\u2500'.repeat(50)));
-    console.log('');
-    console.log('  ' + streakText('\u26A1') + '  ' + chalk.bold('Want AI-polished digests?'));
-    console.log('  ' + secondaryText('Worktale Cloud (coming soon) turns your raw commits'));
-    console.log('  ' + secondaryText('into polished, shareable summaries.'));
-    console.log('  ' + brandText('worktale.org') + ' ' + dimText('for early access'));
-    console.log('');
+    showCatchupBanner();
 
     closeDb();
     process.exit(0);

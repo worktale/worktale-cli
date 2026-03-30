@@ -17,6 +17,7 @@ import {
   getDatesNeedingAnnotation,
   markPublished,
   getTodaySummary,
+  getUnpublishedDays,
 } from '../../src/db/daily-summaries.js';
 
 // Helper: seed a repo row and return its id.
@@ -330,6 +331,93 @@ describe('daily-summaries', () => {
 
     it('returns undefined when no summary exists for today', () => {
       expect(getTodaySummary(repoId)).toBeUndefined();
+    });
+  });
+
+  // ---------- getUnpublishedDays ----------
+
+  describe('getUnpublishedDays', () => {
+    it('returns days with commits that are not published', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 5 });
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(2);
+    });
+
+    it('excludes today', () => {
+      const today = new Date().toISOString().slice(0, 10);
+      upsertDailySummary({ repo_id: repoId, date: today, commits_count: 3 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 5 });
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(1);
+      expect(days[0].date).toBe('2025-06-01');
+    });
+
+    it('excludes published days', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 5 });
+      markPublished(repoId, '2025-06-01');
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(1);
+      expect(days[0].date).toBe('2025-06-02');
+    });
+
+    it('excludes days with zero commits', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 0 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 3 });
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(1);
+      expect(days[0].date).toBe('2025-06-02');
+    });
+
+    it('returns empty array when all days are published', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      markPublished(repoId, '2025-06-01');
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(0);
+    });
+
+    it('aggregates commits across repos for the same date', () => {
+      const otherRepo = seedRepo('/other', 'other');
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: otherRepo, date: '2025-06-01', commits_count: 5 });
+
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(1);
+      expect(days[0].total_commits).toBe(8);
+      expect(days[0].repo_count).toBe(2);
+    });
+
+    it('returns dates ordered descending (most recent first)', () => {
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 1 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-03', commits_count: 1 });
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-02', commits_count: 1 });
+
+      const days = getUnpublishedDays();
+      expect(days.map((d) => d.date)).toEqual(['2025-06-03', '2025-06-02', '2025-06-01']);
+    });
+
+    it('returns empty array when no summaries exist', () => {
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(0);
+    });
+
+    it('counts date as unpublished if any repo is unpublished for that date', () => {
+      const otherRepo = seedRepo('/other', 'other');
+      upsertDailySummary({ repo_id: repoId, date: '2025-06-01', commits_count: 3 });
+      upsertDailySummary({ repo_id: otherRepo, date: '2025-06-01', commits_count: 5 });
+      markPublished(repoId, '2025-06-01');
+
+      // One repo is still unpublished
+      const days = getUnpublishedDays();
+      expect(days).toHaveLength(1);
+      expect(days[0].total_commits).toBe(5);
+      expect(days[0].repo_count).toBe(1);
     });
   });
 });

@@ -1978,7 +1978,7 @@
                             <p
                                 class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-3"
                             >
-                                What's Next
+                                Now in Beta
                             </p>
                             <h2 class="text-3xl md:text-4xl font-bold mb-4">
                                 Worktale Cloud
@@ -1989,6 +1989,7 @@
                                 Everything stays local by default. But when
                                 you're ready to prove what you shipped, Worktale Cloud
                                 turns your local record into shareable, professional artifacts.
+                                Now live at <a href="https://worktale.dev" class="text-cyber-cyan hover:underline">worktale.dev</a>.
                             </p>
                             <div
                                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"
@@ -2098,76 +2099,15 @@
                                 </div>
                             </div>
 
-                            <!-- Email signup -->
-                            <div
-                                x-data="{
-            email: '',
-            status: 'idle',
-            message: '',
-            async submit() {
-              if (!this.email || !this.email.includes('@')) {
-                this.status = 'error';
-                this.message = 'Please enter a valid email.';
-                return;
-              }
-              this.status = 'loading';
-              try {
-                const form = new FormData();
-                form.append('email', this.email);
-                await fetch('https://forms.noundry.com/f/worktale', {
-                  method: 'POST',
-                  body: form,
-                  mode: 'no-cors',
-                });
-                // no-cors means we can't read the response, but the request goes through
-                this.status = 'success';
-                this.message = 'You\'re on the list. We\'ll be in touch.';
-                this.email = '';
-              } catch {
-                this.status = 'error';
-                this.message = 'Network error. Try again.';
-              }
-            }
-          }"
-                            >
-                                <p class="text-text-secondary text-sm mb-3">
-                                    Get early access when Cloud launches:
-                                </p>
-                                <form
-                                    @submit.prevent="submit()"
-                                    class="flex flex-col sm:flex-row gap-3 max-w-md"
+                            <!-- Cloud CTA -->
+                            <div>
+                                <a
+                                    href="https://worktale.dev"
+                                    class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all"
                                 >
-                                    <input
-                                        type="email"
-                                        x-model="email"
-                                        placeholder="dev@example.com"
-                                        class="flex-1 px-4 py-2.5 rounded-lg bg-surface-0 border border-border-dim text-text-primary font-mono text-sm placeholder:text-text-muted focus:outline-none focus:border-cyber-cyan/50 focus:ring-1 focus:ring-cyber-cyan/20 transition-all"
-                                        :disabled="status === 'loading' || status === 'success'"
-                                    />
-                                    <button
-                                        type="submit"
-                                        class="px-6 py-2.5 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all disabled:opacity-50 cursor-pointer whitespace-nowrap"
-                                        :disabled="status === 'loading' || status === 'success'"
-                                    >
-                                        <span
-                                            x-show="status === 'idle' || status === 'error'"
-                                            >Get Early Access</span
-                                        >
-                                        <span x-cloak x-show="status === 'loading'"
-                                            >Sending...</span
-                                        >
-                                        <span x-cloak x-show="status === 'success'"
-                                            >✓ Done</span
-                                        >
-                                    </button>
-                                </form>
-                                <p
-                                    x-show="message"
-                                    x-text="message"
-                                    class="mt-2 font-mono text-xs"
-                                    :class="status === 'success' ? 'text-terminal-green' : 'text-red-400'"
-                                    x-transition
-                                ></p>
+                                    Try Worktale Cloud &rarr;
+                                </a>
+                                <p class="text-text-muted text-xs mt-3 font-mono">Free during beta. No credit card required.</p>
                             </div>
                         </div>
                     </div>

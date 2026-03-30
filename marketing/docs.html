@@ -489,10 +489,10 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
         <div id="cmd-publish" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
           <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
             <code class="font-mono text-base text-terminal-green">worktale publish</code>
-            <span class="font-mono text-xs text-text-muted">Coming soon</span>
+            <span class="font-mono text-xs text-cyber-cyan">Beta</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Placeholder for the upcoming Worktale Cloud publishing feature. Currently displays an informational message about the upcoming cloud service where you'll be able to publish polished, shareable digests.</p>
+            <p class="text-text-secondary text-sm">Publish your digest to <a href="https://worktale.dev" class="text-terminal-green hover:underline">Worktale Cloud</a>. Syncs your local work record to your cloud profile, making it shareable and accessible from anywhere. Requires a Worktale Cloud account and <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">cloudEnabled: true</code> in config.</p>
           </div>
         </div>
 
@@ -797,11 +797,11 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
       <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim text-sm">
         <div class="px-4 py-3 flex items-start gap-4">
           <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">cloudEnabled</code>
-          <p class="text-text-secondary">Enable cloud sync (Phase 2). Default: <code class="text-text-muted">false</code></p>
+          <p class="text-text-secondary">Enable cloud sync with <a href="https://worktale.dev" class="text-terminal-green hover:underline">Worktale Cloud</a>. Default: <code class="text-text-muted">false</code></p>
         </div>
         <div class="px-4 py-3 flex items-start gap-4">
           <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">cloudToken</code>
-          <p class="text-text-secondary">Cloud authentication token (Phase 2). Default: <code class="text-text-muted">null</code></p>
+          <p class="text-text-secondary">Cloud authentication token. Get yours at <a href="https://worktale.dev" class="text-terminal-green hover:underline">worktale.dev</a>. Default: <code class="text-text-muted">null</code></p>
         </div>
         <div class="px-4 py-3 flex items-start gap-4">
           <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">nudgeTime</code>
@@ -866,7 +866,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
         <h2 class="text-2xl md:text-3xl font-bold">Data Storage</h2>
       </div>
 
-      <p class="text-text-secondary text-sm mb-6">All data is stored locally. No network calls are made (except optional Ollama). Nothing is ever sent to any server unless you explicitly opt in to Cloud (Phase 2).</p>
+      <p class="text-text-secondary text-sm mb-6">All data is stored locally. No network calls are made (except optional Ollama). Nothing is ever sent to any server unless you explicitly opt in to <a href="https://worktale.dev" class="text-terminal-green hover:underline">Worktale Cloud</a>.</p>
 
       <h3 class="font-mono text-sm text-terminal-green mb-3">File Locations</h3>
       <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim text-sm mb-8">
@@ -1140,7 +1140,7 @@ if ($worktale) {
           </div>
           <div class="mt-3 space-y-2">
             <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">What gets captured:</span> Intent behind changes, key decisions and trade-offs, problems solved and root causes, high-level description of what was built.</p>
-            <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">Where it appears:</span> Notes show up in <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale digest</code>, the TUI dashboard daily log, and the eventual cloud-published portfolio.</p>
+            <p class="text-text-secondary text-sm"><span class="text-text-primary font-medium">Where it appears:</span> Notes show up in <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale digest</code>, the TUI dashboard daily log, and your <a href="https://worktale.dev" class="text-terminal-green hover:underline">Worktale Cloud</a> portfolio.</p>
           </div>
         </div>
 

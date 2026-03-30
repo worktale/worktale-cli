@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale Cloud Is Live: Your Engineering Record, Shareable at worktale.dev — Worktale Blog</title>
+  <meta name="description" content="Worktale Cloud is now in beta. Public developer profiles, cross-repo timelines, AI-powered weekly digests, standup generators, and promotion packets — all at worktale.dev."/>
+  <meta property="og:title" content="Worktale Cloud Is Live: Your Engineering Record, Shareable at worktale.dev"/>
+  <meta property="og:description" content="Your local work record goes public. Developer profiles, cross-repo timelines, and AI weekly digests — now live in beta at worktale.dev."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://worktale.org/blog/worktale-cloud-beta"/>
+  <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png"/>
+  <meta property="article:published_time" content="2026-03-30"/>
+  <meta property="article:author" content="George Rios"/>
+  <meta property="article:tag" content="launch"/>
+  <meta property="article:tag" content="cloud"/>
+  <meta property="article:tag" content="developer tools"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale Cloud Is Live: Your Engineering Record, Shareable at worktale.dev"/>
+  <meta name="twitter:description" content="Your local work record goes public. Developer profiles, cross-repo timelines, and AI weekly digests — now live in beta at worktale.dev."/>
+  <meta name="twitter:image" content="https://worktale.org/logo/worktale-screenshot.png"/>
+  <link rel="canonical" href="https://worktale.org/blog/worktale-cloud-beta"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="George Rios"/>
+  <meta name="keywords" content="worktale cloud, developer portfolio, engineering profile, work record, developer tools, proof of work, worktale.dev"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Worktale Cloud Is Live: Your Engineering Record, Shareable at worktale.dev",
+    "description": "Worktale Cloud is now in beta. Public developer profiles, cross-repo timelines, AI-powered weekly digests, standup generators, and promotion packets.",
+    "datePublished": "2026-03-30",
+    "author": {
+      "@type": "Person",
+      "name": "George Rios",
+      "url": "https://plurral.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Worktale",
+      "url": "https://worktale.org"
+    },
+    "mainEntityOfPage": "https://worktale.org/blog/worktale-cloud-beta"
+  }
+  </script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <article class="mx-auto max-w-3xl px-6">
+    <header class="py-12 md:py-16">
+      <a href="/blog.html" class="inline-flex items-center gap-1 font-mono text-xs text-text-muted hover:text-terminal-green transition-colors mb-6">
+        <span>&larr;</span> Back to blog
+      </a>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="font-mono text-xs text-text-muted">2026-03-30</span>
+        <span class="text-border-dim">&middot;</span>
+        <span class="font-mono text-xs text-terminal-green">launch</span>
+        <span class="text-border-dim">&middot;</span>
+        <span class="font-mono text-xs text-text-muted">George Rios</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">Worktale Cloud Is Live</h1>
+      <p class="text-text-secondary text-lg leading-relaxed">Your local engineering record now has a home on the web. Public profiles, cross-repo timelines, and AI-powered digests&mdash;all at <a href="https://worktale.dev" class="text-terminal-green hover:underline">worktale.dev</a>.</p>
+    </header>
+
+    <div class="prose-worktale pb-16">
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        When we launched the Worktale CLI three weeks ago, the promise was simple: a local-first record of everything you build. No accounts, no telemetry, no data leaving your machine.
+      </p>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        That hasn&rsquo;t changed. The CLI is still free, still open source, still entirely local. But today we&rsquo;re launching the other half of the vision.
+      </p>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        <strong class="text-text-primary">Worktale Cloud is now live in beta at <a href="https://worktale.dev" class="text-terminal-green hover:underline">worktale.dev</a>.</strong>
+      </p>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">The problem Cloud solves</h2>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        You&rsquo;ve been shipping for months. The commits are there. The PRs are merged. But when review season comes, or a client asks what you delivered, or you&rsquo;re updating your portfolio&mdash;you&rsquo;re digging through git logs trying to reconstruct the story.
+      </p>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        Worktale Cloud takes the record you&rsquo;ve been building locally and turns it into something shareable. A profile. A timeline. A packet you can hand to your manager, your client, or your next employer.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">What&rsquo;s in the beta</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Public Profile &amp; Heatmap</p>
+          <p class="text-text-secondary text-sm">Your engineering activity at <strong class="text-text-primary">worktale.dev/yourname</strong>&mdash;a GitHub-style heatmap that includes private repo work. The full picture of your output, not just what&rsquo;s public.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Cross-Repo Timeline</p>
+          <p class="text-text-secondary text-sm">All your repos in one unified stream. No more switching between projects to piece together what you shipped last quarter.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Weekly AI Digest &amp; Email</p>
+          <p class="text-text-secondary text-sm">AI rolls up your week into a polished summary&mdash;published to your profile or delivered to your inbox. No login required to read it.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Standup &amp; Retro Generator</p>
+          <p class="text-text-secondary text-sm">&ldquo;What did I do yesterday?&rdquo;&mdash;answered instantly. Export for standups, retros, or status updates.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Review &amp; Promotion Packets</p>
+          <p class="text-text-secondary text-sm">One-click export of your quarterly or annual output. Ready to paste into any self-review, promotion doc, or performance review.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+          <p class="font-mono text-sm text-cyber-cyan mb-2">Client &amp; Consulting Summaries</p>
+          <p class="text-text-secondary text-sm">Sanitized delivery reports. Prove what you shipped without exposing code or internals.</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">How it works</h2>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        If you&rsquo;re already using the Worktale CLI, Cloud is a one-time setup:
+      </p>
+
+      <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm leading-relaxed mb-6">
+        <p class="text-text-muted"># 1. Sign up at worktale.dev and grab your token</p>
+        <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale config set cloudEnabled true</p>
+        <p><span class="text-terminal-green/60">$</span> worktale config set cloudToken YOUR_TOKEN</p>
+        <p class="mt-2 text-text-muted"># 2. Publish your record</p>
+        <p><span class="text-terminal-green/60">$</span> worktale publish</p>
+        <p class="text-terminal-green mt-1">&check; Published to worktale.dev/yourname</p>
+      </div>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        That&rsquo;s it. Your local database syncs to the cloud. Everything you&rsquo;ve captured&mdash;commits, notes, AI annotations, daily summaries&mdash;becomes a live, shareable profile.
+      </p>
+
+      <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/5 mb-6">
+        <p class="text-text-secondary text-sm leading-relaxed"><strong class="text-text-primary">Still local-first.</strong> Cloud is strictly opt-in. If you never enable it, nothing changes. Your data stays on your machine. The CLI works exactly the same way it always has.</p>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">Why beta</h2>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        We&rsquo;re shipping this as a beta because we want to get it into your hands early and iterate based on real usage. During the beta:
+      </p>
+
+      <ul class="space-y-2 mb-6 ml-4">
+        <li class="text-text-secondary text-sm flex items-start gap-2">
+          <span class="text-terminal-green mt-1">&#8226;</span>
+          <span><strong class="text-text-primary">It&rsquo;s free.</strong> No credit card, no trial timer. Use everything.</span>
+        </li>
+        <li class="text-text-secondary text-sm flex items-start gap-2">
+          <span class="text-terminal-green mt-1">&#8226;</span>
+          <span><strong class="text-text-primary">Features will evolve.</strong> We&rsquo;re adding capabilities weekly based on feedback.</span>
+        </li>
+        <li class="text-text-secondary text-sm flex items-start gap-2">
+          <span class="text-terminal-green mt-1">&#8226;</span>
+          <span><strong class="text-text-primary">Your input shapes the product.</strong> This is the best time to influence what Cloud becomes.</span>
+        </li>
+      </ul>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        After beta, Cloud will become the paid product. The CLI stays free and open source forever. That&rsquo;s the deal&mdash;always has been.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">The bigger picture</h2>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        Most developer tools ask you to give up privacy for convenience. We think that&rsquo;s a false choice.
+      </p>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        With Worktale, you build a rich local record of your work&mdash;automatically, privately, from your git history. When you&rsquo;re ready to share, Cloud gives you full control over what becomes visible and to whom. Your private repos stay private. Your commits stay yours. You decide what the world sees.
+      </p>
+
+      <blockquote class="border-l-2 border-terminal-green/30 pl-4 my-6">
+        <p class="text-text-secondary italic leading-relaxed">Your proof of work should be portable, private by default, and yours to share on your terms.</p>
+      </blockquote>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">Get started</h2>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        If you don&rsquo;t have the CLI yet:
+      </p>
+
+      <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm leading-relaxed mb-6">
+        <p><span class="text-terminal-green/60">$</span> npm install -g worktale</p>
+        <p><span class="text-terminal-green/60">$</span> worktale init</p>
+        <p class="text-terminal-green mt-1">&check; 847 commits analyzed in 2.1s</p>
+      </div>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        Then head to <a href="https://worktale.dev" class="text-terminal-green hover:underline">worktale.dev</a> to create your account and connect your local record to the cloud.
+      </p>
+
+      <hr class="border-border-dim my-10"/>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        We&rsquo;ve been building Worktale because we believe developers deserve a real record of their work&mdash;not just a GitHub contribution graph. Cloud is the next step: making that record useful beyond your own terminal.
+      </p>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        <a href="https://worktale.dev" class="text-terminal-green hover:underline">Try the beta</a>. Tell us what&rsquo;s missing. Let&rsquo;s build this together.
+      </p>
+
+    </div>
+  </article>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>

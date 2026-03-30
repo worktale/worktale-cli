@@ -21,7 +21,7 @@ npm install -g worktale
 ## Key Facts
 
 - Free and open source (MIT license)
-- Local-first: all data stored in local SQLite, no cloud required
+- Local-first: all data stored in local SQLite, optional cloud sync via worktale.dev
 - Private by default: no account, no telemetry, no network requests
 - Reads only git metadata, never source code
 - Works with any git remote: GitHub, GitLab, Bitbucket, self-hosted

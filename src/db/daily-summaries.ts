@@ -115,6 +115,25 @@ export function getDatesNeedingAnnotation(repoId: number, overwrite: boolean): D
   `).all(repoId) as DailySummary[];
 }
 
+export interface UnpublishedDay {
+  date: string;
+  total_commits: number;
+  repo_count: number;
+}
+
+export function getUnpublishedDays(): UnpublishedDay[] {
+  const db = getDb();
+  const today = new Date().toISOString().slice(0, 10);
+
+  return db.prepare(`
+    SELECT date, SUM(commits_count) as total_commits, COUNT(DISTINCT repo_id) as repo_count
+    FROM daily_summaries
+    WHERE commits_count > 0 AND published = 0 AND date < ?
+    GROUP BY date
+    ORDER BY date DESC
+  `).all(today) as UnpublishedDay[];
+}
+
 export function getTodaySummary(repoId: number): DailySummary | undefined {
   const today = new Date().toISOString().slice(0, 10);
   return getDailySummary(repoId, today);

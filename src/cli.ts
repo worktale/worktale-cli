@@ -17,6 +17,11 @@ import { dashCommand } from './commands/dash.js';
 import { batchCommand } from './commands/batch.js';
 import { hookCommand } from './commands/hook.js';
 import { noteCommand } from './commands/note.js';
+import { cloudCommand } from './commands/cloud.js';
+import { standupCommand } from './commands/standup.js';
+import { retroCommand } from './commands/retro.js';
+import { timelineCommand } from './commands/timeline.js';
+import { profileCommand } from './commands/profile.js';
 import { installNudge, removeNudge, checkNudge, isNudgeInstalled } from './nudge/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -69,9 +74,10 @@ program
 
 program
   .command('publish')
-  .description('Publish your digest (coming soon)')
-  .action(async () => {
-    await publishCommand();
+  .description('Sync today\'s digest to Worktale Cloud')
+  .option('-w, --week', 'Generate and publish weekly digest')
+  .action(async (options: { week?: boolean }) => {
+    await publishCommand(options);
   });
 
 program
@@ -127,6 +133,46 @@ program
   .option('-s, --silent', 'Suppress output')
   .action(async (options: { silent?: boolean }) => {
     await captureCommand(options);
+  });
+
+program
+  .command('cloud [action]')
+  .description('Manage Worktale Cloud account (signup, login, logout, status)')
+  .action(async (action?: string) => {
+    await cloudCommand(action);
+  });
+
+program
+  .command('standup')
+  .description('Generate a standup from recent activity')
+  .option('-c, --copy', 'Copy to clipboard')
+  .option('-f, --format <type>', 'Output format (slack)')
+  .action(async (options: { copy?: boolean; format?: string }) => {
+    await standupCommand(options);
+  });
+
+program
+  .command('retro')
+  .description('Generate a retrospective')
+  .option('-d, --days <n>', 'Number of days to cover', '14')
+  .option('-s, --since <date>', 'Start date')
+  .action(async (options: { days?: string; since?: string }) => {
+    await retroCommand(options);
+  });
+
+program
+  .command('timeline')
+  .description('View cross-repo timeline from cloud')
+  .option('-s, --since <date>', 'Start from date')
+  .action(async (options: { since?: string }) => {
+    await timelineCommand(options);
+  });
+
+program
+  .command('profile [action] [key] [value]')
+  .description('View or update your cloud profile')
+  .action(async (action?: string, key?: string, value?: string) => {
+    await profileCommand(action, key, value);
   });
 
 program

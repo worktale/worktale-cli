@@ -7,6 +7,11 @@ vi.mock('../../src/db/index.js', () => ({
   getDbPath: () => ':memory:',
 }));
 
+// Mock catchup banner (depends on DB + cloud)
+vi.mock('../../src/utils/catchup-banner.js', () => ({
+  showCatchupBanner: vi.fn(),
+}));
+
 // Mock process.exit
 const mockExit = vi.spyOn(process, 'exit').mockImplementation((() => {}) as any);
 
@@ -27,11 +32,11 @@ describe('publishCommand', () => {
     console.log = originalLog;
   });
 
-  it('shows "coming soon" upsell message', async () => {
+  it('shows upsell when not cloud-configured', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('coming soon');
+    expect(joined).toContain('WORKTALE CLOUD');
     expect(mockExit).toHaveBeenCalledWith(0);
   });
 
@@ -49,26 +54,24 @@ describe('publishCommand', () => {
     expect(joined).toContain('AI weekly digests');
   });
 
-  it('mentions worktale.dev profile link', async () => {
+  it('shows worktale.dev/{you} profile link', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('worktale.dev/you');
+    expect(joined).toContain('worktale.dev/{you}');
   });
 
-  it('mentions early access signup', async () => {
+  it('mentions cloud signup', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('early access');
-    expect(joined).toContain('worktale.dev');
+    expect(joined).toContain('worktale cloud signup');
   });
 
-  it('displays the Publish heading', async () => {
+  it('displays the WORKTALE heading', async () => {
     await publishCommand();
 
     const joined = output.join('\n');
-    expect(joined).toContain('Publish');
     expect(joined).toContain('WORKTALE');
   });
 });
