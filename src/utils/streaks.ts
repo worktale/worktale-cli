@@ -142,6 +142,57 @@ export function getEstimatedCodingTime(repoId: number, date: string): number {
   return Math.round((last - first) / (1000 * 60));
 }
 
+// Cross-repo variants (all-repos mode)
+
+export function getAllActiveDates(): string[] {
+  const db = getDb();
+  const rows = db
+    .prepare(
+      `SELECT DISTINCT date(timestamp) AS d
+       FROM commits
+       ORDER BY d ASC`,
+    )
+    .all() as { d: string }[];
+
+  return rows.map((row) => row.d);
+}
+
+export function getAllReposStreakInfo(): { current: number; best: number; bestStart: string; bestEnd: string } {
+  const dates = getAllActiveDates();
+  const current = calculateCurrentStreak(dates);
+  const best = calculateBestStreak(dates);
+
+  return {
+    current,
+    best: best.length,
+    bestStart: best.startDate,
+    bestEnd: best.endDate,
+  };
+}
+
+export function getAllReposMostActiveMonth(): { month: string; commits: number } {
+  const db = getDb();
+  const row = db
+    .prepare(
+      `SELECT strftime('%Y-%m', timestamp) AS ym, COUNT(*) AS cnt
+       FROM commits
+       GROUP BY ym
+       ORDER BY cnt DESC
+       LIMIT 1`,
+    )
+    .get() as { ym: string; cnt: number } | undefined;
+
+  if (!row) {
+    return { month: '', commits: 0 };
+  }
+
+  const [year, monthNum] = row.ym.split('-');
+  const monthDate = new Date(parseInt(year, 10), parseInt(monthNum, 10) - 1, 1);
+  const monthName = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  return { month: monthName, commits: row.cnt };
+}
+
 export function getMostActiveMonth(
   repoId: number,
 ): { month: string; commits: number } {

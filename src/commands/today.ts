@@ -1,20 +1,18 @@
 import chalk from 'chalk';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { brandText, positiveText, negativeText, dimText, streakText } from '../tui/theme.js';
-import { getRepo } from '../db/repos.js';
-import { getCommitsByDate } from '../db/commits.js';
-import { getDailySummary } from '../db/daily-summaries.js';
+import { getRepo, getAllRepos } from '../db/repos.js';
+import { getCommitsByDate, getAllCommitsByDate } from '../db/commits.js';
+import { getDailySummary, getAllReposDailySummary } from '../db/daily-summaries.js';
 import { closeDb } from '../db/index.js';
 import { formatNumber, formatDate, formatRelativeTime, formatDuration, getDateString } from '../utils/formatting.js';
 import { showCatchupBanner } from '../utils/catchup-banner.js';
+import { detectMode } from '../utils/mode.js';
 
 export async function todayCommand(): Promise<void> {
   try {
-    const repoPath = process.cwd();
+    const mode = detectMode();
 
-    // Check if repo is initialized
-    if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
+    if (mode.type === 'not-initialized') {
       console.log('');
       console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
       console.log('  Run ' + brandText('worktale init') + ' to get started.');
@@ -24,7 +22,89 @@ export async function todayCommand(): Promise<void> {
       return;
     }
 
-    const repo = getRepo(repoPath);
+    const today = getDateString();
+    const dateStr = formatDate(new Date());
+
+    if (mode.type === 'all-repos') {
+      const repos = getAllRepos();
+      if (repos.length === 0) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' no repos tracked yet.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+
+      const commits = getAllCommitsByDate(today);
+      const summary = getAllReposDailySummary(today);
+
+      console.log('');
+      console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('WORKTALE') + ' ' + dimText('\u2014') + ' Today, ' + dateStr + dimText(' \u00B7 ' + repos.length + ' repos'));
+      console.log('');
+
+      if (commits.length === 0) {
+        console.log('  ' + dimText('No commits yet today. Time to build something!'));
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+
+      const totalAdded = summary?.lines_added ?? commits.reduce((s, c) => s + c.lines_added, 0);
+      const totalRemoved = summary?.lines_removed ?? commits.reduce((s, c) => s + c.lines_removed, 0);
+      const totalFiles = summary?.files_touched ?? commits.reduce((s, c) => s + c.files_changed, 0);
+
+      const timestamps = commits.map((c) => new Date(c.timestamp).getTime()).sort((a, b) => a - b);
+      let codingTimeStr = '< 1m';
+      if (timestamps.length >= 2) {
+        const diffMs = timestamps[timestamps.length - 1] - timestamps[0];
+        const diffMinutes = Math.round(diffMs / 60_000);
+        codingTimeStr = formatDuration(diffMinutes);
+      }
+
+      console.log(
+        '  ' +
+        dimText('Commits:') + '  ' + chalk.bold(String(commits.length)) +
+        '          ' +
+        dimText('Lines:') + '  ' + positiveText('+' + formatNumber(totalAdded)) + ' / ' + negativeText('-' + formatNumber(totalRemoved))
+      );
+      console.log(
+        '  ' +
+        dimText('Files:') + '    ' + chalk.bold(String(totalFiles)) +
+        '         ' +
+        dimText('Time:') + '   ' + chalk.bold(codingTimeStr)
+      );
+      console.log('');
+
+      console.log('  ' + chalk.bold('Recent:'));
+
+      const recentCommits = commits.slice(0, 10);
+      for (const commit of recentCommits) {
+        const relTime = formatRelativeTime(commit.timestamp);
+        const msg = commit.message
+          ? (commit.message.length > 45 ? commit.message.slice(0, 42) + '...' : commit.message)
+          : '(no message)';
+        console.log(
+          '  ' + brandText('\u25CF') + ' ' +
+          dimText(relTime.padEnd(10)) +
+          dimText(commit.repo_name.padEnd(18)) +
+          msg
+        );
+      }
+
+      if (commits.length > 10) {
+        console.log('  ' + dimText('  ...and ' + (commits.length - 10) + ' more'));
+      }
+
+      console.log('');
+      closeDb();
+      process.exit(0);
+      return;
+    }
+
+    // Single-repo mode (existing behavior)
+    const repo = getRepo(mode.repoPath);
     if (!repo) {
       console.log('');
       console.log('  ' + dimText('worktale:') + ' repo not found in database.');
@@ -35,14 +115,9 @@ export async function todayCommand(): Promise<void> {
       return;
     }
 
-    const today = getDateString();
     const commits = getCommitsByDate(repo.id, today);
     const summary = getDailySummary(repo.id, today);
 
-    // Header
-    const now = new Date();
-    const dayName = now.toLocaleDateString('en-US', { weekday: 'long' });
-    const dateStr = formatDate(now);
     console.log('');
     console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('WORKTALE') + ' ' + dimText('\u2014') + ' Today, ' + dateStr);
     console.log('');
@@ -55,12 +130,10 @@ export async function todayCommand(): Promise<void> {
       return;
     }
 
-    // Stats
     const totalAdded = summary?.lines_added ?? commits.reduce((s, c) => s + c.lines_added, 0);
     const totalRemoved = summary?.lines_removed ?? commits.reduce((s, c) => s + c.lines_removed, 0);
     const totalFiles = summary?.files_touched ?? commits.reduce((s, c) => s + c.files_changed, 0);
 
-    // Estimate coding time from first to last commit
     const timestamps = commits.map((c) => new Date(c.timestamp).getTime()).sort((a, b) => a - b);
     let codingTimeStr = '< 1m';
     if (timestamps.length >= 2) {
@@ -69,26 +142,20 @@ export async function todayCommand(): Promise<void> {
       codingTimeStr = formatDuration(diffMinutes);
     }
 
-    const commitLabel = 'Commits:';
-    const linesLabel = 'Lines:';
-    const filesLabel = 'Files:';
-    const timeLabel = 'Time:';
-
     console.log(
       '  ' +
-      dimText(commitLabel) + '  ' + chalk.bold(String(commits.length)) +
+      dimText('Commits:') + '  ' + chalk.bold(String(commits.length)) +
       '          ' +
-      dimText(linesLabel) + '  ' + positiveText('+' + formatNumber(totalAdded)) + ' / ' + negativeText('-' + formatNumber(totalRemoved))
+      dimText('Lines:') + '  ' + positiveText('+' + formatNumber(totalAdded)) + ' / ' + negativeText('-' + formatNumber(totalRemoved))
     );
     console.log(
       '  ' +
-      dimText(filesLabel) + '    ' + chalk.bold(String(totalFiles)) +
+      dimText('Files:') + '    ' + chalk.bold(String(totalFiles)) +
       '         ' +
-      dimText(timeLabel) + '   ' + chalk.bold(codingTimeStr)
+      dimText('Time:') + '   ' + chalk.bold(codingTimeStr)
     );
     console.log('');
 
-    // Recent commits (most recent first)
     console.log('  ' + chalk.bold('Recent:'));
 
     const recentCommits = [...commits].reverse().slice(0, 10);

@@ -138,3 +138,36 @@ export function getTodaySummary(repoId: number): DailySummary | undefined {
   const today = new Date().toISOString().slice(0, 10);
   return getDailySummary(repoId, today);
 }
+
+// Cross-repo queries (all-repos mode)
+
+export function getAllReposDailySummary(date: string): DailySummary | undefined {
+  const db = getDb();
+  return db.prepare(`
+    SELECT
+      0 as id, 0 as repo_id, ? as date,
+      COALESCE(SUM(commits_count), 0) as commits_count,
+      COALESCE(SUM(lines_added), 0) as lines_added,
+      COALESCE(SUM(lines_removed), 0) as lines_removed,
+      COALESCE(SUM(files_touched), 0) as files_touched,
+      NULL as user_notes, NULL as ai_draft, 0 as published, NULL as published_at
+    FROM daily_summaries WHERE date = ?
+  `).get(date, date) as DailySummary | undefined;
+}
+
+export function getAllReposDailySummariesRange(startDate: string, endDate: string): DailySummary[] {
+  const db = getDb();
+  return db.prepare(`
+    SELECT
+      0 as id, 0 as repo_id, date,
+      COALESCE(SUM(commits_count), 0) as commits_count,
+      COALESCE(SUM(lines_added), 0) as lines_added,
+      COALESCE(SUM(lines_removed), 0) as lines_removed,
+      COALESCE(SUM(files_touched), 0) as files_touched,
+      NULL as user_notes, NULL as ai_draft, 0 as published, NULL as published_at
+    FROM daily_summaries
+    WHERE date >= ? AND date <= ?
+    GROUP BY date
+    ORDER BY date ASC
+  `).all(startDate, endDate) as DailySummary[];
+}

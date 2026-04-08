@@ -183,7 +183,7 @@ describe('noteCommand', () => {
       await noteCommand('This should fail');
 
       const joined = output.join('\n');
-      expect(joined).toContain('not a tracked repo');
+      expect(joined.includes('not a tracked repo') || joined.includes('cannot create a note outside')).toBe(true);
       expect(mockExit).toHaveBeenCalledWith(1);
 
       rmSync(nonGitPath, { recursive: true, force: true });

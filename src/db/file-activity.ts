@@ -120,3 +120,46 @@ export function getTopModules(repoId: number, limit: number): ModuleActivity[] {
     percentage: totalChanges > 0 ? Math.round((r.changes / totalChanges) * 10000) / 100 : 0,
   }));
 }
+
+// Cross-repo variants (all-repos mode)
+
+export function getAllModuleActivityByDate(date: string): ModuleActivity[] {
+  const db = getDb();
+
+  const rows = db.prepare(`
+    SELECT module, SUM(changes) as changes
+    FROM file_activity
+    WHERE date = ? AND module IS NOT NULL
+    GROUP BY module
+    ORDER BY changes DESC
+  `).all(date) as { module: string; changes: number }[];
+
+  const totalChanges = rows.reduce((sum, r) => sum + r.changes, 0);
+
+  return rows.map((r) => ({
+    module: r.module,
+    changes: r.changes,
+    percentage: totalChanges > 0 ? Math.round((r.changes / totalChanges) * 10000) / 100 : 0,
+  }));
+}
+
+export function getAllTopModules(limit: number): ModuleActivity[] {
+  const db = getDb();
+
+  const rows = db.prepare(`
+    SELECT module, SUM(changes) as changes
+    FROM file_activity
+    WHERE module IS NOT NULL
+    GROUP BY module
+    ORDER BY changes DESC
+    LIMIT ?
+  `).all(limit) as { module: string; changes: number }[];
+
+  const totalChanges = rows.reduce((sum, r) => sum + r.changes, 0);
+
+  return rows.map((r) => ({
+    module: r.module,
+    changes: r.changes,
+    percentage: totalChanges > 0 ? Math.round((r.changes / totalChanges) * 10000) / 100 : 0,
+  }));
+}

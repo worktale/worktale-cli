@@ -1,16 +1,14 @@
 import chalk from 'chalk';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { brandText, dimText } from '../tui/theme.js';
-import { getRepo } from '../db/repos.js';
+import { getRepo, getAllRepos } from '../db/repos.js';
 import { closeDb } from '../db/index.js';
+import { detectMode } from '../utils/mode.js';
 
 export async function dashCommand(): Promise<void> {
   try {
-    const repoPath = process.cwd();
+    const mode = detectMode();
 
-    // Check if repo is initialized
-    if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
+    if (mode.type === 'not-initialized') {
       console.log('');
       console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
       console.log('  Run ' + brandText('worktale init') + ' to get started.');
@@ -20,15 +18,37 @@ export async function dashCommand(): Promise<void> {
       return;
     }
 
-    const repo = getRepo(repoPath);
-    if (!repo) {
+    let repoPath: string | undefined;
+    let multiRepo = false;
+    let repoIds: number[] | undefined;
+
+    if (mode.type === 'all-repos') {
+      const repos = getAllRepos();
+      if (repos.length === 0) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' no repos tracked yet.');
+        console.log('  Run ' + brandText('worktale init') + ' in a repo or ' + brandText('worktale batch') + ' to scan.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+      multiRepo = true;
+      repoIds = repos.map(r => r.id);
       console.log('');
-      console.log('  ' + dimText('worktale:') + ' repo not found in database.');
-      console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
-      console.log('');
-      closeDb();
-      process.exit(0);
-      return;
+      console.log('  ' + dimText('Showing all ' + repos.length + ' tracked repos'));
+    } else {
+      repoPath = mode.repoPath;
+      const repo = getRepo(repoPath);
+      if (!repo) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' repo not found in database.');
+        console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
     }
 
     // Try to load and render the Ink TUI app
@@ -44,6 +64,8 @@ export async function dashCommand(): Promise<void> {
       const { waitUntilExit } = render(
         React.createElement(App, {
           repoPath,
+          multiRepo,
+          repoIds,
           onAction: (action: 'digest' | 'publish') => { pendingAction = action; },
         }),
       );

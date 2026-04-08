@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Text, useInput } from 'ink';
 import TextInput from 'ink-text-input';
 import { colors } from '../theme.js';
-import { getCommitsByDate } from '../../db/commits.js';
-import { getDailySummary, updateUserNotes } from '../../db/daily-summaries.js';
+import { getCommitsByDate, getAllCommitsByDate } from '../../db/commits.js';
+import { getDailySummary, updateUserNotes, getAllReposDailySummary } from '../../db/daily-summaries.js';
 import {
   formatDate,
   formatNumber,
@@ -14,13 +14,14 @@ import type { Commit } from '../../db/commits.js';
 import type { DailySummary } from '../../db/daily-summaries.js';
 
 interface DailyLogProps {
-  repoId: number;
+  repoIds: number[];
+  multiRepo?: boolean;
   onEditingChange?: (editing: boolean) => void;
 }
 
-export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
+export default function DailyLog({ repoIds, multiRepo, onEditingChange }: DailyLogProps) {
   const [currentDate, setCurrentDate] = useState(() => new Date());
-  const [commits, setCommits] = useState<Commit[]>([]);
+  const [commits, setCommits] = useState<(Commit & { repo_name?: string })[]>([]);
   const [summary, setSummary] = useState<DailySummary | undefined>(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [notesDraft, setNotesDraft] = useState('');
@@ -33,19 +34,28 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
 
   const loadData = useCallback(() => {
     try {
-      const dayCommits = getCommitsByDate(repoId, dateStr);
-      setCommits(dayCommits);
+      if (multiRepo) {
+        const dayCommits = getAllCommitsByDate(dateStr);
+        setCommits(dayCommits);
 
-      const daySummary = getDailySummary(repoId, dateStr);
-      setSummary(daySummary);
+        const daySummary = getAllReposDailySummary(dateStr);
+        setSummary(daySummary);
+        setNotesDraft('');
+      } else {
+        const repoId = repoIds[0];
+        const dayCommits = getCommitsByDate(repoId, dateStr);
+        setCommits(dayCommits);
 
-      setNotesDraft(daySummary?.user_notes ?? '');
+        const daySummary = getDailySummary(repoId, dateStr);
+        setSummary(daySummary);
+        setNotesDraft(daySummary?.user_notes ?? '');
+      }
     } catch {
       setCommits([]);
       setSummary(undefined);
       setNotesDraft('');
     }
-  }, [repoId, dateStr]);
+  }, [repoIds, multiRepo, dateStr]);
 
   useEffect(() => {
     loadData();
@@ -53,10 +63,8 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
 
   useInput((input, key) => {
     if (isEditing) {
-      // When editing, only handle Escape/Enter to exit editing
       if (key.escape) {
         setIsEditing(false);
-        // Revert draft
         setNotesDraft(summary?.user_notes ?? '');
       }
       return;
@@ -76,17 +84,19 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
         return d;
       });
     }
-    if (input === 'e' || input === 'E') {
+    if (!multiRepo && (input === 'e' || input === 'E')) {
       setIsEditing(true);
     }
   });
 
   const handleNotesSubmit = (value: string) => {
-    try {
-      updateUserNotes(repoId, dateStr, value);
-      setNotesDraft(value);
-    } catch {
-      // ignore write errors
+    if (!multiRepo) {
+      try {
+        updateUserNotes(repoIds[0], dateStr, value);
+        setNotesDraft(value);
+      } catch {
+        // ignore write errors
+      }
     }
     setIsEditing(false);
     loadData();
@@ -135,37 +145,39 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
         )}
       </Box>
 
-      {/* User notes */}
-      <Box marginTop={1} flexDirection="column">
-        <Box>
-          <Text color={colors.textSecondary} bold>Notes </Text>
-          {!isEditing && (
-            <Text color={colors.dim}>[E to edit]</Text>
-          )}
-        </Box>
-        {isEditing ? (
-          <Box borderStyle="round" borderColor={colors.brand} paddingX={1}>
-            <TextInput
-              value={notesDraft}
-              onChange={setNotesDraft}
-              onSubmit={handleNotesSubmit}
-              placeholder="Write your notes for the day... (Enter to save, Esc to cancel)"
-              focus={true}
-            />
-          </Box>
-        ) : (
-          <Box paddingLeft={1}>
-            {notesDraft ? (
-              <Text color={colors.textPrimary}>{notesDraft}</Text>
-            ) : (
-              <Text color={colors.dim} italic>No notes yet. Press E to add notes.</Text>
+      {/* User notes (single-repo only) */}
+      {!multiRepo && (
+        <Box marginTop={1} flexDirection="column">
+          <Box>
+            <Text color={colors.textSecondary} bold>Notes </Text>
+            {!isEditing && (
+              <Text color={colors.dim}>[E to edit]</Text>
             )}
           </Box>
-        )}
-      </Box>
+          {isEditing ? (
+            <Box borderStyle="round" borderColor={colors.brand} paddingX={1}>
+              <TextInput
+                value={notesDraft}
+                onChange={setNotesDraft}
+                onSubmit={handleNotesSubmit}
+                placeholder="Write your notes for the day... (Enter to save, Esc to cancel)"
+                focus={true}
+              />
+            </Box>
+          ) : (
+            <Box paddingLeft={1}>
+              {notesDraft ? (
+                <Text color={colors.textPrimary}>{notesDraft}</Text>
+              ) : (
+                <Text color={colors.dim} italic>No notes yet. Press E to add notes.</Text>
+              )}
+            </Box>
+          )}
+        </Box>
+      )}
 
-      {/* AI Draft */}
-      {summary?.ai_draft && (
+      {/* AI Draft (single-repo only) */}
+      {!multiRepo && summary?.ai_draft && (
         <Box marginTop={1} flexDirection="column">
           <Text color={colors.textSecondary} bold>AI Summary</Text>
           <Box paddingLeft={1}>
@@ -184,6 +196,7 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
             sha: c.sha,
             message: c.message ?? '',
             timestamp: c.timestamp,
+            repoName: multiRepo ? (c as { repo_name?: string }).repo_name : undefined,
           }))}
         />
       </Box>
@@ -191,7 +204,7 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
       {/* Footer hints */}
       <Box marginTop={1}>
         <Text color={colors.dim}>
-          [{'\u2190'}/{'\u2192'}] Navigate days    [E] Edit notes    [Tab] Switch view
+          [{'\u2190'}/{'\u2192'}] Navigate days{!multiRepo ? '    [E] Edit notes' : ''}    [Tab] Switch view
         </Text>
       </Box>
     </Box>

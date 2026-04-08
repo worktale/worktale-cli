@@ -136,3 +136,45 @@ export function commitExists(repoId: number, sha: string): boolean {
   const row = db.prepare('SELECT 1 FROM commits WHERE repo_id = ? AND sha = ?').get(repoId, sha);
   return row !== undefined;
 }
+
+// Cross-repo queries (all-repos mode)
+
+export interface CommitWithRepo extends Commit {
+  repo_name: string;
+}
+
+export function getAllCommitsByDate(date: string): CommitWithRepo[] {
+  const db = getDb();
+  return db.prepare(`
+    SELECT c.*, r.name as repo_name FROM commits c
+    JOIN repos r ON r.id = c.repo_id
+    WHERE c.timestamp >= ? AND c.timestamp < ?
+    ORDER BY c.timestamp DESC
+  `).all(`${date}T00:00:00`, `${date}T23:59:59.999`) as CommitWithRepo[];
+}
+
+export function getAllRecentCommits(limit: number): CommitWithRepo[] {
+  const db = getDb();
+  return db.prepare(`
+    SELECT c.*, r.name as repo_name FROM commits c
+    JOIN repos r ON r.id = c.repo_id
+    ORDER BY c.timestamp DESC
+    LIMIT ?
+  `).all(limit) as CommitWithRepo[];
+}
+
+export function getAllCommitsByDateRange(startDate: string, endDate: string): CommitWithRepo[] {
+  const db = getDb();
+  return db.prepare(`
+    SELECT c.*, r.name as repo_name FROM commits c
+    JOIN repos r ON r.id = c.repo_id
+    WHERE c.timestamp >= ? AND c.timestamp < ?
+    ORDER BY c.timestamp DESC
+  `).all(`${startDate}T00:00:00`, `${endDate}T23:59:59.999`) as CommitWithRepo[];
+}
+
+export function getAllCommitCount(): number {
+  const db = getDb();
+  const row = db.prepare('SELECT COUNT(*) as count FROM commits').get() as { count: number };
+  return row.count;
+}
