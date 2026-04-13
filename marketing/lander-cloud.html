@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Worktale Cloud — Your Engineering Record, Shareable at worktale.dev</title>
+        <meta
+            name="description"
+            content="Turn your local git record into a shareable developer profile. Public heatmaps, cross-repo timelines, AI weekly digests, promotion packets. Free during beta."
+        />
+        <meta property="og:title" content="Worktale Cloud — Your Engineering Record, Shareable" />
+        <meta property="og:description" content="Your best work is invisible. Worktale Cloud turns your local git record into a shareable developer profile, promotion packets, and client summaries. Free during beta." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://worktale.org/lander-cloud" />
+        <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Worktale Cloud — Your Engineering Record, Shareable" />
+        <meta name="twitter:description" content="Your best work is invisible. Worktale Cloud turns your local git record into a shareable developer profile, promotion packets, and client summaries. Free during beta." />
+        <meta name="twitter:image" content="https://worktale.org/logo/worktale-screenshot.png" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/src/styles.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+    </head>
+    <body
+        class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green"
+    >
+        <!-- PostHog -->
+        <script>
+            !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+            posthog.init('phc_Tt3gzr6CBn5hg4nwIrJriFPdaZdcCVWYyNab3nwEDiN', {
+                api_host: 'https://us.i.posthog.com',
+                defaults: '2026-01-30'
+            })
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2CV3DXVT2Z"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-2CV3DXVT2Z');
+        </script>
+
+        <main>
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- HERO -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-8 pb-16">
+                <!-- Scanline overlay -->
+                <div
+                    class="pointer-events-none absolute inset-0 opacity-[0.03]"
+                    style="
+                        background: repeating-linear-gradient(
+                            0deg,
+                            transparent,
+                            transparent 2px,
+                            rgba(0, 255, 65, 0.08) 2px,
+                            rgba(0, 255, 65, 0.08) 4px
+                        );
+                    "
+                ></div>
+                <!-- Glow orb -->
+                <div
+                    class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-cyber-cyan/[0.04] blur-[120px]"
+                ></div>
+
+                <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+                    <!-- Logo -->
+                    <a href="/" class="inline-flex items-center gap-3 mb-10 group">
+                        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold group-hover:bg-terminal-green/20 transition-colors">&gt;_</div>
+                        <span class="font-mono text-lg tracking-wider text-text-primary">worktale</span>
+                        <span class="font-mono text-xs text-cyber-cyan tracking-wider ml-1">cloud</span>
+                    </a>
+
+                    <!-- Beta pill -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 mb-8">
+                        <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
+                        <span class="font-mono text-xs text-cyber-cyan tracking-wider">NOW IN BETA &middot; FREE TO USE</span>
+                    </div>
+
+                    <h1
+                        class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] mb-6"
+                    >
+                        <span class="text-text-primary">Your work record,</span><br />
+                        <span class="bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan bg-clip-text text-transparent">shareable.</span>
+                    </h1>
+
+                    <p
+                        class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-3 leading-relaxed"
+                    >
+                        You&rsquo;ve been shipping. Now prove it.
+                    </p>
+                    <p
+                        class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
+                    >
+                        Worktale Cloud takes the engineering record you&rsquo;ve built locally
+                        and turns it into a shareable profile, promotion packets, and
+                        client summaries. Opt-in. Metadata only. You control what&rsquo;s visible.
+                    </p>
+
+                    <!-- CTA -->
+                    <div class="flex flex-col items-center gap-4 mb-8">
+                        <a
+                            href="https://worktale.dev"
+                            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-lg text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all"
+                        >
+                            Try Worktale Cloud &rarr;
+                        </a>
+                        <p class="font-mono text-xs text-text-muted">
+                            Free during beta &middot; No credit card &middot; CLI stays free forever
+                        </p>
+                    </div>
+
+                    <!-- Trust signals -->
+                    <div class="flex items-center justify-center gap-6 text-text-muted font-mono text-xs">
+                        <a
+                            href="/"
+                            class="inline-flex items-center gap-1.5 hover:text-terminal-green transition-colors"
+                        >
+                            worktale.org
+                        </a>
+                        <span class="text-border-dim">|</span>
+                        <a
+                            href="https://worktale.dev"
+                            target="_blank"
+                            rel="noopener"
+                            class="inline-flex items-center gap-1.5 hover:text-cyber-cyan transition-colors"
+                        >
+                            worktale.dev
+                        </a>
+                        <span class="text-border-dim">|</span>
+                        <span>v1.3.0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- PROBLEM → SOLUTION -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20 border-t border-border-dim">
+                <div class="mx-auto max-w-4xl px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <!-- Without Cloud -->
+                        <div class="p-6 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-xs text-red-400 tracking-widest uppercase mb-4">The problem</p>
+                            <ul class="space-y-3 text-text-secondary text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    Review season: digging through git logs to reconstruct what you shipped
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    Client asks for a delivery summary&mdash;you have nothing ready
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    Private repos invisible on GitHub&rsquo;s contribution graph
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    No portable proof when switching jobs
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    Promotion docs written from memory, not data
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- With Cloud -->
+                        <div class="p-6 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5">
+                            <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-4">With Worktale Cloud</p>
+                            <ul class="space-y-3 text-text-secondary text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-cyber-cyan mt-0.5">&#10003;</span>
+                                    Public profile at worktale.dev/yourname&mdash;including private repo work
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-cyber-cyan mt-0.5">&#10003;</span>
+                                    One-click promotion and review packets
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-cyber-cyan mt-0.5">&#10003;</span>
+                                    Sanitized client delivery reports, ready to send
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-cyber-cyan mt-0.5">&#10003;</span>
+                                    AI weekly digests delivered to your inbox
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-cyber-cyan mt-0.5">&#10003;</span>
+                                    Cross-repo timeline&mdash;the full picture of your output
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- FEATURE GRID -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
+                <div class="mx-auto max-w-4xl px-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
+                        Everything your local record becomes.
+                    </h2>
+                    <p class="text-text-secondary text-center mb-12 text-sm max-w-2xl mx-auto">
+                        The Worktale CLI captures your work. Cloud turns it into professional artifacts you can actually share.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Feature 1 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#127760;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Public Profile &amp; Heatmap</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                worktale.dev/yourname&mdash;a GitHub-style heatmap that includes private repo work. The full picture, not just what&rsquo;s open source.
+                            </p>
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#128200;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Cross-Repo Timeline</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                All your repos in one unified stream. No more switching between projects to piece together your quarter.
+                            </p>
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#129302;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Weekly AI Digest</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                AI rolls up your week into a polished summary&mdash;published to your profile or delivered to your inbox.
+                            </p>
+                        </div>
+                        <!-- Feature 4 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#128640;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Review &amp; Promotion Packets</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                One-click export of your quarterly or annual output&mdash;ready to paste into any self-review or promotion doc.
+                            </p>
+                        </div>
+                        <!-- Feature 5 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#128221;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Client &amp; Consulting Summaries</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                Sanitized delivery reports for clients. Prove what you shipped without exposing code or internals.
+                            </p>
+                        </div>
+                        <!-- Feature 6 -->
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-surface-0 hover:border-cyber-cyan/40 transition-all">
+                            <div class="text-2xl mb-3">&#9997;&#65039;</div>
+                            <h3 class="font-mono text-sm text-text-primary mb-2">Standup &amp; Retro Generator</h3>
+                            <p class="text-text-secondary text-sm leading-relaxed">
+                                &ldquo;What did I do yesterday?&rdquo;&mdash;answered instantly. Export for standups, retros, or status updates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- HOW IT WORKS -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20 border-t border-border-dim">
+                <div class="mx-auto max-w-4xl px-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">
+                        Local first. Cloud when you&rsquo;re ready.
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-0">
+                            <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-xs font-bold mb-3">01</div>
+                            <p class="font-mono text-sm text-terminal-green mb-1">Install the CLI</p>
+                            <p class="text-text-secondary text-sm">
+                                <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">npm install -g worktale</code>
+                                &mdash; then run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale init</code> in your repos. Your entire git history is captured locally.
+                            </p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-0">
+                            <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold mb-3">02</div>
+                            <p class="font-mono text-sm text-cyber-cyan mb-1">Connect to Cloud</p>
+                            <p class="text-text-secondary text-sm">
+                                Sign up at <a href="https://worktale.dev" class="text-cyber-cyan hover:underline">worktale.dev</a>, then run
+                                <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">worktale cloud login</code>. One-time setup.
+                            </p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-0">
+                            <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-xs font-bold mb-3">03</div>
+                            <p class="font-mono text-sm text-cyber-cyan mb-1">Publish</p>
+                            <p class="text-text-secondary text-sm">
+                                Run <code class="text-cyber-cyan bg-cyber-cyan/10 px-1.5 py-0.5 rounded text-xs">worktale publish</code> and your record goes live at worktale.dev/yourname.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Terminal mockup -->
+                    <div class="mt-10 rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-cyber-cyan/[0.03]">
+                        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+                            <div class="flex gap-1.5">
+                                <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                            </div>
+                            <span class="font-mono text-xs text-text-muted ml-2">terminal</span>
+                        </div>
+                        <div class="p-5 font-mono text-sm leading-relaxed">
+                            <p><span class="text-terminal-green/60">$</span> worktale cloud login</p>
+                            <p class="text-text-muted mt-1">Opening worktale.dev in your browser&hellip;</p>
+                            <p class="text-text-muted">Enter the code shown: <span class="text-cyber-cyan font-bold">ABCD-1234</span></p>
+                            <p class="text-terminal-green mt-1">&#10003; Logged in as george</p>
+                            <p class="mt-3"><span class="text-terminal-green/60">$</span> worktale publish</p>
+                            <p class="text-text-muted mt-1">Syncing 3 repos &middot; 847 commits &middot; 142 daily summaries</p>
+                            <p class="text-terminal-green mt-1">&#10003; Published to worktale.dev/george</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- PRIVACY STRIP -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-12 border-t border-border-dim bg-surface-1/20">
+                <div class="mx-auto max-w-4xl px-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <div>
+                            <p class="font-mono text-2xl text-cyber-cyan mb-1">Opt-in</p>
+                            <p class="text-text-muted text-xs">Cloud is never required</p>
+                        </div>
+                        <div>
+                            <p class="font-mono text-2xl text-cyber-cyan mb-1">Metadata</p>
+                            <p class="text-text-muted text-xs">No source code, ever</p>
+                        </div>
+                        <div>
+                            <p class="font-mono text-2xl text-cyber-cyan mb-1">You choose</p>
+                            <p class="text-text-muted text-xs">what&rsquo;s public vs private</p>
+                        </div>
+                        <div>
+                            <p class="font-mono text-2xl text-terminal-green mb-1">CLI = free</p>
+                            <p class="text-text-muted text-xs">forever, open source</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- USE CASES -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20 border-t border-border-dim">
+                <div class="mx-auto max-w-4xl px-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">
+                        Built for developers who need to&hellip;
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-cyber-cyan mb-2">Ace performance reviews</p>
+                            <p class="text-text-secondary text-sm">Export a promotion packet with exact dates, commit counts, repos touched, and daily summaries. Walk in with receipts.</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-cyber-cyan mb-2">Prove work to clients</p>
+                            <p class="text-text-secondary text-sm">Sanitized delivery reports that show what you shipped without exposing code. Perfect for consulting and freelance work.</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-cyber-cyan mb-2">Stand out in job searches</p>
+                            <p class="text-text-secondary text-sm">A portable engineering profile at worktale.dev/yourname. Private repo work visible for the first time. Share in interviews.</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
+                            <p class="font-mono text-sm text-cyber-cyan mb-2">Never miss a standup</p>
+                            <p class="text-text-secondary text-sm">&ldquo;What did I do yesterday?&rdquo;&mdash;answered instantly. Weekly AI digests keep you and your team in sync.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- PROFILE PREVIEW MOCKUP -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
+                <div class="mx-auto max-w-4xl px-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">
+                        Your profile at worktale.dev
+                    </h2>
+                    <p class="text-text-secondary text-center mb-10 text-sm">
+                        A portable engineering record that includes the work GitHub can&rsquo;t show.
+                    </p>
+
+                    <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-cyber-cyan/[0.03]">
+                        <!-- Browser chrome -->
+                        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+                            <div class="flex gap-1.5">
+                                <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+                            </div>
+                            <div class="ml-2 flex-1 max-w-md">
+                                <div class="px-3 py-1.5 rounded-lg bg-surface-0 border border-border-dim font-mono text-xs text-text-muted">
+                                    worktale.dev/sarah
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Profile content -->
+                        <div class="p-6">
+                            <div class="flex items-start gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-cyber-cyan/30 to-terminal-green/30 border border-cyber-cyan/20 flex items-center justify-center font-mono text-xl text-cyber-cyan font-bold">S</div>
+                                <div>
+                                    <p class="text-text-primary font-bold text-lg">Sarah Chen</p>
+                                    <p class="text-text-muted text-sm font-mono">@sarah &middot; Senior Backend Engineer</p>
+                                </div>
+                            </div>
+                            <!-- Stats -->
+                            <div class="grid grid-cols-4 gap-4 mb-6">
+                                <div>
+                                    <p class="text-text-muted text-xs font-mono">Repos</p>
+                                    <p class="text-text-primary text-lg font-bold">12</p>
+                                </div>
+                                <div>
+                                    <p class="text-text-muted text-xs font-mono">Commits</p>
+                                    <p class="text-text-primary text-lg font-bold">4,847</p>
+                                </div>
+                                <div>
+                                    <p class="text-text-muted text-xs font-mono">Lines written</p>
+                                    <p class="text-terminal-green text-lg font-bold">892K</p>
+                                </div>
+                                <div>
+                                    <p class="text-text-muted text-xs font-mono">Active days</p>
+                                    <p class="text-text-primary text-lg font-bold">287</p>
+                                </div>
+                            </div>
+                            <!-- Heatmap -->
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-0">
+                                <p class="text-text-muted text-xs font-mono mb-3">Activity &middot; Last 12 months</p>
+                                <div class="font-mono text-xs leading-relaxed">
+                                    <p class="text-text-secondary">Mon <span class="text-text-muted">&#9617;</span><span class="text-cyber-cyan/60">&#9618;&#9618;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;</span></p>
+                                    <p class="text-text-secondary">Wed <span class="text-text-muted">&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span></p>
+                                    <p class="text-text-secondary">Fri <span class="text-cyber-cyan">&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="text-text-muted">&#9617;&#9617;&#9617;</span><span class="text-cyber-cyan">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span></p>
+                                </div>
+                                <p class="text-text-muted text-xs mt-2">Includes <span class="text-cyber-cyan">8 private repos</span> not visible on GitHub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- FINAL CTA -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="py-20 md:py-28 border-t border-border-dim bg-surface-1/20">
+                <div class="mx-auto max-w-3xl px-6 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Your proof of work deserves an audience.
+                    </h2>
+                    <p class="text-text-secondary mb-8 max-w-xl mx-auto">
+                        The CLI builds the record. Cloud makes it shareable.
+                        Start with the free CLI, connect to Cloud when you&rsquo;re ready.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                        <a
+                            href="https://worktale.dev"
+                            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-lg text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all"
+                        >
+                            Try Worktale Cloud &rarr;
+                        </a>
+                        <div class="flex flex-col items-center gap-2" x-data="{ copied: false }">
+                            <button
+                                @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+                                class="flex items-center gap-3 px-6 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+                            >
+                                <span class="text-terminal-green/60">$</span>
+                                <span class="text-terminal-green">npm install -g worktale</span>
+                                <span
+                                    class="text-text-muted ml-2 text-xs"
+                                    x-text="copied ? 'copied!' : 'copy'"
+                                    x-bind:class="copied && 'text-terminal-green'"
+                                ></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-4 text-text-muted font-mono text-xs">
+                        <a href="/" class="hover:text-terminal-green transition-colors">worktale.org</a>
+                        <span class="text-border-dim">|</span>
+                        <a href="/docs.html" class="hover:text-terminal-green transition-colors">docs</a>
+                        <span class="text-border-dim">|</span>
+                        <a href="https://github.com/worktale/worktale-cli" class="hover:text-terminal-green transition-colors">github</a>
+                    </div>
+
+                    <p class="text-text-muted text-xs font-mono mt-8">
+                        &copy; 2026 Worktale by <a href="https://plurral.com" class="text-text-secondary hover:text-terminal-green transition-colors">Plu(rr)al</a>
+                        &middot; <a href="/terms.html" class="hover:text-terminal-green transition-colors">Terms</a>
+                        &middot; <a href="/privacy.html" class="hover:text-terminal-green transition-colors">Privacy</a>
+                    </p>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

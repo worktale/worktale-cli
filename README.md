@@ -4,7 +4,7 @@
 
 Private repos don't build public proof. You ship code behind firewalls, to classified systems, under NDAs — and months of brilliant engineering stays invisible. When it's time for a performance review, a job search, or a client handoff, you're left reconstructing from memory.
 
-Worktale is a local-first CLI that turns your git history into a portable record of your engineering output. No account. No cloud. No code leaves your machine.
+Worktale is a local-first CLI that turns your git history into a portable record of your engineering output. Everything runs on your machine — optionally sync to [Worktale Cloud](https://worktale.dev) for a shareable developer portfolio.
 
 ```
 npm install -g worktale
@@ -56,7 +56,12 @@ This recursively finds every git repo under the current directory and imports th
 | `worktale hook` | Install, uninstall, or check status of git hooks |
 | `worktale capture` | Capture latest commit (used by git hooks) |
 | `worktale nudge` | Manage end-of-day reminders |
-| `worktale publish` | Share your work record (coming soon) |
+| `worktale cloud` | Manage Worktale Cloud account (signup, login, logout, status) |
+| `worktale publish` | Sync today's digest to Worktale Cloud |
+| `worktale profile` | View or update your cloud profile |
+| `worktale timeline` | View cross-repo timeline from cloud |
+| `worktale standup` | Generate a standup from recent activity |
+| `worktale retro` | Generate a retrospective |
 
 Run `worktale --help` or `worktale <command> --help` for full details.
 
@@ -134,6 +139,45 @@ worktale note "Deployed v2.1.0 to production"
 
 ---
 
+## Worktale Cloud
+
+Sync your work record to [worktale.dev](https://worktale.dev) for a shareable developer portfolio, AI-powered standups, weekly digests, and cross-repo timelines. Your public profile lives at `worktale.dev/{you}`.
+
+### How it works
+
+```bash
+# 1. Sign up at worktale.dev and grab your token
+worktale config set cloudEnabled true
+worktale config set cloudToken YOUR_TOKEN
+
+# 2. Publish your record
+worktale publish
+# ✓ Published to worktale.dev/yourname
+```
+
+Cloud commands show a catchup banner when you have unpublished days — so you never lose track of work you forgot to sync.
+
+### Cloud commands
+
+| Command | What it does |
+|---------|-------------|
+| `worktale cloud signup` | Open Worktale Cloud signup in your browser |
+| `worktale cloud login` | Sign in via device-code flow |
+| `worktale cloud status` | Show account status and profile URL |
+| `worktale publish` | Sync today's digest to cloud |
+| `worktale publish --week` | Generate and publish a weekly digest |
+| `worktale profile` | View your cloud profile |
+| `worktale profile set --bio "..."` | Update profile fields |
+| `worktale timeline` | View unified cross-repo timeline |
+| `worktale standup` | AI-generated standup summary |
+| `worktale standup --copy` | Generate and copy to clipboard |
+| `worktale retro` | AI-generated retrospective |
+| `worktale retro --days 30` | Retro covering last 30 days |
+
+The CLI is free forever. Cloud is optional.
+
+---
+
 ## Who It's For
 
 - **Enterprise developers** — Private repos and classified systems don't build public proof. Worktale does.
@@ -149,13 +193,14 @@ worktale note "Deployed v2.1.0 to production"
 This isn't a privacy policy checkbox. It's the architecture.
 
 - All data lives in a local SQLite database (`~/.worktale/data.db`)
-- No telemetry. No analytics. No network requests
+- No telemetry. No analytics. No network requests (unless you opt in to Cloud)
 - The `.worktale/` directory is auto-added to `.gitignore`
 - Git hooks capture metadata only — never file contents or diffs
 - AI digests run against a local Ollama instance. Nothing external
-- Delete `~/.worktale/` and all data is gone. Permanently.
+- Cloud sync is opt-in and only sends commit metadata (messages, line counts, timestamps) — never source code
+- Delete `~/.worktale/` and all local data is gone. Permanently.
 
-Your code stays on your machine. Always.
+Your code stays on your machine. Cloud only sees metadata you explicitly publish.
 
 ---
 
@@ -208,7 +253,7 @@ git clone https://github.com/worktale/worktale-cli.git
 cd worktale-cli
 npm install
 npm run build    # tsup dual build (CLI + worker)
-npm test         # vitest — 448 tests
+npm test         # vitest — 471 tests
 ```
 
 The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.
