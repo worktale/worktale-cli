@@ -88,6 +88,14 @@ async function publishDaily(): Promise<void> {
     body: syncData,
   });
 
+  // Mark digest as published in the cloud so it appears on public profile
+  if (result.data?.id) {
+    await cloudFetch(`/api/v1/digests/${result.data.id}`, {
+      method: 'PATCH',
+      body: { isPublished: true },
+    });
+  }
+
   // Fetch profile to get username for the published URL
   let profileUrl = 'worktale.dev';
   try {
