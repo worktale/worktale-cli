@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #4ADE80;
+  --color-brand-dim: #4ADE8033;
+  --color-positive: #4ADE80;
+  --color-negative: #FB7185;
+  --color-streak: #FBBF24;
+  --color-dim: #374151;
+  --color-surface: #0a0a0f;
+  --color-surface-1: rgba(255, 255, 255, 0.03);
+  --color-surface-2: rgba(255, 255, 255, 0.06);
+  --color-surface-3: rgba(255, 255, 255, 0.09);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-active: rgba(74, 222, 128, 0.3);
+  --color-text-primary: #F9FAFB;
+  --color-text-secondary: #9CA3AF;
+  --color-text-dim: #4B5563;
+  --color-heat-0: #1a1a2e;
+  --color-heat-1: #064e3b;
+  --color-heat-2: #059669;
+  --color-heat-3: #4ADE80;
+
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Glass card utility */
+.glass {
+  background: var(--color-surface-1);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.glass-hover:hover {
+  background: var(--color-surface-2);
+  border-color: var(--color-border-active);
+}
+
+/* Glow effects */
+.glow-green {
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.1), 0 0 60px rgba(74, 222, 128, 0.05);
+}
+
+.glow-yellow {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* CodeMirror overrides */
+.cm-editor {
+  background: transparent !important;
+  font-family: var(--font-mono) !important;
+  font-size: 14px !important;
+}
+
+.cm-editor .cm-gutters {
+  background: transparent !important;
+  border-right: 1px solid var(--color-border) !important;
+}
+
+.cm-editor .cm-activeLineGutter {
+  background: var(--color-surface-2) !important;
+}
+
+.cm-editor .cm-activeLine {
+  background: var(--color-surface-1) !important;
+}
+
+.cm-editor .cm-cursor {
+  border-left-color: var(--color-brand) !important;
+}
+
+.cm-editor .cm-selectionBackground {
+  background: rgba(74, 222, 128, 0.15) !important;
+}
+
+.cm-editor.cm-focused .cm-selectionBackground {
+  background: rgba(74, 222, 128, 0.2) !important;
+}

@@ -40,7 +40,7 @@
             "url": "https://worktale.org",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "Windows, macOS, Linux",
-            "softwareVersion": "1.3.0",
+            "softwareVersion": "1.4.0",
             "downloadUrl": "https://www.npmjs.com/package/worktale",
             "installUrl": "https://www.npmjs.com/package/worktale",
             "softwareRequirements": "Node.js >= 18.0.0",
@@ -252,12 +252,12 @@
                 <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
                     <!-- Announcement pill -->
                     <a
-                        href="#cloud"
-                        class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-cyber-cyan/30 bg-cyber-cyan/5 mb-4 hover:bg-cyber-cyan/10 hover:border-cyber-cyan/50 transition-all group"
+                        href="#desktop"
+                        class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-terminal-green/30 bg-terminal-green/5 mb-4 hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-all group"
                     >
-                        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">New</span>
-                        <span class="font-mono text-xs text-cyber-cyan/90 group-hover:text-cyber-cyan transition-colors">Worktale Cloud is live &mdash; shareable profiles at worktale.dev</span>
-                        <span class="text-cyber-cyan/60 group-hover:text-cyber-cyan transition-colors">&darr;</span>
+                        <span class="px-2 py-0.5 rounded-full bg-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">New</span>
+                        <span class="font-mono text-xs text-terminal-green/90 group-hover:text-terminal-green transition-colors">Worktale Desktop + AI Session Tracking &mdash; track Claude Code, Codex &amp; Copilot usage</span>
+                        <span class="text-terminal-green/60 group-hover:text-terminal-green transition-colors">&darr;</span>
                     </a>
 
                     <!-- Terminal badge -->
@@ -870,7 +870,114 @@
 
 
             <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- AI NARRATION (Claude Code Skill) -->
+            <!-- DESKTOP APP -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section
+                id="desktop"
+                class="py-24 md:py-32 border-t border-border-dim relative overflow-hidden"
+            >
+                <!-- Accent glow -->
+                <div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-terminal-green/[0.03] blur-[120px]"></div>
+
+                <div class="relative z-10 mx-auto max-w-6xl px-6">
+                    <div class="text-center mb-16">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
+                            <span class="px-2 py-0.5 rounded-full bg-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">New</span>
+                            <span class="font-mono text-xs text-terminal-green/80">Worktale Desktop</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-bold leading-tight">
+                            Your dev story,<br />
+                            <span class="bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green bg-clip-text text-transparent">beautifully told.</span>
+                        </h2>
+                        <p class="text-text-secondary mt-4 max-w-2xl mx-auto leading-relaxed text-lg">
+                            Everything the CLI does&mdash;in a stunning desktop app. Glassmorphism UI, interactive heatmaps,
+                            CodeMirror digest editor, AI session tracking, and keyboard-first navigation.
+                            Built with Tauri + React for native performance.
+                        </p>
+                    </div>
+
+                    <!-- Screenshot: Dashboard -->
+                    <div class="mb-12">
+                        <div class="rounded-xl border border-border-dim overflow-hidden shadow-2xl shadow-terminal-green/[0.06]">
+                            <img
+                                src="/logo/desktop-dashboard.png"
+                                alt="Worktale Desktop — Dashboard with streaks, commits, heatmap, and AI session tracking"
+                                class="w-full"
+                                loading="lazy"
+                            />
+                        </div>
+                        <p class="text-center text-text-muted text-xs mt-3 font-mono">Dashboard &mdash; streaks, week chart, commit timeline, AI assist, and 52-week heatmap</p>
+                    </div>
+
+                    <!-- Feature highlights -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-6">
+                            <div class="text-2xl mb-3">&#128293;</div>
+                            <h3 class="font-mono text-sm text-text-primary font-bold mb-2">Streak Tracking</h3>
+                            <p class="text-text-muted text-xs leading-relaxed">Current and best streak visualized with animated progress bars. GitHub-style 52-week contribution heatmap with hover tooltips.</p>
+                        </div>
+                        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-6">
+                            <div class="text-2xl mb-3">&#9997;&#65039;</div>
+                            <h3 class="font-mono text-sm text-text-primary font-bold mb-2">CodeMirror Digest Editor</h3>
+                            <p class="text-text-muted text-xs leading-relaxed">Full markdown editor with syntax highlighting. Generate digests from commit history, edit, and publish to Worktale Cloud&mdash;all in one view.</p>
+                        </div>
+                        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-6">
+                            <div class="text-2xl mb-3">&#9889;</div>
+                            <h3 class="font-mono text-sm text-text-primary font-bold mb-2">Command Palette</h3>
+                            <p class="text-text-muted text-xs leading-relaxed">Ctrl+K to access any action instantly. Keyboard shortcuts for every tab (Ctrl+1 through Ctrl+8). Built for speed.</p>
+                        </div>
+                    </div>
+
+                    <!-- Screenshots: History + AI -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <div class="rounded-xl border border-border-dim overflow-hidden shadow-2xl shadow-terminal-green/[0.04]">
+                                <img
+                                    src="/logo/desktop-history.png"
+                                    alt="Worktale Desktop — History view with heatmap, all-time stats, modules, and coding hours"
+                                    class="w-full"
+                                    loading="lazy"
+                                />
+                            </div>
+                            <p class="text-center text-text-muted text-xs mt-3 font-mono">History &mdash; all-time stats, top modules, coding hours heatmap</p>
+                        </div>
+                        <div>
+                            <div class="rounded-xl border border-border-dim overflow-hidden shadow-2xl shadow-terminal-green/[0.04]">
+                                <img
+                                    src="/logo/desktop-ai-sessions.png"
+                                    alt="Worktale Desktop — AI Session tracking with cost, tokens, tool distribution"
+                                    class="w-full"
+                                    loading="lazy"
+                                />
+                            </div>
+                            <p class="text-center text-text-muted text-xs mt-3 font-mono">AI Sessions &mdash; cost tracking, token usage, tool distribution</p>
+                        </div>
+                    </div>
+
+                    <!-- Desktop features list -->
+                    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center p-4">
+                            <p class="font-mono text-terminal-green text-sm font-bold">8 Views</p>
+                            <p class="text-text-muted text-xs">Dashboard, Log, History, Digest, AI, Cloud, Repos, Settings</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <p class="font-mono text-terminal-green text-sm font-bold">100% CLI Parity</p>
+                            <p class="text-text-muted text-xs">Every CLI feature, fully replicated in a native desktop experience</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <p class="font-mono text-terminal-green text-sm font-bold">6.2 MB</p>
+                            <p class="text-text-muted text-xs">Tauri + Rust backend. Native performance, tiny footprint</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <p class="font-mono text-terminal-green text-sm font-bold">Cross-Platform</p>
+                            <p class="text-text-muted text-xs">Windows, macOS, and Linux. Same experience everywhere</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- AI NARRATION + SESSION TRACKING -->
             <!-- ═══════════════════════════════════════════════════════ -->
             <section
                 id="ai-narration"
@@ -891,8 +998,24 @@
                         </h2>
                         <p class="text-text-secondary mt-4 max-w-2xl mx-auto leading-relaxed">
                             Git captures the <em>what</em>. The <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill captures the <em>why</em>.
-                            After every commit, your AI coding agent narrates intent, decisions, and problems solved&mdash;automatically.
+                            After every commit, your AI coding agent narrates intent, decisions, and problems solved&mdash;and tracks AI session metadata: model, provider, tools used, MCP servers, and cost.
                         </p>
+
+                        <!-- AI session tracking badges -->
+                        <div class="flex flex-wrap justify-center gap-3 mt-6">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 font-mono text-xs text-terminal-green/80">
+                                <span class="w-2 h-2 rounded-full bg-terminal-green"></span>
+                                Claude Code
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-xs text-cyber-cyan/80">
+                                <span class="w-2 h-2 rounded-full bg-cyber-cyan"></span>
+                                OpenAI Codex
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neon-amber/20 bg-neon-amber/5 font-mono text-xs text-neon-amber/80">
+                                <span class="w-2 h-2 rounded-full bg-neon-amber"></span>
+                                GitHub Copilot
+                            </span>
+                        </div>
 
                         <!-- Install CTA -->
                         <div class="flex flex-col items-center gap-3 mt-8" x-data="{ copied: false }">
@@ -940,7 +1063,7 @@
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">02</div>
                                 <div>
                                     <h3 class="font-mono text-base text-text-primary mb-1">Type <code class="text-cyber-cyan">/worktale</code></h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed">The agent activates session narration. After each commit, it runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> with rich context about what was built and why.</p>
+                                    <p class="text-text-secondary text-sm leading-relaxed">The agent activates session tracking. After each commit, it runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session add</code> with model, tools used, and a narrative about what was built and why.</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -953,11 +1076,11 @@
 
                             <div class="mt-4 p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="text-text-secondary text-sm leading-relaxed">
-                                    <span class="text-text-primary font-medium">Works with any AI agent.</span>
-                                    The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> command is a standard CLI&mdash;use it from Claude Code, scripts, CI pipelines, or any tool that can run shell commands.
+                                    <span class="text-text-primary font-medium">Works with Claude Code, Codex &amp; Copilot.</span>
+                                    Official plugins for all three. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session</code> command tracks provider, model, tools used, MCP servers, cost, and narrative context.
                                 </p>
                             </div>
-                            <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.1.0+</span></p>
+                            <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.4.0+</span></p>
                         </div>
 
                         <!-- Right: terminal mockup -->
@@ -976,7 +1099,7 @@
                                 <div class="p-5 font-mono text-xs leading-relaxed text-left space-y-3">
                                     <div>
                                         <p><span class="text-cyber-cyan/70">&gt;</span> <span class="text-cyber-cyan">/worktale</span></p>
-                                        <p class="text-text-muted mt-1">Worktale narration active. I'll add context to your daily narrative after each commit.</p>
+                                        <p class="text-text-muted mt-1">Worktale session tracking active. I'll record AI session data after each commit.</p>
                                     </div>
 
                                     <div class="border-t border-border-dim/50 pt-3">
@@ -989,18 +1112,18 @@
                                     </div>
 
                                     <div>
-                                        <p><span class="text-terminal-green/60">$</span> worktale note "<span class="text-terminal-green">Added rate limiting to /api/upload &mdash; previous impl allowed unlimited requests causing OOM crashes in production</span>"</p>
-                                        <p class="text-terminal-green mt-1">&#10003;  Note added to 2026-03-12</p>
+                                        <p><span class="text-terminal-green/60">$</span> worktale session add \</p>
+                                        <p class="pl-4">--provider "anthropic" --model "claude-opus-4-6" \</p>
+                                        <p class="pl-4">--tool "claude-code" --tools-used "Read,Edit,Bash" \</p>
+                                        <p class="pl-4">--note "<span class="text-terminal-green">Added rate limiting to /api/upload &mdash; previous impl caused OOM crashes</span>"</p>
+                                        <p class="text-terminal-green mt-1">&#10003;  AI session recorded (claude-code &middot; claude-opus-4-6)</p>
                                     </div>
 
                                     <div class="border-t border-border-dim/50 pt-3">
-                                        <p><span class="text-terminal-green/60">$</span> git commit -m "fix: race condition in job queue"</p>
-                                        <p class="text-neon-amber mt-1">&#9889; worktale: captured "fix: race condition..." (+34 / -8)</p>
-                                    </div>
-
-                                    <div>
-                                        <p><span class="text-terminal-green/60">$</span> worktale note "<span class="text-terminal-green">Fixed race condition &mdash; workers claimed same job because claim query wasn't using SELECT FOR UPDATE</span>"</p>
-                                        <p class="text-terminal-green mt-1">&#10003;  Note added to 2026-03-12</p>
+                                        <p><span class="text-terminal-green/60">$</span> worktale session stats</p>
+                                        <p class="text-neon-amber mt-1">&#9889; AI Usage Stats  (last 30 days)</p>
+                                        <p class="text-text-muted mt-1">&nbsp; Sessions: <span class="text-text-primary">61</span> &nbsp;&middot;&nbsp; Cost: <span class="text-neon-amber">$52.26</span> &nbsp;&middot;&nbsp; Tokens: <span class="text-text-primary">3,734,830</span></p>
+                                        <p class="text-text-muted">&nbsp; Tools: <span class="text-terminal-green">claude-code</span> (36) &middot; <span class="text-cyber-cyan">codex</span> (17) &middot; <span class="text-neon-amber">copilot</span> (8)</p>
                                     </div>
                                 </div>
                             </div>

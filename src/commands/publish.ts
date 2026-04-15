@@ -11,6 +11,7 @@ import { brandText, dimText, positiveText, streakText, secondaryText } from '../
 import { isCloudConfigured, cloudFetch } from '../utils/cloud-client.js';
 import { showCatchupBanner } from '../utils/catchup-banner.js';
 import { markPublished } from '../db/daily-summaries.js';
+import { getAiSessionsByDate } from '../db/ai-sessions.js';
 
 export async function publishCommand(options: { week?: boolean } = {}): Promise<void> {
   try {
@@ -69,6 +70,17 @@ async function publishDaily(): Promise<void> {
     moduleActivity[m.module] = m.percentage / 100;
   }
 
+  // Gather AI session data
+  const aiSessions = getAiSessionsByDate(repo.id, today);
+  const aiSessionData = aiSessions.length > 0 ? {
+    sessions: aiSessions.length,
+    cost: aiSessions.reduce((s, a) => s + a.cost_usd, 0),
+    tokens: aiSessions.reduce((s, a) => s + a.input_tokens + a.output_tokens, 0),
+    tools: [...new Set(aiSessions.map((a) => a.tool).filter(Boolean))],
+    models: [...new Set(aiSessions.map((a) => a.model).filter(Boolean))],
+    providers: [...new Set(aiSessions.map((a) => a.provider).filter(Boolean))],
+  } : null;
+
   const syncData = {
     repoName: repo.name,
     repoSlug: basename(repoPath).toLowerCase().replace(/\s+/g, '-'),
@@ -81,6 +93,7 @@ async function publishDaily(): Promise<void> {
     moduleActivity: JSON.stringify(moduleActivity),
     userNotes: summary?.user_notes ?? null,
     aiDraft: summary?.ai_draft ?? null,
+    aiSessions: aiSessionData ? JSON.stringify(aiSessionData) : null,
   };
 
   const result = await cloudFetch<{ id: string }>('/api/v1/digests', {

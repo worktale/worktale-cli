@@ -1,72 +1,80 @@
 ---
 name: worktale
-description: Narrate your coding session into Worktale — automatically adds context, decisions, and intent to your daily work narrative after each commit
+description: Narrate your coding session into Worktale — automatically tracks AI sessions with context, decisions, cost, and tool usage after each commit
 argument-hint: "[optional initial note]"
 allowed-tools: Bash, Read, Grep, Glob
 ---
 
-# Worktale Session Narration
+# Worktale Session Tracking (Claude Code)
 
-You are now narrating this coding session for Worktale, a developer work journal. Your job is to add **color and context** to the developer's daily narrative — the "why" behind every commit, not just the "what".
+You are tracking this coding session for Worktale, a developer work journal. After every commit, you record **structured AI session data** — the model, tools used, and a narrative of what was built and why.
 
 ## Prerequisites
 
-Worktale CLI must be installed. When this skill activates, check if `worktale` is available:
+When this skill activates, verify the CLI is available:
 
 ```bash
 worktale --version
 ```
 
-If not installed, tell the user:
+If not installed: `npm install -g worktale` then `worktale init`.
 
-```
-Worktale CLI is not installed. Install it with: npm install -g worktale
-Then run: worktale init
-```
+## After Every Commit
 
-Do NOT proceed with narration until the CLI is available.
-
-## How it works
-
-After every `git commit` you make during this session, immediately run:
+Immediately after each `git commit`, run this command to record the AI session:
 
 ```bash
-worktale note "<1-2 sentence narrative about what you just did and why>"
+worktale session add \
+  --provider "anthropic" \
+  --model "<your current model name, e.g. claude-opus-4-6>" \
+  --tool "claude-code" \
+  --tools-used "<comma-separated list of tools you used: Read,Edit,Bash,Grep,Glob,Write,Agent,etc>" \
+  --note "<1-2 sentence narrative about what you just did and why>"
 ```
 
-This appends your note to today's daily narrative in Worktale. The developer will see these notes in their EOD digest (`worktale digest`), giving them a rich, AI-narrated record of their day.
+### Determining your values
 
-## What to write
+- **--provider**: Always `"anthropic"` for Claude Code
+- **--model**: Use your actual model name (e.g., `claude-opus-4-6`, `claude-sonnet-4-6`)
+- **--tool**: Always `"claude-code"`
+- **--tools-used**: List the tools you actually used since the last commit. Common tools: `Read`, `Edit`, `Write`, `Bash`, `Grep`, `Glob`, `Agent`, `WebSearch`, `WebFetch`. Only include tools you actually invoked.
+- **--note**: A 1-2 sentence narrative (see below)
 
-Write from the perspective of a coding partner narrating the session. Include:
+### Optional fields (include when available)
 
-- **What** was changed (high-level, not file-by-file)
-- **Why** it was changed (the intent, the problem being solved)
-- **Key decisions** made (trade-offs, alternatives considered)
+- **--mcp-servers**: If you used MCP tools, list the server names (e.g., `"github,linear,slack"`)
+- **--commits**: The SHA of the commit you just made (e.g., `"abc1234"`)
+- **--duration**: Estimated seconds spent on this unit of work
+
+## What to Write in --note
+
+Write from the perspective of a coding partner narrating the session. Focus on:
+- **Why** the change was made (the intent, the problem being solved)
+- **Key decisions** (trade-offs, alternatives considered)
 - **Problems solved** (bugs found, root causes identified)
 
-## Examples
+Keep notes concise (1-2 sentences). Do NOT describe file paths or line counts — the git diff already captures that.
 
-Good notes:
-- `worktale note "Added rate limiting to the /api/upload endpoint — the previous implementation allowed unlimited requests which was causing OOM crashes in production"`
-- `worktale note "Refactored the auth middleware to store session tokens in encrypted cookies instead of localStorage, driven by new compliance requirements"`
-- `worktale note "Fixed race condition in the job queue — workers were pulling the same job because the claim query wasn't using SELECT FOR UPDATE"`
+### Good notes
+- `"Added rate limiting to /api/upload — previous impl allowed unlimited requests causing OOM crashes"`
+- `"Fixed race condition in job queue — workers claimed same job due to missing SELECT FOR UPDATE"`
+- `"Refactored auth middleware for compliance — session tokens now encrypted in cookies instead of localStorage"`
 
-Bad notes (too mechanical — the git diff already captures this):
-- `worktale note "Changed file auth.ts"`
-- `worktale note "Updated 3 files"`
-- `worktale note "Committed changes"`
+### Bad notes (too mechanical)
+- `"Changed auth.ts"` — the git diff already shows this
+- `"Updated 3 files"` — meaningless
 
 ## Rules
 
-1. Run `worktale note` **immediately after each commit** — don't batch them up
+1. Run `worktale session add` **immediately after each commit** — don't batch them
 2. Keep notes **concise** (1-2 sentences max)
 3. Focus on **intent and context**, not file paths or line counts
-4. If the commit is trivial (typo fix, formatting), keep the note brief: `worktale note "Quick typo fix in the README"`
+4. If the commit is trivial, keep brief: `--note "Quick typo fix in README"`
 5. Never skip a commit — even small ones deserve a one-liner
-6. If `worktale` is not installed or the command fails, mention it to the user once and continue working normally
+6. If `worktale` fails, mention it once and continue normally
+7. Be accurate about **--tools-used** — only list tools you actually invoked
 
-## Session start
+## Session Start
 
 When this skill activates:
 
@@ -75,11 +83,11 @@ When this skill activates:
 3. Confirm to the user:
 
 ```
-Worktale narration active. I'll add context to your daily narrative after each commit.
+Worktale session tracking active. I'll record AI session data after each commit.
 ```
 
 If an initial note argument was provided, save it immediately:
 
 ```bash
-worktale note "<the argument>"
+worktale session add --provider "anthropic" --model "<model>" --tool "claude-code" --note "<the argument>"
 ```

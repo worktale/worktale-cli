@@ -8,6 +8,7 @@ import { getDailySummary } from '../db/daily-summaries.js';
 import { closeDb } from '../db/index.js';
 import { formatNumber, formatDate, formatRelativeTime, formatDuration, getDateString } from '../utils/formatting.js';
 import { showCatchupBanner } from '../utils/catchup-banner.js';
+import { getAiSessionsByDate, getAiCostByDate, getAiTokensByDate } from '../db/ai-sessions.js';
 
 export async function todayCommand(): Promise<void> {
   try {
@@ -106,6 +107,35 @@ export async function todayCommand(): Promise<void> {
 
     if (commits.length > 10) {
       console.log('  ' + dimText(`  ...and ${commits.length - 10} more`));
+    }
+
+    // AI session info
+    const aiSessions = getAiSessionsByDate(repo.id, today);
+    if (aiSessions.length > 0) {
+      const aiCost = getAiCostByDate(repo.id, today);
+      const aiTokens = getAiTokensByDate(repo.id, today);
+      const totalTokens = aiTokens.input + aiTokens.output;
+      const toolSet = new Set<string>();
+      const modelSet = new Set<string>();
+      for (const s of aiSessions) {
+        if (s.tool) toolSet.add(s.tool);
+        if (s.model) modelSet.add(s.model);
+      }
+
+      console.log('');
+      console.log('  ' + chalk.bold('AI:'));
+      const parts: string[] = [];
+      parts.push(`${aiSessions.length} session${aiSessions.length !== 1 ? 's' : ''}`);
+      if (totalTokens > 0) parts.push(`${formatNumber(totalTokens)} tokens`);
+      if (aiCost > 0) parts.push(streakText(`$${aiCost.toFixed(4)}`));
+      console.log('  ' + parts.join('  \u00B7  '));
+
+      if (toolSet.size > 0) {
+        console.log('  ' + dimText('Tools: ') + [...toolSet].map((t) => brandText(t)).join(', '));
+      }
+      if (modelSet.size > 0) {
+        console.log('  ' + dimText('Models: ') + [...modelSet].join(', '));
+      }
     }
 
     console.log('');

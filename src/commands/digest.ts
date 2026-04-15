@@ -12,6 +12,8 @@ import { formatDate, getDateString } from '../utils/formatting.js';
 import { brandText, positiveText, negativeText, dimText, streakText, secondaryText } from '../tui/theme.js';
 import { generateTemplateDigest, generateWithOllama, buildOllamaPrompt } from '../utils/digest-generator.js';
 import { showCatchupBanner } from '../utils/catchup-banner.js';
+import { getAiSessionsByDate } from '../db/ai-sessions.js';
+import type { AiSessionDigestData } from '../utils/digest-generator.js';
 
 function promptYesNo(question: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -76,6 +78,32 @@ export async function digestCommand(): Promise<void> {
 
     const modules = getModuleActivityByDate(repo.id, today);
 
+    // Gather AI session data for digest
+    const aiSessions = getAiSessionsByDate(repo.id, today);
+    let aiData: AiSessionDigestData | undefined;
+    if (aiSessions.length > 0) {
+      const toolSet = new Set<string>();
+      const modelSet = new Set<string>();
+      const providerSet = new Set<string>();
+      let totalCost = 0;
+      let totalTokens = 0;
+      for (const s of aiSessions) {
+        if (s.tool) toolSet.add(s.tool);
+        if (s.model) modelSet.add(s.model);
+        if (s.provider) providerSet.add(s.provider);
+        totalCost += s.cost_usd;
+        totalTokens += s.input_tokens + s.output_tokens;
+      }
+      aiData = {
+        total_sessions: aiSessions.length,
+        total_cost: totalCost,
+        total_tokens: totalTokens,
+        tools: [...toolSet],
+        models: [...modelSet],
+        providers: [...providerSet],
+      };
+    }
+
     // Check AI config
     const config = loadConfig();
     const aiProvider = config.ai.provider;
@@ -109,11 +137,11 @@ export async function digestCommand(): Promise<void> {
         console.log('');
 
         // Fallback to template
-        digest = generateTemplateDigest(todayDate, commits, summaryData, modules);
+        digest = generateTemplateDigest(todayDate, commits, summaryData, modules, aiData);
       }
     } else {
       // Template mode (default)
-      digest = generateTemplateDigest(todayDate, commits, summaryData, modules);
+      digest = generateTemplateDigest(todayDate, commits, summaryData, modules, aiData);
     }
 
     // Display the draft

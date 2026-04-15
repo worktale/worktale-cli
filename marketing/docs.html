@@ -36,7 +36,7 @@
     <div class="mx-auto max-w-4xl px-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
-        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.3.0</span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.4.0</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
       <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
@@ -414,6 +414,63 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">AI AGENT INTEGRATION</p>
               <p class="text-text-secondary text-sm">Use the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill in Claude Code to automatically narrate every commit during a coding session. The skill instructs the AI to run <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale note</code> after each commit with rich context about intent, decisions, and problems solved.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- worktale session -->
+        <div id="cmd-session" class="rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-border-dim bg-surface-2 flex items-center justify-between">
+            <code class="font-mono text-base text-terminal-green">worktale session</code>
+            <span class="font-mono text-xs text-text-muted">AI session tracking</span>
+          </div>
+          <div class="p-5 space-y-4">
+            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. Official plugins for Claude Code, Codex, and Copilot call this automatically. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.0+</span></p>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">SUBCOMMANDS</p>
+              <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
+                <pre class="text-sm text-text-secondary font-mono"><code>worktale session add [options]    # Record an AI session
+worktale session list [-d days]   # List recent sessions
+worktale session stats [-d days]  # Show AI usage statistics</code></pre>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">OPTIONS (for add)</p>
+              <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
+                <pre class="text-sm text-text-secondary font-mono"><code>--provider &lt;name&gt;       # anthropic, openai, github
+--model &lt;name&gt;          # claude-opus-4-6, gpt-4o, o3
+--tool &lt;name&gt;           # claude-code, codex, copilot
+--cost &lt;usd&gt;            # Session cost in USD
+--input-tokens &lt;n&gt;      # Input token count
+--output-tokens &lt;n&gt;     # Output token count
+--tools-used &lt;list&gt;     # Comma-separated agent tools (Read,Edit,Bash)
+--mcp-servers &lt;list&gt;    # Comma-separated MCP servers (github,linear)
+--duration &lt;secs&gt;       # Session duration in seconds
+--commits &lt;shas&gt;        # Comma-separated commit SHAs
+--note &lt;text&gt;           # Session narrative</code></pre>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">EXAMPLE</p>
+              <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
+                <pre class="text-sm text-text-secondary font-mono"><code>worktale session add \
+  --provider anthropic --model claude-opus-4-6 \
+  --tool claude-code --tools-used "Read,Edit,Bash,Grep" \
+  --note "Added rate limiting to upload endpoint"
+
+worktale session stats --days 30</code></pre>
+              </div>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">DATA TRACKED</p>
+              <ul class="text-text-secondary text-sm space-y-1 list-disc list-inside">
+                <li>Provider, model, and tool per session</li>
+                <li>Input/output token counts and cost</li>
+                <li>Agent tools invoked (Read, Edit, Bash, etc.)</li>
+                <li>MCP servers used (github, linear, slack, etc.)</li>
+                <li>Session duration and linked commit SHAs</li>
+                <li>Narrative note with intent and decisions</li>
+              </ul>
             </div>
           </div>
         </div>

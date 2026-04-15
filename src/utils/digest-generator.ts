@@ -1,10 +1,20 @@
 import { formatNumber } from './formatting.js';
 
+export interface AiSessionDigestData {
+  total_sessions: number;
+  total_cost: number;
+  total_tokens: number;
+  tools: string[];
+  models: string[];
+  providers: string[];
+}
+
 export function generateTemplateDigest(
   date: Date,
   commits: Array<{ message: string | null }>,
   summary: { commits_count: number; lines_added: number; lines_removed: number; files_touched: number },
   modules: Array<{ module: string; percentage: number }>,
+  aiData?: AiSessionDigestData,
 ): string {
   const dateStr = date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -59,6 +69,17 @@ export function generateTemplateDigest(
     const topModules = modules.slice(0, 5);
     const parts = topModules.map((m) => `${m.module} (${Math.round(m.percentage)}%)`);
     md += `- ${parts.join(', ')}\n`;
+  }
+
+  if (aiData && aiData.total_sessions > 0) {
+    md += '\n### AI Assist\n';
+    const aiParts: string[] = [];
+    aiParts.push(`${aiData.total_sessions} session${aiData.total_sessions !== 1 ? 's' : ''}`);
+    if (aiData.total_tokens > 0) aiParts.push(`${formatNumber(aiData.total_tokens)} tokens`);
+    if (aiData.total_cost > 0) aiParts.push(`$${aiData.total_cost.toFixed(4)}`);
+    md += `- ${aiParts.join(', ')}\n`;
+    if (aiData.tools.length > 0) md += `- Tools: ${aiData.tools.join(', ')}\n`;
+    if (aiData.models.length > 0) md += `- Models: ${aiData.models.join(', ')}\n`;
   }
 
   return md;

@@ -22,6 +22,7 @@ import { standupCommand } from './commands/standup.js';
 import { retroCommand } from './commands/retro.js';
 import { timelineCommand } from './commands/timeline.js';
 import { profileCommand } from './commands/profile.js';
+import { sessionCommand } from './commands/session.js';
 import { installNudge, removeNudge, checkNudge, isNudgeInstalled } from './nudge/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -173,6 +174,25 @@ program
   .description('View or update your cloud profile')
   .action(async (action?: string, key?: string, value?: string) => {
     await profileCommand(action, key, value);
+  });
+
+program
+  .command('session [action]')
+  .description('Track AI coding sessions (add, list, stats)')
+  .option('--provider <name>', 'AI provider (anthropic, openai, github)')
+  .option('--model <name>', 'Model name (claude-opus-4-6, gpt-4o)')
+  .option('--tool <name>', 'Tool name (claude-code, codex, copilot)')
+  .option('--cost <usd>', 'Session cost in USD')
+  .option('--input-tokens <n>', 'Input token count')
+  .option('--output-tokens <n>', 'Output token count')
+  .option('--tools-used <list>', 'Comma-separated agent tools used')
+  .option('--mcp-servers <list>', 'Comma-separated MCP servers used')
+  .option('--duration <secs>', 'Session duration in seconds')
+  .option('--commits <shas>', 'Comma-separated commit SHAs')
+  .option('--note <text>', 'Session note')
+  .option('-d, --days <n>', 'Days to show (for list/stats)')
+  .action(async (action?: string, options?: Record<string, string | undefined>) => {
+    await sessionCommand(action, options);
   });
 
 program
