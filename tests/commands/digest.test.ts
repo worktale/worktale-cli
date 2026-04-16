@@ -8,6 +8,11 @@ vi.mock('../../src/db/index.js', () => ({
   getDbPath: () => ':memory:',
 }));
 
+// Mock AI sessions
+vi.mock('../../src/db/ai-sessions.js', () => ({
+  getAiSessionsByDate: () => [],
+}));
+
 // Mock existsSync for .worktale/config.json detection
 const mockExistsSync = vi.fn<(path: string) => boolean>();
 vi.mock('node:fs', async (importOriginal) => {

@@ -9,6 +9,13 @@ vi.mock('../../src/db/index.js', () => ({
   getDbPath: () => ':memory:',
 }));
 
+// Mock AI sessions (uses its own getDb call internally)
+vi.mock('../../src/db/ai-sessions.js', () => ({
+  getAiSessionsByDate: () => [],
+  getAiCostByDate: () => 0,
+  getAiTokensByDate: () => ({ input: 0, output: 0 }),
+}));
+
 // Mock process.exit so it doesn't kill the test runner
 const mockExit = vi.spyOn(process, 'exit').mockImplementation((() => {}) as any);
 
