@@ -103,9 +103,13 @@ worktale hook status              # Check if hooks are installed
 
 If the repo isn't tracked yet, `hook install` automatically registers it in the database.
 
-### AI agent integration (v1.1.0+)
+### AI agent integration
 
-Worktale integrates with every major AI coding agent. The agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative.
+Worktale integrates with every major AI coding agent. The agent runs `worktale note` after each commit, adding rich context — intent, decisions, problems solved — to your daily narrative. With the Claude Code plugin, a SessionEnd hook additionally parses the session transcript and records tokens, cost, tools, and MCP servers via `worktale session add`.
+
+- `worktale note` (narrative) requires CLI **v1.1.0+**
+- `worktale session add` (AI session tracking) requires CLI **v1.4.0+**
+- The official Claude Code / Codex / Copilot plugins require CLI **v1.4.0+**
 
 | Platform | Install | Type |
 |----------|---------|------|
@@ -135,7 +139,7 @@ You can also use `worktale note` manually from any script or CI pipeline:
 worktale note "Deployed v2.1.0 to production"
 ```
 
-> **Requires Worktale CLI v1.1.0+** — [Full integration docs →](https://worktale.org/plugin.html)
+> **Requires Worktale CLI v1.4.0+** for the official Claude/Codex/Copilot plugins. Rules-based integrations (Cursor, Cline, Windsurf) work with v1.1.0+. [Full integration docs →](https://worktale.org/plugin.html)
 
 ---
 

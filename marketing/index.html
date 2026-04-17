@@ -419,7 +419,7 @@
                         </h2>
                         <p class="text-text-secondary mt-3">
                             Browse daily context, notes, and stats. Keyboard-driven. Renders in
-                            under 300ms.
+                            Snappy.
                         </p>
                     </div>
 
@@ -1099,8 +1099,8 @@
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">03</div>
                                 <div>
-                                    <h3 class="font-mono text-base text-text-primary mb-1">See cost per project</h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed"><code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session stats</code> breaks down spend by repo, model, and tool. The desktop app shows daily cost bars, token usage over time, and model-vs-model comparisons.</p>
+                                    <h3 class="font-mono text-base text-text-primary mb-1">See your AI spend</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed"><code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session stats</code> totals cost and tokens by model and tool for the active repo. Switch repos with <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale repos</code> to see per-repo breakdowns. The desktop app visualizes the same data as daily cost bars and tool distribution charts.</p>
                                 </div>
                             </div>
 
@@ -1149,12 +1149,12 @@
                                     </div>
 
                                     <div class="border-t border-border-dim/50 pt-3">
-                                        <p><span class="text-terminal-green/60">$</span> worktale session stats --by project</p>
-                                        <p class="text-neon-amber mt-1">&#9889; AI Usage (last 30 days, by project)</p>
-                                        <p class="text-text-muted mt-1">&nbsp; payment-service &nbsp; 23 sessions &nbsp; <span class="text-neon-amber">$21.40</span> &nbsp; 1.8M tokens</p>
-                                        <p class="text-text-muted">&nbsp; dashboard-web &nbsp; &nbsp; 18 sessions &nbsp; <span class="text-neon-amber">$14.92</span> &nbsp; 1.2M tokens</p>
-                                        <p class="text-text-muted">&nbsp; cli-tool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 12 sessions &nbsp; <span class="text-neon-amber">$9.18</span> &nbsp; &nbsp;623k tokens</p>
-                                        <p class="text-text-muted mt-1">&nbsp; <span class="text-text-secondary">total:</span> <span class="text-neon-amber">$45.50</span> &nbsp;&middot;&nbsp; 3.6M tokens &nbsp;&middot;&nbsp; 53 sessions</p>
+                                        <p><span class="text-terminal-green/60">$</span> worktale session stats --days 30</p>
+                                        <p class="text-neon-amber mt-1">&#9889; AI Usage (last 30 days)</p>
+                                        <p class="text-text-muted mt-1">&nbsp; Sessions: <span class="text-text-primary">53</span> &middot; Total cost: <span class="text-neon-amber">$45.50</span> &middot; Tokens: <span class="text-text-primary">3.6M</span></p>
+                                        <p class="text-text-muted">&nbsp; Models: <span class="text-terminal-green">claude-opus-4-7</span> (34) &middot; <span class="text-cyber-cyan">claude-sonnet-4-6</span> (19)</p>
+                                        <p class="text-text-muted">&nbsp; Tools: Read (380) &middot; Edit (241) &middot; Bash (197) &middot; Grep (112)</p>
+                                        <p class="text-text-muted mt-1">&nbsp; <span class="text-text-secondary">Switch repos with</span> <code class="text-terminal-green">worktale repos</code> <span class="text-text-secondary">to see per-repo breakdowns</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -1221,15 +1221,15 @@
                                 <p
                                     class="font-mono text-sm text-terminal-green/60 mb-1"
                                 >
-                                    &gt; worktale weekly --client acme
+                                    &gt; worktale digest
                                 </p>
                                 <p
                                     class="text-terminal-green text-sm font-medium"
                                 >
-                                    &ldquo;This week on acme-portal: shipped the checkout flow, fixed 3 Stripe webhook race conditions, migrated auth to JWT. 23 commits across 4 days. AI assist: $4.20 on Claude Opus.&rdquo;
+                                    &ldquo;Today on acme-portal: shipped the checkout flow, fixed 2 Stripe webhook race conditions. 6 commits, +847 / -204 lines. AI assist: $0.94 on Claude Opus.&rdquo;
                                 </p>
                                 <p class="text-terminal-dim text-sm mt-2">
-                                    Paste and send. 12 seconds, not 45 minutes.
+                                    Paste and send. Stop reconstructing your day from memory.
                                 </p>
                             </div>
                         </div>
@@ -1878,7 +1878,7 @@
                                     >✓</span
                                 >
                                 <span class="text-sm text-text-primary"
-                                    >No network calls. No telemetry.</span
+                                    >No telemetry. Cloud sync is opt-in.</span
                                 >
                             </div>
                             <div
@@ -2864,7 +2864,7 @@
                                     <td
                                         class="px-4 py-3 text-text-secondary"
                                     >
-                                        100% local / offline
+                                        Local-first storage
                                     </td>
                                     <td
                                         class="px-4 py-3 text-center text-terminal-green"

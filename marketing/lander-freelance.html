@@ -96,11 +96,11 @@
         <div class="p-6 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
           <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-4">Your Friday with Worktale</p>
           <ul class="space-y-3 text-text-secondary text-sm">
-            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span><code class="text-terminal-green font-mono text-xs">worktale weekly</code> renders a paste-ready update</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span><code class="text-terminal-green font-mono text-xs">worktale digest</code> renders a paste-ready daily summary</li>
             <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Your AI agent has been writing context notes per commit all week</li>
-            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Days active, commits, lines, hours&mdash;already tallied</li>
-            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>AI cost for this project: <span class="text-neon-amber">$4.20</span>, already attributed</li>
-            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Paste into email. 12 seconds, not 45 minutes</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Commits, lines, files, active time&mdash;already tallied</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Run <code class="text-terminal-green font-mono text-xs">worktale session stats -d 7</code> for weekly AI cost breakdown</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Paste into email. Minutes, not hours</li>
             <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>More code time. Less paperwork time. Same invoice.</li>
           </ul>
         </div>
@@ -119,10 +119,10 @@
           <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center mb-4">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
-          <h3 class="text-lg font-bold text-text-primary mb-2">1. Weekly client updates, automatically</h3>
+          <h3 class="text-lg font-bold text-text-primary mb-2">1. Daily client summaries, automatically</h3>
           <p class="text-text-secondary text-sm leading-relaxed">
-            <code class="text-terminal-green font-mono text-xs">worktale weekly</code> pulls together the week&rsquo;s commits, your daily notes, and AI session metadata into a clean paste-ready summary.
-            Your retainer client gets the Friday update. You get 45 minutes back.
+            <code class="text-terminal-green font-mono text-xs">worktale digest</code> pulls together each day&rsquo;s commits, your notes, and AI session metadata into a clean paste-ready summary.
+            For a weekly recap, <code class="text-terminal-green font-mono text-xs">worktale standup --days 7 --format slack</code> uses your cloud-connected AI digest to generate a standup-style roll-up.
           </p>
         </div>
 
@@ -178,27 +178,34 @@
           </div>
           <span class="font-mono text-xs text-text-muted ml-2">worktale &mdash; acme-portal</span>
         </div>
-        <div class="p-5 font-mono text-xs leading-relaxed space-y-3">
+        <div class="p-5 font-mono text-xs leading-relaxed space-y-4">
           <div>
-            <p><span class="text-terminal-green/60">$</span> <span class="text-terminal-green">worktale weekly</span></p>
+            <p><span class="text-terminal-green/60">$</span> <span class="text-terminal-green">worktale digest</span></p>
             <div class="mt-2 pl-3 border-l-2 border-terminal-green/30 text-text-secondary">
-              <p class="text-neon-amber">&#9889; Week of Apr 13 &ndash; Apr 17 &middot; acme-portal</p>
-              <p class="mt-2">This week: shipped the Stripe checkout flow, fixed 3 webhook race conditions, and migrated auth to JWT-based sessions.</p>
+              <p class="text-neon-amber">&#9889; Today &middot; acme-portal &middot; 2026-04-17</p>
+              <p class="mt-2">Shipped the Stripe checkout flow and fixed 2 webhook race conditions.</p>
               <p class="mt-2 text-text-muted"># Stats</p>
-              <p>&nbsp;&nbsp;Commits: <span class="text-text-primary">23</span> &middot; Days active: <span class="text-text-primary">4 of 5</span> &middot; Lines: <span class="text-terminal-green">+2,847</span> / <span class="text-red-400">-1,104</span></p>
-              <p class="mt-2 text-text-muted"># Highlights (AI session notes)</p>
-              <p>&nbsp;&nbsp;&bull; Tracked down webhook race condition using idempotency keys &mdash; DB unique constraint beat app-level locking at scale</p>
-              <p>&nbsp;&nbsp;&bull; JWT migration: kept session cookies as fallback for 2 sprints to allow rollback</p>
+              <p>&nbsp;&nbsp;Commits: <span class="text-text-primary">6</span> &middot; Lines: <span class="text-terminal-green">+847</span> / <span class="text-red-400">-204</span> &middot; Files: <span class="text-text-primary">11</span></p>
+              <p class="mt-2 text-text-muted"># Highlights</p>
+              <p>&nbsp;&nbsp;&bull; Tracked down webhook race condition using idempotency keys &mdash; DB unique constraint beat app-level locking</p>
               <p>&nbsp;&nbsp;&bull; Checkout flow uses Stripe Elements; PCI-SAQ-A compliant; tested against Stripe CLI webhook fixtures</p>
-              <p class="mt-2 text-text-muted"># AI overhead this week</p>
-              <p>&nbsp;&nbsp;Claude Opus: <span class="text-neon-amber">$4.20</span> &middot; <span class="text-text-primary">127k tokens</span> &middot; 8 sessions</p>
-              <p class="mt-2 text-cyber-cyan">&#10003; Report ready. Copied to clipboard.</p>
+              <p class="mt-2 text-text-muted"># AI overhead today</p>
+              <p>&nbsp;&nbsp;Claude Opus: <span class="text-neon-amber">$0.94</span> &middot; <span class="text-text-primary">31k tokens</span> &middot; 2 sessions</p>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-border-dim">
+            <p><span class="text-terminal-green/60">$</span> <span class="text-terminal-green">worktale session stats --days 7</span></p>
+            <div class="mt-2 pl-3 border-l-2 border-cyber-cyan/30 text-text-secondary">
+              <p class="text-neon-amber">&#9889; AI Sessions (last 7 days)</p>
+              <p class="mt-1">&nbsp;&nbsp;Sessions: <span class="text-text-primary">12</span> &middot; Total cost: <span class="text-neon-amber">$4.20</span> &middot; Tokens: <span class="text-text-primary">127,412</span></p>
+              <p>&nbsp;&nbsp;Models: <span class="text-terminal-green">claude-opus-4-7</span> (9) &middot; <span class="text-cyber-cyan">claude-sonnet-4-6</span> (3)</p>
+              <p class="mt-2 text-cyber-cyan">Copy-paste this into your retainer invoice.</p>
             </div>
           </div>
         </div>
       </div>
       <p class="text-text-muted text-xs text-center mt-4">
-        Add <code class="text-terminal-green font-mono text-xs">--format markdown</code> or <code class="text-terminal-green font-mono text-xs">--format slack</code> for different clients.
+        Connected to Worktale Cloud? <code class="text-terminal-green font-mono text-xs">worktale standup --days 7 --format slack</code> generates an AI-written weekly recap.
       </p>
     </div>
   </section>
