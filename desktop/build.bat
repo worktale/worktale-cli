@@ -31,10 +31,10 @@ echo.
 REM Parse command
 if "%1"=="dev" (
     echo [Worktale Desktop] Starting dev server...
-    npx tauri dev
+    "%~dp0node_modules\.bin\tauri.cmd" dev
 ) else if "%1"=="build" (
     echo [Worktale Desktop] Building release...
-    npx tauri build
+    "%~dp0node_modules\.bin\tauri.cmd" build
 ) else if "%1"=="check" (
     echo [Worktale Desktop] Checking Rust compilation...
     cd src-tauri

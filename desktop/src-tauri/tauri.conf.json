@@ -26,5 +26,22 @@
       "csp": null
     }
   },
-  "plugins": {}
+  "plugins": {},
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": ["icons/icon.png", "icons/icon.ico"],
+    "category": "DeveloperTool",
+    "publisher": "Plural Software",
+    "copyright": "Copyright © 2026 Plural Software",
+    "shortDescription": "Developer work journal — turn your git history into a record of what you actually built",
+    "longDescription": "Worktale Desktop is a native client for the Worktale developer work journal. It reads the same local SQLite database as the Worktale CLI, giving you a visual view of your commits, streaks, AI session tracking, and daily digests.",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English"],
+        "displayLanguageSelector": false
+      }
+    }
+  }
 }

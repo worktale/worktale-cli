@@ -50,7 +50,7 @@
         :disabled="loading"
         class="w-full px-5 py-3 rounded-lg bg-terminal-green/15 border border-terminal-green/40 font-mono text-sm text-terminal-green hover:bg-terminal-green/25 hover:border-terminal-green/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
       >
-        <span x-show="!loading">Download v1.4.1 &mdash; Windows x64 (6.4 MB)</span>
+        <span x-show="!loading">Download v1.4.1 installer &mdash; Windows x64 (2.8 MB)</span>
         <span x-show="loading" class="inline-flex items-center gap-2">
           <svg class="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
           Starting download&hellip;
@@ -76,7 +76,7 @@
       pendingUrl: '',
       init() {
         window.addEventListener('worktale:request-download', (e) => {
-          const url = (e && e.detail && e.detail.url) || '/downloads/worktale-desktop-v1.4.1-win-x64.exe';
+          const url = (e && e.detail && e.detail.url) || '/downloads/worktale-desktop-v1.4.1-win-x64-setup.exe';
           const stored = localStorage.getItem('worktale_registered');
           if (stored) {
             window.location.href = '/thanks.html';

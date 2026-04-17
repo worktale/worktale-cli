@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
@@ -38,7 +39,7 @@
 
       <p class="text-text-secondary text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
         Your download will begin automatically. If it didn&rsquo;t start,
-        <a id="manual-download" href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" class="text-terminal-green underline hover:text-terminal-green/80">download Worktale manually</a>.
+        <a id="manual-download" href="/downloads/worktale-desktop-v1.4.1-win-x64-setup.exe" class="text-terminal-green underline hover:text-terminal-green/80">download Worktale manually</a>.
       </p>
     </div>
   </section>
@@ -74,8 +75,8 @@
                   <span class="font-mono text-terminal-green text-xs font-bold">&gt;_</span>
                 </div>
                 <div class="flex-1 min-w-0 text-left">
-                  <p class="text-sm text-text-primary truncate">worktale-desktop-v1.4.1-win-x64.exe</p>
-                  <p class="text-xs text-text-muted">6.4 MB &middot; just now</p>
+                  <p class="text-sm text-text-primary truncate">worktale-desktop-v1.4.1-win-x64-setup.exe</p>
+                  <p class="text-xs text-text-muted">2.8 MB &middot; just now</p>
                 </div>
               </div>
               <div class="mt-3 pt-3 border-t border-border-dim flex items-center justify-between">
@@ -85,7 +86,7 @@
             </div>
           </div>
           <p class="text-text-secondary text-sm md:text-base leading-relaxed">
-            Open <code class="text-terminal-green font-mono text-sm">worktale-desktop-v1.4.1-win-x64.exe</code> from your <span class="text-terminal-green">Downloads</span> folder
+            Open <code class="text-terminal-green font-mono text-sm">worktale-desktop-v1.4.1-win-x64-setup.exe</code> from your <span class="text-terminal-green">Downloads</span> folder
           </p>
         </div>
 
@@ -131,6 +132,70 @@
           </p>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- Having trouble downloading -->
+  <section class="py-10" x-data="{ open: false }">
+    <div class="mx-auto max-w-2xl px-6">
+      <button
+        type="button"
+        @click="open = !open"
+        class="w-full flex items-center justify-between px-5 py-4 rounded-xl border border-neon-amber/20 bg-neon-amber/5 hover:bg-neon-amber/10 transition-colors"
+      >
+        <span class="flex items-center gap-3 text-left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neon-amber flex-shrink-0">
+            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>
+            <span class="block font-mono text-sm text-text-primary">See a &ldquo;dangerous file&rdquo; warning from Chrome or Windows?</span>
+            <span class="block text-text-muted text-xs mt-0.5">This is expected. Here&rsquo;s how to proceed.</span>
+          </span>
+        </span>
+        <svg :class="{ 'rotate-180': open }" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-muted transition-transform flex-shrink-0">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <div x-show="open" x-collapse x-cloak class="mt-3 p-6 rounded-xl border border-border-dim bg-surface-1/30 text-left">
+        <p class="text-text-secondary text-sm leading-relaxed mb-4">
+          Worktale Desktop is a new open-source tool, so the installer isn&rsquo;t yet signed with a commercial code-signing certificate. Chrome and Windows SmartScreen default to warning on unsigned executables from unknown publishers. <strong class="text-text-primary">The file is safe</strong> &mdash; you can verify by checking the SHA-256 against the value published in our <a href="https://github.com/worktale/worktale-cli/releases" class="text-terminal-green underline">GitHub releases</a> once we publish it there, or by inspecting the Tauri/Rust source at <a href="https://github.com/worktale/worktale-cli" class="text-terminal-green underline">github.com/worktale/worktale-cli</a>.
+        </p>
+
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg border border-border-dim bg-surface-0">
+            <p class="font-mono text-xs text-cyber-cyan mb-2">Chrome &mdash; &ldquo;Improve download protection&rdquo; popup</p>
+            <ol class="text-text-secondary text-sm space-y-1.5 list-decimal list-inside">
+              <li>Click the downloads icon in the Chrome toolbar.</li>
+              <li>Find <code class="text-terminal-green font-mono text-xs">worktale-desktop-v1.4.1-win-x64-setup.exe</code> in the list.</li>
+              <li>Click the &hellip; menu or arrow next to it and choose <strong class="text-text-primary">Keep</strong> (or <strong class="text-text-primary">Keep dangerous file</strong>).</li>
+            </ol>
+          </div>
+
+          <div class="p-4 rounded-lg border border-border-dim bg-surface-0">
+            <p class="font-mono text-xs text-cyber-cyan mb-2">Windows SmartScreen &mdash; &ldquo;Windows protected your PC&rdquo;</p>
+            <ol class="text-text-secondary text-sm space-y-1.5 list-decimal list-inside">
+              <li>When the blue SmartScreen dialog appears, click <strong class="text-text-primary">More info</strong>.</li>
+              <li>Click <strong class="text-text-primary">Run anyway</strong>.</li>
+              <li>The installer opens; proceed with installation.</li>
+            </ol>
+          </div>
+
+          <div class="p-4 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
+            <p class="font-mono text-xs text-terminal-green mb-2">Prefer the CLI?</p>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              You can skip the desktop app entirely and use the npm-distributed CLI &mdash; no SmartScreen warnings:
+            </p>
+            <div class="mt-2 px-3 py-2 rounded-lg bg-surface-0 border border-border-dim font-mono text-xs">
+              <span class="text-terminal-green/60">$</span> <span class="text-terminal-green">npm install -g worktale</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-text-muted text-xs mt-5 leading-relaxed">
+          A commercial code-signing certificate is on the roadmap &mdash; once we have one, these warnings go away for everyone. Thanks for bearing with us.
+        </p>
       </div>
     </div>
   </section>
