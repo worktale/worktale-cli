@@ -322,7 +322,7 @@
 
       <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <p class="text-text-secondary text-sm leading-relaxed">
-          <strong class="text-text-primary">Windows x64</strong> available now &mdash; <a href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" class="text-terminal-green hover:underline">download v1.4.1</a> (6.2 MB). macOS and Linux builds coming soon.
+          <strong class="text-text-primary">Windows x64</strong> available now &mdash; <a href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" onclick="if (!localStorage.getItem('worktale_registered')) { event.preventDefault(); window.dispatchEvent(new CustomEvent('worktale:request-download', { detail: { url: this.href } })); }" class="text-terminal-green hover:underline">download v1.4.1</a> (6.4 MB). macOS and Linux builds coming soon.
         </p>
       </div>
 
@@ -386,7 +386,7 @@
       <ul class="space-y-2 mb-6 ml-4">
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
-          <span><a href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" class="text-terminal-green hover:underline">Download Worktale Desktop</a> (Windows x64, 6.2 MB)</span>
+          <span><a href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" onclick="if (!localStorage.getItem('worktale_registered')) { event.preventDefault(); window.dispatchEvent(new CustomEvent('worktale:request-download', { detail: { url: this.href } })); }" class="text-terminal-green hover:underline">Download Worktale Desktop</a> (Windows x64, 6.4 MB)</span>
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
@@ -412,6 +412,7 @@
 </main>
 
 <%footer%>
+<%downloadmodal%>
 
 </body>
 </html>

@@ -1,0 +1,136 @@
+<!-- Worktale desktop download email gate -->
+<div
+  x-data="worktaleDownloadModal"
+  x-init="init"
+  x-show="open"
+  x-cloak
+  x-transition.opacity
+  @keydown.escape.window="close"
+  class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+  style="display:none;"
+>
+  <div
+    @click.outside="close"
+    class="relative w-full max-w-md rounded-2xl border border-terminal-green/30 bg-surface-0 p-8 shadow-2xl shadow-terminal-green/10"
+  >
+    <button
+      type="button"
+      @click="close"
+      class="absolute top-3 right-3 w-8 h-8 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-1 transition-colors flex items-center justify-center"
+      aria-label="Close"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+
+    <div class="text-center mb-6">
+      <div class="inline-flex w-14 h-14 rounded-xl bg-terminal-green/10 border border-terminal-green/20 items-center justify-center mb-4">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-text-primary">Download Worktale Desktop</h3>
+      <p class="text-text-muted text-sm mt-2 leading-relaxed">Drop your email and we&rsquo;ll start the download.<br/>We use this for occasional product updates. No spam.</p>
+    </div>
+
+    <form @submit.prevent="submit" class="space-y-3">
+      <input
+        type="email"
+        x-model="email"
+        x-ref="emailInput"
+        required
+        autocomplete="email"
+        placeholder="you@example.com"
+        :disabled="loading"
+        class="w-full px-4 py-3 rounded-lg bg-surface-1 border border-border-dim focus:border-terminal-green/50 focus:outline-none font-mono text-sm text-text-primary placeholder:text-text-muted transition-colors"
+      />
+      <button
+        type="submit"
+        :disabled="loading"
+        class="w-full px-5 py-3 rounded-lg bg-terminal-green/15 border border-terminal-green/40 font-mono text-sm text-terminal-green hover:bg-terminal-green/25 hover:border-terminal-green/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+      >
+        <span x-show="!loading">Download v1.4.1 &mdash; Windows x64 (6.4 MB)</span>
+        <span x-show="loading" class="inline-flex items-center gap-2">
+          <svg class="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+          Starting download&hellip;
+        </span>
+      </button>
+      <p x-show="error" x-text="error" class="text-red-400 text-xs text-center"></p>
+    </form>
+
+    <p class="text-[10px] text-text-muted text-center mt-5 leading-relaxed">
+      By downloading you agree to our <a href="/privacy" class="underline hover:text-terminal-green">privacy policy</a>.
+      macOS and Linux builds coming soon.
+    </p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('worktaleDownloadModal', () => ({
+      open: false,
+      email: '',
+      loading: false,
+      error: '',
+      pendingUrl: '',
+      init() {
+        window.addEventListener('worktale:request-download', (e) => {
+          const url = (e && e.detail && e.detail.url) || '/downloads/worktale-desktop-v1.4.1-win-x64.exe';
+          const stored = localStorage.getItem('worktale_registered');
+          if (stored) {
+            this.trigger(url);
+          } else {
+            this.pendingUrl = url;
+            this.open = true;
+            this.$nextTick(() => this.$refs.emailInput && this.$refs.emailInput.focus());
+          }
+        });
+      },
+      close() {
+        this.open = false;
+        this.error = '';
+      },
+      async submit() {
+        if (!this.email || this.loading) return;
+        this.loading = true;
+        this.error = '';
+        try {
+          const res = await fetch('https://forms.noundry.com/f/worktale', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              source: 'desktop-download',
+              email: this.email,
+              version: '1.4.1',
+              platform: 'windows-x64',
+              referrer: document.referrer || '',
+              timestamp: new Date().toISOString(),
+            }),
+          });
+          if (!res.ok) throw new Error('submit-failed');
+          localStorage.setItem('worktale_registered', this.email);
+          localStorage.setItem('worktale_registered_at', new Date().toISOString());
+          this.trigger(this.pendingUrl);
+          this.close();
+        } catch (err) {
+          this.error = 'Submission failed. Try again, or email hello@worktale.org to request access.';
+        } finally {
+          this.loading = false;
+        }
+      },
+      trigger(url) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      },
+    }));
+  });
+
+  window.worktaleRequestDownload = function (url) {
+    window.dispatchEvent(new CustomEvent('worktale:request-download', { detail: { url: url } }));
+  };
+</script>
