@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worktale for Freelancers — Client Updates, Billing Defense, AI Cost Tracking</title>
+  <meta name="description" content="The work journal for solo devs, contractors, and freelancers. Turn your git history into weekly client updates, billing-dispute defense, a living portfolio, and AI-cost attribution per project. Built by a freelancer, for freelancers."/>
+  <meta property="og:title" content="Worktale for Freelancers — Stop Writing Status Reports"/>
+  <meta property="og:description" content="Weekly client updates write themselves. Billing defense baked in. AI cost per project. Your portfolio stays current without you touching it."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/lander-freelance"/>
+  <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale for Freelancers — Stop Writing Status Reports"/>
+  <meta name="twitter:description" content="Weekly client updates, billing defense, AI cost per project. Built for independents."/>
+  <link rel="canonical" href="https://worktale.org/lander-freelance.html"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main>
+  <!-- HERO -->
+  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-16 pb-20">
+    <div class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[700px] rounded-full bg-terminal-green/[0.04] blur-[130px]"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 mb-8">
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">For Freelancers</span>
+        <span class="font-mono text-xs text-cyber-cyan/80">Built by one. For us.</span>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] mb-6">
+        <span class="text-text-primary">Stop writing</span><br/>
+        <span class="bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green bg-clip-text text-transparent">status reports.</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed">
+        Every Friday you stop coding and spend an unbilled hour reconstructing the week for your client.
+      </p>
+      <p class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
+        Worktale writes the update for you&mdash;from commits, notes, and AI session data you&rsquo;ve already generated.
+        One command. Paste. Send.
+      </p>
+
+      <div class="flex flex-col items-center gap-4 mb-8" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span class="text-text-muted ml-2 text-xs" x-text="copied ? 'copied!' : 'click to copy'" x-bind:class="copied &amp;&amp; 'text-terminal-green'"></span>
+          </button>
+        </div>
+        <p class="font-mono text-xs text-text-muted">Free &middot; Open Source &middot; MIT License &middot; Works on every git repo</p>
+      </div>
+
+      <div class="flex items-center justify-center gap-6 text-text-muted font-mono text-xs">
+        <a href="https://github.com/worktale/worktale-cli" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 hover:text-terminal-green transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <span class="text-border-dim">|</span>
+        <a href="https://www.npmjs.com/package/worktale" target="_blank" rel="noopener" class="hover:text-terminal-green transition-colors">npm</a>
+        <span class="text-border-dim">|</span>
+        <span>v1.4.1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / SOLUTION -->
+  <section class="py-16 md:py-20 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-1/30">
+          <p class="font-mono text-xs text-red-400 tracking-widest uppercase mb-4">Your Friday right now</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>Client email: &ldquo;Quick recap of what you got done this week?&rdquo;</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>You switch branches for 45 minutes reading your own commits</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>Try to remember why you did what two days ago</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>Write a report that nobody&rsquo;s excited to write or read</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>None of that time is billable</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">&#10007;</span>Did Claude eat $8 of your margin this week? No idea</li>
+          </ul>
+        </div>
+        <div class="p-6 rounded-xl border border-terminal-green/20 bg-terminal-green/5">
+          <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-4">Your Friday with Worktale</p>
+          <ul class="space-y-3 text-text-secondary text-sm">
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span><code class="text-terminal-green font-mono text-xs">worktale weekly</code> renders a paste-ready update</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Your AI agent has been writing context notes per commit all week</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Days active, commits, lines, hours&mdash;already tallied</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>AI cost for this project: <span class="text-neon-amber">$4.20</span>, already attributed</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>Paste into email. 12 seconds, not 45 minutes</li>
+            <li class="flex items-start gap-2"><span class="text-terminal-green mt-0.5">&#10003;</span>More code time. Less paperwork time. Same invoice.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUR PILLARS -->
+  <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-5xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">Four things freelancers keep telling us they need.</h2>
+      <p class="text-text-secondary text-center mb-12 text-sm">All shipped. All local-first. All private by default.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-text-primary mb-2">1. Weekly client updates, automatically</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            <code class="text-terminal-green font-mono text-xs">worktale weekly</code> pulls together the week&rsquo;s commits, your daily notes, and AI session metadata into a clean paste-ready summary.
+            Your retainer client gets the Friday update. You get 45 minutes back.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-text-primary mb-2">2. Billing defense, pre-built</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            &ldquo;We didn&rsquo;t ask for that&rdquo; &mdash; three weeks after you shipped it. Every commit is timestamped.
+            Every AI session note explains the intent. When a scope conversation starts, you&rsquo;ve got the log already.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-text-primary mb-2">3. AI cost per project</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            You&rsquo;re spending real money on Claude/GPT/Copilot. Is that cost in your rate, or coming out of your margin?
+            Worktale tracks spend per project &mdash; automatic on Claude Code (transcript parsing), manual on others.
+            <a href="/lander-ai.html" class="text-terminal-green underline">More on AI cost &rarr;</a>
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-border-dim bg-surface-0">
+          <div class="w-10 h-10 rounded-lg bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-text-primary mb-2">4. A portfolio that stays current</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Your public profile at <code class="text-terminal-green font-mono text-xs">worktale.dev/{username}</code> fills itself in as you work.
+            Prospects see what you&rsquo;ve been shipping, not a stale &ldquo;last updated 2024&rdquo; portfolio site.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SESSION EXAMPLE -->
+  <section class="py-16 md:py-20 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">What a week on a client project actually looks like</h2>
+      <p class="text-text-secondary text-center mb-10 text-sm">Real terminal. Real output format. Names changed.</p>
+
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+          </div>
+          <span class="font-mono text-xs text-text-muted ml-2">worktale &mdash; acme-portal</span>
+        </div>
+        <div class="p-5 font-mono text-xs leading-relaxed space-y-3">
+          <div>
+            <p><span class="text-terminal-green/60">$</span> <span class="text-terminal-green">worktale weekly</span></p>
+            <div class="mt-2 pl-3 border-l-2 border-terminal-green/30 text-text-secondary">
+              <p class="text-neon-amber">&#9889; Week of Apr 13 &ndash; Apr 17 &middot; acme-portal</p>
+              <p class="mt-2">This week: shipped the Stripe checkout flow, fixed 3 webhook race conditions, and migrated auth to JWT-based sessions.</p>
+              <p class="mt-2 text-text-muted"># Stats</p>
+              <p>&nbsp;&nbsp;Commits: <span class="text-text-primary">23</span> &middot; Days active: <span class="text-text-primary">4 of 5</span> &middot; Lines: <span class="text-terminal-green">+2,847</span> / <span class="text-red-400">-1,104</span></p>
+              <p class="mt-2 text-text-muted"># Highlights (AI session notes)</p>
+              <p>&nbsp;&nbsp;&bull; Tracked down webhook race condition using idempotency keys &mdash; DB unique constraint beat app-level locking at scale</p>
+              <p>&nbsp;&nbsp;&bull; JWT migration: kept session cookies as fallback for 2 sprints to allow rollback</p>
+              <p>&nbsp;&nbsp;&bull; Checkout flow uses Stripe Elements; PCI-SAQ-A compliant; tested against Stripe CLI webhook fixtures</p>
+              <p class="mt-2 text-text-muted"># AI overhead this week</p>
+              <p>&nbsp;&nbsp;Claude Opus: <span class="text-neon-amber">$4.20</span> &middot; <span class="text-text-primary">127k tokens</span> &middot; 8 sessions</p>
+              <p class="mt-2 text-cyber-cyan">&#10003; Report ready. Copied to clipboard.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-text-muted text-xs text-center mt-4">
+        Add <code class="text-terminal-green font-mono text-xs">--format markdown</code> or <code class="text-terminal-green font-mono text-xs">--format slack</code> for different clients.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="py-12 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div><p class="font-mono text-2xl text-terminal-green mb-1">0</p><p class="text-text-muted text-xs">source code uploaded</p></div>
+        <div><p class="font-mono text-2xl text-terminal-green mb-1">0</p><p class="text-text-muted text-xs">file contents read</p></div>
+        <div><p class="font-mono text-2xl text-terminal-green mb-1">0</p><p class="text-text-muted text-xs">accounts required (CLI)</p></div>
+        <div><p class="font-mono text-2xl text-terminal-green mb-1">100%</p><p class="text-text-muted text-xs">local SQLite</p></div>
+      </div>
+      <p class="text-text-muted text-xs text-center mt-6 max-w-2xl mx-auto">
+        Only git metadata &mdash; messages, timestamps, line counts. NDA-safe to share a <code class="text-terminal-green font-mono">worktale digest</code> output with a prospect; no source code, no diffs, no proprietary detail.
+      </p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-20 md:py-28 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Built by a freelancer. For freelancers.</h2>
+      <p class="text-text-secondary mb-8">
+        I built this because I got tired of writing status reports every Friday and wondering where my margin went.
+        One command to install. Works on every git repo you already have.
+      </p>
+
+      <div class="flex flex-col items-center gap-4 mb-6" x-data="{ copied: false }">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-terminal-green/30 to-cyber-cyan/30 blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <button
+            @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+            class="relative flex items-center gap-3 px-8 py-4 rounded-xl bg-surface-1 border border-terminal-green/30 font-mono text-lg hover:border-terminal-green/60 transition-all cursor-pointer"
+          >
+            <span class="text-terminal-green/60">$</span>
+            <span class="text-terminal-green">npm install -g worktale</span>
+            <span class="text-text-muted ml-2 text-xs" x-text="copied ? 'copied!' : 'click to copy'" x-bind:class="copied &amp;&amp; 'text-terminal-green'"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center gap-4 text-text-muted font-mono text-xs">
+        <a href="/" class="hover:text-terminal-green transition-colors">worktale.org</a>
+        <span class="text-border-dim">|</span>
+        <a href="/docs.html" class="hover:text-terminal-green transition-colors">docs</a>
+        <span class="text-border-dim">|</span>
+        <a href="/plugin.html" class="hover:text-terminal-green transition-colors">plugins</a>
+        <span class="text-border-dim">|</span>
+        <a href="https://github.com/worktale/worktale-cli" class="hover:text-terminal-green transition-colors">github</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%footer%>
+
+</body>
+</html>

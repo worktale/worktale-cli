@@ -43,6 +43,7 @@ export default defineConfig({
         landerProof: resolve(__dirname, 'lander-proof.html'),
         landerSprint: resolve(__dirname, 'lander-sprint.html'),
         landerCloud: resolve(__dirname, 'lander-cloud.html'),
+        landerFreelance: resolve(__dirname, 'lander-freelance.html'),
         alternatives: resolve(__dirname, 'worktale-alternatives.html'),
         vsWakatime: resolve(__dirname, 'worktale-vs-wakatime.html'),
         vsRescuetime: resolve(__dirname, 'worktale-vs-rescuetime.html'),
