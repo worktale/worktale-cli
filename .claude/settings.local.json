@@ -8,7 +8,24 @@
       "Bash(npx tsc:*)",
       "Bash(node:*)",
       "Bash(bun install:*)",
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "Bash(dotnet build:*)",
+      "Bash(ls:*)",
+      "Bash(railway status:*)",
+      "Bash(railway service:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(n['node']['name']\\) for n in d['services']['edges']]\")",
+      "Bash(railway up:*)",
+      "Bash(railway logs:*)",
+      "Bash(railway deployment:*)",
+      "Bash(railway deploy:*)",
+      "Bash(curl:*)",
+      "Bash(railway run:*)",
+      "Bash(railway vars:*)",
+      "Bash(railway variable:*)",
+      "Bash(railway variables:*)",
+      "Bash(psql:*)",
+      "WebFetch(domain:worktale.dev)",
+      "Bash(worktale note:*)"
     ]
   }
 }

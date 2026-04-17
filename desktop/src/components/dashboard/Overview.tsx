@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import * as api from "../../lib/api";
-import { getDateString, getWeekDates, formatDate, formatNumber, formatDuration } from "../../lib/utils";
+import { getDateString, getWeekDatesForDate, formatDate, formatNumber, formatDuration, addDays } from "../../lib/utils";
 import { StreakCounter } from "./StreakCounter";
 import { WeekChart } from "./WeekChart";
 import { CommitTimeline } from "./CommitTimeline";
 import { HeatmapGrid } from "./HeatmapGrid";
 import { AiSessionStats } from "./AiSessionStats";
-import type { Commit, DailySummary, StreakInfo } from "../../lib/types";
+import type { Commit, DailySummary, StreakInfo, DayCommitStats } from "../../lib/types";
 
 interface OverviewProps {
   repoId: number;
 }
 
 export function Overview({ repoId }: OverviewProps) {
-  const [todayStr] = useState(() => getDateString());
+  const todayStr = getDateString();
+  const [currentDate, setCurrentDate] = useState(todayStr);
+  const isToday = currentDate === todayStr;
+
   const [commits, setCommits] = useState<Commit[]>([]);
   const [summary, setSummary] = useState<DailySummary | null>(null);
   const [streakInfo, setStreakInfo] = useState<StreakInfo>({ current: 0, best: 0, best_start: "", best_end: "" });
@@ -27,46 +30,46 @@ export function Overview({ repoId }: OverviewProps) {
   useEffect(() => {
     async function load() {
       try {
-        const [todayCommits, todaySummary, streak, recent, time, unpub] = await Promise.all([
-          api.getCommitsByDate(repoId, todayStr),
-          api.getDailySummary(repoId, todayStr),
+        const weekDates = getWeekDatesForDate(currentDate);
+
+        const [dateCommits, dateSummary, streak, weekCommitStats, time, unpub] = await Promise.all([
+          api.getCommitsByDate(repoId, currentDate),
+          api.getDailySummary(repoId, currentDate),
           api.getStreakInfo(repoId),
-          api.getRecentCommits(repoId, 8),
-          api.getEstimatedCodingTime(repoId, todayStr),
+          api.getCommitStatsRange(repoId, weekDates[0], weekDates[6]),
+          api.getEstimatedCodingTime(repoId, currentDate),
           api.getUnpublishedDays(repoId),
         ]);
 
-        setCommits(todayCommits);
-        setSummary(todaySummary);
+        setCommits(dateCommits);
+        setSummary(dateSummary);
         setStreakInfo(streak);
-        setRecentCommits(recent);
+        setRecentCommits(dateCommits);
         setCodingTime(time);
         setUnpublished(unpub);
 
-        // Week data
-        const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-        const weekDates = getWeekDates();
-        const weekSummaries = await api.getDailySummariesRange(repoId, weekDates[0], weekDates[weekDates.length - 1]);
-        const summaryMap = new Map(weekSummaries.map((s) => [s.date, s]));
+        // Week data sourced directly from commits table
+        const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const statsMap = new Map(weekCommitStats.map((s: DayCommitStats) => [s.date, s]));
         setWeekData(weekDates.map((date, i) => ({
           day: dayNames[i],
-          value: summaryMap.get(date)?.lines_added ?? 0,
+          value: statsMap.get(date)?.lines_added ?? 0,
           isToday: date === todayStr,
         })));
 
-        // Heatmap data (last 52 weeks)
+        // Heatmap data (last 52 weeks) — sourced from commits table
         const yearAgo = new Date();
         yearAgo.setFullYear(yearAgo.getFullYear() - 1);
-        const yearSummaries = await api.getDailySummariesRange(repoId, getDateString(yearAgo), todayStr);
+        const yearCommitStats = await api.getCommitStatsRange(repoId, getDateString(yearAgo), todayStr);
         const hmap = new Map<string, number>();
-        for (const s of yearSummaries) hmap.set(s.date, s.commits_count);
+        for (const s of yearCommitStats) hmap.set(s.date, s.commits);
         setHeatmapData(hmap);
       } catch (e) {
         console.error("Failed to load overview data:", e);
       }
     }
     load();
-  }, [repoId, todayStr]);
+  }, [repoId, currentDate, todayStr]);
 
   const todayAdded = summary?.lines_added ?? commits.reduce((s, c) => s + c.lines_added, 0);
   const todayRemoved = summary?.lines_removed ?? commits.reduce((s, c) => s + c.lines_removed, 0);
@@ -85,9 +88,33 @@ export function Overview({ repoId }: OverviewProps) {
 
   return (
     <motion.div className="space-y-6" variants={stagger} initial="hidden" animate="show">
-      {/* Date */}
-      <motion.div variants={fadeUp}>
-        <h2 className="text-lg font-semibold text-text-primary">{formatDate(todayStr)}</h2>
+      {/* Date navigation */}
+      <motion.div variants={fadeUp} className="flex items-center gap-3">
+        <button
+          onClick={() => setCurrentDate((d) => addDays(d, -1))}
+          className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-1 hover:bg-surface-2 text-text-secondary hover:text-text-primary transition-all"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <h2 className="text-lg font-semibold text-text-primary min-w-[280px] text-center">
+          {formatDate(currentDate)}
+          {isToday && <span className="text-streak ml-2 text-xs font-normal">(today)</span>}
+        </h2>
+        <button
+          onClick={() => setCurrentDate((d) => addDays(d, 1))}
+          disabled={isToday}
+          className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-1 hover:bg-surface-2 text-text-secondary hover:text-text-primary transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        {!isToday && (
+          <button
+            onClick={() => setCurrentDate(todayStr)}
+            className="px-3 py-1 bg-surface-1 hover:bg-surface-2 text-text-secondary hover:text-text-primary text-xs rounded-md transition-all"
+          >
+            Today
+          </button>
+        )}
       </motion.div>
 
       {/* Unpublished banner */}
@@ -115,7 +142,7 @@ export function Overview({ repoId }: OverviewProps) {
         </motion.div>
       )}
 
-      {/* Today's stats */}
+      {/* Stats for selected date */}
       <motion.div variants={fadeUp} className="grid grid-cols-5 gap-3">
         {stats.map((stat) => (
           <div key={stat.label} className="glass p-4 text-center glass-hover transition-all duration-200">
@@ -142,9 +169,11 @@ export function Overview({ repoId }: OverviewProps) {
 
         {/* Right column */}
         <div className="space-y-6">
-          {/* Recent commits */}
+          {/* Commits for selected date */}
           <motion.div variants={fadeUp} className="glass p-5">
-            <h3 className="text-text-secondary text-xs font-semibold uppercase tracking-wider mb-4">Recent Commits</h3>
+            <h3 className="text-text-secondary text-xs font-semibold uppercase tracking-wider mb-4">
+              {isToday ? "Today's Commits" : "Commits"}
+            </h3>
             <CommitTimeline commits={recentCommits} />
           </motion.div>
         </div>
@@ -152,7 +181,7 @@ export function Overview({ repoId }: OverviewProps) {
 
       {/* AI Sessions */}
       <motion.div variants={fadeUp}>
-        <AiSessionStats repoId={repoId} />
+        <AiSessionStats repoId={repoId} date={currentDate} />
       </motion.div>
 
       {/* Heatmap */}

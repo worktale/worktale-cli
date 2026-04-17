@@ -29,14 +29,14 @@
 
 <%header%>
 
-<main class="pt-24 pb-16">
+<main id="top" class="pt-24 pb-16">
 
   <!-- Page header -->
   <section class="py-12 md:py-16 border-b border-border-dim">
     <div class="mx-auto max-w-4xl px-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
-        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.4.0</span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.4.1</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
       <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
@@ -425,7 +425,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
             <span class="font-mono text-xs text-text-muted">AI session tracking</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. Official plugins for Claude Code, Codex, and Copilot call this automatically. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.0+</span></p>
+            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. Official plugins for Claude Code, Codex, and Copilot call this automatically. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.1+</span></p>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">SUBCOMMANDS</p>
               <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
@@ -1265,7 +1265,7 @@ if ($worktale) {
   <!-- Back to top -->
   <section class="py-12">
     <div class="mx-auto max-w-4xl px-6 text-center">
-      <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-terminal-green/10 border border-terminal-green/30 font-mono text-sm text-terminal-green hover:bg-terminal-green/20 transition-all">
+      <a href="#top" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-terminal-green/10 border border-terminal-green/30 font-mono text-sm text-terminal-green hover:bg-terminal-green/20 transition-all">
         Back to top &uarr;
       </a>
     </div>

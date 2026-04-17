@@ -6,18 +6,19 @@ import type { AiSession, AiSessionStats as AiStats } from "../../lib/types";
 
 interface AiSessionStatsProps {
   repoId: number;
+  date?: string;
 }
 
-export function AiSessionStats({ repoId }: AiSessionStatsProps) {
+export function AiSessionStats({ repoId, date }: AiSessionStatsProps) {
   const [todaySessions, setTodaySessions] = useState<AiSession[]>([]);
   const [stats, setStats] = useState<AiStats | null>(null);
+  const selectedDate = date ?? getDateString();
 
   useEffect(() => {
     async function load() {
       try {
-        const today = getDateString();
         const [sessions, allStats] = await Promise.all([
-          api.getAiSessionsByDate(repoId, today),
+          api.getAiSessionsByDate(repoId, selectedDate),
           api.getAiSessionStats(repoId, 30),
         ]);
         setTodaySessions(sessions);
@@ -27,7 +28,7 @@ export function AiSessionStats({ repoId }: AiSessionStatsProps) {
       }
     }
     load();
-  }, [repoId]);
+  }, [repoId, selectedDate]);
 
   if (!stats || stats.total_sessions === 0) return null;
 
@@ -51,7 +52,7 @@ export function AiSessionStats({ repoId }: AiSessionStatsProps) {
       <div className="grid grid-cols-2 gap-6">
         {/* Today */}
         <div className="space-y-3">
-          <span className="text-text-dim text-[10px] uppercase tracking-wider">Today</span>
+          <span className="text-text-dim text-[10px] uppercase tracking-wider">{selectedDate === getDateString() ? "Today" : selectedDate}</span>
           {todaySessions.length > 0 ? (
             <div className="space-y-2">
               <div className="flex items-baseline gap-2">

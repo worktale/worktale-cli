@@ -1,0 +1,17 @@
+{
+  "name": "worktale-plugin",
+  "owner": {
+    "name": "George Rios"
+  },
+  "plugins": [
+    {
+      "name": "worktale-plugin",
+      "source": "./",
+      "description": "Worktale AI session tracking — captures provider, model, tokens, cost, tools, and narrative per coding session",
+      "version": "1.1.0",
+      "author": {
+        "name": "George Rios"
+      }
+    }
+  ]
+}

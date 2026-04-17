@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import type {
   Repo,
   Commit,
+  DayCommitStats,
   DailySummary,
   ModuleActivity,
   StreakInfo,
@@ -37,6 +38,16 @@ export const getRecentCommits = (repoId: number, limit: number) =>
   invoke<Commit[]>("get_recent_commits", { repoId, limit });
 export const getCommitCount = (repoId: number) =>
   invoke<number>("get_commit_count", { repoId });
+export const getCommitStatsRange = (
+  repoId: number,
+  startDate: string,
+  endDate: string,
+) =>
+  invoke<DayCommitStats[]>("get_commit_stats_range", {
+    repoId,
+    startDate,
+    endDate,
+  });
 
 // ── Daily Summaries ──────────────────────────────────────────────────────────
 

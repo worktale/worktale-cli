@@ -22,6 +22,7 @@ drafts/
 # Claude Code / AI tooling
 CLAUDE.md
 **/CLAUDE.md
+.claude/scheduled_tasks.lock
 
 # Lock files (project uses npm, not bun)
 bun.lock

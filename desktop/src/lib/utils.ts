@@ -72,6 +72,27 @@ export function getWeekDates(): string[] {
   return dates;
 }
 
+export function getWeekDatesForDate(dateStr: string): string[] {
+  const d = new Date(dateStr + "T00:00:00");
+  const dayOfWeek = d.getDay();
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(
+    d.getFullYear(),
+    d.getMonth(),
+    d.getDate() + mondayOffset,
+  );
+  const dates: string[] = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(
+      monday.getFullYear(),
+      monday.getMonth(),
+      monday.getDate() + i,
+    );
+    dates.push(getDateString(day));
+  }
+  return dates;
+}
+
 export function addDays(dateStr: string, days: number): string {
   const d = new Date(dateStr + "T00:00:00");
   d.setDate(d.getDate() + days);

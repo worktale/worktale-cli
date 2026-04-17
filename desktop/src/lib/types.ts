@@ -121,6 +121,14 @@ export interface WeeklyDigestResponse {
   weekEndDate: string;
 }
 
+export interface DayCommitStats {
+  date: string;
+  commits: number;
+  lines_added: number;
+  lines_removed: number;
+  files_changed: number;
+}
+
 export interface AiSession {
   id: number;
   repo_id: number;

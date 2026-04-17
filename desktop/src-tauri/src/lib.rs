@@ -284,6 +284,15 @@ pub struct DailyAiSummary {
     pub tokens: i64,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct DayCommitStats {
+    pub date: String,
+    pub commits: i64,
+    pub lines_added: i64,
+    pub lines_removed: i64,
+    pub files_changed: i64,
+}
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 pub struct AppState {
@@ -611,6 +620,45 @@ fn get_commit_count(state: State<AppState>, repo_id: i64) -> Result<i64, String>
         |row| row.get(0),
     )
     .map_err(|e| e.to_string())
+}
+
+// ─── Tauri Commands: Commit Stats Range ─────────────────────────────────────
+
+#[tauri::command]
+fn get_commit_stats_range(
+    state: State<AppState>,
+    repo_id: i64,
+    start_date: String,
+    end_date: String,
+) -> Result<Vec<DayCommitStats>, String> {
+    let db = state.db.lock().map_err(|e| e.to_string())?;
+    let mut stmt = db
+        .prepare(
+            "SELECT date(timestamp) AS d, COUNT(*) AS cnt,
+                    COALESCE(SUM(lines_added), 0),
+                    COALESCE(SUM(lines_removed), 0),
+                    COALESCE(SUM(files_changed), 0)
+             FROM commits
+             WHERE repo_id = ?1 AND date(timestamp) >= ?2 AND date(timestamp) <= ?3
+             GROUP BY d ORDER BY d ASC",
+        )
+        .map_err(|e| e.to_string())?;
+
+    let results = stmt
+        .query_map(params![repo_id, start_date, end_date], |row| {
+            Ok(DayCommitStats {
+                date: row.get(0)?,
+                commits: row.get(1)?,
+                lines_added: row.get(2)?,
+                lines_removed: row.get(3)?,
+                files_changed: row.get(4)?,
+            })
+        })
+        .map_err(|e| e.to_string())?
+        .filter_map(|r| r.ok())
+        .collect();
+
+    Ok(results)
 }
 
 // ─── Tauri Commands: Daily Summaries ─────────────────────────────────────────
@@ -1449,8 +1497,15 @@ async fn cloud_standup(state: State<'_, AppState>) -> Result<String, String> {
         .await
         .map_err(|e| e.to_string())?;
 
+    let status = resp.status();
+    let body = resp.text().await.map_err(|e| e.to_string())?;
+
+    if !status.is_success() {
+        return Err(format!("API error ({}): {}", status.as_u16(), body));
+    }
+
     let result: CloudApiResponse<AiTextResponse> =
-        resp.json().await.map_err(|e| e.to_string())?;
+        serde_json::from_str(&body).map_err(|e| format!("Failed to parse response: {e}\nBody: {body}"))?;
     Ok(result
         .data
         .and_then(|d| d.output)
@@ -1472,8 +1527,15 @@ async fn cloud_retro(state: State<'_, AppState>, days: i64) -> Result<String, St
         .await
         .map_err(|e| e.to_string())?;
 
+    let status = resp.status();
+    let body = resp.text().await.map_err(|e| e.to_string())?;
+
+    if !status.is_success() {
+        return Err(format!("API error ({}): {}", status.as_u16(), body));
+    }
+
     let result: CloudApiResponse<AiTextResponse> =
-        resp.json().await.map_err(|e| e.to_string())?;
+        serde_json::from_str(&body).map_err(|e| format!("Failed to parse response: {e}\nBody: {body}"))?;
     Ok(result
         .data
         .and_then(|d| d.output)
@@ -1847,6 +1909,7 @@ pub fn run() {
             get_commits_by_date,
             get_recent_commits,
             get_commit_count,
+            get_commit_stats_range,
             // Daily summaries
             get_daily_summary,
             get_daily_summaries_range,

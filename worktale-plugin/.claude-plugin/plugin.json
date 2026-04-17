@@ -1,0 +1,22 @@
+{
+  "name": "worktale",
+  "description": "Worktale AI session tracking — captures provider, model, tokens, cost, tools, and narrative per coding session",
+  "version": "1.1.0",
+  "author": {
+    "name": "George Rios",
+    "url": "https://plurral.com"
+  },
+  "homepage": "https://worktale.org",
+  "repository": "https://github.com/worktale/worktale-plugin",
+  "license": "MIT",
+  "keywords": [
+    "worktale",
+    "developer-journal",
+    "git",
+    "narration",
+    "ai-agent",
+    "coding-session",
+    "daily-digest",
+    "session-tracking"
+  ]
+}

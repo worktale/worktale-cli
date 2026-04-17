@@ -1,0 +1,21 @@
+{
+  "name": "worktale-codex",
+  "description": "Worktale AI session tracking for OpenAI Codex — records per-commit narrative and session metadata",
+  "version": "1.1.0",
+  "author": {
+    "name": "George Rios",
+    "url": "https://plurral.com"
+  },
+  "homepage": "https://worktale.org",
+  "repository": "https://github.com/worktale/worktale-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "worktale",
+    "codex",
+    "developer-journal",
+    "git",
+    "narration",
+    "ai-agent",
+    "session-tracking"
+  ]
+}
