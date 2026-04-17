@@ -55,7 +55,7 @@
         <a href="#windsurf" class="px-3 py-1.5 rounded-lg border border-border-dim bg-surface-1/30 font-mono text-xs text-text-secondary hover:border-terminal-green/30 transition-colors">Windsurf</a>
       </div>
 
-      <p class="font-mono text-xs text-text-muted">Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.1.0+</span> &mdash; <code class="bg-surface-1 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code></p>
+      <p class="font-mono text-xs text-text-muted">Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.4.0+</span> &mdash; <code class="bg-surface-1 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code></p>
     </div>
   </section>
 
@@ -70,10 +70,10 @@
       <div class="space-y-4">
         <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
           <h3 class="font-mono text-sm text-terminal-green mb-2">Worktale CLI</h3>
-          <p class="text-text-secondary text-sm mb-3">The plugin requires <span class="text-cyber-cyan font-semibold">Worktale CLI v1.1.0 or higher</span> installed globally. It uses <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> (introduced in v1.1.0) to write to your local journal.</p>
+          <p class="text-text-secondary text-sm mb-3">The plugin requires <span class="text-cyber-cyan font-semibold">Worktale CLI v1.4.0 or higher</span> installed globally. It uses <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> for per-commit narrative and <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session add</code> for session metrics (provider, model, tokens, cost, tools).</p>
           <div class="rounded-lg bg-surface-0 border border-border-dim p-4 font-mono text-sm">
             <p><span class="text-terminal-green/60">$</span> npm install -g worktale@latest</p>
-            <p class="text-text-muted mt-1 text-xs"># Verify: worktale --version → 1.1.0+</p>
+            <p class="text-text-muted mt-1 text-xs"># Verify: worktale --version → 1.4.0+</p>
           </div>
         </div>
 
@@ -103,7 +103,12 @@
         <h2 class="text-2xl font-bold">Claude Code</h2>
         <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Plugin</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Native plugin with marketplace distribution. The agent narrates after every commit via the <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill.</p>
+      <p class="text-text-secondary text-sm mb-4">Native plugin with marketplace distribution. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill handles per-commit narrative. A <code class="text-text-muted text-xs">SessionEnd</code> hook parses the session transcript to automatically record provider, model, input/output tokens, computed cost, tools used, MCP servers, and duration.</p>
+
+      <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
+        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
+        <p class="text-text-secondary text-sm">Model, input &amp; output tokens (incl. cache reads/writes), cost in USD, tools used, MCP servers, session duration &mdash; all parsed from the transcript at session end. Cost is computed from the published Anthropic rate table, so the number matches your invoice.</p>
+      </div>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -162,7 +167,7 @@
         <h2 class="text-2xl font-bold">OpenAI Codex CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Skill</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Codex uses the same SKILL.md format. Install the skill to <code class="text-text-muted text-xs">~/.agents/skills/worktale/</code> and enable skills mode.</p>
+      <p class="text-text-secondary text-sm mb-4">Codex uses the same SKILL.md format. Install the skill to <code class="text-text-muted text-xs">~/.codex/skills/worktale/</code>. The skill handles per-commit narrative and end-of-session metadata; Codex doesn&rsquo;t expose transcripts or token usage to plugins today, so the agent supplies what it knows.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -172,11 +177,16 @@
         <div class="p-5 font-mono text-sm space-y-1">
           <p class="text-text-muted text-xs"># Install:</p>
           <p><span class="text-terminal-green/60">$</span> git clone https://github.com/worktale/worktale-codex-plugin.git</p>
-          <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale ~/.agents/skills/worktale</p>
-          <p class="text-text-muted text-xs mt-3"># Run with skills enabled:</p>
-          <p><span class="text-terminal-green/60">$</span> codex --enable skills</p>
+          <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.codex/skills/worktale</p>
+          <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale/* ~/.codex/skills/worktale/</p>
         </div>
       </div>
+
+      <div class="p-4 rounded-lg border border-neon-amber/20 bg-neon-amber/5 mb-4">
+        <p class="font-mono text-xs text-neon-amber mb-1">Agent-supplied capture</p>
+        <p class="text-text-secondary text-sm">Provider, model, tools used, commits, and narrative &mdash; the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> at session wrap-up with what it knows. <strong class="text-text-primary">Tokens and cost are not captured</strong> because Codex doesn&rsquo;t expose them. If you need cost tracking on OpenAI, mirror it from your OpenAI usage dashboard or use <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code> manually.</p>
+      </div>
+
       <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-codex-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-codex-plugin</a></p>
     </div>
   </section>
@@ -189,7 +199,7 @@
         <h2 class="text-2xl font-bold">GitHub Copilot CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Plugin + Hooks</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Native plugin with a <code class="text-text-muted text-xs">postToolUse</code> hook that deterministically captures every commit. Also ships a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale</code> agent for session narration.</p>
+      <p class="text-text-secondary text-sm mb-4">Native plugin with a <code class="text-text-muted text-xs">postToolUse</code> hook for git capture, plus a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale</code> agent that handles per-commit narrative and end-of-session metadata. Copilot&rsquo;s plugin hooks don&rsquo;t expose token usage, so the agent supplies provider, model, tools, and commits.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -204,6 +214,12 @@
           <p class="text-text-muted text-xs"># Select "worktale" from the list</p>
         </div>
       </div>
+
+      <div class="p-4 rounded-lg border border-neon-amber/20 bg-neon-amber/5 mb-4">
+        <p class="font-mono text-xs text-neon-amber mb-1">Agent-supplied capture</p>
+        <p class="text-text-secondary text-sm">Provider, model, tools used, commits, and narrative. <strong class="text-text-primary">Tokens and cost are not captured</strong> because Copilot&rsquo;s plugin hooks don&rsquo;t expose that data. If you need cost tracking, pass it manually: <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.</p>
+      </div>
+
       <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-copilot-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-copilot-plugin</a></p>
     </div>
   </section>
@@ -320,65 +336,65 @@
             <tr class="border-b border-border-dim">
               <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Platform</th>
               <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Type</th>
-              <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Install</th>
-              <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Per-commit?</th>
-              <th class="text-left py-3 font-mono text-text-muted font-normal text-xs">Reliability</th>
+              <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Narrative</th>
+              <th class="text-left py-3 pr-4 font-mono text-text-muted font-normal text-xs">Tokens &amp; cost</th>
+              <th class="text-left py-3 font-mono text-text-muted font-normal text-xs">Tools &amp; MCP</th>
             </tr>
           </thead>
           <tbody class="text-text-secondary">
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Claude Code</td>
-              <td class="py-3 pr-4 font-mono text-xs">Plugin</td>
-              <td class="py-3 pr-4 font-mono text-xs text-cyber-cyan">/plugin install</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-terminal-green">Deterministic</td>
+              <td class="py-3 pr-4 font-mono text-xs">Plugin + SessionEnd hook</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
+              <td class="py-3 text-terminal-green">&#10003; automated</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Copilot CLI</td>
-              <td class="py-3 pr-4 font-mono text-xs">Plugin + hooks</td>
-              <td class="py-3 pr-4 font-mono text-xs text-cyber-cyan">/plugin install</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-terminal-green">Deterministic</td>
+              <td class="py-3 pr-4 font-mono text-xs">Plugin + postToolUse hook</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-text-muted">&mdash; not exposed</td>
+              <td class="py-3 text-neon-amber">Agent-supplied</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Codex CLI</td>
-              <td class="py-3 pr-4 font-mono text-xs">Skill</td>
-              <td class="py-3 pr-4 font-mono text-xs">git clone + copy</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-neon-amber">Advisory</td>
+              <td class="py-3 pr-4 font-mono text-xs">Skill (SKILL.md)</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-text-muted">&mdash; not exposed</td>
+              <td class="py-3 text-neon-amber">Agent-supplied</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Cursor</td>
               <td class="py-3 pr-4 font-mono text-xs">Rules file</td>
-              <td class="py-3 pr-4 font-mono text-xs">curl + copy</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-neon-amber">Advisory</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-text-muted">Manual only</td>
+              <td class="py-3 text-neon-amber">Agent-supplied</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Cline</td>
               <td class="py-3 pr-4 font-mono text-xs">Rules file</td>
-              <td class="py-3 pr-4 font-mono text-xs">curl + copy</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-neon-amber">Advisory</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-text-muted">Manual only</td>
+              <td class="py-3 text-neon-amber">Agent-supplied</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Windsurf</td>
               <td class="py-3 pr-4 font-mono text-xs">Rules file</td>
-              <td class="py-3 pr-4 font-mono text-xs">curl + copy</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-neon-amber">Advisory</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-text-muted">Manual only</td>
+              <td class="py-3 text-neon-amber">Agent-supplied</td>
             </tr>
             <tr>
               <td class="py-3 pr-4 text-text-primary font-medium">Git hook</td>
               <td class="py-3 pr-4 font-mono text-xs">Post-commit</td>
-              <td class="py-3 pr-4 font-mono text-xs">worktale init</td>
-              <td class="py-3 pr-4 text-terminal-green">&#10003; Yes</td>
-              <td class="py-3 text-terminal-green">Deterministic</td>
+              <td class="py-3 pr-4 text-text-muted">&mdash;</td>
+              <td class="py-3 pr-4 text-text-muted">&mdash;</td>
+              <td class="py-3 text-text-muted">&mdash;</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Deterministic</strong> = enforced by hooks/plugins. <strong class="text-text-secondary">Advisory</strong> = the agent follows instructions but isn't mechanically enforced. Combine with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale hook install</code> for guaranteed capture.</p>
+      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Automated</strong> = the plugin/hook captures the data itself; the agent doesn&rsquo;t need to do anything. <strong class="text-text-secondary">Agent-supplied</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with what it knows. Only Claude Code exposes transcripts and token usage to plugins today, so only Claude Code gets automated token/cost capture. You can always supplement any host with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ... --input-tokens ... --output-tokens ...</code> manually.</p>
     </div>
   </section>
 
@@ -390,9 +406,9 @@
         <h2 class="text-2xl font-bold">What gets captured</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
-          <h3 class="font-mono text-sm text-terminal-green mb-3">The agent writes</h3>
+          <h3 class="font-mono text-sm text-terminal-green mb-3">Narrative (every host)</h3>
           <ul class="space-y-2">
             <li class="flex items-start gap-2 text-text-secondary text-sm">
               <span class="text-terminal-green mt-0.5">&#10003;</span>
@@ -413,7 +429,7 @@
           </ul>
         </div>
         <div>
-          <h3 class="font-mono text-sm text-text-muted mb-3">The agent does NOT write</h3>
+          <h3 class="font-mono text-sm text-text-muted mb-3">NOT written</h3>
           <ul class="space-y-2">
             <li class="flex items-start gap-2 text-text-muted text-sm">
               <span class="mt-0.5">&#10007;</span>
@@ -434,6 +450,65 @@
           </ul>
         </div>
       </div>
+
+      <h3 class="font-mono text-sm text-cyber-cyan mb-3">Session metrics (where supported)</h3>
+      <div class="overflow-x-auto rounded-lg border border-border-dim mb-4">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-surface-2 border-b border-border-dim">
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Field</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Claude Code</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Codex</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Copilot</th>
+            </tr>
+          </thead>
+          <tbody class="text-text-secondary bg-surface-1/30">
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">Provider / model</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">Input / output tokens</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (transcript)</td>
+              <td class="py-2 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2 px-4 text-text-muted">&mdash;</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">Cost in USD</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (from rates)</td>
+              <td class="py-2 px-4 text-text-muted">Manual only</td>
+              <td class="py-2 px-4 text-text-muted">Manual only</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">Tools used</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (tool_use blocks)</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">MCP servers</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2 px-4 text-text-muted">&mdash;</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
+              <td class="py-2 px-4 text-text-primary">Duration</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4 text-text-primary">Commits</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-text-muted text-xs"><strong class="text-text-secondary">Auto</strong> = the SessionEnd hook parses the transcript and records the field without agent cooperation. <strong class="text-text-secondary">Agent</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with the value at session end (reliability depends on the agent following the skill). <strong class="text-text-secondary">Manual only</strong> = you supply the flag yourself when you call <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> from the terminal.</p>
     </div>
   </section>
 

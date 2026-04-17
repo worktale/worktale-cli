@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Worktale — Your AI Agent Writes the Story</title>
+        <title>Worktale — Track AI Coding Cost, Tokens, and Context by Project</title>
         <meta
             name="description"
-            content="Your AI coding agent writes the code. Worktale makes it narrate the story. Intent, decisions, trade-offs — captured automatically after every commit."
+            content="Track every AI coding session — cost, tokens, model, tools, and narrative — automatically, per project. Claude Code captures tokens and cost from the transcript. Works with Codex, Copilot, Cursor, Cline, Windsurf."
         />
-        <meta property="og:title" content="Worktale — Your AI Agent Writes the Story" />
-        <meta property="og:description" content="Your AI coding agent writes the code. Worktale makes it narrate the story. Intent, decisions, trade-offs — captured after every commit. 100% local." />
+        <meta property="og:title" content="Worktale — Track AI Coding Cost and Context by Project" />
+        <meta property="og:description" content="Know where your AI coding spend goes. Track cost, tokens, model, tools, and narrative per session, per project. 100% local." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://worktale.org/lander-ai" />
         <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Worktale — Your AI Agent Writes the Story" />
-        <meta name="twitter:description" content="Your AI coding agent writes the code. Worktale makes it narrate the story. Intent, decisions, trade-offs — captured after every commit. 100% local." />
+        <meta name="twitter:title" content="Worktale — Track AI Coding Cost and Context by Project" />
+        <meta name="twitter:description" content="Know where your AI coding spend goes. Track cost, tokens, model, tools, and narrative per session, per project. 100% local." />
         <meta name="twitter:image" content="https://worktale.org/logo/worktale-screenshot.png" />
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -88,20 +88,18 @@
                     <h1
                         class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] mb-6"
                     >
-                        <span class="text-text-primary">Your AI writes the code.<br />Who writes the story?</span>
+                        <span class="text-text-primary">Your AI writes the code.<br />How much is it costing you?</span>
                     </h1>
 
                     <p
                         class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-3 leading-relaxed"
                     >
-                        Worktale turns your AI coding agent into a session narrator.
+                        Track every AI coding session &mdash; cost, tokens, model, tools, and context &mdash; per project.
                     </p>
                     <p
                         class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
                     >
-                        After every commit, the agent captures intent, decisions, and trade-offs
-                        automatically. Your end-of-day digest writes itself. Works with Claude Code,
-                        Copilot, Codex, Cursor, Cline, and Windsurf.
+                        On Claude Code, a SessionEnd hook parses the transcript and records real tokens and cost automatically. On Codex and Copilot, the agent supplies provider, model, tools, and narrative after every commit. End-of-day spend-by-project lives locally in your Worktale DB.
                     </p>
 
                     <!-- Install CTA -->
@@ -154,7 +152,7 @@
                             npm
                         </a>
                         <span class="text-border-dim">|</span>
-                        <span>v1.3.0</span>
+                        <span>v1.4.1</span>
                     </div>
                 </div>
             </section>
@@ -171,19 +169,19 @@
                             <ul class="space-y-3 text-text-secondary text-sm">
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    AI generates code&mdash;you forget why by next week
+                                    You see the Anthropic/OpenAI invoice &mdash; no idea which project burned it
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    Commit messages say &ldquo;fix bug&rdquo; not &ldquo;why this approach&rdquo;
+                                    No idea how many tokens your longest session ate
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-400 mt-0.5">&#10007;</span>
+                                    Can&rsquo;t tell whether Opus is actually worth it vs Sonnet on routine work
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
                                     AI session context vanishes when the chat closes
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-red-400 mt-0.5">&#10007;</span>
-                                    End-of-day summaries? You&rsquo;re writing those manually
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-red-400 mt-0.5">&#10007;</span>
@@ -197,11 +195,15 @@
                             <ul class="space-y-3 text-text-secondary text-sm">
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Your AI agent narrates every commit automatically
+                                    Cost per project, per model, per session &mdash; automatic on Claude Code
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Intent, decisions, trade-offs&mdash;captured in your daily log
+                                    Input/output/cache tokens parsed straight from the transcript
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-terminal-green mt-0.5">&#10003;</span>
+                                    Agent narrates intent, decisions, and trade-offs after every commit
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
@@ -209,11 +211,7 @@
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    AI digests via local Ollama&mdash;nothing sent to the cloud
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-terminal-green mt-0.5">&#10003;</span>
-                                    Open your log in 6 months and remember exactly why
+                                    100% local &mdash; your cost data stays on your machine
                                 </li>
                             </ul>
                         </div>
@@ -227,10 +225,10 @@
             <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
                 <div class="mx-auto max-w-4xl px-6">
                     <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">
-                        What AI narration looks like
+                        What a tracked session looks like
                     </h2>
                     <p class="text-text-secondary text-center mb-10 text-sm">
-                        After each commit, your AI agent calls <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> with rich context.
+                        Narrative per commit, session metrics at the end &mdash; automatic on Claude Code.
                     </p>
                     <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.03]">
                         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -254,6 +252,18 @@
                                 <p class="text-text-primary mb-2">feat: add retry backoff for failed payment webhooks</p>
                                 <div class="p-3 rounded-lg border border-terminal-green/20 bg-terminal-green/5">
                                     <p class="text-terminal-green/80 text-xs leading-relaxed">Implemented exponential backoff with jitter for failed webhook retries. Max 5 attempts over ~30 minutes. Considered a dead-letter queue but decided it was overkill for current volume. Will revisit if we exceed 10k events/day.</p>
+                                </div>
+                            </div>
+                            <div class="border-t border-border-dim pt-4 mt-4">
+                                <p class="text-text-muted mb-2">Session end &mdash; auto-captured by SessionEnd hook:</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="text-text-muted">model</div><div class="text-text-primary">claude-opus-4-7</div>
+                                    <div class="text-text-muted">input tokens</div><div class="text-text-primary">58,000 <span class="text-text-muted">(incl. 50k cache)</span></div>
+                                    <div class="text-text-muted">output tokens</div><div class="text-text-primary">1,300</div>
+                                    <div class="text-text-muted">cost</div><div class="text-terminal-green">$0.31</div>
+                                    <div class="text-text-muted">tools used</div><div class="text-text-primary">Read, Edit, Bash, Grep</div>
+                                    <div class="text-text-muted">mcp servers</div><div class="text-text-primary">github</div>
+                                    <div class="text-text-muted">duration</div><div class="text-text-primary">30m 42s</div>
                                 </div>
                             </div>
                         </div>

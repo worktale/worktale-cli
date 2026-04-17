@@ -163,7 +163,7 @@
       </p>
 
       <p class="text-text-secondary leading-relaxed mb-4">
-        Worktale now tracks all of it. Every AI coding session records:
+        Worktale now tracks all of it. What gets captured depends on which host you use:
       </p>
 
       <ul class="space-y-2 mb-6 ml-4">
@@ -173,11 +173,11 @@
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
-          <span><strong class="text-text-primary">Cost in USD</strong> &mdash; actual spend per session, aggregated daily, weekly, monthly</span>
+          <span><strong class="text-text-primary">Cost in USD</strong> &mdash; automatic on Claude Code (computed from token usage against published rates), aggregated daily, weekly, monthly</span>
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
-          <span><strong class="text-text-primary">Input &amp; output tokens</strong> &mdash; know exactly how much context you&rsquo;re burning</span>
+          <span><strong class="text-text-primary">Input &amp; output tokens</strong> &mdash; automatic on Claude Code via transcript parsing; know exactly how much context you&rsquo;re burning</span>
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
@@ -185,7 +185,7 @@
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
-          <span><strong class="text-text-primary">MCP servers</strong> &mdash; GitHub, Linear, Slack&mdash;which integrations the agent used during the session</span>
+          <span><strong class="text-text-primary">MCP servers</strong> &mdash; GitHub, Linear, Slack&mdash;which integrations the agent used during the session (Claude Code only)</span>
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
@@ -193,65 +193,83 @@
         </li>
         <li class="text-text-secondary text-sm flex items-start gap-2">
           <span class="text-terminal-green mt-1">&#8226;</span>
-          <span><strong class="text-text-primary">Narrative note</strong> &mdash; the AI writes a 1&ndash;2 sentence summary of what it built and why</span>
+          <span><strong class="text-text-primary">Narrative note</strong> &mdash; the AI writes a 1&ndash;2 sentence summary of what it built and why, after every commit</span>
         </li>
       </ul>
 
-      <h3 class="text-lg font-bold mt-8 mb-3 text-text-primary">Three agents, one command</h3>
+      <h3 class="text-lg font-bold mt-8 mb-3 text-text-primary">Three hosts, one CLI</h3>
 
       <p class="text-text-secondary leading-relaxed mb-4">
-        Official plugins for Claude Code, OpenAI Codex, and GitHub Copilot. Each one calls <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale session add</code> after every commit with the right provider, model, and tool metadata. You don&rsquo;t configure anything&mdash;activate <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">/worktale</code> and it just works.
+        Official plugins for Claude Code, OpenAI Codex, and GitHub Copilot. All three record a per-commit narrative and session metadata via <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale session add</code>. The one difference is how much the plugin can capture on its own versus how much the agent has to supply.
       </p>
 
       <div class="overflow-x-auto rounded-lg border border-border-dim mb-6">
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-surface-2 border-b border-border-dim">
-              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Agent</th>
-              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Provider</th>
-              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Plugin Type</th>
-              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Tracks</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Host</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Plugin type</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Automated capture</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Agent-supplied</th>
             </tr>
           </thead>
           <tbody class="text-text-secondary bg-surface-1/30">
             <tr class="border-b border-border-dim/50">
               <td class="py-2.5 px-4 text-text-primary font-medium">Claude Code</td>
-              <td class="py-2.5 px-4">Anthropic</td>
-              <td class="py-2.5 px-4">Skill + hooks</td>
-              <td class="py-2.5 px-4 text-terminal-green">Cost, tokens, tools, MCP</td>
+              <td class="py-2.5 px-4">Skill + SessionEnd hook</td>
+              <td class="py-2.5 px-4 text-terminal-green">Model, input/output tokens, <strong>cost</strong>, tools, MCP servers, duration</td>
+              <td class="py-2.5 px-4 text-text-muted">Per-commit narrative</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2.5 px-4 text-text-primary font-medium">OpenAI Codex</td>
-              <td class="py-2.5 px-4">OpenAI</td>
               <td class="py-2.5 px-4">Skill (SKILL.md)</td>
-              <td class="py-2.5 px-4 text-terminal-green">Cost, tokens, tools</td>
+              <td class="py-2.5 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2.5 px-4 text-neon-amber">Provider, model, tools used, commits, narrative</td>
             </tr>
             <tr>
               <td class="py-2.5 px-4 text-text-primary font-medium">GitHub Copilot</td>
-              <td class="py-2.5 px-4">GitHub</td>
-              <td class="py-2.5 px-4">Agent (CLAUDE.md)</td>
-              <td class="py-2.5 px-4 text-terminal-green">Cost, tokens, tools</td>
+              <td class="py-2.5 px-4">Agent + post-commit hook</td>
+              <td class="py-2.5 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2.5 px-4 text-neon-amber">Provider, model, tools used, commits, narrative</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h3 class="text-lg font-bold mt-8 mb-3 text-text-primary">What a real session looks like</h3>
+      <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/5 mb-6">
+        <p class="text-text-secondary text-sm leading-relaxed">
+          <strong class="text-text-primary">Why only Claude Code captures tokens and cost automatically:</strong> Claude Code&rsquo;s <code class="text-text-muted text-xs">SessionEnd</code> hook hands your plugin the full session transcript. We parse it, sum the token usage blocks across every assistant turn, and compute cost from a built-in rate table. Codex and Copilot don&rsquo;t expose token or cost data to plugins today, so those fields rely on the agent supplying them&mdash;which it can&rsquo;t do accurately. Provider, model, tools, commits, and narrative all work on every host.
+        </p>
+      </div>
 
       <p class="text-text-secondary leading-relaxed mb-4">
-        Here&rsquo;s a Claude Code session from this morning. I activated <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">/worktale</code> and asked it to add rate limiting:
+        You can always record sessions manually on any host (or from any agent we haven&rsquo;t shipped a plugin for yet) with <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale session add</code>.
+      </p>
+
+      <h3 class="text-lg font-bold mt-8 mb-3 text-text-primary">What a real Claude Code session looks like</h3>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        I activated <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">/worktale</code> and asked Claude Code to add rate limiting. After each commit, Claude writes a 1&ndash;2 sentence narrative. When the session ends, the SessionEnd hook parses the transcript and records the aggregate metrics automatically.
       </p>
 
       <div class="rounded-lg border border-border-dim bg-surface-1 p-4 font-mono text-sm leading-relaxed mb-6">
         <p class="text-text-muted"># Claude Code session</p>
         <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/worktale</span></p>
-        <p class="text-text-muted mt-1">Worktale narration active. I'll track AI sessions and add context after each commit.</p>
+        <p class="text-text-muted mt-1">Worktale narration active. I'll add context after each commit. Session metrics are captured automatically at session end.</p>
         <p class="mt-3 text-text-muted"># ...working on features...</p>
         <p class="mt-3"><span class="text-terminal-green/60">$</span> git commit -m "feat: add rate limiting to upload endpoint"</p>
         <p class="text-neon-amber mt-1">&#9889; worktale: captured (+89 / -12)</p>
-        <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale session add --provider anthropic --model claude-opus-4-6 --tool claude-code --cost 0.42 --input-tokens 18400 --output-tokens 3200 --tools-used "Read,Edit,Bash,Grep" --note "Added rate limiting to /api/upload &mdash; previous impl allowed unlimited requests causing OOM in prod"</p>
+        <p class="mt-2"><span class="text-terminal-green/60">$</span> worktale note "Added rate limiting to /api/upload &mdash; previous impl allowed unlimited requests causing OOM in prod"</p>
+        <p class="text-terminal-green mt-1">&check; Note added to 2026-04-16</p>
+        <p class="mt-3 text-text-muted"># ...more work, more commits...</p>
+        <p class="mt-3 text-text-muted"># Session ends. SessionEnd hook fires automatically:</p>
+        <p class="mt-1"><span class="text-terminal-green/60">$</span> worktale session add --provider anthropic --tool claude-code --model claude-opus-4-7 --input-tokens 58000 --output-tokens 1300 --cost 0.3113 --tools-used "Read,Edit,Bash,Grep" --mcp-servers "github" --duration 1842</p>
         <p class="text-terminal-green mt-1">&check; Session recorded for 2026-04-16</p>
       </div>
+
+      <p class="text-text-secondary leading-relaxed mb-4">
+        Those input/output/cost numbers aren&rsquo;t guesses&mdash;the hook reads <code class="text-text-muted text-xs">transcript.jsonl</code>, sums every assistant turn&rsquo;s <code class="text-text-muted text-xs">usage</code> block (including cache reads and cache writes), and multiplies against the published rate table. You get the same number you&rsquo;d see on your Anthropic invoice.
+      </p>
 
       <p class="text-text-secondary leading-relaxed mb-4">
         The agent handles all of that. You just code. At end of day, open the desktop app or run <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-sm">worktale session stats</code> and you get the full picture:

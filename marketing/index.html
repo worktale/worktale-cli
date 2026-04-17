@@ -1020,12 +1020,11 @@
                             <span class="font-mono text-xs text-cyber-cyan/80">Claude Code Skill</span>
                         </div>
                         <h2 class="text-3xl md:text-4xl font-bold leading-tight">
-                            Your AI agent writes<br />
-                            <span class="bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan bg-clip-text text-transparent">the story behind the code.</span>
+                            Know where your<br />
+                            <span class="bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan bg-clip-text text-transparent">AI coding spend goes.</span>
                         </h2>
                         <p class="text-text-secondary mt-4 max-w-2xl mx-auto leading-relaxed">
-                            Git captures the <em>what</em>. The <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">/worktale</code> skill captures the <em>why</em>.
-                            After every commit, your AI coding agent narrates intent, decisions, and problems solved&mdash;and tracks AI session metadata: model, provider, tools used, MCP servers, and cost.
+                            Every AI coding session, by project. On Claude Code, a SessionEnd hook parses the transcript and records real input/output tokens, computed cost, model, tools, MCP servers, and duration automatically. On Codex and Copilot, the agent supplies provider, model, and tools. After every commit on any host, the agent writes a 1&ndash;2 sentence narrative note.
                         </p>
 
                         <!-- AI session tracking badges -->
@@ -1090,21 +1089,21 @@
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">02</div>
                                 <div>
                                     <h3 class="font-mono text-base text-text-primary mb-1">Type <code class="text-cyber-cyan">/worktale</code></h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed">The agent activates session tracking. After each commit, it runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session add</code> with model, tools used, and a narrative about what was built and why.</p>
+                                    <p class="text-text-secondary text-sm leading-relaxed">After each commit the agent runs <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note "..."</code> with intent and context. At session end, a SessionEnd hook records tokens, cost, model, tools, MCP servers, and duration &mdash; zero agent cooperation needed.</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">03</div>
                                 <div>
-                                    <h3 class="font-mono text-base text-text-primary mb-1">Review your narrative</h3>
-                                    <p class="text-text-secondary text-sm leading-relaxed">Open <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale digest</code> at end of day. Your notes, stats, and AI-narrated context&mdash;all in one place.</p>
+                                    <h3 class="font-mono text-base text-text-primary mb-1">See cost per project</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed"><code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session stats</code> breaks down spend by repo, model, and tool. The desktop app shows daily cost bars, token usage over time, and model-vs-model comparisons.</p>
                                 </div>
                             </div>
 
                             <div class="mt-4 p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="text-text-secondary text-sm leading-relaxed">
-                                    <span class="text-text-primary font-medium">Works with Claude Code, Codex &amp; Copilot.</span>
-                                    Official plugins for all three. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session</code> command tracks provider, model, tools used, MCP servers, cost, and narrative context.
+                                    <span class="text-text-primary font-medium">Claude Code, Codex &amp; Copilot.</span>
+                                    Only Claude Code exposes transcripts to plugins, so only Claude Code captures tokens and cost automatically. On Codex and Copilot the agent supplies provider, model, tools, and narrative; you can add cost manually via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.
                                 </p>
                             </div>
                             <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.4.1+</span></p>
@@ -1126,31 +1125,32 @@
                                 <div class="p-5 font-mono text-xs leading-relaxed text-left space-y-3">
                                     <div>
                                         <p><span class="text-cyber-cyan/70">&gt;</span> <span class="text-cyber-cyan">/worktale</span></p>
-                                        <p class="text-text-muted mt-1">Worktale session tracking active. I'll record AI session data after each commit.</p>
-                                    </div>
-
-                                    <div class="border-t border-border-dim/50 pt-3">
-                                        <p class="text-text-muted"># ... coding session in progress ...</p>
+                                        <p class="text-text-muted mt-1">Worktale narration active. Session metrics will be captured at session end.</p>
                                     </div>
 
                                     <div class="border-t border-border-dim/50 pt-3">
                                         <p><span class="text-terminal-green/60">$</span> git commit -m "feat: add rate limiting to upload endpoint"</p>
                                         <p class="text-neon-amber mt-1">&#9889; worktale: captured "feat: add rate limiting..." (+89 / -12)</p>
-                                    </div>
-
-                                    <div>
-                                        <p><span class="text-terminal-green/60">$</span> worktale session add \</p>
-                                        <p class="pl-4">--provider "anthropic" --model "claude-opus-4-6" \</p>
-                                        <p class="pl-4">--tool "claude-code" --tools-used "Read,Edit,Bash" \</p>
-                                        <p class="pl-4">--note "<span class="text-terminal-green">Added rate limiting to /api/upload &mdash; previous impl caused OOM crashes</span>"</p>
-                                        <p class="text-terminal-green mt-1">&#10003;  AI session recorded (claude-code &middot; claude-opus-4-6)</p>
+                                        <p class="mt-1"><span class="text-terminal-green/60">$</span> worktale note <span class="text-terminal-green">"Added rate limiting to /api/upload &mdash; previous impl caused OOM crashes"</span></p>
+                                        <p class="text-terminal-green mt-1">&#10003;  Note added to today</p>
                                     </div>
 
                                     <div class="border-t border-border-dim/50 pt-3">
-                                        <p><span class="text-terminal-green/60">$</span> worktale session stats</p>
-                                        <p class="text-neon-amber mt-1">&#9889; AI Usage Stats  (last 30 days)</p>
-                                        <p class="text-text-muted mt-1">&nbsp; Sessions: <span class="text-text-primary">61</span> &nbsp;&middot;&nbsp; Cost: <span class="text-neon-amber">$52.26</span> &nbsp;&middot;&nbsp; Tokens: <span class="text-text-primary">3,734,830</span></p>
-                                        <p class="text-text-muted">&nbsp; Tools: <span class="text-terminal-green">claude-code</span> (36) &middot; <span class="text-cyber-cyan">codex</span> (17) &middot; <span class="text-neon-amber">copilot</span> (8)</p>
+                                        <p class="text-text-muted"># ... more commits, session ends, SessionEnd hook fires:</p>
+                                        <p class="mt-1"><span class="text-terminal-green/60">$</span> worktale session add --provider anthropic --tool claude-code \</p>
+                                        <p class="pl-4">--model claude-opus-4-7 --input-tokens 58000 --output-tokens 1300 \</p>
+                                        <p class="pl-4">--cost 0.3113 --tools-used "Read,Edit,Bash,Grep" \</p>
+                                        <p class="pl-4">--mcp-servers "github" --duration 1842</p>
+                                        <p class="text-terminal-green mt-1">&#10003;  AI session recorded (claude-code &middot; claude-opus-4-7 &middot; $0.31)</p>
+                                    </div>
+
+                                    <div class="border-t border-border-dim/50 pt-3">
+                                        <p><span class="text-terminal-green/60">$</span> worktale session stats --by project</p>
+                                        <p class="text-neon-amber mt-1">&#9889; AI Usage (last 30 days, by project)</p>
+                                        <p class="text-text-muted mt-1">&nbsp; payment-service &nbsp; 23 sessions &nbsp; <span class="text-neon-amber">$21.40</span> &nbsp; 1.8M tokens</p>
+                                        <p class="text-text-muted">&nbsp; dashboard-web &nbsp; &nbsp; 18 sessions &nbsp; <span class="text-neon-amber">$14.92</span> &nbsp; 1.2M tokens</p>
+                                        <p class="text-text-muted">&nbsp; cli-tool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 12 sessions &nbsp; <span class="text-neon-amber">$9.18</span> &nbsp; &nbsp;623k tokens</p>
+                                        <p class="text-text-muted mt-1">&nbsp; <span class="text-text-secondary">total:</span> <span class="text-neon-amber">$45.50</span> &nbsp;&middot;&nbsp; 3.6M tokens &nbsp;&middot;&nbsp; 53 sessions</p>
                                     </div>
                                 </div>
                             </div>

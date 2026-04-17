@@ -425,7 +425,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
             <span class="font-mono text-xs text-text-muted">AI session tracking</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. Official plugins for Claude Code, Codex, and Copilot call this automatically. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.1+</span></p>
+            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. On Claude Code, the official plugin's SessionEnd hook captures this automatically by parsing the transcript; on Codex and Copilot the agent supplies what it knows. You can always call <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> manually to supplement any field. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.1+</span></p>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">SUBCOMMANDS</p>
               <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
@@ -471,6 +471,31 @@ worktale session stats --days 30</code></pre>
                 <li>Session duration and linked commit SHAs</li>
                 <li>Narrative note with intent and decisions</li>
               </ul>
+            </div>
+            <div>
+              <p class="font-mono text-xs text-text-muted mb-2">CAPTURE BY HOST</p>
+              <div class="overflow-x-auto rounded-lg border border-border-dim">
+                <table class="w-full text-xs">
+                  <thead>
+                    <tr class="bg-surface-2 border-b border-border-dim">
+                      <th class="text-left py-2 px-3 font-mono text-text-muted font-normal">Field</th>
+                      <th class="text-left py-2 px-3 font-mono text-text-muted font-normal">Claude Code</th>
+                      <th class="text-left py-2 px-3 font-mono text-text-muted font-normal">Codex</th>
+                      <th class="text-left py-2 px-3 font-mono text-text-muted font-normal">Copilot</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-text-secondary bg-surface-0">
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">provider / model</td><td class="py-1.5 px-3 text-terminal-green">Auto</td><td class="py-1.5 px-3 text-neon-amber">Agent</td><td class="py-1.5 px-3 text-neon-amber">Agent</td></tr>
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">input / output tokens</td><td class="py-1.5 px-3 text-terminal-green">Auto</td><td class="py-1.5 px-3 text-text-muted">Manual</td><td class="py-1.5 px-3 text-text-muted">Manual</td></tr>
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">cost</td><td class="py-1.5 px-3 text-terminal-green">Auto (rate table)</td><td class="py-1.5 px-3 text-text-muted">Manual</td><td class="py-1.5 px-3 text-text-muted">Manual</td></tr>
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">tools-used</td><td class="py-1.5 px-3 text-terminal-green">Auto</td><td class="py-1.5 px-3 text-neon-amber">Agent</td><td class="py-1.5 px-3 text-neon-amber">Agent</td></tr>
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">mcp-servers</td><td class="py-1.5 px-3 text-terminal-green">Auto</td><td class="py-1.5 px-3 text-text-muted">&mdash;</td><td class="py-1.5 px-3 text-text-muted">&mdash;</td></tr>
+                    <tr class="border-b border-border-dim/50"><td class="py-1.5 px-3 text-text-primary">duration</td><td class="py-1.5 px-3 text-terminal-green">Auto</td><td class="py-1.5 px-3 text-neon-amber">Agent</td><td class="py-1.5 px-3 text-neon-amber">Agent</td></tr>
+                    <tr><td class="py-1.5 px-3 text-text-primary">commits</td><td class="py-1.5 px-3 text-neon-amber">Agent</td><td class="py-1.5 px-3 text-neon-amber">Agent</td><td class="py-1.5 px-3 text-neon-amber">Agent</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-text-muted text-xs mt-2"><strong class="text-text-secondary">Auto</strong> = plugin/hook captures without agent cooperation. <strong class="text-text-secondary">Agent</strong> = the host's skill/agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-[10px]">worktale session add</code> with the value at wrap-up. <strong class="text-text-secondary">Manual</strong> = pass the flag yourself. Codex and Copilot plugin APIs don't expose token usage, so token/cost on those hosts is manual-only.</p>
             </div>
           </div>
         </div>
