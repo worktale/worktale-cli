@@ -79,12 +79,12 @@
           const url = (e && e.detail && e.detail.url) || '/downloads/worktale-desktop-v1.4.1-win-x64.exe';
           const stored = localStorage.getItem('worktale_registered');
           if (stored) {
-            this.trigger(url);
-          } else {
-            this.pendingUrl = url;
-            this.open = true;
-            this.$nextTick(() => this.$refs.emailInput && this.$refs.emailInput.focus());
+            window.location.href = '/thanks.html';
+            return;
           }
+          this.pendingUrl = url;
+          this.open = true;
+          this.$nextTick(() => this.$refs.emailInput && this.$refs.emailInput.focus());
         });
       },
       close() {
@@ -111,8 +111,9 @@
           if (!res.ok) throw new Error('submit-failed');
           localStorage.setItem('worktale_registered', this.email);
           localStorage.setItem('worktale_registered_at', new Date().toISOString());
-          this.trigger(this.pendingUrl);
           this.close();
+          window.location.href = '/thanks.html';
+          return;
         } catch (err) {
           this.error = 'Submission failed. Try again, or email hello@worktale.org to request access.';
         } finally {

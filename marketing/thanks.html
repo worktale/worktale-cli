@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thanks for downloading Worktale Desktop</title>
+  <meta name="description" content="Your Worktale Desktop download has started. Next: run the installer from your Downloads folder."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- Accent glow -->
+  <div class="pointer-events-none absolute top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-terminal-green/[0.04] blur-[120px]"></div>
+
+  <section class="relative py-16 md:py-20">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/30 bg-terminal-green/10 mb-8">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span class="font-mono text-[11px] font-bold text-terminal-green tracking-widest uppercase">Download started</span>
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
+        Thanks for downloading!<br/>
+        <span class="text-text-secondary">Just a few steps left.</span>
+      </h1>
+
+      <p class="text-text-secondary text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+        Your download will begin automatically. If it didn&rsquo;t start,
+        <a id="manual-download" href="/downloads/worktale-desktop-v1.4.1-win-x64.exe" class="text-terminal-green underline hover:text-terminal-green/80">download Worktale manually</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Install steps -->
+  <section class="py-8 md:py-12">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+        <!-- Step 1 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-10 h-10 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center font-mono text-terminal-green font-bold text-sm mb-5 relative z-10">1</div>
+          <!-- Browser download popup mock -->
+          <div class="w-full max-w-sm rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.04] mb-5">
+            <!-- Chrome-like toolbar -->
+            <div class="flex items-center gap-2 px-3 py-2 border-b border-border-dim bg-surface-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-muted"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-muted"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-muted"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <div class="w-px h-4 bg-border-dim mx-1"></div>
+              <div class="w-7 h-7 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center ml-auto">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+            </div>
+            <!-- Download dropdown -->
+            <div class="p-4">
+              <div class="flex items-center justify-between mb-3">
+                <p class="text-sm font-semibold text-text-primary">Recent download history</p>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-muted"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <div class="flex items-start gap-3 py-2">
+                <div class="w-9 h-9 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center flex-shrink-0">
+                  <span class="font-mono text-terminal-green text-xs font-bold">&gt;_</span>
+                </div>
+                <div class="flex-1 min-w-0 text-left">
+                  <p class="text-sm text-text-primary truncate">worktale-desktop-v1.4.1-win-x64.exe</p>
+                  <p class="text-xs text-text-muted">6.4 MB &middot; just now</p>
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-border-dim flex items-center justify-between">
+                <p class="text-xs text-text-muted">Full download history</p>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-muted"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </div>
+            </div>
+          </div>
+          <p class="text-text-secondary text-sm md:text-base leading-relaxed">
+            Open <code class="text-terminal-green font-mono text-sm">worktale-desktop-v1.4.1-win-x64.exe</code> from your <span class="text-terminal-green">Downloads</span> folder
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-10 h-10 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center font-mono text-terminal-green font-bold text-sm mb-5 relative z-10">2</div>
+          <!-- Windows installer mock -->
+          <div class="w-full max-w-sm rounded-xl border border-border-dim bg-surface-1 overflow-hidden shadow-2xl shadow-terminal-green/[0.04] mb-5">
+            <!-- Installer title bar -->
+            <div class="flex items-center gap-2 px-3 py-2 border-b border-border-dim bg-surface-2">
+              <div class="w-5 h-5 rounded bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center">
+                <span class="font-mono text-terminal-green text-[9px] font-bold">&gt;_</span>
+              </div>
+              <span class="font-mono text-xs text-text-primary">Worktale Setup</span>
+              <div class="flex gap-1 ml-auto">
+                <svg width="10" height="10" viewBox="0 0 10 10" class="text-text-muted"><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.2"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" class="text-text-muted" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.5" y="0.5" width="9" height="9" rx="0.5"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" class="text-text-muted" stroke="currentColor" stroke-width="1.2"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>
+              </div>
+            </div>
+            <!-- Installer body -->
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-9 h-9 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center flex-shrink-0">
+                  <span class="font-mono text-terminal-green text-sm font-bold">&gt;_</span>
+                </div>
+                <div class="flex-1 text-left">
+                  <p class="text-sm text-text-primary">Installing, please wait&hellip;</p>
+                  <p class="text-xs text-text-muted">Worktale Desktop v1.4.1</p>
+                </div>
+              </div>
+              <!-- Progress bar -->
+              <div class="w-full h-2 rounded-full bg-surface-2 overflow-hidden">
+                <div class="h-full bg-terminal-green rounded-full" style="width: 68%;">
+                  <div class="h-full w-full bg-gradient-to-r from-terminal-green/60 to-terminal-green animate-pulse"></div>
+                </div>
+              </div>
+              <p class="text-xs text-text-muted mt-3 text-right font-mono">68%</p>
+            </div>
+          </div>
+          <p class="text-text-secondary text-sm md:text-base leading-relaxed">
+            Run the installer and follow the instructions
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- After install tip -->
+  <section class="py-8 md:py-12 border-t border-border-dim mt-12">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-xl md:text-2xl font-bold text-text-primary mb-3">Once installed</h2>
+      <p class="text-text-secondary text-sm md:text-base leading-relaxed mb-6">
+        Worktale Desktop reads the same local database the CLI writes to. If you already have <code class="text-terminal-green font-mono text-sm">worktale init</code> set up on any repo, your history is already there.
+        If not, install the CLI once:
+      </p>
+      <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg bg-surface-1 border border-border-dim font-mono text-sm">
+        <span class="text-terminal-green/60">$</span>
+        <span class="text-terminal-green">npm install -g worktale</span>
+      </div>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="/docs" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-dim bg-surface-1/30 font-mono text-sm text-text-secondary hover:border-terminal-green/30 hover:text-terminal-green transition-all">
+          Read the docs
+        </a>
+        <a href="/plugin" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/10 hover:border-cyber-cyan/40 transition-all">
+          Connect your AI agent
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+<script>
+  // Auto-start the download if the user landed here directly (e.g. via redirect after email gate).
+  // Safe to re-trigger: browsers dedupe same-origin same-file downloads started within a short window.
+  (function autoTriggerDownload() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('dl') === '0') return;
+    setTimeout(function () {
+      const a = document.getElementById('manual-download');
+      if (!a) return;
+      const clone = document.createElement('a');
+      clone.href = a.href;
+      clone.rel = 'noopener';
+      document.body.appendChild(clone);
+      clone.click();
+      document.body.removeChild(clone);
+    }, 400);
+  })();
+</script>
+
+</body>
+</html>
