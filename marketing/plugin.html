@@ -104,11 +104,11 @@
         <h2 class="text-2xl font-bold">Claude Code</h2>
         <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Plugin</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Native plugin with marketplace distribution. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill handles per-commit narrative. A <code class="text-text-muted text-xs">SessionEnd</code> hook parses the session transcript to automatically record provider, model, input/output tokens, computed cost, tools used, MCP servers, and duration.</p>
+      <p class="text-text-secondary text-sm mb-4">Native plugin with marketplace distribution. The <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">/worktale</code> skill handles per-commit narrative. Session metrics are captured automatically when the session ends &mdash; no agent cooperation required.</p>
 
       <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
         <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
-        <p class="text-text-secondary text-sm">Model, input &amp; output tokens (incl. cache reads/writes), cost in USD, tools used, MCP servers, session duration &mdash; all parsed from the transcript at session end. Cost is computed from the published Anthropic rate table, so the number matches your invoice.</p>
+        <p class="text-text-secondary text-sm">Model, input &amp; output tokens (including cache), cost in USD, tools used, MCP servers, session duration &mdash; all recorded automatically at session end. Cost matches what your account is charged.</p>
       </div>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
@@ -168,7 +168,7 @@
         <h2 class="text-2xl font-bold">OpenAI Codex CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Skill + Stop hook</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Skill drives per-commit narrative; a Stop hook parses Codex&rsquo;s session JSONL rollouts at <code class="text-text-muted text-xs">~/.codex/sessions/YYYY/MM/DD/*.jsonl</code> and records tokens, model, and computed cost automatically. No agent cooperation required.</p>
+      <p class="text-text-secondary text-sm mb-4">Skill drives per-commit narrative; a session hook records tokens, model, and computed cost automatically. No agent cooperation required.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -190,10 +190,10 @@
 
       <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
         <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
-        <p class="text-text-secondary text-sm">Model, input + cached + output tokens, computed cost, session duration &mdash; all parsed from Codex&rsquo;s on-disk session rollouts after each session goes idle. Cost is computed from the published OpenAI rate table baked into the script (GPT-5/4o/4.1/o3/o4 + Codex-mini). The agent only handles per-commit narrative.</p>
+        <p class="text-text-secondary text-sm">Model, input + cached + output tokens, computed cost, session duration &mdash; all recorded automatically when each session goes idle. Covers the GPT-5 / 4o / 4.1 / o3 / o4 / Codex-mini families. The agent only handles per-commit narrative.</p>
       </div>
 
-      <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-codex-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-codex-plugin</a> &middot; Inspired by <a href="https://github.com/Dimillian/CodexMonitor" class="text-terminal-green hover:underline">CodexMonitor</a>&rsquo;s rollout parser</p>
+      <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-codex-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-codex-plugin</a></p>
     </div>
   </section>
 
@@ -205,7 +205,7 @@
         <h2 class="text-2xl font-bold">OpenCode</h2>
         <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Native plugin</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Drop-in TypeScript plugin for the OpenCode plugin framework. Subscribes to <code class="text-text-muted text-xs">message.updated</code> and <code class="text-text-muted text-xs">tool.execute.after</code> events, aggregates per-session, and shells out to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> after 60s of inactivity.</p>
+      <p class="text-text-secondary text-sm mb-4">Drop-in TypeScript plugin for the OpenCode plugin framework. Aggregates session metrics in real time and records them automatically after each session goes idle.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -223,8 +223,8 @@
       </div>
 
       <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
-        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture &mdash; cost is read directly</p>
-        <p class="text-text-secondary text-sm">Provider, model, input + cached + output + reasoning tokens, <strong class="text-text-primary">cost (pre-computed by OpenCode &mdash; no rate-table guessing)</strong>, tools used, duration. The plugin records the most accurate cost of all four hosts because OpenCode does the math itself on every assistant message.</p>
+        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
+        <p class="text-text-secondary text-sm">Provider, model, input + cached + output + reasoning tokens, exact cost (matches the host&rsquo;s own ledger), tools used, duration. All recorded without agent cooperation.</p>
       </div>
 
       <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-opencode-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-opencode-plugin</a></p>
@@ -239,7 +239,7 @@
         <h2 class="text-2xl font-bold">GitHub Copilot CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Agent + Stop hook</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Agent drives per-commit narrative; a Stop hook parses Copilot&rsquo;s session-state JSONL files at <code class="text-text-muted text-xs">~/.copilot/session-state/&lt;sessionId&gt;/events.jsonl</code> and records tokens, model, tools, MCP servers, and computed cost automatically. Cost is summed from Copilot&rsquo;s pre-computed <code class="text-text-muted text-xs">assistant.usage.cost</code> field — no rate-table guessing.</p>
+      <p class="text-text-secondary text-sm mb-4">Agent drives per-commit narrative; a session hook records tokens, model, tools, MCP servers, and exact cost automatically &mdash; matching what your subscription is charged.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -260,8 +260,8 @@
       </div>
 
       <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
-        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture &mdash; cost is read directly</p>
-        <p class="text-text-secondary text-sm">Model, input + cached + output tokens, computed cost, tools, MCP servers, duration &mdash; all parsed from Copilot&rsquo;s on-disk session-state after each session goes idle. Like OpenCode, Copilot pre-computes its own cost values so the recorded numbers match what your subscription is charged.</p>
+        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
+        <p class="text-text-secondary text-sm">Model, input + cached + output tokens, exact cost, tools, MCP servers, duration &mdash; all recorded automatically when each session goes idle. Cost matches what Copilot bills.</p>
       </div>
 
       <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-copilot-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-copilot-plugin</a></p>
@@ -445,7 +445,7 @@
           </tbody>
         </table>
       </div>
-      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Automated</strong> = the plugin/hook captures the data itself; the agent doesn&rsquo;t need to do anything. <strong class="text-text-secondary">Agent-supplied</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with what it knows. All four official hosts (Claude Code, Codex, OpenCode, Copilot) expose token + cost data either via in-process hooks or on-disk session state, so all four get automated capture. The rules-based hosts (Cursor/Cline/Windsurf) don&rsquo;t expose tokens, so cost there is manual via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.</p>
+      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Auto</strong> = the plugin records the field without agent cooperation. <strong class="text-text-secondary">Agent</strong> = filled in by the AI agent at session end. Four official hosts get automated tokens + cost; rules-based hosts (Cursor/Cline/Windsurf) are agent-supplied.</p>
     </div>
   </section>
 
@@ -518,44 +518,44 @@
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Provider / model</td>
               <td class="py-2 px-4 text-terminal-green">Auto</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (turn_context)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (message)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (session.start)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Input / output tokens</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (transcript)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (rollout JSONL)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (event hook)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (assistant.usage)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Cost in USD</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (Anthropic rates)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (OpenAI rates)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (pre-computed)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (pre-computed)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Tools used</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (tool_use blocks)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (tool.execute.after)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (tool.execution_*)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">MCP servers</td>
               <td class="py-2 px-4 text-terminal-green">Auto</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (mcpServerName)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Duration</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (event timing)</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
+              <td class="py-2 px-4 text-terminal-green">Auto</td>
             </tr>
             <tr>
               <td class="py-2 px-4 text-text-primary">Commits</td>
@@ -567,7 +567,7 @@
           </tbody>
         </table>
       </div>
-      <p class="text-text-muted text-xs"><strong class="text-text-secondary">Auto</strong> = the SessionEnd hook parses the transcript and records the field without agent cooperation. <strong class="text-text-secondary">Agent</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with the value at session end (reliability depends on the agent following the skill). <strong class="text-text-secondary">Manual only</strong> = you supply the flag yourself when you call <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> from the terminal.</p>
+      <p class="text-text-muted text-xs"><strong class="text-text-secondary">Auto</strong> = recorded automatically without agent cooperation. <strong class="text-text-secondary">Agent</strong> = filled in by the AI agent at session end. <strong class="text-text-secondary">Manual</strong> = supply the flag yourself when calling <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code>.</p>
     </div>
   </section>
 
