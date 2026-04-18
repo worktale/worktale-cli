@@ -42,13 +42,14 @@
         <span class="bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan bg-clip-text text-transparent">AI Coding Agents</span>
       </h1>
       <p class="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed mb-8">
-        Your AI coding agent automatically narrates every commit &mdash; adding intent, decisions, and context to your daily work journal. Works with Claude Code, Codex CLI, Copilot CLI, Cursor, Cline, and Windsurf.
+        Your AI coding agent automatically narrates every commit &mdash; adding intent, decisions, and context to your daily work journal. Works with Claude Code, OpenAI Codex, OpenCode, Copilot CLI, Cursor, Cline, and Windsurf.
       </p>
 
       <!-- Platform badges -->
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a href="#claude-code" class="px-3 py-1.5 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-xs text-cyber-cyan hover:border-cyber-cyan/40 transition-colors">Claude Code</a>
-        <a href="#codex-cli" class="px-3 py-1.5 rounded-lg border border-terminal-green/20 bg-terminal-green/5 font-mono text-xs text-terminal-green hover:border-terminal-green/40 transition-colors">Codex CLI</a>
+        <a href="#codex-cli" class="px-3 py-1.5 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-xs text-cyber-cyan hover:border-cyber-cyan/40 transition-colors">Codex CLI</a>
+        <a href="#opencode" class="px-3 py-1.5 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-xs text-cyber-cyan hover:border-cyber-cyan/40 transition-colors">OpenCode</a>
         <a href="#copilot-cli" class="px-3 py-1.5 rounded-lg border border-terminal-green/20 bg-terminal-green/5 font-mono text-xs text-terminal-green hover:border-terminal-green/40 transition-colors">Copilot CLI</a>
         <a href="#cursor" class="px-3 py-1.5 rounded-lg border border-border-dim bg-surface-1/30 font-mono text-xs text-text-secondary hover:border-terminal-green/30 transition-colors">Cursor</a>
         <a href="#cline" class="px-3 py-1.5 rounded-lg border border-border-dim bg-surface-1/30 font-mono text-xs text-text-secondary hover:border-terminal-green/30 transition-colors">Cline</a>
@@ -196,11 +197,45 @@
     </div>
   </section>
 
+  <!-- OpenCode -->
+  <section id="opencode" class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">03</div>
+        <h2 class="text-2xl font-bold">OpenCode</h2>
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Native plugin</span>
+      </div>
+      <p class="text-text-secondary text-sm mb-4">Drop-in TypeScript plugin for the OpenCode plugin framework. Subscribes to <code class="text-text-muted text-xs">message.updated</code> and <code class="text-text-muted text-xs">tool.execute.after</code> events, aggregates per-session, and shells out to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> after 60s of inactivity.</p>
+
+      <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
+          <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-500/60"></div><div class="w-3 h-3 rounded-full bg-yellow-500/60"></div><div class="w-3 h-3 rounded-full bg-green-500/60"></div></div>
+          <span class="font-mono text-xs text-text-muted ml-2">terminal</span>
+        </div>
+        <div class="p-5 font-mono text-sm space-y-1">
+          <p class="text-text-muted text-xs"># 1. Drop the plugin file into your project:</p>
+          <p><span class="text-terminal-green/60">$</span> mkdir -p .opencode/plugins</p>
+          <p><span class="text-terminal-green/60">$</span> curl -o .opencode/plugins/worktale.ts \</p>
+          <p class="pl-4 text-text-secondary">https://raw.githubusercontent.com/worktale/worktale-cli/main/worktale-opencode-plugin/src/index.ts</p>
+          <p class="text-text-muted text-xs mt-3"># 2. Reference it in .opencode/opencode.jsonc:</p>
+          <p class="text-text-secondary">{ "plugin": ["./.opencode/plugins/worktale.ts"] }</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
+        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture &mdash; cost is read directly</p>
+        <p class="text-text-secondary text-sm">Provider, model, input + cached + output + reasoning tokens, <strong class="text-text-primary">cost (pre-computed by OpenCode &mdash; no rate-table guessing)</strong>, tools used, duration. The plugin records the most accurate cost of all four hosts because OpenCode does the math itself on every assistant message.</p>
+      </div>
+
+      <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-cli/tree/main/worktale-opencode-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-cli/tree/main/worktale-opencode-plugin</a></p>
+    </div>
+  </section>
+
   <!-- Copilot CLI -->
   <section id="copilot-cli" class="py-16 border-t border-border-dim">
     <div class="mx-auto max-w-4xl px-6">
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">03</div>
+        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">04</div>
         <h2 class="text-2xl font-bold">GitHub Copilot CLI</h2>
         <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Plugin + Hooks</span>
       </div>
@@ -369,6 +404,13 @@
               <td class="py-3 text-terminal-green">&#10003; automated (model)</td>
             </tr>
             <tr class="border-b border-border-dim/50">
+              <td class="py-3 pr-4 text-text-primary font-medium">OpenCode</td>
+              <td class="py-3 pr-4 font-mono text-xs">Native plugin</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
+              <td class="py-3 text-terminal-green">&#10003; automated</td>
+            </tr>
+            <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Cursor</td>
               <td class="py-3 pr-4 font-mono text-xs">Rules file</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
@@ -464,6 +506,7 @@
               <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Field</th>
               <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Claude Code</th>
               <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Codex</th>
+              <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">OpenCode</th>
               <th class="text-left py-2.5 px-4 font-mono text-text-muted font-normal text-xs">Copilot</th>
             </tr>
           </thead>
@@ -472,24 +515,28 @@
               <td class="py-2 px-4 text-text-primary">Provider / model</td>
               <td class="py-2 px-4 text-terminal-green">Auto</td>
               <td class="py-2 px-4 text-terminal-green">Auto (turn_context)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (message)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Input / output tokens</td>
               <td class="py-2 px-4 text-terminal-green">Auto (transcript)</td>
               <td class="py-2 px-4 text-terminal-green">Auto (rollout JSONL)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (event hook)</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Cost in USD</td>
               <td class="py-2 px-4 text-terminal-green">Auto (Anthropic rates)</td>
               <td class="py-2 px-4 text-terminal-green">Auto (OpenAI rates)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (pre-computed)</td>
               <td class="py-2 px-4 text-text-muted">Manual only</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Tools used</td>
               <td class="py-2 px-4 text-terminal-green">Auto (tool_use blocks)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (tool.execute.after)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
             </tr>
             <tr class="border-b border-border-dim/50">
@@ -497,15 +544,18 @@
               <td class="py-2 px-4 text-terminal-green">Auto</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2 px-4 text-text-muted">&mdash;</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Duration</td>
               <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
               <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (event timing)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
             </tr>
             <tr>
               <td class="py-2 px-4 text-text-primary">Commits</td>
+              <td class="py-2 px-4 text-neon-amber">Agent</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
