@@ -62,15 +62,17 @@ program
   .description('Browse historical log entries')
   .option('-d, --days <n>', 'Number of days to show', '7')
   .option('-r, --repo <path>', 'Path to repo')
-  .action(async (options: { days: string; repo?: string }) => {
+  .option('-f, --format <fmt>', 'Output format: text | json | csv', 'text')
+  .action(async (options: { days: string; repo?: string; format?: string }) => {
     await logCommand(options);
   });
 
 program
   .command('digest')
   .description("Generate today's work digest")
-  .action(async () => {
-    await digestCommand();
+  .option('-f, --format <fmt>', 'Output format: text | json | markdown', 'text')
+  .action(async (options: { format?: string }) => {
+    await digestCommand(options);
   });
 
 program
@@ -191,6 +193,7 @@ program
   .option('--commits <shas>', 'Comma-separated commit SHAs')
   .option('--note <text>', 'Session note')
   .option('-d, --days <n>', 'Days to show (for list/stats)')
+  .option('-f, --format <fmt>', 'Output format: text | json | csv (for list/stats)', 'text')
   .action(async (action?: string, options?: Record<string, string | undefined>) => {
     await sessionCommand(action, options);
   });

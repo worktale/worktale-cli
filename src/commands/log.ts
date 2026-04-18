@@ -8,17 +8,31 @@ import { closeDb } from '../db/index.js';
 import { formatNumber, formatDate, getDateString } from '../utils/formatting.js';
 import { brandText, positiveText, negativeText, dimText, streakText } from '../tui/theme.js';
 
-export async function logCommand(options: { days: string; repo?: string }): Promise<void> {
+function csvEscape(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  const s = String(value);
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+export async function logCommand(options: { days: string; repo?: string; format?: string }): Promise<void> {
+  const format = options.format || 'text';
+  const isJson = format === 'json';
+  const isCsv = format === 'csv';
   try {
     const repoPath = options.repo ?? process.cwd();
     const days = parseInt(options.days, 10) || 7;
 
     // Check if repo is initialized
     if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
-      console.log('  Run ' + brandText('worktale init') + ' to get started.');
-      console.log('');
+      if (isJson) console.log(JSON.stringify({ error: 'not-initialized', path: repoPath }));
+      else if (isCsv) console.log('');
+      else {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
+        console.log('  Run ' + brandText('worktale init') + ' to get started.');
+        console.log('');
+      }
       closeDb();
       process.exit(0);
       return;
@@ -26,10 +40,14 @@ export async function logCommand(options: { days: string; repo?: string }): Prom
 
     const repo = getRepo(repoPath);
     if (!repo) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' repo not found in database.');
-      console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
-      console.log('');
+      if (isJson) console.log(JSON.stringify({ error: 'repo-not-found', path: repoPath }));
+      else if (isCsv) console.log('');
+      else {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' repo not found in database.');
+        console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
+        console.log('');
+      }
       closeDb();
       process.exit(0);
       return;
@@ -41,15 +59,61 @@ export async function logCommand(options: { days: string; repo?: string }): Prom
     const startDateStr = getDateString(startDate);
     const endDateStr = getDateString(today);
 
+    // Get summaries for the range
+    const summaries = getDailySummariesRange(repo.id, startDateStr, endDateStr);
+    const summaryMap = new Map(summaries.map((s) => [s.date, s]));
+
+    if (isJson || isCsv) {
+      const rows: Array<{
+        date: string;
+        commits_count: number;
+        lines_added: number;
+        lines_removed: number;
+        files_touched: number;
+        commits: Array<{ sha: string; message: string; author: string; timestamp: string; lines_added: number; lines_removed: number; files_changed: number; branch?: string }>;
+      }> = [];
+      for (let d = 0; d < days; d++) {
+        const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - d);
+        const dateStr = getDateString(date);
+        const summary = summaryMap.get(dateStr);
+        if (!summary || summary.commits_count === 0) continue;
+        const commits = getCommitsByDate(repo.id, dateStr);
+        rows.push({
+          date: dateStr,
+          commits_count: summary.commits_count,
+          lines_added: summary.lines_added,
+          lines_removed: summary.lines_removed,
+          files_touched: summary.files_touched,
+          commits: commits.map((c) => ({
+            sha: c.sha,
+            message: c.message ?? '',
+            author: c.author ?? '',
+            timestamp: c.timestamp,
+            lines_added: c.lines_added,
+            lines_removed: c.lines_removed,
+            files_changed: c.files_changed,
+            branch: c.branch ?? undefined,
+          })),
+        });
+      }
+      if (isJson) {
+        console.log(JSON.stringify({ repo: repo.name, days, rows }, null, 2));
+      } else {
+        console.log('date,sha,message,author,timestamp,lines_added,lines_removed,files_changed,branch');
+        for (const r of rows) {
+          for (const c of r.commits) {
+            console.log([r.date, c.sha, c.message, c.author, c.timestamp, c.lines_added, c.lines_removed, c.files_changed, c.branch ?? ''].map(csvEscape).join(','));
+          }
+        }
+      }
+      closeDb();
+      process.exit(0);
+      return;
+    }
+
     console.log('');
     console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('WORKTALE LOG') + ' ' + dimText('\u2014 Last ' + days + ' days'));
     console.log('');
-
-    // Get summaries for the range
-    const summaries = getDailySummariesRange(repo.id, startDateStr, endDateStr);
-
-    // Build a set of dates that have data
-    const summaryMap = new Map(summaries.map((s) => [s.date, s]));
 
     let hasAnyData = false;
 

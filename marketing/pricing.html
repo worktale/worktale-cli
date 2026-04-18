@@ -4,15 +4,15 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pricing — Worktale</title>
-  <meta name="description" content="The Worktale CLI is free forever. Cloud sync, public profile, and AI digests are $19/mo. Founding member lifetime access $149 (limited). Team tier waitlist open."/>
+  <meta name="description" content="The Worktale CLI is free forever. Cloud sync, public profile, and AI digests are $9/mo or $99/yr. Founding lifetime access $249 (first 100 only). Team tier waitlist open."/>
   <meta property="og:title" content="Worktale Pricing — Free CLI, Pro Cloud, Founding Lifetime"/>
-  <meta property="og:description" content="Free CLI forever. $19/mo for Cloud features. $149 lifetime for founding members. Team tier on the waitlist."/>
+  <meta property="og:description" content="Free CLI forever. $9/mo or $99/yr for Cloud features. $249 lifetime for founding members (first 100 only). Team tier on the waitlist."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://worktale.org/pricing"/>
   <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Worktale Pricing"/>
-  <meta name="twitter:description" content="Free CLI forever. $19/mo Cloud. $149 lifetime."/>
+  <meta name="twitter:description" content="Free CLI forever. $9/mo Cloud. $249 lifetime."/>
   <link rel="canonical" href="https://worktale.org/pricing.html"/>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -88,10 +88,10 @@
             <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">PRO</p>
             <h2 class="text-xl font-bold text-text-primary mb-1">Pro Cloud</h2>
             <div class="flex items-baseline gap-1 mb-2">
-              <span class="text-3xl font-bold text-text-primary">$19</span>
+              <span class="text-3xl font-bold text-text-primary">$9</span>
               <span class="text-text-muted text-sm">/ month</span>
             </div>
-            <p class="text-text-muted text-xs">or <span class="text-cyber-cyan font-mono">$190/yr</span> &mdash; save $38</p>
+            <p class="text-text-muted text-xs">or <span class="text-cyber-cyan font-mono">$99/yr</span> &mdash; save $9</p>
             <p class="text-text-muted text-sm leading-relaxed mt-3">Everything in Free, plus the cloud features built for client work.</p>
           </div>
 
@@ -106,16 +106,19 @@
             <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Cancel anytime</li>
           </ul>
 
-          <div class="mt-auto">
-            <button
-              type="button"
-              x-data
-              @click="$dispatch('worktale:waitlist', { tier: 'pro', label: 'Pro Cloud ($19/mo)' })"
-              class="w-full text-center px-4 py-3 rounded-lg border border-cyber-cyan/40 bg-cyber-cyan/15 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/25 hover:border-cyber-cyan/60 transition-all cursor-pointer"
+          <div class="mt-auto space-y-2">
+            <a
+              href="https://buy.stripe.com/aFacMYeXMfki8Fn2Y1gjC0m"
+              class="block w-full text-center px-4 py-3 rounded-lg border border-cyber-cyan/40 bg-cyber-cyan/15 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/25 hover:border-cyber-cyan/60 transition-all"
             >
-              Get early access &rarr;
-            </button>
-            <p class="text-text-muted text-[10px] text-center mt-2">Stripe checkout opens shortly. Join the list to be notified.</p>
+              Subscribe &mdash; $9/mo &rarr;
+            </a>
+            <a
+              href="https://buy.stripe.com/cNi14gaHw9ZY8Fn0PTgjC0n"
+              class="block w-full text-center px-4 py-2.5 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/[0.04] font-mono text-xs text-cyber-cyan/80 hover:bg-cyber-cyan/10 hover:border-cyber-cyan/40 transition-all"
+            >
+              or $99/year &rarr;
+            </a>
           </div>
         </div>
 
@@ -126,10 +129,10 @@
             <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">FOUNDING</p>
             <h2 class="text-xl font-bold text-text-primary mb-1">Lifetime</h2>
             <div class="flex items-baseline gap-1 mb-2">
-              <span class="text-3xl font-bold text-text-primary">$149</span>
+              <span class="text-3xl font-bold text-text-primary">$249</span>
               <span class="text-text-muted text-sm">once</span>
             </div>
-            <p class="text-text-muted text-xs">~8 months of Pro &middot; locked in forever</p>
+            <p class="text-text-muted text-xs">~2.5 years of Pro &middot; locked in forever</p>
             <p class="text-text-muted text-sm leading-relaxed mt-3">For early supporters. Pay once, never again.</p>
           </div>
 
@@ -143,15 +146,13 @@
           </ul>
 
           <div class="mt-auto">
-            <button
-              type="button"
-              x-data
-              @click="$dispatch('worktale:waitlist', { tier: 'lifetime', label: 'Founding Lifetime ($149)' })"
-              class="w-full text-center px-4 py-3 rounded-lg border border-neon-amber/40 bg-neon-amber/15 font-mono text-sm text-neon-amber hover:bg-neon-amber/25 hover:border-neon-amber/60 transition-all cursor-pointer"
+            <a
+              href="https://buy.stripe.com/00waEQg1Qfki08R8ilgjC0o"
+              class="block w-full text-center px-4 py-3 rounded-lg border border-neon-amber/40 bg-neon-amber/15 font-mono text-sm text-neon-amber hover:bg-neon-amber/25 hover:border-neon-amber/60 transition-all"
             >
-              Reserve your spot &rarr;
-            </button>
-            <p class="text-text-muted text-[10px] text-center mt-2">Tier closes after 100 sales. Stripe checkout available soon.</p>
+              Buy Lifetime &mdash; $249 &rarr;
+            </a>
+            <p class="text-text-muted text-[10px] text-center mt-2">Tier closes after 100 sales. 14-day refund guarantee.</p>
           </div>
         </div>
 
@@ -351,12 +352,12 @@
           The TUI dashboard, all 17 commands, AI session tracking via the Claude Code plugin &mdash; all free, forever.
         </p>
         <p>
-          <strong class="text-text-primary">$19/mo Pro Cloud is what unlocks the cloud-side features.</strong>
+          <strong class="text-text-primary">$9/mo Pro Cloud is what unlocks the cloud-side features.</strong>
           AI-generated weekly digests, standup &amp; retro generation, the public profile at <code class="text-terminal-green font-mono text-xs">worktale.dev/{you}</code>,
           cross-repo timeline, and client-ready exports. These exist because they require AI inference cost and hosting &mdash; both real expenses for a one-person company.
         </p>
         <p>
-          <strong class="text-text-primary">$149 lifetime is for the first 100 supporters.</strong>
+          <strong class="text-text-primary">$249 lifetime is for the first 100 supporters.</strong>
           You take a small bet on Worktale being around in 5 years; in exchange you get every Pro feature forever and a founding badge.
           When the 100 spots are gone, the lifetime tier closes and Pro is monthly only.
         </p>

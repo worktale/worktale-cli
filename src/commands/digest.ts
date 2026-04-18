@@ -26,16 +26,23 @@ function promptYesNo(question: string): Promise<boolean> {
   });
 }
 
-export async function digestCommand(): Promise<void> {
+export async function digestCommand(options: { format?: string } = {}): Promise<void> {
+  const format = options.format || 'text';
+  const isJson = format === 'json';
+  const isMarkdown = format === 'markdown' || format === 'md';
   try {
     const repoPath = process.cwd();
 
     // Check if repo is initialized
     if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
-      console.log('  Run ' + brandText('worktale init') + ' to get started.');
-      console.log('');
+      if (isJson) {
+        console.log(JSON.stringify({ error: 'not-initialized', path: repoPath }));
+      } else {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
+        console.log('  Run ' + brandText('worktale init') + ' to get started.');
+        console.log('');
+      }
       closeDb();
       process.exit(0);
       return;
@@ -43,9 +50,13 @@ export async function digestCommand(): Promise<void> {
 
     const repo = getRepo(repoPath);
     if (!repo) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' repo not found in database.');
-      console.log('');
+      if (isJson) {
+        console.log(JSON.stringify({ error: 'repo-not-found', path: repoPath }));
+      } else {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' repo not found in database.');
+        console.log('');
+      }
       closeDb();
       process.exit(0);
       return;
@@ -56,14 +67,22 @@ export async function digestCommand(): Promise<void> {
     const commits = getCommitsByDate(repo.id, today);
     const summary = getDailySummary(repo.id, today);
 
-    console.log('');
-    console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('WORKTALE DIGEST') + ' ' + dimText('\u2014 ' + formatDate(todayDate)));
-    console.log('');
+    if (!isJson && !isMarkdown) {
+      console.log('');
+      console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('WORKTALE DIGEST') + ' ' + dimText('\u2014 ' + formatDate(todayDate)));
+      console.log('');
+    }
 
     if (commits.length === 0) {
-      console.log('  ' + dimText('No commits today. Nothing to digest yet.'));
-      console.log('  ' + dimText('Make some commits and come back later!'));
-      console.log('');
+      if (isJson) {
+        console.log(JSON.stringify({ date: today, repo: repo.name, commits: [], summary: null, modules: [], ai: null, note: 'no-commits' }));
+      } else if (isMarkdown) {
+        console.log(`# Worktale digest \u2014 ${today}\n\n_No commits today._`);
+      } else {
+        console.log('  ' + dimText('No commits today. Nothing to digest yet.'));
+        console.log('  ' + dimText('Make some commits and come back later!'));
+        console.log('');
+      }
       closeDb();
       process.exit(0);
       return;
@@ -102,6 +121,32 @@ export async function digestCommand(): Promise<void> {
         models: [...modelSet],
         providers: [...providerSet],
       };
+    }
+
+    // JSON mode: emit raw structured data and exit before interactive path
+    if (isJson) {
+      console.log(JSON.stringify({
+        date: today,
+        repo: { id: repo.id, name: repo.name, path: repo.path },
+        summary: summaryData,
+        commits: commits.map((c) => ({
+          sha: c.sha,
+          message: c.message,
+          author: c.author,
+          timestamp: c.timestamp,
+          lines_added: c.lines_added,
+          lines_removed: c.lines_removed,
+          files_changed: c.files_changed,
+          branch: c.branch,
+        })),
+        modules,
+        ai: aiData ?? null,
+        user_notes: summary?.user_notes ?? null,
+        ai_draft: summary?.ai_draft ?? null,
+      }, null, 2));
+      closeDb();
+      process.exit(0);
+      return;
     }
 
     // Check AI config
@@ -147,6 +192,14 @@ export async function digestCommand(): Promise<void> {
     // Display the draft
     console.log('  ' + dimText('\u2500'.repeat(50)));
     console.log('');
+
+    if (isMarkdown) {
+      // Raw markdown output — no chalk styling, no interactive prompt
+      console.log(digest);
+      closeDb();
+      process.exit(0);
+      return;
+    }
 
     // Render markdown with basic chalk formatting
     const lines = digest.split('\n');

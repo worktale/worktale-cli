@@ -19,6 +19,15 @@ interface SessionOptions {
   duration?: string;
   commits?: string;
   note?: string;
+  format?: string;
+  days?: string;
+}
+
+function csvEscape(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  const s = String(value);
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
 }
 
 export async function sessionCommand(
@@ -100,18 +109,47 @@ async function listSessions(options: SessionOptions): Promise<void> {
   const repoPath = process.cwd();
   const repo = getRepo(repoPath);
   if (!repo) {
-    console.log('  ' + dimText('Not a tracked repo.'));
+    if (options.format === 'json') console.log('[]');
+    else if (options.format === 'csv') console.log('');
+    else console.log('  ' + dimText('Not a tracked repo.'));
     return;
   }
 
   const today = getDateString();
-  const days = options.duration ? parseInt(options.duration, 10) : 7;
+  const daysRaw = options.days ?? options.duration;
+  const days = daysRaw ? parseInt(daysRaw, 10) : 7;
   const since = new Date();
   since.setDate(since.getDate() - days);
   const sinceStr = getDateString(since);
 
   const { getAiSessionsRange } = await import('../db/ai-sessions.js');
   const sessions = getAiSessionsRange(repo.id, sinceStr, today);
+
+  if (options.format === 'json') {
+    console.log(JSON.stringify(sessions, null, 2));
+    return;
+  }
+  if (options.format === 'csv') {
+    const headers = ['date', 'tool', 'provider', 'model', 'input_tokens', 'output_tokens', 'cost_usd', 'duration_secs', 'tools_used', 'mcp_servers', 'commits', 'note'];
+    console.log(headers.join(','));
+    for (const s of sessions) {
+      console.log([
+        s.date,
+        s.tool ?? '',
+        s.provider ?? '',
+        s.model ?? '',
+        s.input_tokens,
+        s.output_tokens,
+        s.cost_usd,
+        s.duration_secs,
+        Array.isArray(s.tools_used) ? s.tools_used.join('|') : '',
+        Array.isArray(s.mcp_servers) ? s.mcp_servers.join('|') : '',
+        Array.isArray(s.commits) ? s.commits.join('|') : '',
+        s.note ?? '',
+      ].map(csvEscape).join(','));
+    }
+    return;
+  }
 
   console.log('');
   console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('AI Sessions') + '  ' + dimText(`(last ${days} days)`));
@@ -159,12 +197,38 @@ async function showStats(options: SessionOptions): Promise<void> {
   const repoPath = process.cwd();
   const repo = getRepo(repoPath);
   if (!repo) {
-    console.log('  ' + dimText('Not a tracked repo.'));
+    if (options.format === 'json') console.log('{}');
+    else if (options.format === 'csv') console.log('');
+    else console.log('  ' + dimText('Not a tracked repo.'));
     return;
   }
 
-  const days = options.duration ? parseInt(options.duration, 10) : 30;
+  const daysRaw = options.days ?? options.duration;
+  const days = daysRaw ? parseInt(daysRaw, 10) : 30;
   const stats = getAiSessionStats(repo.id, days);
+
+  if (options.format === 'json') {
+    console.log(JSON.stringify({ days, ...stats }, null, 2));
+    return;
+  }
+  if (options.format === 'csv') {
+    // Emit a "summary" row then expanded sections
+    console.log('metric,value');
+    console.log(`days,${days}`);
+    console.log(`total_sessions,${stats.total_sessions}`);
+    console.log(`total_cost_usd,${stats.total_cost.toFixed(4)}`);
+    console.log(`total_input_tokens,${stats.total_input_tokens}`);
+    console.log(`total_output_tokens,${stats.total_output_tokens}`);
+    console.log(`total_duration_secs,${stats.total_duration_secs}`);
+    console.log('');
+    console.log('category,key,count');
+    for (const [k, v] of Object.entries(stats.tools ?? {})) console.log(`tool,${csvEscape(k)},${v}`);
+    for (const [k, v] of Object.entries(stats.models ?? {})) console.log(`model,${csvEscape(k)},${v}`);
+    for (const [k, v] of Object.entries(stats.providers ?? {})) console.log(`provider,${csvEscape(k)},${v}`);
+    for (const [k, v] of Object.entries(stats.tools_used_frequency ?? {})) console.log(`tools_used,${csvEscape(k)},${v}`);
+    for (const [k, v] of Object.entries(stats.mcp_servers_used ?? {})) console.log(`mcp_server,${csvEscape(k)},${v}`);
+    return;
+  }
 
   console.log('');
   console.log('  ' + streakText('\u26A1') + ' ' + chalk.bold('AI Usage Stats') + '  ' + dimText(`(last ${days} days)`));
