@@ -33,7 +33,7 @@ worktale init
 ```bash
 mkdir -p .opencode/plugins
 curl -o .opencode/plugins/worktale.ts \
-  https://raw.githubusercontent.com/worktale/worktale-cli/main/worktale-opencode-plugin/src/index.ts
+  https://raw.githubusercontent.com/worktale/worktale-opencode-plugin/main/src/index.ts
 ```
 
 ### 3. Reference it in `.opencode/opencode.jsonc`
@@ -54,7 +54,7 @@ That's it. Next time you run OpenCode in this project, the plugin loads automati
 ```bash
 mkdir -p ~/.config/opencode/plugins
 curl -o ~/.config/opencode/plugins/worktale.ts \
-  https://raw.githubusercontent.com/worktale/worktale-cli/main/worktale-opencode-plugin/src/index.ts
+  https://raw.githubusercontent.com/worktale/worktale-opencode-plugin/main/src/index.ts
 ```
 
 Then add to `~/.config/opencode/opencode.jsonc`:
