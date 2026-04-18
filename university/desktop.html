@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desktop App &mdash; Worktale University</title>
+    <meta name="description" content="Course 05: Install the Tauri desktop app, tour all 8 views, use the CodeMirror digest editor, master the command palette, and customize theme and font scale." />
+    <link rel="canonical" href="https://university.worktale.org/desktop.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-neon-amber/20 selection:text-neon-amber">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 05</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-neon-amber/10 border border-neon-amber/30 font-mono text-[10px] text-neon-amber tracking-widest uppercase">Advanced</span>
+                    <span class="font-mono text-xs text-text-muted">6 lessons &middot; ~45 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Desktop App.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Worktale Desktop is a native Tauri + React app that reads the same local SQLite database as the CLI. Eight views, a command palette, a full-featured markdown editor, and theme + font-scale accessibility controls.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-5-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.1 &middot; Install</a></li>
+                        <li><a href="#lesson-5-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.2 &middot; The 8 views</a></li>
+                        <li><a href="#lesson-5-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.3 &middot; Digest editor</a></li>
+                        <li><a href="#lesson-5-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.4 &middot; Command palette</a></li>
+                        <li><a href="#lesson-5-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.5 &middot; Shortcuts</a></li>
+                        <li><a href="#lesson-5-6" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">5.6 &middot; Appearance</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/cloud.html" class="block font-mono text-xs text-neon-amber hover:underline">06 Cloud &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-5-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Install the desktop app.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Download and install Worktale Desktop. Understand how it connects to your existing CLI data.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Download</h3>
+                        <p class="text-text-secondary mb-4">
+                            Windows installer is live at <a href="https://worktale.org/#desktop" class="text-terminal-green hover:underline">worktale.org</a>. macOS and Linux coming soon; until then, build from source (<a href="https://github.com/worktale/worktale-cli" class="text-terminal-green hover:underline">github.com/worktale/worktale-cli</a>).
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            Prereq: the CLI must be installed first. The desktop app does not ship the data layer &mdash; it reads <code>~/.worktale/data.db</code>. If the DB doesn't exist yet, run <code>worktale init</code> in any repo to create it.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it installs</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>A ~3 MB Windows executable (Tauri + Rust backend + compiled React frontend).</li>
+                            <li>A Start Menu entry named &ldquo;Worktale&rdquo;.</li>
+                            <li>Nothing else &mdash; no services, no drivers, no registry autostart.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">First launch</h3>
+                        <p class="text-text-secondary mb-4">
+                            On first launch the app reads <code>~/.worktale/data.db</code>, lists your tracked repos in the sidebar, and lands you on the Overview of the most recently active one. If you have no repos yet, you'll see an onboarding card with the <code>worktale init</code> command to copy.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">Windows SmartScreen may warn on the first download because the installer isn't code-signed yet. Click <em>More info</em> &rarr; <em>Run anyway</em>. The binary is open-source; you can audit or rebuild it from <code>desktop/src-tauri/</code> in the repo.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-5-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">The eight views.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">What each sidebar view is for and how they relate to the CLI commands you already know.</p>
+                        </div>
+
+                        <div class="space-y-3 mb-8">
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">1. Overview</span> &mdash; <span class="text-text-secondary">streaks, week chart, commit timeline, AI cost card, 52-week heatmap. Mirrors the TUI Overview.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">2. Daily Log</span> &mdash; <span class="text-text-secondary">calendar + day detail pane, with per-day stats, notes editor, and commit list.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">3. History</span> &mdash; <span class="text-text-secondary">all-time stats, top modules, hourly activity heatmap, milestones from git tags.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">4. Digest</span> &mdash; <span class="text-text-secondary">CodeMirror markdown editor for drafting, editing, and publishing digests. Covered in 5.3.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">5. AI</span> &mdash; <span class="text-text-secondary">AI session stats with interactive charts: cost over time, tokens, breakdown by agent/model/provider/tool/MCP.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">6. Cloud</span> &mdash; <span class="text-text-secondary">login, published digests list, profile preview. Covered in Course 06.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">7. Repos</span> &mdash; <span class="text-text-secondary">tracked repo list with quick switch, rename, remove, and add.</span></p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-sm"><span class="text-neon-amber">8. Settings</span> &mdash; <span class="text-text-secondary">AI provider, git email filters, display, appearance (theme + font scale). Every CLI config key has a GUI here.</span></p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Jump to any view with <code>Ctrl+1</code> through <code>Ctrl+8</code> (<code>Cmd</code> on macOS). Sidebar is collapsible.
+                        </p>
+                    </article>
+
+                    <article id="lesson-5-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">The digest editor.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Draft, edit, and publish a digest inside the app with a full-featured markdown editor.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Workflow</h3>
+                        <ol class="space-y-2 text-text-secondary mb-6 list-decimal pl-6 marker:text-neon-amber">
+                            <li>Press <code>Ctrl+4</code> to open the Digest view.</li>
+                            <li>Pick a date from the date picker (defaults to today).</li>
+                            <li>Click <em>Generate from commits</em> to seed the editor with a template digest (or Ollama-narrated if configured).</li>
+                            <li>Edit freely. Markdown, live preview side-by-side.</li>
+                            <li>Click <em>Save</em> to persist locally, or <em>Publish</em> to push to Worktale Cloud.</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Editor features</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>CodeMirror 6 with markdown syntax highlighting.</li>
+                            <li>Vim keybindings (toggle in Settings).</li>
+                            <li>Tab indents, Shift+Tab dedents.</li>
+                            <li>Headers, lists, code fences auto-formatted.</li>
+                            <li>Live word count &amp; read time at the bottom.</li>
+                            <li>Font size follows the app's fontScale setting (Lesson 5.6).</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Drafts vs published</h3>
+                        <p class="text-text-secondary mb-4">
+                            A digest has three states: <strong class="text-text-primary">empty</strong> (no row), <strong class="text-text-primary">draft</strong> (<code>ai_draft</code> populated, <code>published = 0</code>), and <strong class="text-text-primary">published</strong> (<code>published = 1</code>, optional <code>published_at</code> timestamp). The editor lets you save a draft without publishing; publishing is a separate explicit action.
+                        </p>
+                    </article>
+
+                    <article id="lesson-5-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Command palette.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Hit <code>Ctrl+K</code> (<code>Cmd+K</code>) from anywhere to fuzzy-search every action in the app.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">The command palette is the fastest way to do anything that doesn't have a dedicated shortcut. Type a few characters, arrow to the action, enter.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Examples</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># Type &ldquo;digest today&rdquo; &rarr; Generate today's digest</p>
+                                <p class="text-text-muted"># Type &ldquo;publish&rdquo; &rarr; Publish current day to cloud</p>
+                                <p class="text-text-muted"># Type a repo name &rarr; Switch active repo</p>
+                                <p class="text-text-muted"># Type &ldquo;theme&rdquo; &rarr; Toggle dark/light</p>
+                                <p class="text-text-muted"># Type &ldquo;font&rdquo; &rarr; Change font scale</p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">The palette is context-aware &mdash; it knows which view you're on and surfaces relevant actions first.</p>
+                    </article>
+
+                    <article id="lesson-5-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Keyboard shortcuts.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Every keyboard shortcut in the desktop app.</p>
+                        </div>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <thead class="bg-surface-2">
+                                    <tr><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">SHORTCUT</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">ACTION</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+K</td><td class="py-2 px-4 text-text-secondary">Open command palette</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+1&hellip;8</td><td class="py-2 px-4 text-text-secondary">Switch to view 1&mdash;8</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+N</td><td class="py-2 px-4 text-text-secondary">New note for today</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+D</td><td class="py-2 px-4 text-text-secondary">Generate today's digest</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+S</td><td class="py-2 px-4 text-text-secondary">Save draft (in Digest view)</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+Shift+P</td><td class="py-2 px-4 text-text-secondary">Publish current digest</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+R</td><td class="py-2 px-4 text-text-secondary">Refresh data from DB</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Ctrl+B</td><td class="py-2 px-4 text-text-secondary">Toggle sidebar</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">&larr; &rarr;</td><td class="py-2 px-4 text-text-secondary">Prev / next day (in Daily Log)</td></tr>
+                                    <tr><td class="py-2 px-4 text-neon-amber">Esc</td><td class="py-2 px-4 text-text-secondary">Close dialogs / clear focus</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="text-text-secondary mt-4 mb-4 text-sm">
+                            On macOS, substitute <code>Cmd</code> for <code>Ctrl</code>.
+                        </p>
+                    </article>
+
+                    <article id="lesson-5-6" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 5.6</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Theme and font scale.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Switch between dark and light themes, and scale fonts for readability.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Both settings live at <strong class="text-text-primary">Settings &rarr; Appearance</strong>. They persist to <code>~/.worktale/config.json</code> and apply on the next config load.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Theme</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li><strong class="text-text-primary">Dark</strong> (default) &mdash; slate-on-near-black with neon accents.</li>
+                            <li><strong class="text-text-primary">Light</strong> &mdash; slate-on-near-white with deeper greens for contrast. Heatmap, borders, and scrollbar adjust automatically.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Font size</h3>
+                        <p class="text-text-secondary mb-4">Scales all text (including the CodeMirror digest editor):</p>
+                        <ul class="space-y-1 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li><strong class="text-text-primary">Small</strong> &mdash; 0.9&times; &mdash; dense layouts</li>
+                            <li><strong class="text-text-primary">Default</strong> &mdash; 1&times; &mdash; 14px base</li>
+                            <li><strong class="text-text-primary">Large</strong> &mdash; 1.15&times; &mdash; better for long-form editing</li>
+                            <li><strong class="text-text-primary">Extra Large</strong> &mdash; 1.3&times; &mdash; accessibility-first</li>
+                        </ul>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">Theme and font scale are stored in the shared config file, so they also take effect if you later switch to the CLI-adjacent tools. Settings you set in the app respect the same <code>appearance.*</code> keys you could set via <code>worktale config set appearance.theme light</code>.</p>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/advanced-cli.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 04 Advanced CLI</a>
+                        <a href="/cloud.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-neon-amber/10 border border-neon-amber/30 font-mono text-sm text-neon-amber hover:bg-neon-amber/20 hover:border-neon-amber/50 transition-all">
+                            <span>Course 06: Cloud</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

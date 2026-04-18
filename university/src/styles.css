@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+[x-cloak] { display: none !important; }
+
+@theme {
+  --color-terminal-green: #00FF41;
+  --color-terminal-dim: #00CC33;
+  --color-terminal-dark: #003B00;
+  --color-cyber-cyan: #00D4FF;
+  --color-cyber-blue: #0066FF;
+  --color-neon-amber: #FBBF24;
+  --color-surface-0: #0A0A0A;
+  --color-surface-1: #111111;
+  --color-surface-2: #1A1A1A;
+  --color-surface-3: #222222;
+  --color-border-dim: #2A2A2A;
+  --color-border-glow: #00FF4120;
+  --color-text-primary: #E8E8E8;
+  --color-text-secondary: #888888;
+  --color-text-muted: #555555;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Lesson prose tuning */
+.lesson-prose p { line-height: 1.75; }
+.lesson-prose code:not(pre code) {
+  color: var(--color-terminal-green);
+  background: color-mix(in srgb, var(--color-terminal-green) 10%, transparent);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.3rem;
+  font-size: 0.875em;
+}

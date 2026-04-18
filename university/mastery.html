@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mastery &mdash; Worktale University</title>
+    <meta name="description" content="Course 07: NDA-safe workflows, multi-project patterns, freelance invoicing with AI cost pass-through, review prep, data export, and troubleshooting." />
+    <link rel="canonical" href="https://university.worktale.org/mastery.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-cyber-blue/20 selection:text-cyber-blue">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 07</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/30 font-mono text-[10px] text-cyber-blue tracking-widest uppercase">Expert</span>
+                    <span class="font-mono text-xs text-text-muted">7 lessons &middot; ~70 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Mastery.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    The patterns that emerge when you've been running Worktale for months. Real workflows for freelancers, NDA work, performance reviews, and the edge cases nobody tells you about.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-7-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.1 &middot; NDA-safe</a></li>
+                        <li><a href="#lesson-7-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.2 &middot; Multi-project</a></li>
+                        <li><a href="#lesson-7-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.3 &middot; Invoicing</a></li>
+                        <li><a href="#lesson-7-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.4 &middot; Reviews</a></li>
+                        <li><a href="#lesson-7-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.5 &middot; Standups</a></li>
+                        <li><a href="#lesson-7-6" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.6 &middot; Export</a></li>
+                        <li><a href="#lesson-7-7" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-blue hover:bg-cyber-blue/5 font-mono text-xs">7.7 &middot; Troubleshooting</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next</p>
+                        <a href="/reference.html" class="block font-mono text-xs text-text-secondary hover:underline">08 Reference &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-7-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">NDA-safe workflow.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to use Worktale on NDA'd work without violating the agreement, and how to share outputs safely.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">What Worktale captures</h3>
+                        <p class="text-text-secondary mb-4">Commit metadata only:</p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li>SHA, author email, timestamp, branch name, tag names</li>
+                            <li>Commit message (the text you wrote)</li>
+                            <li>Lines added/removed, files changed count, names of changed files</li>
+                            <li>AI session cost/tokens/tools &mdash; but not the agent's transcript content</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What Worktale does not capture</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li>File contents, diffs, or snippets</li>
+                            <li>Secrets, env vars, or config values</li>
+                            <li>The agent's conversation transcript</li>
+                            <li>Any data from remote git hosts</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Safe-to-share outputs</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li><strong class="text-text-primary">Digest output</strong> &mdash; uses commit messages you wrote. Review before sharing; if you wrote secrets into a commit message, they'll be in the digest. You'd have the same problem with a <code>git log</code> paste.</li>
+                            <li><strong class="text-text-primary">Stats (<code>worktale status</code>)</strong> &mdash; counts only. Always safe.</li>
+                            <li><strong class="text-text-primary">AI session stats</strong> &mdash; models and costs. Always safe (no transcript content).</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Riskier</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-red-400">
+                            <li><strong class="text-text-primary">Notes you wrote yourself</strong> &mdash; may contain sensitive detail. Review before sharing.</li>
+                            <li><strong class="text-text-primary">File name lists</strong> &mdash; the top-modules view may reveal internal structure (e.g. <code>src/billing/stripe/enterprise-overrides</code>). Consider repo-slug anonymization if you publish.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Repo slug for anonymization</h3>
+                        <p class="text-text-secondary mb-4">
+                            When publishing to Worktale Cloud, each repo has a public <em>slug</em>. Default = repo name. You can override:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos rename acme-proprietary-thing "Client Work"</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">The public profile will now show &ldquo;Client Work&rdquo; instead of the real repo name.</p>
+                    </article>
+
+                    <article id="lesson-7-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Multi-project patterns.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Strategies for working across 5, 10, 20+ repos without losing the thread.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Bulk onboard everything once</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale batch ~/code --auto --since 6m --install-hooks</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">One command gets every repo under <code>~/code</code> into the database with hooks installed, limited to the last 6 months of history.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Cross-repo day view</h3>
+                        <p class="text-text-secondary mb-4">The TUI shows one repo at a time. To see <em>all</em> your activity for today across all repos:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale status --all-repos</span></p>
+                                <p class="text-text-secondary mt-2">Today (2026-04-17)</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;acme-portal: 3 commits &middot; <span class="text-terminal-green">+421</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;my-saas: 4 commits &middot; <span class="text-terminal-green">+783</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;side-lib: 1 commit &middot; <span class="text-terminal-green">+42</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">One digest per project vs one rollup</h3>
+                        <p class="text-text-secondary mb-4">Two patterns:</p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li><strong class="text-text-primary">Per-project</strong> &mdash; run <code>worktale digest</code> from each repo. Publish separately. Client-specific retention. Best for billed consulting work.</li>
+                            <li><strong class="text-text-primary">Rollup</strong> &mdash; <code>worktale standup --days 1 --all-repos</code>. Single summary combining every repo. Best for "what did I do today" personal journaling.</li>
+                        </ul>
+                    </article>
+
+                    <article id="lesson-7-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Freelance invoicing.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Turn Worktale data into line items for client invoices, with AI cost pass-through.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">The pattern</h3>
+                        <ol class="space-y-2 text-text-secondary mb-6 list-decimal pl-6 marker:text-cyber-blue">
+                            <li>Export your month for the client's repo as JSON.</li>
+                            <li>Extract: total active time (sum of session durations), AI cost for that repo, top modules touched.</li>
+                            <li>Attach the CSV as a substantiation doc.</li>
+                        </ol>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># In the client's repo directory</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale log --days 30 --format csv &gt; invoice-apr.csv</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session list --days 30 --format csv &gt; ai-apr.csv</span></p>
+                                <p class="text-text-muted mt-2"># Get the month's AI total for pass-through</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session stats --days 30 --format json | jq '.total_cost'</span></p>
+                                <p class="text-text-primary">47.83</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Invoice line item template</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1/50 p-5 mb-4">
+                            <p class="text-text-primary font-mono text-sm mb-2">Engineering services &mdash; April 2026</p>
+                            <p class="text-text-secondary text-sm">32h at $175/hr ...................... $5,600.00</p>
+                            <p class="text-text-secondary text-sm">AI tooling pass-through (Claude + GPT) ... $47.83</p>
+                            <p class="text-text-primary font-mono text-sm mt-3 pt-3 border-t border-border-dim">Total ........................................ $5,647.83</p>
+                            <p class="text-text-muted text-xs mt-3">Detailed breakdown: invoice-apr.csv, ai-apr.csv</p>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">Clients love seeing AI cost called out. It signals: you're using the tools efficiently, you're transparent about expenses, and they're not being surprised later with a "who ran up our API bill?" conversation. Worktale makes this a one-line change to your monthly invoice.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-7-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Performance review prep.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Walk into a review with exact dates, counts, and context instead of a half-remembered list of features.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">The six-month digest</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest --since 2026-01-01 --format markdown &gt; h1-review.md</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">This compiles <em>everything</em> &mdash; commit counts, big features, modules touched, AI-session totals &mdash; into a markdown doc you can edit into your review narrative.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">The three-paragraph rescue</h3>
+                        <p class="text-text-secondary mb-4">Can't remember March? Don't fake it:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale log --since 2026-03-01 --until 2026-03-31 --format markdown</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">Every commit in March with its message. Scan, pick the big ones, rewrite into prose. Takes 15 minutes; produces specific, accurate review material.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Themes over time</h3>
+                        <p class="text-text-secondary mb-4">Run <code>worktale</code>, open History tab, look at top modules. The module you spent 30% of your year in is your <em>theme</em>. Lead your self-review with it.</p>
+                    </article>
+
+                    <article id="lesson-7-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Weekly standup automation.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Schedule a Monday 9am Slack post with last week's recap so you never again ask &ldquo;what did I do last week?&rdquo;</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Two options:</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">1. Cron + Slack webhook (local, no Pro tier needed)</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># ~/bin/weekly-standup.sh</p>
+                                <p class="text-text-primary">#!/bin/bash</p>
+                                <p class="text-text-primary">TEXT=$(worktale standup --days 7 --format slack)</p>
+                                <p class="text-text-primary">curl -X POST -H 'Content-type: application/json' \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;-d "{\"text\": \"$TEXT\"}" \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;"$SLACK_WEBHOOK_URL"</p>
+                                <p class="text-text-muted mt-2"># crontab -e, add:</p>
+                                <p class="text-text-primary">0 9 * * 1 /home/you/bin/weekly-standup.sh</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">2. Worktale Cloud Pro</h3>
+                        <p class="text-text-secondary mb-4">On Pro, the cloud can schedule and send standups for you. Set your Slack webhook and cadence from <code>worktale.dev/settings/standups</code>. No cron. No script maintenance.</p>
+                    </article>
+
+                    <article id="lesson-7-6" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.6</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Data portability and export.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to back up, migrate, or leave Worktale entirely. Your data is always yours.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Back up your entire history</h3>
+                        <p class="text-text-secondary mb-4">The whole database is one SQLite file:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">cp ~/.worktale/data.db ~/backups/worktale-$(date +%Y%m%d).db</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">Put that on Dropbox, Syncthing, an encrypted USB stick &mdash; whatever you trust. It's SQLite; any SQLite tool can open it.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Export to JSON/CSV</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale export --format json &gt; worktale-export.json</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale export --format csv --dir ~/worktale-csv/</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Migrating between machines</h3>
+                        <ol class="space-y-2 text-text-secondary mb-6 list-decimal pl-6 marker:text-cyber-blue">
+                            <li>On the old machine: <code>cp ~/.worktale/data.db /tmp/data.db</code>.</li>
+                            <li>Transfer <code>data.db</code> + <code>config.json</code> to the new machine.</li>
+                            <li>Install Worktale on the new machine, don't run <code>init</code> yet.</li>
+                            <li>Drop the files into <code>~/.worktale/</code>.</li>
+                            <li>Worktale picks them up on next run. Repos at their old absolute paths won't resolve; use <code>worktale repos move</code> to fix each one.</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Leaving Worktale</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># Uninstall hooks from every tracked repo</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale hook uninstall --all</span></p>
+                                <p class="text-text-muted mt-2"># Remove the CLI</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm uninstall -g worktale</span></p>
+                                <p class="text-text-muted mt-2"># Remove data (your choice &mdash; keeping it is fine)</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">rm -rf ~/.worktale/</span></p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="lesson-7-7" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-blue tracking-widest uppercase mb-2">Lesson 7.7</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Troubleshooting.</h2>
+                        <div class="p-5 rounded-xl border border-cyber-blue/20 bg-cyber-blue/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-blue mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">The failure modes we see most often and how to fix them.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">"Commits aren't being captured"</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li>Check <code>worktale hook status</code> in the repo. If missing, <code>worktale hook install</code>.</li>
+                            <li>Check <code>git.userEmailOverride</code> config &mdash; if set, only commits by that email count.</li>
+                            <li>Check that <code>worktale</code> is on the <code>PATH</code> visible to your shell when git runs the hook. Some IDE terminals use a different <code>PATH</code> than your login shell.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">"AI sessions aren't being captured"</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li>Verify the plugin is installed: for Claude Code, <code>/plugin list</code>; for Codex/Copilot, confirm the watcher is running.</li>
+                            <li>Check <code>ls ~/.claude/projects/</code> / <code>~/.codex/sessions/</code> / <code>~/.copilot/session-state/</code> &mdash; the agent must actually be writing transcripts to disk.</li>
+                            <li>Run <code>worktale session list --days 1</code>. If empty, the plugin's SessionEnd callback didn't fire; restart the agent and try a short session.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">"Digest is empty"</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-blue">
+                            <li>Run <code>worktale status</code>. If commits = 0, the day has no content to digest.</li>
+                            <li>If commits &gt; 0 but digest is still empty, the timezone may be off &mdash; Worktale is looking at today in your <code>timezone</code> setting. Commits made at 11pm local might be tomorrow in UTC.</li>
+                            <li>If Ollama mode hangs: Ollama isn't reachable at <code>ai.ollamaUrl</code>. Fall back with <code>worktale config set ai.provider template</code>.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">"Cloud login hangs"</h3>
+                        <p class="text-text-secondary mb-4">The CLI polls the cloud until you confirm the code. If you don't confirm within 15 minutes it times out. Ctrl+C and try again; the code is one-time use and new on every login attempt.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">"Desktop app won't launch on Windows"</h3>
+                        <p class="text-text-secondary mb-4">Most likely: WebView2 runtime missing. Windows 11 has it by default; on Windows 10 you may need to install it. Error messages will usually point you there.</p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">If you hit a reproducible bug, capture it with <code>worktale diagnose</code> &mdash; a command that prints your OS, CLI version, config (secrets redacted), DB schema version, and last 10 operations. Paste that into a GitHub issue and we can usually fix within a day.</p>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/cloud.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 06 Cloud</a>
+                        <a href="/reference.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-2 border border-border-dim font-mono text-sm text-text-secondary hover:border-text-secondary transition-all">
+                            <span>08 Reference</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

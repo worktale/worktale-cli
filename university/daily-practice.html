@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Practice &mdash; Worktale University</title>
+    <meta name="description" content="Course 02: Build a daily Worktale habit. The commit-note-digest loop, reading stats, writing notes, nudges, and when to switch to the desktop app." />
+    <link rel="canonical" href="https://university.worktale.org/daily-practice.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-cyber-cyan/20 selection:text-cyber-cyan">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 02</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-[10px] text-cyber-cyan tracking-widest uppercase">Intermediate</span>
+                    <span class="font-mono text-xs text-text-muted">5 lessons &middot; ~40 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Daily Practice.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Worktale rewards consistency. This course is about turning Foundations into a daily habit &mdash; a rhythm of commits, notes, and digests that builds a record you'll actually use.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-2-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">2.1 &middot; The daily loop</a></li>
+                        <li><a href="#lesson-2-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">2.2 &middot; Reading stats</a></li>
+                        <li><a href="#lesson-2-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">2.3 &middot; Writing notes</a></li>
+                        <li><a href="#lesson-2-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">2.4 &middot; Nudges</a></li>
+                        <li><a href="#lesson-2-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">2.5 &middot; CLI vs Desktop</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/ai-sessions.html" class="block font-mono text-xs text-cyber-cyan hover:underline">03 AI Sessions &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-2-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 2.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">The daily loop.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">The three moves that make Worktale pay off: commit, note, digest. In that order. Every day.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Worktale's payoff comes from <strong class="text-text-primary">compounding small inputs</strong>. Nothing in the tool is heavyweight: no long-form journal, no required form fields, no tagging taxonomy. Just three small actions, repeated.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Step 1 &mdash; Commit (as you already do)</h3>
+                        <p class="text-text-secondary mb-4">
+                            Write your commit messages slightly better than you would without Worktale. Not drastically better &mdash; just readable. <code>fix stuff</code> becomes <code>fix: webhook race on idempotent payment retry</code>. The digest later uses these messages verbatim.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            The post-commit hook captures the metadata automatically. You don't have to think about Worktale at commit time.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Step 2 &mdash; Note (1-2 times/day, &lt;30s each)</h3>
+                        <p class="text-text-secondary mb-4">
+                            Between commits, when you figure something out or make a decision, drop a note:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale note "switched from app-level locking to DB unique constraint; faster under load"</span></p>
+                                <p class="text-terminal-green">&#10003; Noted.</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">
+                            The note is appended to today's <code>user_notes</code>. It shows up in <code>worktale digest</code> and in the TUI Daily Log tab. Notes are the "why" layer &mdash; commits are "what", notes are "why you chose this".
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Step 3 &mdash; Digest (once/day, at end of day)</h3>
+                        <p class="text-text-secondary mb-4">
+                            When you're closing the laptop: <code>worktale digest</code>. Confirm Y to save. Done. Takes 5 seconds.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            Or set up a nudge (Lesson 2.4) so Worktale reminds you at 5pm.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">Missing a digest is fine. Your commits are still captured, and you can generate a digest for any past date with <code>worktale digest --date 2026-04-15</code>. The loop is forgiving; consistency builds the asset, but missing a day doesn't break it.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-2-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 2.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Reading stats.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to read the Overview and History tabs without getting confused by vanity metrics.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">The useful numbers</h3>
+                        <ul class="space-y-3 text-text-secondary mb-6">
+                            <li><strong class="text-text-primary">Current streak</strong> &mdash; consecutive days with at least one commit. This is the only &ldquo;gamified&rdquo; metric and we use it as a gentle prompt, not a goal. Breaking a streak because you took a weekend off is healthy.</li>
+                            <li><strong class="text-text-primary">Commits per day</strong> &mdash; useful for spotting rhythm. A week of 0-commit days inside a &ldquo;busy&rdquo; sprint usually means you're stuck on something; the digest will remind you to surface it.</li>
+                            <li><strong class="text-text-primary">Lines added/removed</strong> &mdash; directionally useful. Don't chase the number. Refactors that <em>remove</em> lines are often more valuable than ones that add.</li>
+                            <li><strong class="text-text-primary">Top modules</strong> &mdash; where you spent the week. Surprisingly honest. The module you didn't realize you'd been working on shows up here.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">The 52-week heatmap</h3>
+                        <p class="text-text-secondary mb-4">
+                            The History tab renders a GitHub-style heatmap of your commit activity, but it's computed from <em>your</em> local data &mdash; it includes private repos GitHub's public heatmap would never show. This is often the first place you see the total arc of your work.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Per-repo vs all-repo stats</h3>
+                        <p class="text-text-secondary mb-4">
+                            By default, the TUI shows stats for the repo you opened it from. To see all repos, use <code>worktale repos</code>:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos</span></p>
+                                <p class="text-text-secondary mt-2">acme-portal &nbsp; &nbsp; 847 commits &nbsp; last: 2h ago</p>
+                                <p class="text-text-secondary">my-saas-project &nbsp; 1,204 commits &nbsp; last: today</p>
+                                <p class="text-text-secondary">side-experiment &nbsp; 38 commits &nbsp; last: 6d ago</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-8">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If &ldquo;top modules&rdquo; looks weird (e.g. node_modules showing up), it's because a historical commit actually touched those paths. Worktale isn't filtering; it's showing the truth. You can exclude paths at the git level with <code>.gitattributes linguist-generated</code> or handle it at review time.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-2-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 2.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Writing notes that matter.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to use <code>worktale note</code> so that six months later, past-you is a useful coworker.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Three ways to add a note</h3>
+
+                        <p class="font-mono text-xs text-terminal-green mt-6 mb-2">1. CLI (fastest)</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale note "picked option B because redis lookups are ~5x cheaper than DB for this"</span></p>
+                            </div>
+                        </div>
+
+                        <p class="font-mono text-xs text-terminal-green mt-6 mb-2">2. TUI (edit longer notes)</p>
+                        <p class="text-text-secondary mb-4">
+                            Open the TUI with <code>worktale</code>, press <code>2</code> for Daily Log, then <code>e</code> to edit. This drops you into your <code>$EDITOR</code> (defaults to nano or vim).
+                        </p>
+
+                        <p class="font-mono text-xs text-terminal-green mt-6 mb-2">3. AI agent</p>
+                        <p class="text-text-secondary mb-4">
+                            If you're using an AI coding agent (Claude Code, Codex, OpenCode, Copilot) with the Worktale plugin installed, the agent appends context notes automatically after each session. Covered in Course 03.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What to actually write</h3>
+                        <p class="text-text-secondary mb-4">The commit message tells you <em>what</em> changed. Your note should tell you <em>why this approach</em>. Useful patterns:</p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li><strong class="text-text-primary">Decision + alternative:</strong> &ldquo;went with Redis lock over DB-level; tradeoff is cache miss storm on restart but we have a warmer.&rdquo;</li>
+                            <li><strong class="text-text-primary">Surprise:</strong> &ldquo;the webhook race was masked by a second bug in retry logic; fixing the retry exposed it.&rdquo;</li>
+                            <li><strong class="text-text-primary">Dead end:</strong> &ldquo;tried lock-free ring buffer, scrapped, spinlock was enough at current volume.&rdquo;</li>
+                            <li><strong class="text-text-primary">External context:</strong> &ldquo;client rejected the idea of v2 API; sticking with v1 + feature flags.&rdquo;</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What NOT to write</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li>Secrets, tokens, API keys (the database is local but backups exist).</li>
+                            <li>Things that belong in code comments (&ldquo;this is O(n log n)&rdquo; &mdash; put it in the code).</li>
+                            <li>Full design docs. Notes are context, not artifacts.</li>
+                        </ul>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">The best test for a note: if you read it six months from now, alongside the day's commits and AI session tools-used list, could you reconstruct why you did what you did? If yes, good note. If not, be more specific.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-2-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 2.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Nudges.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to set up a shell-prompt reminder that nudges you to digest when you haven't yet.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            A nudge is a one-liner Worktale adds to your <code>.bashrc</code> or <code>.zshrc</code> that checks, once per shell load after your configured &ldquo;nudge time&rdquo;, whether you've committed today but haven't run <code>worktale digest</code>. If both are true, it prints a single-line reminder.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale nudge --install</span></p>
+                                <p class="text-terminal-green">&#10003; Added nudge to ~/.bashrc and ~/.zshrc</p>
+                                <p class="text-text-muted">Reload your shell or run `source ~/.bashrc`</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Configure</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-2">
+                                <p class="text-text-muted"># Default nudge fires at 17:00 (5pm)</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set nudgeTime "18:30"</span></p>
+                                <p class="text-text-muted mt-2"># Timezone defaults to auto; override if needed</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set timezone "America/New_York"</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it looks like</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p class="text-text-muted"># You open a new terminal after 5pm</p>
+                                <p class="text-neon-amber">&#9889; Worktale: 7 commits today, no digest yet. Run `worktale digest`.</p>
+                                <p class="text-text-muted mt-1">$</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Remove</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale nudge --uninstall</span></p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-8">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">The nudge runs <code>worktale nudge --check</code> as a background shell call. It's fast (one SQLite query) but if your <code>.bashrc</code> also does other heavy work, the total shell-open time can creep. If that happens, remove the nudge and rely on the desktop app's dock icon instead (Course 05).</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-2-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 2.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">CLI vs Desktop: when to switch.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">The CLI and desktop app read the same SQLite database. Which one to reach for, when.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <h3 class="font-bold text-text-primary mb-2">Reach for the CLI when</h3>
+                                <ul class="space-y-2 text-text-secondary text-sm list-disc pl-5 marker:text-terminal-green">
+                                    <li>You're already in a terminal</li>
+                                    <li>You want to run a one-off command (<code>status</code>, <code>note</code>, <code>digest</code>)</li>
+                                    <li>You want scripted output (<code>--format json</code>)</li>
+                                    <li>You're on a remote server / SSH session</li>
+                                </ul>
+                            </div>
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <h3 class="font-bold text-text-primary mb-2">Reach for the desktop app when</h3>
+                                <ul class="space-y-2 text-text-secondary text-sm list-disc pl-5 marker:text-terminal-green">
+                                    <li>You want to browse multiple days / repos visually</li>
+                                    <li>You're editing a long digest draft (CodeMirror is nicer than vim in-terminal)</li>
+                                    <li>You want to publish to the cloud with a click</li>
+                                    <li>You want interactive charts for AI cost</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Both read/write the same local database. You can use both; they stay in sync. The desktop app is covered in detail in Course 05; this lesson is just the "when to use which" heuristic.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">A good default is: <strong class="text-text-primary">terminal for writing (commits, notes, digests), desktop app for reading (browsing history, comparing weeks, publishing)</strong>. The TUI is fine for both, but once you're looking at data &mdash; especially across multiple repos &mdash; the desktop app wins on pure ergonomics.</p>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/foundations.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 01 Foundations</a>
+                        <a href="/ai-sessions.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all">
+                            <span>Course 03: AI Sessions</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

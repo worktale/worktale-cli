@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced CLI &mdash; Worktale University</title>
+    <meta name="description" content="Course 04: Script-friendly output formats, bulk imports, multi-repo management, Ollama-narrated digests, and git hook internals." />
+    <link rel="canonical" href="https://university.worktale.org/advanced-cli.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-neon-amber/20 selection:text-neon-amber">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 04</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-neon-amber/10 border border-neon-amber/30 font-mono text-[10px] text-neon-amber tracking-widest uppercase">Advanced</span>
+                    <span class="font-mono text-xs text-text-muted">6 lessons &middot; ~50 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Advanced CLI.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Worktale is scriptable. This course covers the pieces that matter when you want to integrate Worktale output into other tools, manage many repos, or generate narrated digests with a local LLM.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-4-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.1 &middot; Output formats</a></li>
+                        <li><a href="#lesson-4-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.2 &middot; batch</a></li>
+                        <li><a href="#lesson-4-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.3 &middot; Multi-repo</a></li>
+                        <li><a href="#lesson-4-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.4 &middot; Ollama</a></li>
+                        <li><a href="#lesson-4-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.5 &middot; Hooks</a></li>
+                        <li><a href="#lesson-4-6" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">4.6 &middot; Config deep-dive</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/desktop.html" class="block font-mono text-xs text-neon-amber hover:underline">05 Desktop &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-4-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Output formats.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Use <code>--format json</code>, <code>--format csv</code>, and <code>--format markdown</code> to pipe Worktale into other tools.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Three commands support <code>--format</code>: <code>log</code>, <code>digest</code>, and <code>session stats</code>/<code>session list</code>. Short flag: <code>-f</code>.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">JSON: for scripts and tooling</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale log --days 7 --format json | jq '.rows | length'</span></p>
+                                <p class="text-text-primary">42</p>
+                                <p class="mt-3"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest --format json</span></p>
+                                <p class="text-text-secondary">{ "date": "2026-04-17", "commits": [...], "summary": {...}, "modules": [...], "ai": {...}, "notes": [...] }</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">CSV: for spreadsheets</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale log --days 30 --format csv &gt; april.csv</span></p>
+                                <p class="text-text-muted"># One row per commit: date, sha, message, author, timestamp, lines, files, branch</p>
+                                <p class="mt-3"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session list --days 30 --format csv &gt; ai-april.csv</span></p>
+                                <p class="text-text-muted"># One row per session: date, tool, model, cost, input_tokens, output_tokens, duration</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Markdown: for docs and commit-ready output</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest --format markdown &gt; week-recap.md</span></p>
+                                <p class="text-text-muted"># Plain markdown without chalk color codes, safe to commit to a docs repo</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">When <code>--format</code> is set to anything other than the default, Worktale suppresses all interactive prompts (like &ldquo;save this digest?&rdquo;). Output is pure &mdash; safe to pipe, redirect, or capture in CI.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-4-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Bulk import with <code class="text-neon-amber">batch</code>.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Import dozens of repos in one command &mdash; with or without hooks.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            <code>worktale batch</code> recursively walks a directory, finds every git repo, and imports commit history for each. No hooks installed by default.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Most common use</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># Import every repo under ~/code, last 3 months only, silently</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale batch ~/code --since 3m --auto</span></p>
+                                <p class="text-terminal-green mt-2">&#10003; Processed 23 repos, imported 8,412 commits in 14s.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Useful flags</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li><code>--since 6m</code> / <code>--since 2024-01-01</code> &mdash; limit how far back to scan</li>
+                            <li><code>--annotate</code> &mdash; also generate daily summaries for imported days (slower, but Overview tab will be populated)</li>
+                            <li><code>--auto</code> &mdash; skip confirmation prompts</li>
+                            <li><code>--install-hooks</code> &mdash; install hooks in every repo (default: off &mdash; batch is import-only)</li>
+                            <li><code>--exclude 'node_modules|vendor'</code> &mdash; skip paths matching a regex</li>
+                        </ul>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If a repo is deeply nested (e.g. a monorepo with submodules), batch will detect each inner <code>.git</code> and import them separately. Usually not what you want. Use <code>--exclude</code> or run <code>worktale init</code> at the outer repo only.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-4-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Multi-repo with <code class="text-neon-amber">repos</code>.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to list, rename, move, or remove tracked repos.</p>
+                        </div>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-2 leading-relaxed">
+                                <p class="text-text-muted"># List every tracked repo</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos</span></p>
+                                <p class="text-text-muted mt-2"># Rename a repo in your display</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos rename acme-portal "Acme: Customer Portal"</span></p>
+                                <p class="text-text-muted mt-2"># A repo moved on disk? Tell Worktale</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos move my-saas-project /new/path/to/repo</span></p>
+                                <p class="text-text-muted mt-2"># Stop tracking a repo (history is kept in the DB)</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale repos remove side-experiment</span></p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Repos are identified by absolute path. Moving a folder on disk without running <code>repos move</code> means the post-commit hook still points at the old path; Worktale silently stops recording new commits until you fix it.
+                        </p>
+                    </article>
+
+                    <article id="lesson-4-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ollama-narrated digests.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Wire a local Ollama model into <code>worktale digest</code> so your summaries are prosaic instead of templated. Everything stays on your machine.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Prerequisites</h3>
+                        <ol class="space-y-1 text-text-secondary mb-6 list-decimal pl-6 marker:text-neon-amber">
+                            <li>Ollama installed (<code>ollama.ai</code>).</li>
+                            <li>A model pulled: <code>ollama pull llama3.2</code> or similar.</li>
+                            <li>Ollama daemon running (<code>ollama serve</code> or system service).</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Wire it up</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set ai.provider ollama</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set ai.model llama3.2</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set ai.ollamaUrl http://localhost:11434</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Run a narrated digest</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest</span></p>
+                                <p class="text-neon-amber mt-2">&#9889; WORKTALE DIGEST &mdash; April 17, 2026</p>
+                                <p class="text-text-secondary mt-2">Spent the afternoon on payments. The big win was tracking down a webhook race condition that had been masking a second bug in the retry logic &mdash; fixing the retry exposed it, then the idempotency-key constraint cleaned both up. Shipped 7 commits, net +815 lines, mostly in <code>src/api/</code> and <code>src/workers/</code>.</p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            The prompt that goes to Ollama is: &ldquo;Given these commit messages and notes, write a 2-3 paragraph recap in first person. Don't fabricate.&rdquo; No external network. No tokens billed. Output quality depends on your model; 7B+ models work well.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If Ollama is not running when you digest, Worktale falls back to template mode and prints a one-line warning. No silent failures, no hangs.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-4-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Hooks: install, uninstall, status.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Manage the post-commit hook without touching <code>.git/hooks/</code> by hand.</p>
+                        </div>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-2 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale hook status</span></p>
+                                <p class="text-text-secondary">Installed &middot; <span class="text-terminal-green">/path/to/repo/.git/hooks/post-commit</span></p>
+                                <p class="mt-2"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale hook uninstall</span></p>
+                                <p class="text-text-secondary">Removed.</p>
+                                <p class="mt-2"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale hook install</span></p>
+                                <p class="text-text-secondary">Installed.</p>
+                                <p class="mt-2 text-text-muted"># Operate on a different repo</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale hook install /path/to/other-repo</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">What the hook looks like</h3>
+                        <p class="text-text-secondary mb-4">
+                            Three lines. You can read it. It shells out to <code>worktale capture</code> with the repo path and exits 0 so it never blocks a commit.
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="p-4 space-y-1">
+                                <p class="text-text-muted">#!/bin/sh</p>
+                                <p class="text-text-muted"># Worktale auto-capture</p>
+                                <p class="text-text-primary">worktale capture "$PWD" &gt; /dev/null 2&gt;&amp;1 &amp;</p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            The <code>&amp;</code> backgrounds the capture so commits return instantly. If <code>worktale</code> is missing from <code>PATH</code>, the hook fails silently and your commit is unaffected.
+                        </p>
+                    </article>
+
+                    <article id="lesson-4-6" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 4.6</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Config deep-dive.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Every config key, what it does, and how to read/write config from the CLI or a file.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Config lives at <code>~/.worktale/config.json</code>. You can edit it directly or use the CLI:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config get</span> <span class="text-text-muted"># print entire config as JSON</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config get ai.model</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config set nudgeTime "18:30"</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale config unset ai.model</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Every key</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
+                            <table class="w-full text-xs font-mono">
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">nudgeTime</td><td class="py-2 px-3 text-text-secondary">"17:00" HH:MM for end-of-day nudge</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">timezone</td><td class="py-2 px-3 text-text-secondary">"auto" or IANA tz like "America/New_York"</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">ai.provider</td><td class="py-2 px-3 text-text-secondary">"template" (default) or "ollama"</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">ai.model</td><td class="py-2 px-3 text-text-secondary">Ollama model name, e.g. "llama3.2"</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">ai.ollamaUrl</td><td class="py-2 px-3 text-text-secondary">Ollama base URL (default http://localhost:11434)</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">git.userEmail</td><td class="py-2 px-3 text-text-secondary">Your git email (usually auto-detected)</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">git.userEmailOverride</td><td class="py-2 px-3 text-text-secondary">Only count commits from this email</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">showCaptureConfirmation</td><td class="py-2 px-3 text-text-secondary">Print a "&#10003; captured" line after git hook fires</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">cloudEnabled</td><td class="py-2 px-3 text-text-secondary">Managed by cloud login/logout commands</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">cloudApiUrl</td><td class="py-2 px-3 text-text-secondary">Override for self-hosted cloud backend</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-3 text-terminal-green">appearance.theme</td><td class="py-2 px-3 text-text-secondary">Desktop app theme: "dark" or "light"</td></tr>
+                                <tr><td class="py-2 px-3 text-terminal-green">appearance.fontScale</td><td class="py-2 px-3 text-text-secondary">Desktop app font scale: 0.9 / 1 / 1.15 / 1.3</td></tr>
+                            </table>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">Config is versioned automatically &mdash; backup created to <code>~/.worktale/config.json.bak</code> before any <code>set</code>/<code>unset</code>. If you ever break it, delete <code>config.json</code> and Worktale regenerates defaults on next run.</p>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/ai-sessions.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 03 AI Sessions</a>
+                        <a href="/desktop.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-neon-amber/10 border border-neon-amber/30 font-mono text-sm text-neon-amber hover:bg-neon-amber/20 hover:border-neon-amber/50 transition-all">
+                            <span>Course 05: Desktop</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

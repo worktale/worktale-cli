@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reference &mdash; Worktale University</title>
+    <meta name="description" content="Course 08: Every CLI command, flag, config key, keyboard shortcut, and file-system path in Worktale. Bookmark this page." />
+    <link rel="canonical" href="https://university.worktale.org/reference.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 08</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-surface-2 border border-border-dim font-mono text-[10px] text-text-secondary tracking-widest uppercase">Reference</span>
+                    <span class="font-mono text-xs text-text-muted">Bookmark this</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Reference.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Every command, every flag, every config key, every keyboard shortcut, every file path. Designed for quick lookup, not learning &mdash; if you're starting out, begin at <a href="/foundations.html" class="text-terminal-green hover:underline">Foundations</a>.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Sections</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#commands" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">Commands</a></li>
+                        <li><a href="#flags" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">Global flags</a></li>
+                        <li><a href="#config" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">Config keys</a></li>
+                        <li><a href="#shortcuts-tui" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">TUI shortcuts</a></li>
+                        <li><a href="#shortcuts-desktop" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">Desktop shortcuts</a></li>
+                        <li><a href="#paths" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">File paths</a></li>
+                        <li><a href="#schema" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 font-mono text-xs">Database schema</a></li>
+                    </ul>
+                </aside>
+
+                <div class="max-w-none">
+
+                    <article id="commands" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">Commands</h2>
+
+                        <div class="space-y-1">
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale</p>
+                                <p class="text-text-secondary text-sm mt-1">Alias for <code>worktale dash</code>. Opens the TUI dashboard.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale init</p>
+                                <p class="text-text-secondary text-sm mt-1">Import history of the current git repo, register it, install post-commit hook.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale dash</p>
+                                <p class="text-text-secondary text-sm mt-1">Open the interactive TUI (Overview / Daily Log / History / AI Sessions).</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale today</p>
+                                <p class="text-text-secondary text-sm mt-1">Quick summary of today (commits, lines, files, coding time).</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale status <span class="text-text-muted">[--all-repos]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">One-line status. <code>--all-repos</code> aggregates every tracked repo.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale log <span class="text-text-muted">[--days N] [--since DATE] [--until DATE] [-f json|csv|markdown]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Browse daily activity log. Format flags emit structured output.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale digest <span class="text-text-muted">[--date YYYY-MM-DD] [-f json|markdown]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Generate a digest for today (default) or a specific date.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale note <span class="text-text-muted">"&lt;text&gt;"</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Append a note to today's <code>user_notes</code>. Shows up in digest + Daily Log.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale publish <span class="text-text-muted">[--date YYYY-MM-DD]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Publish a saved digest to Worktale Cloud. Requires login.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale standup <span class="text-text-muted">[--days N] [--format slack|markdown|email|html] [--all-repos]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Generate an AI-written recap post.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale repos <span class="text-text-muted">[list | rename &lt;name&gt; &lt;new&gt; | move &lt;name&gt; &lt;path&gt; | remove &lt;name&gt;]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Manage tracked repos.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale batch <span class="text-text-muted">&lt;dir&gt; [--since N[mdy]] [--auto] [--annotate] [--install-hooks] [--exclude &lt;regex&gt;]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Recursively find and import every git repo under <code>&lt;dir&gt;</code>.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale hook <span class="text-text-muted">&lt;install|uninstall|status&gt; [&lt;repo-path&gt;]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Manage the post-commit hook in a repo.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale nudge <span class="text-text-muted">&lt;--install|--uninstall|--check&gt;</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Shell-profile reminder at end of day.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale session <span class="text-text-muted">&lt;add|list|stats&gt; [flags]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">AI session management. <code>add</code> inserts; <code>list</code> and <code>stats</code> support <code>--format</code>.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale config <span class="text-text-muted">&lt;get|set|unset&gt; [key] [value]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Read/write config values.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale cloud <span class="text-text-muted">&lt;login|logout|status|profile&gt;</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Cloud login and identity.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale export <span class="text-text-muted">[--format json|csv] [--dir &lt;path&gt;]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Dump the full database to JSON or CSV files.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale diagnose</p>
+                                <p class="text-text-secondary text-sm mt-1">Print version, OS, config (redacted), DB info. Paste into bug reports.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale capture <span class="text-text-muted">&lt;repo-path&gt;</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Internal: called by git post-commit hook. You don't run this directly.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale --version</p>
+                                <p class="text-text-secondary text-sm mt-1">Print CLI version.</p>
+                            </div>
+                            <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm">worktale --help <span class="text-text-muted">[command]</span></p>
+                                <p class="text-text-secondary text-sm mt-1">Show help; pass a command for command-specific help.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="flags" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">Global flags</h2>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <thead class="bg-surface-2"><tr><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">FLAG</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">MEANING</th></tr></thead>
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green">-f, --format</td><td class="py-2 px-4 text-text-secondary">Output format (log/digest/session): json, csv, markdown</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">--days N</td><td class="py-2 px-4 text-text-secondary">Lookback window in days</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">--since &lt;d&gt;</td><td class="py-2 px-4 text-text-secondary">Start date: ISO or Ndays/Nweeks/Nmonths (e.g. 3m)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">--until &lt;d&gt;</td><td class="py-2 px-4 text-text-secondary">End date (inclusive)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">--date &lt;d&gt;</td><td class="py-2 px-4 text-text-secondary">Specific date for single-day commands</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">--all-repos</td><td class="py-2 px-4 text-text-secondary">Aggregate across every tracked repo</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">-h, --help</td><td class="py-2 px-4 text-text-secondary">Show help and exit</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">-v, --version</td><td class="py-2 px-4 text-text-secondary">Print version and exit</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article id="config" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">Config keys</h2>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <thead class="bg-surface-2"><tr><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">KEY</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">TYPE</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">DEFAULT / NOTES</th></tr></thead>
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green">nudgeTime</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"17:00" HH:MM</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">timezone</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"auto" or IANA tz</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">ai.provider</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"template" or "ollama"</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">ai.model</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">Ollama model name</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">ai.ollamaUrl</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">http://localhost:11434</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">git.userEmail</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">auto-detect</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">git.userEmailOverride</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">filter imports by author email</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">showCaptureConfirmation</td><td class="py-2 px-4 text-text-secondary">bool</td><td class="py-2 px-4 text-text-secondary">false</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">cloudEnabled</td><td class="py-2 px-4 text-text-secondary">bool</td><td class="py-2 px-4 text-text-secondary">managed by login/logout</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">cloudToken</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">bearer token</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">cloudApiUrl</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">self-host override</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">appearance.theme</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"dark" or "light" (desktop)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">appearance.fontScale</td><td class="py-2 px-4 text-text-secondary">number</td><td class="py-2 px-4 text-text-secondary">0.9 / 1.0 / 1.15 / 1.3 (desktop)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article id="shortcuts-tui" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">TUI keyboard shortcuts</h2>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green w-32">1 / 2 / 3 / 4</td><td class="py-2 px-4 text-text-secondary">Overview / Daily Log / History / AI Sessions</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Tab</td><td class="py-2 px-4 text-text-secondary">Cycle tabs forward</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">d / D</td><td class="py-2 px-4 text-text-secondary">Generate digest and exit</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">p / P</td><td class="py-2 px-4 text-text-secondary">Publish today and exit</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">e</td><td class="py-2 px-4 text-text-secondary">Edit notes (Daily Log)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">&larr; &rarr;</td><td class="py-2 px-4 text-text-secondary">Prev/next day (Daily Log)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">q</td><td class="py-2 px-4 text-text-secondary">Quit</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article id="shortcuts-desktop" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">Desktop keyboard shortcuts</h2>
+                        <p class="text-text-secondary text-sm mb-4">On macOS, use <code>Cmd</code> instead of <code>Ctrl</code>.</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green w-40">Ctrl+K</td><td class="py-2 px-4 text-text-secondary">Command palette</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+1&hellip;8</td><td class="py-2 px-4 text-text-secondary">Switch view (1=Overview ... 8=Settings)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+N</td><td class="py-2 px-4 text-text-secondary">New note</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+D</td><td class="py-2 px-4 text-text-secondary">Generate today's digest</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+S</td><td class="py-2 px-4 text-text-secondary">Save draft (Digest view)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+Shift+P</td><td class="py-2 px-4 text-text-secondary">Publish current digest</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+R</td><td class="py-2 px-4 text-text-secondary">Refresh from DB</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Ctrl+B</td><td class="py-2 px-4 text-text-secondary">Toggle sidebar</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">&larr; &rarr;</td><td class="py-2 px-4 text-text-secondary">Prev/next day (Daily Log)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">Esc</td><td class="py-2 px-4 text-text-secondary">Close dialog</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article id="paths" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">File paths</h2>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green w-56">~/.worktale/</td><td class="py-2 px-4 text-text-secondary">Worktale home directory</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.worktale/data.db</td><td class="py-2 px-4 text-text-secondary">Main SQLite database</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.worktale/config.json</td><td class="py-2 px-4 text-text-secondary">Global config</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.worktale/config.json.bak</td><td class="py-2 px-4 text-text-secondary">Last config backup (auto-created)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">&lt;repo&gt;/.git/hooks/post-commit</td><td class="py-2 px-4 text-text-secondary">Per-repo Worktale hook</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.claude/projects/...</td><td class="py-2 px-4 text-text-secondary">Claude Code transcripts (plugin source)</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.codex/sessions/YYYY/MM/DD/</td><td class="py-2 px-4 text-text-secondary">Codex rollout JSONLs</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">~/.copilot/session-state/&lt;id&gt;/</td><td class="py-2 px-4 text-text-secondary">Copilot CLI events</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <article id="schema" class="scroll-mt-24 mb-16">
+                        <h2 class="text-3xl font-bold mb-6">Database schema</h2>
+                        <p class="text-text-secondary text-sm mb-4">Every row is local. Nothing here is transmitted unless you explicitly publish.</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden">
+                            <table class="w-full text-sm font-mono">
+                                <thead class="bg-surface-2"><tr><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">TABLE</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">PURPOSE</th></tr></thead>
+                                <tbody class="divide-y divide-border-dim">
+                                    <tr><td class="py-2 px-4 text-terminal-green">repos</td><td class="py-2 px-4 text-text-secondary">Every tracked repo: path, name, first_seen, last_synced</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">commits</td><td class="py-2 px-4 text-text-secondary">One row per commit: sha, msg, author, timestamp, stats, branch, tags</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">daily_summaries</td><td class="py-2 px-4 text-text-secondary">One per (repo, date): counts, notes, ai_draft, published flag</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">file_activity</td><td class="py-2 px-4 text-text-secondary">Per (repo, path, date): change counts for module aggregation</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">ai_sessions</td><td class="py-2 px-4 text-text-secondary">One per AI session: provider, model, tool, cost, tokens, tools_used</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/mastery.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 07 Mastery</a>
+                        <a href="/" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">back to curriculum &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Sessions &mdash; Worktale University</title>
+    <meta name="description" content="Course 03: The four-agent capture model. Plugins for Claude Code, Codex, OpenCode, and Copilot. Manual session add. Reading AI cost and token stats." />
+    <link rel="canonical" href="https://university.worktale.org/ai-sessions.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-cyber-cyan/20 selection:text-cyber-cyan">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 03</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-[10px] text-cyber-cyan tracking-widest uppercase">Intermediate</span>
+                    <span class="font-mono text-xs text-text-muted">7 lessons &middot; ~60 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">AI Sessions.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    The most differentiated feature of Worktale. Every AI coding session &mdash; tokens, cost, model, tools, MCP servers &mdash; captured automatically across Claude Code, OpenAI Codex, OpenCode, and GitHub Copilot. One dashboard for all four.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-3-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.1 &middot; Capture model</a></li>
+                        <li><a href="#lesson-3-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.2 &middot; Claude Code</a></li>
+                        <li><a href="#lesson-3-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.3 &middot; Codex</a></li>
+                        <li><a href="#lesson-3-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.4 &middot; OpenCode</a></li>
+                        <li><a href="#lesson-3-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.5 &middot; Copilot</a></li>
+                        <li><a href="#lesson-3-6" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.6 &middot; Manual add</a></li>
+                        <li><a href="#lesson-3-7" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-cyber-cyan hover:bg-cyber-cyan/5 font-mono text-xs">3.7 &middot; Reading stats</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/advanced-cli.html" class="block font-mono text-xs text-neon-amber hover:underline">04 Advanced CLI &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-3-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">The four-agent capture model.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">What an AI session is in Worktale's data model, what fields are captured, and how the four supported agents feed into the same local table.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Every AI coding session gets one row in the <code>ai_sessions</code> table. The shape is the same regardless of which agent produced it:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-6">
+                            <table class="w-full text-sm font-mono">
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">repo_id</td><td class="py-2 px-4 text-text-secondary">which project the session ran in</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">date</td><td class="py-2 px-4 text-text-secondary">YYYY-MM-DD (local)</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">provider</td><td class="py-2 px-4 text-text-secondary">anthropic / openai / github / ...</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">model</td><td class="py-2 px-4 text-text-secondary">claude-opus-4-7 / gpt-5 / ...</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">tool</td><td class="py-2 px-4 text-text-secondary">claude-code / codex / opencode / copilot</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">cost_usd</td><td class="py-2 px-4 text-text-secondary">computed from tokens &times; model price</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">input_tokens</td><td class="py-2 px-4 text-text-secondary">prompt + cached + system</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">output_tokens</td><td class="py-2 px-4 text-text-secondary">completion tokens</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">tools_used</td><td class="py-2 px-4 text-text-secondary">JSON array: [Read, Edit, Bash, Grep]</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">mcp_servers</td><td class="py-2 px-4 text-text-secondary">JSON array: [github, claude-mem]</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">duration_secs</td><td class="py-2 px-4 text-text-secondary">wall-clock session time</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">commits</td><td class="py-2 px-4 text-text-secondary">JSON array of git shas made during session</td></tr>
+                                <tr><td class="py-2 px-4 text-terminal-green">note</td><td class="py-2 px-4 text-text-secondary">free-form narrative from the agent</td></tr>
+                            </table>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">How each agent fills this in</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li><strong class="text-text-primary">Claude Code</strong> &mdash; the Worktale plugin's SessionEnd hook parses the live transcript JSONL and extracts every field above, automatically.</li>
+                            <li><strong class="text-text-primary">OpenAI Codex</strong> &mdash; plugin watches <code>~/.codex/sessions/YYYY/MM/DD/*.jsonl</code> rollout files, extracts on session end.</li>
+                            <li><strong class="text-text-primary">OpenCode</strong> &mdash; native plugin via <code>@opencode-ai/plugin</code> event hooks.</li>
+                            <li><strong class="text-text-primary">GitHub Copilot</strong> &mdash; plugin reads <code>~/.copilot/session-state/&lt;sessionId&gt;/events.jsonl</code>.</li>
+                        </ul>
+                        <p class="text-text-secondary mb-4">
+                            The agents <em>never</em> have to know about Worktale. The capture happens from files the agents already write to disk. No agent cooperation, no API keys, no telemetry.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">&ldquo;Session&rdquo; here means &ldquo;one agent conversation&rdquo;, not &ldquo;one command&rdquo;. A 90-minute refactor with Claude Code = one session, one row, full token &amp; cost total. The agent decides when a session ends; Worktale just captures what the agent already wrote to disk.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-3-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Claude Code plugin.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Install the Worktale plugin for Claude Code so every session's cost, tokens, tools, and MCP servers are captured automatically.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Install</h3>
+                        <p class="text-text-secondary mb-4">From inside Claude Code:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin marketplace add worktale/worktale-plugin</span></p>
+                                <p class="text-text-muted">Added marketplace: worktale</p>
+                                <p><span class="text-cyber-cyan/60">&gt;</span> <span class="text-cyber-cyan">/plugin install worktale-plugin@worktale-plugin</span></p>
+                                <p class="text-text-muted">Installed worktale-plugin v1.4.x</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it does</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li>Registers a <code>SessionEnd</code> hook with Claude Code.</li>
+                            <li>When the session ends, parses the session transcript JSONL (which Claude Code writes to disk for every session).</li>
+                            <li>Extracts model name, tokens (input/output/cache), final cost in USD, tools used, MCP servers invoked, and the full duration.</li>
+                            <li>Calls <code>worktale session add ...</code> with the extracted fields, which inserts one row into the <code>ai_sessions</code> table.</li>
+                            <li>Also calls <code>worktale note "..."</code> at natural commit boundaries so your Daily Log gets per-commit narrative context.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Verify it's working</h3>
+                        <p class="text-text-secondary mb-4">Run a short Claude Code session (anything &mdash; ask it a question, let it edit a file), then exit. Then:</p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session stats --days 1</span></p>
+                                <p class="text-neon-amber mt-2">&#9889; AI Usage &mdash; today</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Sessions: <span class="text-text-primary">1</span> &middot; Cost: <span class="text-neon-amber">$0.31</span> &middot; Tokens: <span class="text-text-primary">58k in / 1.3k out</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Model: <span class="text-terminal-green">claude-opus-4-7</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Tools: Read, Edit, Bash, Grep</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-8">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">The plugin captures on <strong class="text-text-primary">session end</strong>, not periodically. If Claude Code crashes or you force-kill it, the session may not be recorded. The partial transcript is still on disk; you can run <code>worktale session add --from-claude-transcript /path/to/transcript.jsonl</code> to import it manually. We cover this in Mastery (Lesson 7.7).</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-3-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Codex plugin.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Install the Worktale Codex plugin so OpenAI Codex sessions are captured from their rollout JSONL files.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Codex writes a rollout JSONL per session at <code>~/.codex/sessions/YYYY/MM/DD/&lt;session-id&gt;.jsonl</code>. The Worktale Codex plugin watches this directory and imports every rollout when it finishes.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale-codex-plugin</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale-codex init</span></p>
+                                <p class="text-text-muted">Watching ~/.codex/sessions/</p>
+                                <p class="text-terminal-green">&#10003; Background watcher started.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What gets captured</h3>
+                        <p class="text-text-secondary mb-4">Same table, same shape. The rollout files contain token counts, model used, tools called (via the Codex tool-use events), and the full session duration. The plugin parses the JSONL line-by-line, aggregates, and writes one row per session.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Backfill existing sessions</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p class="text-text-muted"># Import every historical Codex session from disk</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale-codex import --since 2026-01-01</span></p>
+                                <p class="text-text-muted">Imported 42 sessions (total cost: $18.40).</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="lesson-3-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">OpenCode plugin.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Use OpenCode's native plugin framework to capture session data into Worktale.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            OpenCode has a first-class plugin API. Worktale's OpenCode plugin registers event hooks (<code>onSessionStart</code>, <code>onSessionEnd</code>, <code>onToolCall</code>) and emits one <code>ai_session</code> row at session end.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">opencode plugin install worktale-opencode-plugin</span></p>
+                                <p class="text-terminal-green">&#10003; Plugin registered.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What's different from Claude/Codex</h3>
+                        <p class="text-text-secondary mb-4">
+                            Because OpenCode exposes structured events, this plugin gets <em>more</em> real-time data: tool calls are captured as they happen, token usage is streamed, and if a session crashes mid-flight, whatever fired before the crash is still recorded.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            For Claude Code and Codex the capture is end-of-session only; for OpenCode it's progressive. The <code>ai_sessions</code> row still lands at session end, but with higher fidelity.
+                        </p>
+                    </article>
+
+                    <article id="lesson-3-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Copilot plugin.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Capture GitHub Copilot CLI sessions by tailing the events JSONL file Copilot already writes.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Copilot CLI writes per-session state to <code>~/.copilot/session-state/&lt;sessionId&gt;/events.jsonl</code>. That file contains token usage and model identity events. The Worktale Copilot plugin tails these files and imports at session end.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale-copilot-plugin</span></p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale-copilot init</span></p>
+                                <p class="text-terminal-green">&#10003; Watching ~/.copilot/session-state/</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">Copilot's event format is less rich than Claude's transcript. Tool-call granularity is lower, and MCP server info is not always present. We capture what's there and backfill the rest from commit history. Cost numbers are computed from token counts using the model's list price &mdash; if you're on an enterprise seat, your actual cost may differ.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-3-6" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.6</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Manual <code class="text-cyber-cyan">session add</code>.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to add a session manually &mdash; for agents without a plugin, for ad-hoc ChatGPT/Claude.ai work, or to fix a missed capture.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            <code>worktale session add</code> takes the same fields the plugins fill in, via CLI flags. Use it when:
+                        </p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li>You pasted code from Claude.ai / ChatGPT / other agent without a plugin.</li>
+                            <li>A plugin crashed mid-session and didn't record.</li>
+                            <li>You want to attribute an AI-assisted commit to the right provider for cost tracking.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Example</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session add \</span></p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--provider anthropic \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--model claude-opus-4-7 \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--tool claude-ai-web \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--cost 0.80 \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--input-tokens 12000 \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--output-tokens 2500 \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--duration 1800 \</p>
+                                <p class="text-text-primary">&nbsp;&nbsp;--note "pair-debugged the webhook issue with Claude on the web"</p>
+                                <p class="text-terminal-green mt-2">&#10003; Session added.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Minimum viable add</h3>
+                        <p class="text-text-secondary mb-4">
+                            Only <code>--provider</code> and <code>--tool</code> are required. Everything else defaults to null / zero. Use this for quick attribution even when you don't have exact numbers:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session add --provider openai --tool chatgpt-web --note "quick api design review"</span></p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="lesson-3-7" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">Lesson 3.7</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Reading AI stats.</h2>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mb-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Three ways to look at your AI data: <code>worktale session stats</code>, the TUI AI Sessions tab, and the desktop app.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">1. CLI: <code>worktale session stats</code></h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale session stats --days 30</span></p>
+                                <p class="text-neon-amber mt-2">&#9889; AI Usage &mdash; last 30 days</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Sessions: <span class="text-text-primary">147</span> &middot; Cost: <span class="text-neon-amber">$184.20</span> &middot; Tokens: <span class="text-text-primary">12.4M</span></p>
+                                <p class="text-text-secondary mt-2">By agent:</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;claude-code &nbsp; 78 sessions &nbsp; <span class="text-neon-amber">$94.30</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;codex &nbsp; &nbsp; &nbsp; 41 sessions &nbsp; <span class="text-neon-amber">$58.40</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;opencode &nbsp; &nbsp; 19 sessions &nbsp; <span class="text-neon-amber">$22.10</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;copilot &nbsp; &nbsp; &nbsp;9 sessions &nbsp; <span class="text-neon-amber">$9.40</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">
+                            Add <code>--format json</code> for scripting, <code>--format csv</code> for spreadsheets. Covered in Course 04 Lesson 4.1.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">2. TUI: AI Sessions tab</h3>
+                        <p class="text-text-secondary mb-4">Open <code>worktale</code>, press <code>4</code>. You get:</p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-cyber-cyan">
+                            <li>Four KPI totals (sessions, cost, tokens, active time) for the last 30 days.</li>
+                            <li>Cost/day and tokens/day sparklines with peak labels.</li>
+                            <li>Breakdowns for agents, models, providers, top tools, and MCP servers.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">3. Desktop: full charts</h3>
+                        <p class="text-text-secondary mb-4">
+                            The desktop app (Course 05) has an <strong class="text-text-primary">AI view</strong> with interactive charts, per-repo filtering, and model cost comparison. Same underlying data; better for exploration.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Cost attribution: per-project</h3>
+                        <p class="text-text-secondary mb-4">
+                            Every session has a <code>repo_id</code>. The plugins attribute to whichever repo the agent was running in when the session started. So your Claude Opus spend on <code>acme-portal</code> is cleanly separable from your side-project spend. This is the single most valuable stat for freelancers &mdash; it makes AI cost pass-through trivial (covered in Mastery 7.3).
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">The cost numbers are <strong class="text-text-primary">list price</strong> computations from token counts. They're accurate if you pay per-token (API). They're <em>indicative</em> if you're on a subscription (Pro / Team). For subscription users, the tokens/sessions/tools numbers are still exact; only the dollar figure is a model estimate.</p>
+                        </div>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/daily-practice.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 02 Daily Practice</a>
+                        <a href="/advanced-cli.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-neon-amber/10 border border-neon-amber/30 font-mono text-sm text-neon-amber hover:bg-neon-amber/20 hover:border-neon-amber/50 transition-all">
+                            <span>Course 04: Advanced CLI</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

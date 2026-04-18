@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worktale Cloud &mdash; Worktale University</title>
+    <meta name="description" content="Course 06: Login via device code, publish digests, set up your public profile at worktale.dev/{username}, generate AI standups, and understand the pricing tiers." />
+    <link rel="canonical" href="https://university.worktale.org/cloud.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-neon-amber/20 selection:text-neon-amber">
+    <%header%>
+
+    <main class="pt-20">
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 06</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-neon-amber/10 border border-neon-amber/30 font-mono text-[10px] text-neon-amber tracking-widest uppercase">Advanced</span>
+                    <span class="font-mono text-xs text-text-muted">6 lessons &middot; ~50 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Worktale Cloud.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Everything in the first five courses works offline forever. Cloud is the opt-in layer: a public profile, cross-device sync, AI-written weekly summaries, and shareable digests.
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-6-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.1 &middot; Why cloud</a></li>
+                        <li><a href="#lesson-6-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.2 &middot; Device-code login</a></li>
+                        <li><a href="#lesson-6-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.3 &middot; Publishing digests</a></li>
+                        <li><a href="#lesson-6-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.4 &middot; Public profile</a></li>
+                        <li><a href="#lesson-6-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.5 &middot; AI standups</a></li>
+                        <li><a href="#lesson-6-6" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-neon-amber hover:bg-neon-amber/5 font-mono text-xs">6.6 &middot; Tiers</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/mastery.html" class="block font-mono text-xs text-cyber-blue hover:underline">07 Mastery &rarr;</a>
+                    </div>
+                </aside>
+
+                <div class="lesson-prose max-w-none">
+
+                    <article id="lesson-6-1" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.1</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">What cloud adds.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Exactly what the cloud does and doesn't do, so you can decide if it's worth opting in.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                            <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03]">
+                                <h3 class="font-bold text-text-primary mb-2">Cloud DOES</h3>
+                                <ul class="space-y-1 text-text-secondary text-sm list-disc pl-5 marker:text-terminal-green">
+                                    <li>Host your public profile at <code>worktale.dev/{username}</code></li>
+                                    <li>Store digests <em>you explicitly publish</em></li>
+                                    <li>Generate AI-written weekly standups</li>
+                                    <li>Aggregate published digests across all your repos</li>
+                                    <li>Sync that public view between devices</li>
+                                </ul>
+                            </div>
+                            <div class="p-5 rounded-xl border border-negative/20 bg-red-500/[0.03]">
+                                <h3 class="font-bold text-text-primary mb-2">Cloud does NOT</h3>
+                                <ul class="space-y-1 text-text-secondary text-sm list-disc pl-5 marker:text-red-400">
+                                    <li>Sync your private daily log</li>
+                                    <li>Read commit diffs or source code</li>
+                                    <li>Back up your local <code>data.db</code></li>
+                                    <li>Share AI session cost unless you publish it</li>
+                                    <li>Send any data before you log in</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            The cloud is designed as a <strong class="text-text-primary">publishing layer</strong>, not a sync layer. Your source of truth stays local. The cloud only knows what you tell it to publish.
+                        </p>
+                    </article>
+
+                    <article id="lesson-6-2" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.2</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Device-code login.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Link your CLI to a Worktale Cloud account without ever typing a password into the terminal.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Worktale Cloud uses OAuth-style device-code flow. You run one command, get a short code, paste it into a browser window that's already logged in.
+                        </p>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale cloud login</span></p>
+                                <p class="text-neon-amber mt-2">&#9889; Visit: https://worktale.dev/device</p>
+                                <p class="text-text-primary">&#9889; Your code: <span class="text-terminal-green font-bold">H4NK-9QXT</span></p>
+                                <p class="text-text-muted mt-1">Polling... press Ctrl+C to cancel.</p>
+                                <p class="text-terminal-green mt-3">&#10003; Logged in as @yourusername</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">Where the token is stored</h3>
+                        <p class="text-text-secondary mb-4">
+                            The bearer token lands in <code>~/.worktale/config.json</code> under <code>cloudToken</code>. It's a long-lived token scoped to publish-and-profile actions for your account. Logging out on the CLI (<code>worktale cloud logout</code>) clears it locally; revoking on the web revokes it everywhere.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Desktop app login</h3>
+                        <p class="text-text-secondary mb-4">
+                            In the desktop app, press <code>Ctrl+6</code> to open Cloud view, click <em>Login</em>, and a browser window opens automatically with the code already passed along.
+                        </p>
+                    </article>
+
+                    <article id="lesson-6-3" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.3</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Publishing digests.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Send a saved digest to your public profile. Unpublish or edit later.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">CLI</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-2 leading-relaxed">
+                                <p class="text-text-muted"># Publish today's digest</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale publish</span></p>
+                                <p class="text-text-muted mt-2"># Publish a specific date</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale publish --date 2026-04-15</span></p>
+                                <p class="text-text-muted mt-2"># Generate and publish in one step</p>
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest &amp;&amp; worktale publish</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">From the TUI</h3>
+                        <p class="text-text-secondary mb-4">Open <code>worktale</code>, press <code>p</code>. Confirms and publishes.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-6 mb-3">From the desktop app</h3>
+                        <p class="text-text-secondary mb-4">Digest view &rarr; <em>Publish</em> button, or <code>Ctrl+Shift+P</code>.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What gets sent</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>The digest body (markdown)</li>
+                            <li>Date, commit count, lines added/removed, files touched</li>
+                            <li>Top modules (folder names; no file names)</li>
+                            <li>AI session aggregates for that day (session count, total cost, total tokens, top tools &mdash; no individual transcripts)</li>
+                            <li>Repo slug (public-safe name; defaults to repo name, configurable)</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What's NOT sent</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-red-400">
+                            <li>Individual commit messages (only counts and aggregates)</li>
+                            <li>Notes (they stay local unless pasted into the digest)</li>
+                            <li>Absolute file paths</li>
+                            <li>The repo's actual git history</li>
+                        </ul>
+                    </article>
+
+                    <article id="lesson-6-4" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.4</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Your public profile.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">What visitors see at <code>worktale.dev/{username}</code> and how to customize it.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Your profile is one URL you can share with clients, hiring managers, or your own future self. It shows:</p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>Your display name, bio, avatar, and optional links (GitHub / Twitter / website)</li>
+                            <li>Streaks and all-time stats from published digests</li>
+                            <li>AI session aggregates (last 90 days) &mdash; models used, total cost, top tools</li>
+                            <li>A reverse-chronological timeline of your published digests</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Privacy toggles per digest</h3>
+                        <p class="text-text-secondary mb-4">
+                            Every digest has its own public/private toggle. From the desktop app or the web UI, you can:
+                        </p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>Publish publicly (appears on your profile)</li>
+                            <li>Publish privately (syncs across your devices but isn't on the public profile)</li>
+                            <li>Unpublish entirely (removes from cloud, keeps local)</li>
+                        </ul>
+                    </article>
+
+                    <article id="lesson-6-5" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.5</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">AI-written standups.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">Generate weekly summary posts from your published digests, formatted for Slack, Markdown, or email.</p>
+                        </div>
+
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-4 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale standup --days 7 --format slack</span></p>
+                                <p class="text-text-secondary mt-2">*Week of Apr 11 &mdash; 17*</p>
+                                <p class="text-text-secondary">Shipped the Stripe checkout flow (acme-portal), fixed 2 webhook race conditions, refactored payment handler. 23 commits, +2,804 / -891. AI assist: $6.12 on Claude Opus.</p>
+                                <p class="text-text-secondary mt-2">_Next_: rate-limit rollout + retention dashboard.</p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">Formats: <code>slack</code>, <code>markdown</code>, <code>email</code>, <code>html</code>. The content comes from your published digests; the AI step summarizes them into a single post.</p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Use cases</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-neon-amber">
+                            <li>Friday recap to your retainer client</li>
+                            <li>Monday standup in Slack</li>
+                            <li>Quarterly self-review email to your manager</li>
+                            <li>Annual "what I shipped" summary for your own records</li>
+                        </ul>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-6">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">AI standup generation runs on the cloud side (not your local Ollama). Data sent to the standup endpoint = only the published digests you already made public. No local notes, no unpublished drafts.</p>
+                        </div>
+                    </article>
+
+                    <article id="lesson-6-6" class="scroll-mt-24 mb-20">
+                        <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">Lesson 6.6</p>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Pricing tiers.</h2>
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mb-6">
+                            <p class="font-mono text-xs text-neon-amber mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">What's free, what's paid, and what unlocks at each tier.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-xs text-text-muted mb-1">TIER 1</p>
+                                <h3 class="font-bold text-text-primary mb-2">Free</h3>
+                                <p class="text-terminal-green font-mono text-sm mb-3">$0 / forever</p>
+                                <ul class="space-y-1 text-text-secondary text-xs list-disc pl-4 marker:text-terminal-green">
+                                    <li>CLI + desktop: everything</li>
+                                    <li>Public profile at <code>worktale.dev/{user}</code></li>
+                                    <li>Up to 30 published digests</li>
+                                    <li>Community support</li>
+                                </ul>
+                            </div>
+                            <div class="p-5 rounded-xl border border-neon-amber/30 bg-neon-amber/[0.05]">
+                                <p class="font-mono text-xs text-neon-amber mb-1">TIER 2 &middot; POPULAR</p>
+                                <h3 class="font-bold text-text-primary mb-2">Pro</h3>
+                                <p class="text-neon-amber font-mono text-sm mb-3">$9 / month &middot; $99 / year</p>
+                                <ul class="space-y-1 text-text-secondary text-xs list-disc pl-4 marker:text-neon-amber">
+                                    <li>Everything in Free</li>
+                                    <li>Unlimited published digests</li>
+                                    <li>AI weekly standups (Slack/MD/email)</li>
+                                    <li>Multi-device sync of profile data</li>
+                                    <li>Private digest publishing</li>
+                                </ul>
+                            </div>
+                            <div class="p-5 rounded-xl border border-cyber-blue/30 bg-cyber-blue/[0.05]">
+                                <p class="font-mono text-xs text-cyber-blue mb-1">TIER 3</p>
+                                <h3 class="font-bold text-text-primary mb-2">Lifetime</h3>
+                                <p class="text-cyber-blue font-mono text-sm mb-3">$249 &middot; once</p>
+                                <ul class="space-y-1 text-text-secondary text-xs list-disc pl-4 marker:text-cyber-blue">
+                                    <li>Everything in Pro, forever</li>
+                                    <li>Early access to new features</li>
+                                    <li>Founder's Discord</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            <strong class="text-text-primary">Remember:</strong> the CLI is free forever. The desktop app is free forever. Worktale Cloud Free is generous enough for most users. Pro exists for anyone who publishes daily and wants the AI-standup automation.
+                        </p>
+                    </article>
+
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/desktop.html" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; 05 Desktop</a>
+                        <a href="/mastery.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyber-blue/10 border border-cyber-blue/30 font-mono text-sm text-cyber-blue hover:bg-cyber-blue/20 hover:border-cyber-blue/50 transition-all">
+                            <span>Course 07: Mastery</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

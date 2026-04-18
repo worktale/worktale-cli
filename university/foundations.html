@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundations &mdash; Worktale University</title>
+    <meta name="description" content="Course 01: Install Worktale, initialize a repo, tour the TUI dashboard, and write your first digest. Everything you need to be productive in 30 minutes." />
+    <link rel="canonical" href="https://university.worktale.org/foundations.html" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+    <%header%>
+
+    <main class="pt-20">
+        <!-- Breadcrumb + Hero -->
+        <section class="py-12 md:py-16 border-b border-border-dim">
+            <div class="mx-auto max-w-5xl px-6">
+                <p class="font-mono text-xs text-text-muted mb-4">
+                    <a href="/" class="hover:text-terminal-green">university</a>
+                    <span class="mx-2">/</span>
+                    <span class="text-text-secondary">course 01</span>
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="px-3 py-1 rounded-full bg-terminal-green/10 border border-terminal-green/30 font-mono text-[10px] text-terminal-green tracking-widest uppercase">Beginner</span>
+                    <span class="font-mono text-xs text-text-muted">5 lessons &middot; ~30 min</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-4">Foundations.</h1>
+                <p class="text-lg text-text-secondary max-w-2xl leading-relaxed">
+                    Install the CLI, initialize your first repo, tour the TUI dashboard, and write your first digest.
+                    By the end of this course you'll have Worktale tracking a real project and producing a shareable end-of-day summary.
+                </p>
+            </div>
+        </section>
+
+        <!-- Two-column: sticky TOC + content -->
+        <section class="py-12 md:py-16">
+            <div class="mx-auto max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+                <!-- Sticky lesson nav -->
+                <aside class="lg:sticky lg:top-24 self-start">
+                    <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">Lessons</p>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#lesson-1-1" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 transition-colors font-mono text-xs">1.1 &middot; Why Worktale</a></li>
+                        <li><a href="#lesson-1-2" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 transition-colors font-mono text-xs">1.2 &middot; Install the CLI</a></li>
+                        <li><a href="#lesson-1-3" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 transition-colors font-mono text-xs">1.3 &middot; worktale init</a></li>
+                        <li><a href="#lesson-1-4" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 transition-colors font-mono text-xs">1.4 &middot; TUI tour</a></li>
+                        <li><a href="#lesson-1-5" class="block px-3 py-2 rounded-lg text-text-secondary hover:text-terminal-green hover:bg-terminal-green/5 transition-colors font-mono text-xs">1.5 &middot; First digest</a></li>
+                    </ul>
+                    <div class="mt-8 p-4 rounded-lg border border-border-dim bg-surface-1/50">
+                        <p class="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-2">Next course</p>
+                        <a href="/daily-practice.html" class="block font-mono text-xs text-cyber-cyan hover:underline">02 Daily Practice &rarr;</a>
+                    </div>
+                </aside>
+
+                <!-- Lesson content -->
+                <div class="lesson-prose max-w-none">
+
+                    <!-- LESSON 1.1 -->
+                    <article id="lesson-1-1" class="scroll-mt-24 mb-20">
+                        <div class="mb-6">
+                            <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-2">Lesson 1.1</p>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Why Worktale exists.</h2>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03] mb-6">
+                            <p class="font-mono text-xs text-terminal-green mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">The problem Worktale solves, so the rest of the course makes sense. No setup yet &mdash; just the shape of the thing.</p>
+                        </div>
+
+                        <p class="text-text-secondary mb-4">
+                            Most serious software gets built inside private repos. Under NDAs. Behind firewalls. At clients. At employers.
+                            When the engagement ends or you move on, the record doesn't come with you &mdash; and six months later you can't
+                            reconstruct what you shipped.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            The same thing is happening with your AI spend. You're burning real money on Claude, GPT, and Copilot,
+                            split across four different agents and however many projects, and the only record is your monthly invoice.
+                        </p>
+                        <p class="text-text-primary font-medium mb-6">
+                            Worktale is a personal, local-first record of what you built, what it cost, and why. It stays on your machine and moves with you when you change jobs.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it actually is</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li>A CLI tool you install once with <code>npm install -g worktale</code></li>
+                            <li>A local SQLite database at <code>~/.worktale/data.db</code> that only <em>you</em> can read</li>
+                            <li>Silent git hooks that snapshot every commit's metadata (never contents)</li>
+                            <li>A TUI dashboard (<code>worktale</code>) and an optional desktop app</li>
+                            <li>An opt-in cloud profile at <code>worktale.dev/{username}</code> you control</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it is <em>not</em></h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li><strong class="text-text-primary">Not a surveillance tool.</strong> It has no team view. No manager can see your data.</li>
+                            <li><strong class="text-text-primary">Not a time tracker.</strong> It doesn't watch keystrokes or track mouse movement.</li>
+                            <li><strong class="text-text-primary">Not SaaS.</strong> Everything runs locally. The cloud is optional and opt-in.</li>
+                            <li><strong class="text-text-primary">Not reading your source.</strong> Only git metadata: commit hashes, messages, diff stats.</li>
+                        </ul>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">Your Worktale data lives at <code>~/.worktale/data.db</code> &mdash; outside any repo, on your own machine. If you lose access to a company's repos, your record of what you shipped stays with you. That's the whole point.</p>
+                        </div>
+                    </article>
+
+                    <!-- LESSON 1.2 -->
+                    <article id="lesson-1-2" class="scroll-mt-24 mb-20">
+                        <div class="mb-6">
+                            <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-2">Lesson 1.2</p>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Install the CLI.</h2>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03] mb-6">
+                            <p class="font-mono text-xs text-terminal-green mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to install Worktale globally via npm, verify it works, and what gets created on first run.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Prerequisites</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li>Node.js 18 or later (<code>node -v</code> to check)</li>
+                            <li>git installed and on your <code>PATH</code></li>
+                            <li>Any terminal: bash, zsh, PowerShell, Git Bash on Windows &mdash; all fine</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="px-4 py-2 border-b border-border-dim bg-surface-2 text-text-muted text-xs">~ &mdash; install worktale</div>
+                            <div class="p-5 space-y-2">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale</span></p>
+                                <p class="text-text-muted">added 142 packages in 3s</p>
+                                <p class="mt-3"><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale --version</span></p>
+                                <p class="text-terminal-green">1.4.3</p>
+                            </div>
+                        </div>
+
+                        <p class="text-text-secondary mb-6">
+                            That's it. No account. No API key. No first-run wizard. The tool is idle until you run a command.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Where did it install?</h3>
+                        <p class="text-text-secondary mb-4">
+                            A globally-installed npm package puts the <code>worktale</code> binary somewhere on your <code>PATH</code>:
+                        </p>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li>macOS / Linux: typically <code>/usr/local/bin/worktale</code> or <code>~/.nvm/versions/node/.../bin/worktale</code></li>
+                            <li>Windows: <code>%APPDATA%\npm\worktale.cmd</code></li>
+                        </ul>
+                        <p class="text-text-secondary mb-4">
+                            Worktale itself creates <strong class="text-text-primary">nothing</strong> until you run <code>worktale init</code>.
+                            The database at <code>~/.worktale/data.db</code> does not exist until your first repo is tracked.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Updating later</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="p-5">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">npm install -g worktale@latest</span></p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary mb-4">
+                            Your data is preserved across updates. The database schema is migrated in-place on first launch of the new version.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-8">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If you see <code>EACCES permission denied</code> on macOS or Linux, your npm global prefix is in a root-owned directory. Rather than <code>sudo npm install</code>, fix the prefix: <code>npm config set prefix ~/.npm-global</code> and add <code>~/.npm-global/bin</code> to your <code>PATH</code>. Cleaner and safer.</p>
+                        </div>
+                    </article>
+
+                    <!-- LESSON 1.3 -->
+                    <article id="lesson-1-3" class="scroll-mt-24 mb-20">
+                        <div class="mb-6">
+                            <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-2">Lesson 1.3</p>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Initialize a repo with <code class="text-terminal-green">worktale init</code>.</h2>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03] mb-6">
+                            <p class="font-mono text-xs text-terminal-green mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How <code>worktale init</code> imports your git history and installs the silent post-commit hook that captures future commits automatically.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Run it</h3>
+                        <p class="text-text-secondary mb-4">
+                            <code>cd</code> into any git repository you've been working on &mdash; even one with ten years of history &mdash; and run:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
+                            <div class="px-4 py-2 border-b border-border-dim bg-surface-2 text-text-muted text-xs">~/my-project &mdash; initialize</div>
+                            <div class="p-5 space-y-2">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale init</span></p>
+                                <p class="text-neon-amber mt-2">&#9889; Initializing Worktale for my-project...</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Scanning git history...</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Imported <span class="text-terminal-green">1,847 commits</span> across <span class="text-terminal-green">3 branches</span></p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Installed post-commit hook</p>
+                                <p class="text-text-secondary">&nbsp;&nbsp;Database at <span class="text-text-primary">~/.worktale/data.db</span></p>
+                                <p class="text-terminal-green mt-2">&#10003; Ready. Run <span class="text-text-primary">worktale</span> to open the dashboard.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What <code>init</code> actually did</h3>
+                        <ol class="space-y-3 text-text-secondary mb-6 list-decimal pl-6 marker:text-terminal-green">
+                            <li><strong class="text-text-primary">Registered the repo.</strong> Added a row to the <code>repos</code> table with the absolute path, name, and first-seen timestamp.</li>
+                            <li><strong class="text-text-primary">Imported git history.</strong> Ran <code>git log</code> under the hood, inserted one row per commit into the <code>commits</code> table with sha, author, message, timestamp, lines added/removed, files changed, branch, and any tags.</li>
+                            <li><strong class="text-text-primary">Built daily summaries.</strong> Grouped commits by day into the <code>daily_summaries</code> table so the TUI's Overview and History tabs load instantly.</li>
+                            <li><strong class="text-text-primary">Installed the hook.</strong> Dropped a <code>post-commit</code> hook into <code>.git/hooks/</code> that calls <code>worktale</code> silently after every commit. The hook is 3 lines; you can read it.</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What it didn't do</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li>It did <strong class="text-text-primary">not</strong> read any file contents. Only <code>git log</code> metadata.</li>
+                            <li>It did <strong class="text-text-primary">not</strong> make a network request.</li>
+                            <li>It did <strong class="text-text-primary">not</strong> modify any tracked files in your repo.</li>
+                            <li>It did <strong class="text-text-primary">not</strong> touch <code>.gitignore</code> or create any files your teammates would see.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">If you don't want hooks</h3>
+                        <p class="text-text-secondary mb-4">
+                            Prefer import-only? Use <code>worktale batch</code> instead of <code>init</code>. It imports your history exactly the same way but skips the hook step. You can add the hook later with <code>worktale hook install</code>, or remove it with <code>worktale hook uninstall</code>. Hooks are fully optional; the import is the core.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-8">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If the repo's git user email doesn't match yours, Worktale imports <em>every</em> committer's work. On shared repos, set your email filter: <code>worktale config set git.userEmailOverride "you@example.com"</code>. Future imports will only count commits authored by that email.</p>
+                        </div>
+                    </article>
+
+                    <!-- LESSON 1.4 -->
+                    <article id="lesson-1-4" class="scroll-mt-24 mb-20">
+                        <div class="mb-6">
+                            <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-2">Lesson 1.4</p>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Tour the TUI dashboard.</h2>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03] mb-6">
+                            <p class="font-mono text-xs text-terminal-green mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to open the dashboard, what each of the four tabs shows, and how to navigate with the keyboard.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Opening it</h3>
+                        <p class="text-text-secondary mb-4">
+                            From inside any initialized repo, just type:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-6 font-mono text-sm">
+                            <div class="p-4 space-y-2">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale</span> <span class="text-text-muted"># or: worktale dash</span></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">The four tabs</h3>
+                        <p class="text-text-secondary mb-4">Press <code>1</code>, <code>2</code>, <code>3</code>, or <code>4</code> to jump between tabs, or <code>Tab</code> to cycle.</p>
+
+                        <div class="space-y-4 mb-8">
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm mb-2">[1] Overview</p>
+                                <p class="text-text-secondary text-sm leading-relaxed">Today at a glance. Commits, lines added/removed, files touched. Weekly activity bar chart. Current + best streak. Last 5 commits with messages and timestamps.</p>
+                            </div>
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm mb-2">[2] Daily Log</p>
+                                <p class="text-text-secondary text-sm leading-relaxed">One day per screen. Arrow keys <code>&larr;</code> / <code>&rarr;</code> to move between days. Per-day stats, your notes (press <code>e</code> to edit), AI-session summaries, and the full commit list.</p>
+                            </div>
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm mb-2">[3] History</p>
+                                <p class="text-text-secondary text-sm leading-relaxed">The long view. GitHub-style 52-week heatmap, all-time stats, top modules (biggest folders by churn), and milestones (from git tags).</p>
+                            </div>
+                            <div class="p-5 rounded-xl border border-border-dim bg-surface-1/50">
+                                <p class="font-mono text-terminal-green text-sm mb-2">[4] AI Sessions</p>
+                                <p class="text-text-secondary text-sm leading-relaxed">Last 30 days of AI activity. KPIs (sessions, cost, tokens, active duration), cost/day and tokens/day sparklines, and breakdowns by agent, model, provider, and top tools.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Keyboard summary</h3>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-6">
+                            <table class="w-full text-sm font-mono">
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">1 2 3 4</td><td class="py-2 px-4 text-text-secondary">jump to tab</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">Tab</td><td class="py-2 px-4 text-text-secondary">cycle tab forward</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">d / D</td><td class="py-2 px-4 text-text-secondary">generate today's digest and exit</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">p / P</td><td class="py-2 px-4 text-text-secondary">publish today's digest to the cloud and exit</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">e</td><td class="py-2 px-4 text-text-secondary">edit notes (on Daily Log tab)</td></tr>
+                                <tr class="border-b border-border-dim"><td class="py-2 px-4 text-terminal-green">&larr; &rarr;</td><td class="py-2 px-4 text-text-secondary">previous / next day (on Daily Log tab)</td></tr>
+                                <tr><td class="py-2 px-4 text-terminal-green">q</td><td class="py-2 px-4 text-text-secondary">quit</td></tr>
+                            </table>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">The TUI is safe to leave running. It doesn't poll or fetch &mdash; it reads from SQLite on each tab change. Close your laptop, come back, data is still current. New commits made while the TUI is open require a restart to appear (this is intentional; we may add auto-refresh later).</p>
+                        </div>
+                    </article>
+
+                    <!-- LESSON 1.5 -->
+                    <article id="lesson-1-5" class="scroll-mt-24 mb-20">
+                        <div class="mb-6">
+                            <p class="font-mono text-xs text-terminal-green tracking-widest uppercase mb-2">Lesson 1.5</p>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">Write your first digest.</h2>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-terminal-green/20 bg-terminal-green/[0.03] mb-6">
+                            <p class="font-mono text-xs text-terminal-green mb-2">WHAT YOU'LL LEARN</p>
+                            <p class="text-text-secondary text-sm">How to run <code>worktale digest</code>, what the output looks like, and what to do with it.</p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mb-3">Run it</h3>
+                        <p class="text-text-secondary mb-4">
+                            From any initialized repo, at the end of your workday:
+                        </p>
+                        <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-xs">
+                            <div class="px-4 py-2 border-b border-border-dim bg-surface-2 text-text-muted">~/my-saas-project &mdash; end of day</div>
+                            <div class="p-5 space-y-1 leading-relaxed">
+                                <p><span class="text-terminal-green/60">$</span> <span class="text-text-primary">worktale digest</span></p>
+                                <p class="text-neon-amber mt-3">&#9889; WORKTALE DIGEST <span class="text-text-muted">&mdash; Friday, April 17, 2026</span></p>
+                                <p class="text-text-muted">&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;</p>
+                                <p class="text-terminal-green font-bold mt-3">What I built</p>
+                                <p class="text-text-secondary">&bull; Added rate limiting to /api/upload endpoint</p>
+                                <p class="text-text-secondary">&bull; Fixed race condition in job queue worker</p>
+                                <p class="text-text-secondary">&bull; Refactored payment webhook into a module</p>
+                                <p class="text-text-secondary">&bull; Added regression tests for idempotency key check</p>
+                                <p class="text-terminal-green font-bold mt-3">Stats</p>
+                                <p class="text-text-secondary">&bull; 7 commits, <span class="text-terminal-green">+1,204</span> / <span class="text-red-400">-389</span> lines, 23 files</p>
+                                <p class="text-terminal-green font-bold mt-3">Areas</p>
+                                <p class="text-text-secondary">&bull; src/api/ (38%), src/workers/ (24%), tests/ (21%)</p>
+                                <p class="text-text-secondary mt-3">Save this digest? (Y/n) <span class="text-terminal-green">Y</span></p>
+                                <p class="text-terminal-green">&#10003; Digest saved!</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What just happened</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li><strong class="text-text-primary">Today's commits</strong> were turned into a bulleted &ldquo;What I built&rdquo; list using the commit messages as source material.</li>
+                            <li><strong class="text-text-primary">Stats</strong> came straight from the <code>commits</code> and <code>daily_summaries</code> tables.</li>
+                            <li><strong class="text-text-primary">Areas</strong> ranks folders by total changes for the day (using the <code>file_activity</code> table).</li>
+                            <li><strong class="text-text-primary">Saving</strong> wrote the digest to the <code>daily_summaries.ai_draft</code> column for the current date. You can edit it later in the Daily Log tab or republish it.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What to do with it</h3>
+                        <ul class="space-y-2 text-text-secondary mb-6 list-disc pl-6 marker:text-terminal-green">
+                            <li>Paste into a status-update Slack message, client email, or retro doc.</li>
+                            <li>Save it as the seed for your weekly review &mdash; tomorrow you'll add to it.</li>
+                            <li>Run <code>worktale digest --format json</code> to get structured output for scripting (covered in Course 04).</li>
+                            <li>If you have Worktale Cloud connected, press <code>p</code> in the TUI to publish it to your profile (covered in Course 06).</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Template vs Ollama mode</h3>
+                        <p class="text-text-secondary mb-4">
+                            The digest above is <strong class="text-text-primary">template mode</strong>: deterministic, offline, no AI involved. It's the default and it's enough for most days.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            If you've got Ollama running locally, you can opt into AI-narrated digests with <code>worktale config set ai.provider ollama</code> and the digest becomes more prosaic. We cover Ollama setup in Course 04 Lesson 4.4.
+                        </p>
+
+                        <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/[0.03] mt-8">
+                            <p class="font-mono text-xs text-cyber-cyan mb-2">KEY INSIGHT</p>
+                            <p class="text-text-secondary text-sm">A digest is not a replacement for good commit messages. A digest is what <em>rescues</em> days where you didn't write great messages &mdash; by giving you stats, areas, and a second chance to narrate. Commit messages still matter. The digest just makes them visible after the fact.</p>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/[0.03] mt-4">
+                            <p class="font-mono text-xs text-neon-amber mb-2">GOTCHA</p>
+                            <p class="text-text-secondary text-sm">If you run <code>worktale digest</code> and nothing shows, you probably have zero commits today. That's fine &mdash; Worktale won't fabricate work you didn't do. Run <code>worktale status</code> to confirm the day's state.</p>
+                        </div>
+                    </article>
+
+                    <!-- Course nav -->
+                    <div class="mt-16 pt-8 border-t border-border-dim flex items-center justify-between">
+                        <a href="/" class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors">&larr; curriculum</a>
+                        <a href="/daily-practice.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all">
+                            <span>Course 02: Daily Practice</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%footer%>
+</body>
+</html>

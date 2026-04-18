@@ -1,0 +1,51 @@
+<header
+    class="fixed top-0 left-0 right-0 z-50 border-b border-border-dim bg-surface-0/80 backdrop-blur-xl"
+    x-data="{ mobileOpen: false }"
+>
+    <div class="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+            <div class="relative">
+                <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold group-hover:bg-terminal-green/20 transition-colors">
+                    &gt;_
+                </div>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="font-mono text-lg tracking-wider text-text-primary">worktale</span>
+                <span class="font-mono text-xs text-terminal-green/70">university</span>
+            </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="/foundations.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">foundations</a>
+            <a href="/daily-practice.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">daily</a>
+            <a href="/ai-sessions.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">ai</a>
+            <a href="/advanced-cli.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">advanced</a>
+            <a href="/desktop.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">desktop</a>
+            <a href="/cloud.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">cloud</a>
+            <a href="/mastery.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">mastery</a>
+            <a href="/reference.html" class="font-mono text-text-secondary hover:text-terminal-green transition-colors">reference</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <a href="https://worktale.org" class="hidden md:inline-flex items-center gap-2 font-mono text-xs text-text-secondary hover:text-terminal-green transition-colors">
+                &larr; worktale.org
+            </a>
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden text-text-secondary hover:text-terminal-green">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div x-show="mobileOpen" x-transition x-cloak class="md:hidden border-t border-border-dim bg-surface-0/95 backdrop-blur-xl">
+        <div class="px-6 py-4 flex flex-col gap-3">
+            <a href="/foundations.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">foundations</a>
+            <a href="/daily-practice.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">daily practice</a>
+            <a href="/ai-sessions.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">ai sessions</a>
+            <a href="/advanced-cli.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">advanced cli</a>
+            <a href="/desktop.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">desktop</a>
+            <a href="/cloud.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">cloud</a>
+            <a href="/mastery.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">mastery</a>
+            <a href="/reference.html" @click="mobileOpen = false" class="font-mono text-sm text-text-secondary hover:text-terminal-green">reference</a>
+            <a href="https://worktale.org" class="font-mono text-sm text-text-secondary hover:text-terminal-green">&larr; worktale.org</a>
+        </div>
+    </div>
+</header>
