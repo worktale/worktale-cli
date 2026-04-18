@@ -76,8 +76,8 @@
             >
             <a
                 href="/blog.html"
-                class="font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors"
-                >blog</a
+                class="relative font-mono text-sm text-text-secondary hover:text-terminal-green transition-colors"
+                >blog<span class="absolute -top-1 -right-3 flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-terminal-green opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-terminal-green"></span></span></a
             >
         </nav>
         <div class="flex items-center gap-4">
@@ -154,8 +154,8 @@
             <a
                 href="/blog.html"
                 @click="mobileOpen = false"
-                class="font-mono text-sm text-text-secondary hover:text-terminal-green"
-                >blog</a
+                class="relative inline-flex items-center gap-2 font-mono text-sm text-text-secondary hover:text-terminal-green"
+                >blog<span class="flex h-2 w-2"><span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-terminal-green opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-terminal-green"></span></span></a
             >
         </div>
     </div>
