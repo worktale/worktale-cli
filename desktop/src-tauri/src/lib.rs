@@ -101,7 +101,26 @@ pub struct GlobalConfig {
     pub show_capture_confirmation: bool,
     #[serde(rename = "cloudApiUrl", default)]
     pub cloud_api_url: Option<String>,
+    #[serde(default)]
+    pub appearance: AppearanceConfig,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct AppearanceConfig {
+    #[serde(default = "default_theme")]
+    pub theme: String,
+    #[serde(rename = "fontScale", default = "default_font_scale")]
+    pub font_scale: f32,
+}
+
+impl Default for AppearanceConfig {
+    fn default() -> Self {
+        Self { theme: default_theme(), font_scale: default_font_scale() }
+    }
+}
+
+fn default_theme() -> String { "dark".into() }
+fn default_font_scale() -> f32 { 1.0 }
 
 fn default_nudge_time() -> String { "17:00".into() }
 fn default_timezone() -> String { "auto".into() }
@@ -440,6 +459,7 @@ impl Default for GlobalConfig {
             git: GitConfig::default(),
             show_capture_confirmation: false,
             cloud_api_url: None,
+            appearance: AppearanceConfig::default(),
         }
     }
 }

@@ -73,6 +73,7 @@ export interface GlobalConfig {
   git: { userEmail: string | null; userEmailOverride: string | null };
   showCaptureConfirmation: boolean;
   cloudApiUrl: string | null;
+  appearance: { theme: "dark" | "light"; fontScale: number };
 }
 
 export interface CloudProfile {

@@ -25,6 +25,34 @@
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
 }
 
+/* Light theme overrides — applied when the <html> element has data-theme="light". */
+html[data-theme="light"] {
+  --color-brand: #16A34A;
+  --color-brand-dim: #16A34A33;
+  --color-positive: #16A34A;
+  --color-negative: #DC2626;
+  --color-streak: #CA8A04;
+  --color-dim: #CBD5E1;
+  --color-surface: #F8FAFC;
+  --color-surface-1: rgba(15, 23, 42, 0.04);
+  --color-surface-2: rgba(15, 23, 42, 0.08);
+  --color-surface-3: rgba(15, 23, 42, 0.12);
+  --color-border: rgba(15, 23, 42, 0.12);
+  --color-border-active: rgba(22, 163, 74, 0.5);
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-dim: #64748B;
+  --color-heat-0: #E2E8F0;
+  --color-heat-1: #BBF7D0;
+  --color-heat-2: #4ADE80;
+  --color-heat-3: #16A34A;
+}
+
+html {
+  /* User-controlled base font size (14px default * fontScale). */
+  font-size: calc(14px * var(--font-scale, 1));
+}
+
 html,
 body {
   margin: 0;
@@ -60,6 +88,14 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.15);
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.3);
 }
 
 /* Glass card utility */
@@ -106,8 +142,14 @@ body {
 /* CodeMirror overrides */
 .cm-editor {
   background: transparent !important;
+  color: var(--color-text-primary) !important;
   font-family: var(--font-mono) !important;
-  font-size: 14px !important;
+  font-size: calc(14px * var(--font-scale, 1)) !important;
+}
+
+/* In light mode, CodeMirror one-dark's syntax colors still read OK, but base text needs to be dark. */
+html[data-theme="light"] .cm-editor {
+  color: var(--color-text-primary) !important;
 }
 
 .cm-editor .cm-gutters {

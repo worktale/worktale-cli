@@ -151,6 +151,33 @@ export function Settings({ config, onRefresh }: SettingsProps) {
         },
       ],
     },
+    {
+      title: "Appearance",
+      icon: "&#127752;",
+      fields: [
+        {
+          label: "Theme", description: "Interface color scheme",
+          configKey: "appearance.theme", value: localConfig.appearance?.theme ?? "dark",
+          type: "select" as const,
+          options: [
+            { value: "dark", label: "Dark" },
+            { value: "light", label: "Light" },
+          ],
+        },
+        {
+          label: "Font Size", description: "Scale all text for readability",
+          configKey: "appearance.fontScale",
+          value: String(localConfig.appearance?.fontScale ?? 1),
+          type: "select" as const,
+          options: [
+            { value: "0.9", label: "Small" },
+            { value: "1", label: "Default" },
+            { value: "1.15", label: "Large" },
+            { value: "1.3", label: "Extra Large" },
+          ],
+        },
+      ],
+    },
   ];
 
   return (

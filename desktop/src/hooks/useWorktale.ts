@@ -61,6 +61,17 @@ export function useWorktale() {
     init();
   }, [loadRepos, loadConfig]);
 
+  // Apply appearance (theme + font scale) to the document root whenever config changes.
+  useEffect(() => {
+    const theme = config?.appearance?.theme === "light" ? "light" : "dark";
+    const scale = config?.appearance?.fontScale;
+    const clampedScale = typeof scale === "number" && scale > 0
+      ? Math.min(1.5, Math.max(0.85, scale))
+      : 1;
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.setProperty("--font-scale", String(clampedScale));
+  }, [config]);
+
   useEffect(() => {
     loadStreak();
   }, [loadStreak]);
