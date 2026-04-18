@@ -166,7 +166,7 @@
       <div class="flex items-center gap-3 mb-6">
         <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">02</div>
         <h2 class="text-2xl font-bold">OpenAI Codex CLI</h2>
-        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Skill + Stop hook</span>
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Skill + auto-capture</span>
       </div>
       <p class="text-text-secondary text-sm mb-4">Skill drives per-commit narrative; a session hook records tokens, model, and computed cost automatically. No agent cooperation required.</p>
 
@@ -181,7 +181,7 @@
           <p class="text-text-muted text-xs mt-2"># Skill (per-commit narrative):</p>
           <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.codex/skills/worktale</p>
           <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale/* ~/.codex/skills/worktale/</p>
-          <p class="text-text-muted text-xs mt-2"># Stop hook (auto token + cost capture):</p>
+          <p class="text-text-muted text-xs mt-2"># Auto token + cost capture:</p>
           <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.codex/hooks</p>
           <p><span class="text-terminal-green/60">$</span> cp worktale-codex-plugin/hooks/session-track.mjs ~/.codex/hooks/</p>
           <p><span class="text-terminal-green/60">$</span> cp worktale-codex-plugin/hooks/hooks.json ~/.codex/hooks.json</p>
@@ -237,7 +237,7 @@
       <div class="flex items-center gap-3 mb-6">
         <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">04</div>
         <h2 class="text-2xl font-bold">GitHub Copilot CLI</h2>
-        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Agent + Stop hook</span>
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Agent + auto-capture</span>
       </div>
       <p class="text-text-secondary text-sm mb-4">Agent drives per-commit narrative; a session hook records tokens, model, tools, MCP servers, and exact cost automatically &mdash; matching what your subscription is charged.</p>
 
@@ -252,7 +252,7 @@
           <p class="text-text-muted text-xs mt-2"># Agent (per-commit narrative):</p>
           <p><span class="text-terminal-green/60">$</span> mkdir -p .github/copilot</p>
           <p><span class="text-terminal-green/60">$</span> cp worktale-copilot-plugin/agents/worktale.md .github/copilot/</p>
-          <p class="text-text-muted text-xs mt-2"># Stop hook (auto token + cost capture):</p>
+          <p class="text-text-muted text-xs mt-2"># Auto token + cost capture:</p>
           <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.copilot/hooks</p>
           <p><span class="text-terminal-green/60">$</span> cp worktale-copilot-plugin/hooks/session-track.mjs ~/.copilot/hooks/</p>
           <p><span class="text-terminal-green/60">$</span> cp worktale-copilot-plugin/hooks/hooks.json ~/.copilot/hooks.json</p>
@@ -388,21 +388,21 @@
           <tbody class="text-text-secondary">
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Claude Code</td>
-              <td class="py-3 pr-4 font-mono text-xs">Plugin + SessionEnd hook</td>
+              <td class="py-3 pr-4 font-mono text-xs">Plugin + auto-capture</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
               <td class="py-3 text-terminal-green">&#10003; automated</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Copilot CLI</td>
-              <td class="py-3 pr-4 font-mono text-xs">Agent + Stop hook</td>
+              <td class="py-3 pr-4 font-mono text-xs">Agent + auto-capture</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
               <td class="py-3 text-terminal-green">&#10003; automated</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Codex CLI</td>
-              <td class="py-3 pr-4 font-mono text-xs">Skill + Stop hook</td>
+              <td class="py-3 pr-4 font-mono text-xs">Skill + auto-capture</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
               <td class="py-3 text-terminal-green">&#10003; automated (model)</td>
