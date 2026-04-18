@@ -169,7 +169,14 @@
 
                         <p class="font-mono text-xs text-terminal-green mt-6 mb-2">3. AI agent (automatic)</p>
                         <p class="text-text-secondary mb-4">
-                            If you're using a Worktale plugin (Claude Code, Codex, OpenCode, Copilot), the agent runs one combined command per commit &mdash; <code>worktale session add --write-note</code> &mdash; which records the session metrics <em>and</em> appends the narrative to today's daily log in a single call. You get notes automatically, tagged with the tool that produced them (<code>[claude-code] ...</code>). Covered in Course 03.
+                            With a Worktale plugin installed, two layers of automation kick in:
+                        </p>
+                        <ul class="space-y-2 text-text-secondary mb-4 list-disc pl-6 marker:text-cyber-cyan">
+                            <li><strong class="text-text-primary">SessionEnd hook</strong> (Claude Code, Codex, Copilot plugins): the hook itself parses the transcript on session end and records tokens/cost/model/tools automatically &mdash; no agent involvement.</li>
+                            <li><strong class="text-text-primary">Per-commit narrative</strong>: the agent's skill tells it to run <code>worktale note</code> after each commit. For rules-based integrations without hooks (Cursor, Cline, Windsurf), the one-shot <code>worktale session add --write-note</code> records a per-commit session row and appends the narrative to the daily log in a single call.</li>
+                        </ul>
+                        <p class="text-text-secondary mb-4">
+                            Covered in detail in Course 03.
                         </p>
 
                         <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What to actually write</h3>
