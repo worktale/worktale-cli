@@ -56,7 +56,7 @@
         <a href="#windsurf" class="px-3 py-1.5 rounded-lg border border-border-dim bg-surface-1/30 font-mono text-xs text-text-secondary hover:border-terminal-green/30 transition-colors">Windsurf</a>
       </div>
 
-      <p class="font-mono text-xs text-text-muted">Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.4.0+</span> &mdash; <code class="bg-surface-1 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code></p>
+      <p class="font-mono text-xs text-text-muted">Requires <span class="text-cyber-cyan font-bold">Worktale CLI v1.5.0+</span> &mdash; <code class="bg-surface-1 px-1.5 py-0.5 rounded text-text-secondary">npm install -g worktale@latest</code></p>
     </div>
   </section>
 
@@ -71,10 +71,10 @@
       <div class="space-y-4">
         <div class="p-5 rounded-xl border border-border-dim bg-surface-1/30">
           <h3 class="font-mono text-sm text-terminal-green mb-2">Worktale CLI</h3>
-          <p class="text-text-secondary text-sm mb-3">The plugin requires <span class="text-cyber-cyan font-semibold">Worktale CLI v1.4.0 or higher</span> installed globally. It uses <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code> for per-commit narrative and <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session add</code> for session metrics (provider, model, tokens, cost, tools).</p>
+          <p class="text-text-secondary text-sm mb-3">The plugin requires <span class="text-cyber-cyan font-semibold">Worktale CLI v1.5.0 or higher</span> installed globally. The Claude Code, Codex, and Copilot plugins ship a <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">SessionEnd</code> hook that captures session metrics automatically (tokens, cost, model, tools); per-commit narrative is added via <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale note</code>. For rules-based integrations (Cursor, Cline, Windsurf) the <code class="text-terminal-green bg-terminal-green/10 px-1.5 py-0.5 rounded text-xs">worktale session add --write-note</code> pattern does both in one call.</p>
           <div class="rounded-lg bg-surface-0 border border-border-dim p-4 font-mono text-sm">
             <p><span class="text-terminal-green/60">$</span> npm install -g worktale@latest</p>
-            <p class="text-text-muted mt-1 text-xs"># Verify: worktale --version → 1.4.0+</p>
+            <p class="text-text-muted mt-1 text-xs"># Verify: worktale --version → 1.5.0+</p>
           </div>
         </div>
 

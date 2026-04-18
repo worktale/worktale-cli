@@ -36,7 +36,7 @@
     <div class="mx-auto max-w-4xl px-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
         <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
-        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.4.3</span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">v1.5.0</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Documentation</h1>
       <p class="text-text-secondary text-lg max-w-2xl leading-relaxed">Complete reference for every command, flag, config key, keyboard shortcut, and data path in Worktale.</p>
@@ -425,7 +425,7 @@ worktale note "Fixed race condition — root cause was missing mutex"</code></pr
             <span class="font-mono text-xs text-text-muted">AI session tracking</span>
           </div>
           <div class="p-5 space-y-4">
-            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. On Claude Code, the official plugin's SessionEnd hook captures this automatically by parsing the transcript; on Codex and Copilot the agent supplies what it knows. You can always call <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> manually to supplement any field. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.4.1+</span></p>
+            <p class="text-text-secondary text-sm">Track AI coding sessions with structured metadata &mdash; provider, model, tools used, MCP servers, cost, and narrative context. The Worktale plugins for Claude Code, Codex, and Copilot all ship a <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">SessionEnd</code> hook that parses the transcript and records everything automatically. Pass <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">--write-note</code> to <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">session add</code> to also append the narrative to today's daily log in one call &mdash; useful for rules-based integrations (Cursor, Cline, Windsurf) that don't have hooks. <span class="inline-block mt-1 px-2 py-0.5 rounded bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] text-terminal-green font-bold">Requires v1.5.0+ for --write-note</span></p>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">SUBCOMMANDS</p>
               <div class="rounded-lg bg-surface-0 border border-border-dim p-4">
@@ -447,7 +447,8 @@ worktale session stats [-d days]  # Show AI usage statistics</code></pre>
 --mcp-servers &lt;list&gt;    # Comma-separated MCP servers (github,linear)
 --duration &lt;secs&gt;       # Session duration in seconds
 --commits &lt;shas&gt;        # Comma-separated commit SHAs
---note &lt;text&gt;           # Session narrative</code></pre>
+--note &lt;text&gt;           # Session narrative
+--write-note            # Also append --note to today's daily log (v1.5.0+)</code></pre>
               </div>
             </div>
             <div>
@@ -541,14 +542,14 @@ worktale session stats --days 30</code></pre>
             <p class="text-text-secondary text-sm">Manage the end-of-day reminder system. See <a href="#nudge" class="text-terminal-green hover:underline">End-of-Day Nudge</a> section for full details.</p>
             <div class="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-neon-amber/20 bg-neon-amber/5">
               <span class="text-neon-amber text-sm">⚠</span>
-              <p class="text-neon-amber/90 text-sm font-mono">Linux &amp; macOS only. Windows support coming soon.</p>
+              <p class="text-neon-amber/90 text-sm font-mono">Install/remove: Linux &amp; macOS only. The check path works on Windows too (Git Bash / WSL / PowerShell).</p>
             </div>
             <div>
               <p class="font-mono text-xs text-text-muted mb-2">FLAGS</p>
               <div class="rounded-lg border border-border-dim bg-surface-0 divide-y divide-border-dim">
                 <div class="px-4 py-2.5 flex items-start gap-4">
                   <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--check</code>
-                  <p class="text-text-secondary text-sm">Run the nudge check (used by shell profile injection). Shows a reminder if: it's past <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">nudgeTime</code>, commits exist today, and no digest has been written.</p>
+                  <p class="text-text-secondary text-sm">Run the nudge check (used by shell profile injection). When it's past <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">nudgeTime</code> and commits exist today without a digest, <strong class="text-text-primary">auto-generates and saves a template digest per pending repo</strong> (v1.5.0+). Set <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">autoDigestOnNudge: false</code> in config to revert to reminder-only mode.</p>
                 </div>
                 <div class="px-4 py-2.5 flex items-start gap-4">
                   <code class="font-mono text-xs text-terminal-green whitespace-nowrap mt-0.5">--install</code>
@@ -859,6 +860,7 @@ worktale session stats --days 30</code></pre>
   <span class="text-terminal-green">"cloudEnabled"</span>:             <span class="text-neon-amber">false</span>,
   <span class="text-terminal-green">"cloudToken"</span>:               <span class="text-text-muted">null</span>,
   <span class="text-terminal-green">"nudgeTime"</span>:                <span class="text-cyber-cyan">"17:00"</span>,
+  <span class="text-terminal-green">"autoDigestOnNudge"</span>:        <span class="text-neon-amber">true</span>,
   <span class="text-terminal-green">"timezone"</span>:                 <span class="text-cyber-cyan">"auto"</span>,
   <span class="text-terminal-green">"colorScheme"</span>:              <span class="text-cyber-cyan">"default"</span>,
   <span class="text-terminal-green">"showCaptureConfirmation"</span>:  <span class="text-neon-amber">false</span>,
@@ -887,7 +889,11 @@ worktale session stats --days 30</code></pre>
         </div>
         <div class="px-4 py-3 flex items-start gap-4">
           <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">nudgeTime</code>
-          <p class="text-text-secondary">Time of day to show the nudge reminder (24h format). Default: <code class="text-text-muted">"17:00"</code></p>
+          <p class="text-text-secondary">Time of day to run the nudge (24h format). Default: <code class="text-text-muted">"17:00"</code></p>
+        </div>
+        <div class="px-4 py-3 flex items-start gap-4">
+          <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">autoDigestOnNudge</code>
+          <p class="text-text-secondary">When true, the nudge auto-generates and saves a template digest for any repo with commits today but no digest yet. Default: <code class="text-text-muted">true</code> (v1.5.0+)</p>
         </div>
         <div class="px-4 py-3 flex items-start gap-4">
           <code class="font-mono text-xs text-terminal-green whitespace-nowrap min-w-[200px] mt-0.5">timezone</code>
