@@ -252,11 +252,11 @@
                 <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
                     <!-- Announcement pill -->
                     <a
-                        href="/lander-freelance.html"
+                        href="/lander-ai.html"
                         class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-terminal-green/30 bg-terminal-green/5 mb-4 hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-all group"
                     >
-                        <span class="px-2 py-0.5 rounded-full bg-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">For</span>
-                        <span class="font-mono text-xs text-terminal-green/90 group-hover:text-terminal-green transition-colors">Solo devs, contractors &amp; freelancers &mdash; reclaim your billable hours</span>
+                        <span class="px-2 py-0.5 rounded-full bg-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">New</span>
+                        <span class="font-mono text-xs text-terminal-green/90 group-hover:text-terminal-green transition-colors">AI Sessions dashboard &mdash; cross-agent cost, tokens &amp; context</span>
                         <span class="text-terminal-green/60 group-hover:text-terminal-green transition-colors">&rarr;</span>
                     </a>
 
@@ -509,7 +509,7 @@
                             Your work. Always accessible.
                         </h2>
                         <p class="text-text-secondary mt-3">
-                            Browse daily context, notes, and stats. Keyboard-driven. Snappy.
+                            Browse daily context, notes, stats, and AI session cost. Keyboard-driven. Snappy.
                         </p>
                         <p class="text-text-muted mt-4 text-sm font-mono">
                             Run <code class="text-terminal-green bg-terminal-green/10 px-2 py-1 rounded">worktale dash</code> <span class="text-text-muted">(or just <code class="text-terminal-green bg-terminal-green/10 px-2 py-1 rounded">worktale</code>)</span> to open it.
@@ -523,7 +523,7 @@
                             tab: 2,
                             timer: null,
                             start() {
-                                this.timer = setInterval(() => { this.tab = this.tab % 3 + 1 }, 4000)
+                                this.timer = setInterval(() => { this.tab = this.tab % 4 + 1 }, 4000)
                             },
                             pick(t) {
                                 this.tab = t;
@@ -579,6 +579,13 @@
                                 :class="tab === 3 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'"
                             >
                                 [3] History
+                            </button>
+                            <button
+                                @click="pick(4)"
+                                class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2"
+                                :class="tab === 4 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'"
+                            >
+                                [4] AI Sessions
                             </button>
                             <span class="text-text-muted ml-auto py-2"
                                 >🔥 Streak:
@@ -956,6 +963,90 @@
                                     >
                                     18%
                                 </p>
+                            </div>
+                            <!-- AI Sessions -->
+                            <div class="absolute inset-0 p-5 transition-opacity duration-300 overflow-hidden" :class="tab === 4 ? 'opacity-100' : 'opacity-0 pointer-events-none'">
+                                <p class="text-text-secondary mb-3">
+                                    AI SESSIONS &middot; last 30 days
+                                </p>
+                                <div class="grid grid-cols-4 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-text-muted">Sessions</p>
+                                        <p class="text-terminal-green text-lg font-bold">142</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted">Cost</p>
+                                        <p class="text-neon-amber text-lg font-bold">$47.83</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted">Tokens</p>
+                                        <p class="text-terminal-green text-lg font-bold">8.4M</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted">Active</p>
+                                        <p class="text-terminal-green text-lg font-bold">38h 12m</p>
+                                    </div>
+                                </div>
+
+                                <p class="text-text-muted mb-1">Cost/day</p>
+                                <p class="text-text-secondary mb-2">
+                                    <span class="text-terminal-green">▁▃▂▅▄▇█▆▄▂▃▅▇▆▄▃▁▂▄▆█▇▅▃▂▁▃▅▄▂</span>
+                                    <span class="text-text-muted">&nbsp;&nbsp;peak $4.12</span>
+                                </p>
+                                <p class="text-text-muted mb-1">Tokens/day</p>
+                                <p class="text-text-secondary mb-3">
+                                    <span class="text-cyber-cyan">▂▄▃▆▅██▇▅▃▄▆█▇▅▄▂▃▅▇██▇▆▄▂▃▄▃▂</span>
+                                    <span class="text-text-muted">&nbsp;&nbsp;peak 612k</span>
+                                </p>
+
+                                <div class="grid grid-cols-2 gap-x-8 mt-3">
+                                    <div>
+                                        <p class="text-text-muted mb-1">AGENTS</p>
+                                        <p class="text-text-secondary">
+                                            claude-code <span class="text-text-muted">84 sessions</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            codex <span class="text-text-muted">32 sessions</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            opencode <span class="text-text-muted">17 sessions</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            copilot <span class="text-text-muted">9 sessions</span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted mb-1">MODELS</p>
+                                        <p class="text-text-secondary">
+                                            claude-opus-4-7 <span class="text-text-muted">71x</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            gpt-5 <span class="text-text-muted">28x</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            claude-sonnet-4-6 <span class="text-text-muted">23x</span>
+                                        </p>
+                                        <p class="text-text-secondary">
+                                            gpt-5-codex <span class="text-text-muted">20x</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-x-8 mt-3">
+                                    <div>
+                                        <p class="text-text-muted mb-1">PROVIDERS</p>
+                                        <p class="text-text-secondary">anthropic <span class="text-text-muted">101 sessions</span></p>
+                                        <p class="text-text-secondary">openai <span class="text-text-muted">32 sessions</span></p>
+                                        <p class="text-text-secondary">github <span class="text-text-muted">9 sessions</span></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted mb-1">TOP AGENT TOOLS</p>
+                                        <p class="text-text-secondary">Read <span class="text-text-muted">1,248x</span></p>
+                                        <p class="text-text-secondary">Edit <span class="text-text-muted">612x</span></p>
+                                        <p class="text-text-secondary">Bash <span class="text-text-muted">489x</span></p>
+                                        <p class="text-text-secondary">Grep <span class="text-text-muted">334x</span></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
