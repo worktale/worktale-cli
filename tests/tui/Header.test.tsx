@@ -50,10 +50,11 @@ describe('Header', () => {
       <Header repoName="test" streak={0} activeView={1} />,
     );
     const frame = lastFrame()!;
-    // All three tabs should be visible
+    // All four tabs should be visible
     expect(frame).toContain('[1] Overview');
     expect(frame).toContain('[2] Daily Log');
     expect(frame).toContain('[3] History');
+    expect(frame).toContain('[4] AI Sessions');
   });
 
   it('highlights active tab - Daily Log', () => {
@@ -70,6 +71,14 @@ describe('Header', () => {
     );
     const frame = lastFrame()!;
     expect(frame).toContain('[3] History');
+  });
+
+  it('highlights active tab - AI Sessions', () => {
+    const { lastFrame } = render(
+      <Header repoName="test" streak={0} activeView={4} />,
+    );
+    const frame = lastFrame()!;
+    expect(frame).toContain('[4] AI Sessions');
   });
 
   it('shows quit hint', () => {

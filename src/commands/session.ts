@@ -70,7 +70,8 @@ async function addSession(options: SessionOptions): Promise<void> {
   let repo = getRepo(repoPath);
   if (!repo && existsSync(join(repoPath, '.git'))) {
     const name = basename(repoPath);
-    repo = addRepo(repoPath, name);
+    addRepo(repoPath, name);
+    repo = getRepo(repoPath);
   }
 
   if (!repo) {

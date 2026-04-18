@@ -7,6 +7,7 @@ import Header from './components/Header.js';
 import Overview from './components/Overview.js';
 import DailyLog from './components/DailyLog.js';
 import History from './components/History.js';
+import AiSessions from './components/AiSessions.js';
 import type { Repo } from '../db/repos.js';
 
 interface AppProps {
@@ -16,7 +17,7 @@ interface AppProps {
 
 export default function App({ repoPath, onAction }: AppProps) {
   const { exit } = useApp();
-  const [activeView, setActiveView] = useState<1 | 2 | 3>(1);
+  const [activeView, setActiveView] = useState<1 | 2 | 3 | 4>(1);
   const [repo, setRepo] = useState<Repo | undefined>(undefined);
   const [streak, setStreak] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -58,8 +59,9 @@ export default function App({ repoPath, onAction }: AppProps) {
     if (input === '1') setActiveView(1);
     if (input === '2') setActiveView(2);
     if (input === '3') setActiveView(3);
+    if (input === '4') setActiveView(4);
     if (key.tab) {
-      setActiveView((prev) => (prev === 3 ? 1 : ((prev + 1) as 1 | 2 | 3)));
+      setActiveView((prev) => (prev === 4 ? 1 : ((prev + 1) as 1 | 2 | 3 | 4)));
     }
   });
 
@@ -90,6 +92,7 @@ export default function App({ repoPath, onAction }: AppProps) {
         {activeView === 1 && <Overview repoId={repo.id} />}
         {activeView === 2 && <DailyLog repoId={repo.id} onEditingChange={setIsEditing} />}
         {activeView === 3 && <History repoId={repo.id} />}
+        {activeView === 4 && <AiSessions repoId={repo.id} />}
       </Box>
     </Box>
   );

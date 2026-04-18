@@ -5,13 +5,14 @@ import { colors } from '../theme.js';
 interface HeaderProps {
   repoName: string;
   streak: number;
-  activeView: 1 | 2 | 3;
+  activeView: 1 | 2 | 3 | 4;
 }
 
 const tabs = [
   { key: 1 as const, label: 'Overview' },
   { key: 2 as const, label: 'Daily Log' },
   { key: 3 as const, label: 'History' },
+  { key: 4 as const, label: 'AI Sessions' },
 ];
 
 export default function Header({ repoName, streak, activeView }: HeaderProps) {
