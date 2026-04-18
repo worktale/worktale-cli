@@ -316,10 +316,10 @@
             <section class="py-16 md:py-20 border-t border-border-dim bg-surface-1/20">
                 <div class="mx-auto max-w-4xl px-6">
                     <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">
-                        Your terminal, alive.
+                        CLI dashboard &middot; Desktop app.
                     </h2>
                     <p class="text-text-secondary text-center mb-10 text-sm">
-                        Interactive TUI dashboard with three views. Keyboard-driven. Snappy.
+                        Same local database. Browse in the terminal TUI, or open the desktop app for charts. Pick your tool.
                     </p>
 
                     <!-- Compact dashboard mockup -->
@@ -329,7 +329,7 @@
                             tab: 1,
                             timer: null,
                             start() {
-                                this.timer = setInterval(() => { this.tab = this.tab % 3 + 1 }, 4000)
+                                this.timer = setInterval(() => { this.tab = this.tab % 4 + 1 }, 4000)
                             },
                             pick(t) {
                                 this.tab = t;
@@ -354,6 +354,7 @@
                             <button @click="pick(1)" class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2" :class="tab === 1 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'">[1] Overview</button>
                             <button @click="pick(2)" class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2" :class="tab === 2 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'">[2] Daily Log</button>
                             <button @click="pick(3)" class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2" :class="tab === 3 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'">[3] History</button>
+                            <button @click="pick(4)" class="px-3 py-2 -mb-px rounded-t transition-all cursor-pointer border-b-2" :class="tab === 4 ? 'text-terminal-green border-terminal-green bg-terminal-green/5' : 'text-text-muted border-transparent hover:text-text-secondary hover:bg-surface-2/50'">[4] AI Sessions</button>
                             <span class="text-text-muted ml-auto py-2">&#128293; Streak: <span class="text-neon-amber">14 days</span></span>
                         </div>
                         <!-- Tab content -->
@@ -399,7 +400,42 @@
                                     <p class="text-text-secondary">Days active <span class="text-text-primary">287</span></p>
                                 </div>
                             </div>
+                            <!-- AI Sessions -->
+                            <div x-show="tab === 4" x-transition.opacity>
+                                <p class="text-text-secondary mb-3">AI SESSIONS &middot; last 30 days</p>
+                                <div class="grid grid-cols-4 gap-3 mb-3">
+                                    <div><p class="text-text-muted">Sessions</p><p class="text-terminal-green text-lg font-bold">142</p></div>
+                                    <div><p class="text-text-muted">Cost</p><p class="text-neon-amber text-lg font-bold">$47.83</p></div>
+                                    <div><p class="text-text-muted">Tokens</p><p class="text-terminal-green text-lg font-bold">8.4M</p></div>
+                                    <div><p class="text-text-muted">Active</p><p class="text-terminal-green text-lg font-bold">38h</p></div>
+                                </div>
+                                <p class="text-text-muted mb-1">Cost/day</p>
+                                <p class="text-text-secondary mb-2"><span class="text-terminal-green">&#9601;&#9603;&#9602;&#9605;&#9604;&#9607;&#9608;&#9606;&#9604;&#9602;&#9603;&#9605;&#9607;&#9606;&#9604;&#9603;&#9601;&#9602;&#9604;&#9606;&#9608;&#9607;&#9605;&#9603;&#9602;&#9601;&#9603;&#9605;&#9604;&#9602;</span><span class="text-text-muted">&nbsp;peak $4.12</span></p>
+                                <div class="grid grid-cols-2 gap-x-6 mt-2">
+                                    <div>
+                                        <p class="text-text-muted mb-1">AGENTS</p>
+                                        <p class="text-text-secondary">claude-code <span class="text-text-muted">84</span></p>
+                                        <p class="text-text-secondary">codex <span class="text-text-muted">32</span></p>
+                                        <p class="text-text-secondary">opencode <span class="text-text-muted">17</span></p>
+                                        <p class="text-text-secondary">copilot <span class="text-text-muted">9</span></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-text-muted mb-1">TOP MODELS</p>
+                                        <p class="text-text-secondary">claude-opus-4-7 <span class="text-text-muted">71x</span></p>
+                                        <p class="text-text-secondary">gpt-5 <span class="text-text-muted">28x</span></p>
+                                        <p class="text-text-secondary">sonnet-4-6 <span class="text-text-muted">23x</span></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Desktop screenshot -->
+                    <div class="mt-10">
+                        <div class="rounded-xl border border-border-dim overflow-hidden shadow-2xl shadow-terminal-green/[0.03]">
+                            <img src="/logo/desktop-dashboard.png" alt="Worktale Desktop — Dashboard with streaks, commits, heatmap, and AI session tracking" class="w-full" loading="lazy" />
+                        </div>
+                        <p class="text-center text-text-muted text-xs mt-3 font-mono">Desktop app &mdash; same data, interactive charts. Windows, macOS, Linux.</p>
                     </div>
                 </div>
             </section>
