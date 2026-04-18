@@ -1030,7 +1030,7 @@
                         <p class="text-text-secondary mt-4 max-w-2xl mx-auto leading-relaxed">
                             If you&rsquo;re billing hourly, every dollar you spend on Claude, GPT, or Copilot comes out of your profit.
                             Worktale tracks what you spent per project so you can price your next engagement correctly&mdash;or pass the cost through as a line item.
-                            On Claude Code, Codex, and OpenCode, capture is automatic (tokens, cost, model, tools). On Copilot, the agent supplies what it can.
+                            Capture is automatic on all four supported hosts (Claude Code, Codex, OpenCode, Copilot) &mdash; tokens, cost, model, tools.
                         </p>
 
                         <!-- AI session tracking badges -->
@@ -1047,8 +1047,8 @@
                                 <span class="w-2 h-2 rounded-full bg-cyber-cyan"></span>
                                 OpenCode
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neon-amber/20 bg-neon-amber/5 font-mono text-xs text-neon-amber/80">
-                                <span class="w-2 h-2 rounded-full bg-neon-amber"></span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-cyber-cyan/20 bg-cyber-cyan/5 font-mono text-xs text-cyber-cyan/80">
+                                <span class="w-2 h-2 rounded-full bg-cyber-cyan"></span>
                                 GitHub Copilot
                             </span>
                         </div>
@@ -1113,7 +1113,7 @@
                             <div class="mt-4 p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="text-text-secondary text-sm leading-relaxed">
                                     <span class="text-text-primary font-medium">Claude Code, Codex, OpenCode &amp; Copilot.</span>
-                                    Tokens and cost capture automatically on <strong class="text-text-primary">Claude Code</strong> (transcript parsing), <strong class="text-text-primary">OpenAI Codex</strong> (session-rollout parsing at <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.codex/sessions</code>), and <strong class="text-text-primary">OpenCode</strong> (native plugin reading pre-computed cost). On Copilot the agent supplies provider, model, tools, and narrative; cost can be added manually via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.
+                                    Tokens and cost capture automatically on all four supported hosts: <strong class="text-text-primary">Claude Code</strong> (transcript parsing), <strong class="text-text-primary">OpenAI Codex</strong> (session-rollout parsing at <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.codex/sessions</code>), <strong class="text-text-primary">OpenCode</strong> (native plugin), and <strong class="text-text-primary">GitHub Copilot</strong> (session-state parsing at <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.copilot/session-state</code> &mdash; cost is read directly from Copilot&rsquo;s pre-computed values).
                                 </p>
                             </div>
                             <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.4.1+</span></p>

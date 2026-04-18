@@ -228,9 +228,9 @@
             </tr>
             <tr>
               <td class="py-2.5 px-4 text-text-primary font-medium">GitHub Copilot</td>
-              <td class="py-2.5 px-4">Agent + post-commit hook</td>
-              <td class="py-2.5 px-4 text-text-muted">&mdash;</td>
-              <td class="py-2.5 px-4 text-neon-amber">Provider, model, tools used, commits, narrative</td>
+              <td class="py-2.5 px-4">Agent + Stop hook</td>
+              <td class="py-2.5 px-4 text-terminal-green">Model, input/cached/output tokens, <strong>cost</strong>, tools, MCP servers, duration</td>
+              <td class="py-2.5 px-4 text-text-muted">Per-commit narrative</td>
             </tr>
           </tbody>
         </table>
@@ -239,7 +239,7 @@
       <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5 mb-6">
         <p class="text-text-secondary text-sm leading-relaxed">
           <strong class="text-text-primary">How automated capture works:</strong>
-          Claude Code&rsquo;s <code class="text-text-muted text-xs">SessionEnd</code> hook hands the plugin the full session transcript. Codex writes its own session rollouts to <code class="text-text-muted text-xs">~/.codex/sessions/YYYY/MM/DD/*.jsonl</code> on disk &mdash; the plugin&rsquo;s <code class="text-text-muted text-xs">Stop</code> hook parses those after each session goes idle. Both compute cost from built-in rate tables (Anthropic for Claude, OpenAI for Codex) so the recorded numbers match your invoices. Copilot doesn&rsquo;t expose comparable data to plugins, so cost on Copilot is manual via <code class="text-text-muted text-xs">worktale session add --cost ...</code>.
+          All three plugins use the same pattern &mdash; read session state Copilot/Codex/Claude already write to disk, sum tokens, attribute cost, then call <code class="text-text-muted text-xs">worktale session add</code>. Claude Code&rsquo;s <code class="text-text-muted text-xs">SessionEnd</code> hook hands us the transcript directly; Codex persists rollouts at <code class="text-text-muted text-xs">~/.codex/sessions</code> with token deltas; Copilot persists per-API-call <code class="text-text-muted text-xs">assistant.usage</code> events at <code class="text-text-muted text-xs">~/.copilot/session-state</code> with a pre-computed <code class="text-text-muted text-xs">cost</code> field. Claude Code and Codex use built-in rate tables (Anthropic / OpenAI) for cost; OpenCode and Copilot read cost directly from the host because they pre-compute it themselves.
         </p>
       </div>
 
