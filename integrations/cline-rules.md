@@ -3,10 +3,13 @@
 After every `git commit` you make during this session, immediately run this command:
 
 ```bash
-worktale note "<1-2 sentence narrative about what you just did and why>"
+worktale session add \
+  --tool cline \
+  --note "<1-2 sentence narrative about what you just did and why>" \
+  --write-note
 ```
 
-This appends context to the developer's daily work journal in Worktale (v1.1.0+ required).
+`--write-note` records the session metrics **and** appends the narrative to today's daily log in one command (Worktale CLI v1.5.0+ required). The developer will see the narrative in their EOD digest automatically — no separate `worktale note` call needed.
 
 ## What to write
 

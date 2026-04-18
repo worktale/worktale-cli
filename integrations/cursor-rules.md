@@ -8,10 +8,11 @@ worktale session add \
   --model "<model>" \
   --tool "<tool-name>" \
   --tools-used "<comma-separated tools you used>" \
-  --note "<1-2 sentence narrative about what you just did and why>"
+  --note "<1-2 sentence narrative about what you just did and why>" \
+  --write-note
 ```
 
-This records structured AI session data in the developer's Worktale journal (v1.4.0+ required).
+This records structured AI session data **and** appends the narrative to today's daily log in one command (Worktale CLI v1.5.0+ required for `--write-note`). The developer will see the narrative in their EOD digest automatically — no separate `worktale note` call needed.
 
 ## What to write in --note
 

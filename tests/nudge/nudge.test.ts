@@ -174,16 +174,19 @@ describe('nudge', () => {
       teardownTestDb();
     });
 
-    it('shows nudge when time is past nudgeTime and commits exist without digest', () => {
+    it('auto-saves digest when time is past nudgeTime and commits exist without digest', () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date(2026, 2, 6, 18, 0, 0)); // 6pm, past 5pm nudge
 
       const db = getTestDb();
-      // Seed a repo and daily summary with commits but no user_notes
+      // Seed a repo with a real commit so generateAndSaveDigest has something to narrate
       db.prepare("INSERT INTO repos (path, name) VALUES (?, ?)").run('/test-repo', 'test-repo');
       db.prepare(
-        "INSERT INTO daily_summaries (repo_id, date, commits_count, lines_added) VALUES (?, ?, ?, ?)"
-      ).run(1, '2026-03-06', 5, 200);
+        "INSERT INTO commits (repo_id, sha, message, author, timestamp, lines_added, lines_removed, files_changed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+      ).run(1, 'abc123', 'feat: add rate limiting to /api/upload', 'me@example.com', '2026-03-06T10:30:00Z', 150, 20, 4);
+      db.prepare(
+        "INSERT INTO daily_summaries (repo_id, date, commits_count, lines_added, lines_removed, files_touched) VALUES (?, ?, ?, ?, ?, ?)"
+      ).run(1, '2026-03-06', 1, 150, 20, 4);
 
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -191,8 +194,14 @@ describe('nudge', () => {
 
       expect(consoleSpy).toHaveBeenCalled();
       const allOutput = consoleSpy.mock.calls.map(c => c.join(' ')).join('\n');
+      // New behavior: auto-saved digest, not just a reminder
       expect(allOutput).toContain('Worktale');
-      expect(allOutput).toContain('worktale digest');
+      expect(allOutput).toContain('Auto-saved');
+
+      // Verify the digest actually landed in user_notes
+      const row = db.prepare('SELECT user_notes FROM daily_summaries WHERE repo_id = ? AND date = ?').get(1, '2026-03-06') as { user_notes: string | null } | undefined;
+      expect(row?.user_notes).toBeTruthy();
+      expect(row!.user_notes).toContain('rate limiting');
 
       consoleSpy.mockRestore();
     });

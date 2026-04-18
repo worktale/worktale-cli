@@ -61,6 +61,24 @@ export function setupTestDb(): BetterSqlite3.Database {
       date      TEXT,
       changes   INTEGER DEFAULT 0
     );
+
+    CREATE TABLE IF NOT EXISTS ai_sessions (
+      id              INTEGER PRIMARY KEY AUTOINCREMENT,
+      repo_id         INTEGER REFERENCES repos(id),
+      date            TEXT NOT NULL,
+      provider        TEXT,
+      model           TEXT,
+      tool            TEXT,
+      cost_usd        REAL DEFAULT 0,
+      input_tokens    INTEGER DEFAULT 0,
+      output_tokens   INTEGER DEFAULT 0,
+      tools_used      TEXT,
+      mcp_servers     TEXT,
+      duration_secs   INTEGER DEFAULT 0,
+      commits         TEXT,
+      note            TEXT,
+      timestamp       TEXT NOT NULL
+    );
   `);
 
   // ---- indexes ----

@@ -5,6 +5,7 @@ import { brandText, dimText, positiveText, streakText, negativeText } from '../t
 import { getRepo, addRepo } from '../db/repos.js';
 import { closeDb } from '../db/index.js';
 import { insertAiSession, getAiSessionsByDate, getAiSessionStats } from '../db/ai-sessions.js';
+import { appendUserNotes } from '../db/daily-summaries.js';
 import { formatNumber, formatDuration, getDateString } from '../utils/formatting.js';
 
 interface SessionOptions {
@@ -19,6 +20,7 @@ interface SessionOptions {
   duration?: string;
   commits?: string;
   note?: string;
+  writeNote?: boolean;
   format?: string;
   days?: string;
 }
@@ -97,11 +99,28 @@ async function addSession(options: SessionOptions): Promise<void> {
     note: options.note,
   });
 
+  // Auto-note path: when --write-note is passed, also append the narrative to
+  // today's user_notes so it shows up in the daily log and digest without the
+  // agent having to make a separate `worktale note` call. This is what closes
+  // the "agent forgot to narrate" gap.
+  let noteWritten = false;
+  if (options.writeNote && options.note && options.note.trim()) {
+    try {
+      const prefix = options.tool ? `[${options.tool}] ` : '';
+      appendUserNotes(repo.id, today, `${prefix}${options.note.trim()}`);
+      noteWritten = true;
+    } catch {
+      // Silent — session was recorded; failing to append the note should not
+      // surface as an error to the calling agent.
+    }
+  }
+
   // Compact output for agent consumption
   const parts: string[] = [];
   if (options.tool) parts.push(options.tool);
   if (options.model) parts.push(options.model);
   if (options.cost) parts.push(`$${options.cost}`);
+  if (noteWritten) parts.push('+note');
 
   console.log('  ' + positiveText('\u2713') + '  AI session recorded' + (parts.length > 0 ? ` (${parts.join(' \u00B7 ')})` : ''));
 }
@@ -312,5 +331,6 @@ function showHelp(): void {
   console.log('    --duration <secs>       ' + dimText('Session duration in seconds'));
   console.log('    --commits <shas>        ' + dimText('Comma-separated commit SHAs'));
   console.log('    --note <text>           ' + dimText('Session note'));
+  console.log('    --write-note            ' + dimText('Also append --note text to today\'s daily log'));
   console.log('');
 }

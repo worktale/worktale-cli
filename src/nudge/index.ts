@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { loadConfig } from '../config/index.js';
 import { getDb } from '../db/index.js';
 import { getDateString } from '../utils/formatting.js';
+import { generateAndSaveDigest } from '../utils/digest-saver.js';
 
 const isWindows = process.platform === 'win32';
 
@@ -63,8 +64,9 @@ export function removeNudge(): void {
 }
 
 export function checkNudge(): void {
-  if (isWindows) return;
-
+  // Note: the install/remove guards on Windows are intentional (bash profiles
+  // don't exist), but checkNudge just reads the DB and prints — works on any
+  // platform (WSL, Git Bash, PowerShell all run Node fine).
   try {
     const config = loadConfig();
     const now = new Date();
@@ -78,26 +80,55 @@ export function checkNudge(): void {
     const today = getDateString();
     const db = getDb();
 
-    // Check if there are any commits today across all repos
-    const todayCommits = db.prepare(
-      `SELECT SUM(commits_count) as total, SUM(lines_added) as lines
-       FROM daily_summaries WHERE date = ?`
-    ).get(today) as { total: number | null; lines: number | null } | undefined;
+    // Find every repo with commits today but no digest saved yet.
+    // We need a per-repo breakdown (not a global count) so we can auto-generate
+    // a distinct draft per repo when autoDigestOnNudge is enabled.
+    const pending = db.prepare(
+      `SELECT ds.repo_id, r.name AS repo_name,
+              ds.commits_count AS commits, ds.lines_added AS lines
+       FROM daily_summaries ds
+       JOIN repos r ON r.id = ds.repo_id
+       WHERE ds.date = ?
+         AND ds.commits_count > 0
+         AND (ds.user_notes IS NULL OR ds.user_notes = '')`
+    ).all(today) as Array<{ repo_id: number; repo_name: string; commits: number; lines: number }>;
 
-    if (!todayCommits?.total || todayCommits.total === 0) return;
 
-    // Check if a digest has already been written today
-    const hasDigest = db.prepare(
-      `SELECT COUNT(*) as cnt FROM daily_summaries
-       WHERE date = ? AND user_notes IS NOT NULL AND user_notes != ''`
-    ).get(today) as { cnt: number };
 
-    if (hasDigest.cnt > 0) return;
+    if (pending.length === 0) return;
 
-    // Show nudge
-    const lines = todayCommits.lines ?? 0;
+    const totalLines = pending.reduce((acc, r) => acc + (r.lines ?? 0), 0);
+
+    // Auto-digest path: generate + save a template digest for each pending repo.
+    // This closes the "I forgot to digest" gap — template mode is deterministic,
+    // offline, and non-destructive (user_notes was empty). User can edit later.
+    if (config.autoDigestOnNudge !== false) {
+      const saved: string[] = [];
+      for (const p of pending) {
+        try {
+          const body = generateAndSaveDigest(p.repo_id, today);
+          if (body) saved.push(p.repo_name);
+        } catch {
+          // Per-repo failure shouldn't block the others or poison the shell.
+        }
+      }
+
+      if (saved.length > 0) {
+        const repoList = saved.length === 1 ? saved[0] : `${saved.length} repos`;
+        console.log('');
+        console.log(
+          chalk.hex('#FBBF24')('  \u26A1 Worktale') +
+          chalk.hex('#9CA3AF')(` \u2014 Auto-saved digest for ${chalk.bold(repoList)} (${totalLines.toLocaleString()} lines shipped today).`),
+        );
+        console.log(chalk.hex('#9CA3AF')('     Review or edit: ') + chalk.hex('#00D4FF')('worktale digest'));
+        console.log('');
+      }
+      return;
+    }
+
+    // Legacy path: just remind the user to run digest manually.
     console.log('');
-    console.log(chalk.hex('#FBBF24')('  \u26A1 Worktale') + chalk.hex('#9CA3AF')(` \u2014 You shipped ${chalk.bold(lines.toLocaleString())} lines today. Want to log it?`));
+    console.log(chalk.hex('#FBBF24')('  \u26A1 Worktale') + chalk.hex('#9CA3AF')(` \u2014 You shipped ${chalk.bold(totalLines.toLocaleString())} lines today. Want to log it?`));
     console.log(chalk.hex('#9CA3AF')('     Run: ') + chalk.hex('#00D4FF')('worktale digest'));
     console.log('');
   } catch {

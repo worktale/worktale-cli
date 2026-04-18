@@ -6,6 +6,10 @@ export interface GlobalConfig {
   cloudEnabled: boolean;
   cloudToken: string | null;
   nudgeTime: string;
+  /** When true, nudge auto-generates and saves a template digest for any repo
+   *  with commits today but no digest yet. Default true — closes the "forgot
+   *  to digest" gap. Set false to revert to reminder-only behavior. */
+  autoDigestOnNudge: boolean;
   timezone: string;
   colorScheme: string;
   ai: {
@@ -30,6 +34,7 @@ export const DEFAULT_CONFIG: GlobalConfig = {
   cloudEnabled: false,
   cloudToken: null,
   nudgeTime: '17:00',
+  autoDigestOnNudge: true,
   timezone: 'auto',
   colorScheme: 'default',
   ai: {

@@ -192,10 +192,11 @@ program
   .option('--duration <secs>', 'Session duration in seconds')
   .option('--commits <shas>', 'Comma-separated commit SHAs')
   .option('--note <text>', 'Session note')
+  .option('--write-note', 'Also append --note text to today\'s daily log')
   .option('-d, --days <n>', 'Days to show (for list/stats)')
   .option('-f, --format <fmt>', 'Output format: text | json | csv (for list/stats)', 'text')
-  .action(async (action?: string, options?: Record<string, string | undefined>) => {
-    await sessionCommand(action, options);
+  .action(async (action?: string, options?: Record<string, unknown>) => {
+    await sessionCommand(action, options as Parameters<typeof sessionCommand>[1]);
   });
 
 program
