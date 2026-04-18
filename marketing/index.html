@@ -1109,7 +1109,7 @@
                             <div class="mt-4 p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="text-text-secondary text-sm leading-relaxed">
                                     <span class="text-text-primary font-medium">Claude Code, Codex &amp; Copilot.</span>
-                                    Only Claude Code exposes transcripts to plugins, so only Claude Code captures tokens and cost automatically. On Codex and Copilot the agent supplies provider, model, tools, and narrative; you can add cost manually via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.
+                                    Tokens and cost capture automatically on <strong class="text-text-primary">Claude Code</strong> (transcript parsing) and <strong class="text-text-primary">OpenAI Codex</strong> (session-rollout parsing at <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.codex/sessions</code>). On Copilot the agent supplies provider, model, tools, and narrative; cost can be added manually via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.
                                 </p>
                             </div>
                             <p class="text-text-muted text-xs mt-3">Requires <a href="https://www.npmjs.com/package/worktale" class="text-terminal-green hover:underline">Worktale CLI</a> <span class="text-cyber-cyan font-mono font-bold">v1.4.1+</span></p>

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node \"${CODEX_PLUGIN_ROOT}/hooks/session-track.mjs\""
+      }
+    ],
+    "SessionEnd": [
+      {
+        "type": "command",
+        "command": "node \"${CODEX_PLUGIN_ROOT}/hooks/session-track.mjs\""
+      }
+    ]
+  }
+}

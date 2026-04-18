@@ -163,11 +163,11 @@
   <section id="codex-cli" class="py-16 border-t border-border-dim">
     <div class="mx-auto max-w-4xl px-6">
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-8 h-8 rounded-lg bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center font-mono text-terminal-green text-sm font-bold">02</div>
+        <div class="w-8 h-8 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center font-mono text-cyber-cyan text-sm font-bold">02</div>
         <h2 class="text-2xl font-bold">OpenAI Codex CLI</h2>
-        <span class="px-2 py-0.5 rounded-full bg-terminal-green/10 border border-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">Skill</span>
+        <span class="px-2 py-0.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/20 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Skill + Stop hook</span>
       </div>
-      <p class="text-text-secondary text-sm mb-4">Codex uses the same SKILL.md format. Install the skill to <code class="text-text-muted text-xs">~/.codex/skills/worktale/</code>. The skill handles per-commit narrative and end-of-session metadata; Codex doesn&rsquo;t expose transcripts or token usage to plugins today, so the agent supplies what it knows.</p>
+      <p class="text-text-secondary text-sm mb-4">Skill drives per-commit narrative; a Stop hook parses Codex&rsquo;s session JSONL rollouts at <code class="text-text-muted text-xs">~/.codex/sessions/YYYY/MM/DD/*.jsonl</code> and records tokens, model, and computed cost automatically. No agent cooperation required.</p>
 
       <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-border-dim bg-surface-2">
@@ -177,17 +177,22 @@
         <div class="p-5 font-mono text-sm space-y-1">
           <p class="text-text-muted text-xs"># Install:</p>
           <p><span class="text-terminal-green/60">$</span> git clone https://github.com/worktale/worktale-codex-plugin.git</p>
+          <p class="text-text-muted text-xs mt-2"># Skill (per-commit narrative):</p>
           <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.codex/skills/worktale</p>
           <p><span class="text-terminal-green/60">$</span> cp -r worktale-codex-plugin/skills/worktale/* ~/.codex/skills/worktale/</p>
+          <p class="text-text-muted text-xs mt-2"># Stop hook (auto token + cost capture):</p>
+          <p><span class="text-terminal-green/60">$</span> mkdir -p ~/.codex/hooks</p>
+          <p><span class="text-terminal-green/60">$</span> cp worktale-codex-plugin/hooks/session-track.mjs ~/.codex/hooks/</p>
+          <p><span class="text-terminal-green/60">$</span> cp worktale-codex-plugin/hooks/hooks.json ~/.codex/hooks.json</p>
         </div>
       </div>
 
-      <div class="p-4 rounded-lg border border-neon-amber/20 bg-neon-amber/5 mb-4">
-        <p class="font-mono text-xs text-neon-amber mb-1">Agent-supplied capture</p>
-        <p class="text-text-secondary text-sm">Provider, model, tools used, commits, and narrative &mdash; the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> at session wrap-up with what it knows. <strong class="text-text-primary">Tokens and cost are not captured</strong> because Codex doesn&rsquo;t expose them. If you need cost tracking on OpenAI, mirror it from your OpenAI usage dashboard or use <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code> manually.</p>
+      <div class="p-4 rounded-lg border border-cyber-cyan/20 bg-cyber-cyan/5 mb-4">
+        <p class="font-mono text-xs text-cyber-cyan mb-1">Automated capture</p>
+        <p class="text-text-secondary text-sm">Model, input + cached + output tokens, computed cost, session duration &mdash; all parsed from Codex&rsquo;s on-disk session rollouts after each session goes idle. Cost is computed from the published OpenAI rate table baked into the script (GPT-5/4o/4.1/o3/o4 + Codex-mini). The agent only handles per-commit narrative.</p>
       </div>
 
-      <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-codex-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-codex-plugin</a></p>
+      <p class="text-text-secondary text-xs">Source: <a href="https://github.com/worktale/worktale-codex-plugin" class="text-terminal-green hover:underline">github.com/worktale/worktale-codex-plugin</a> &middot; Inspired by <a href="https://github.com/Dimillian/CodexMonitor" class="text-terminal-green hover:underline">CodexMonitor</a>&rsquo;s rollout parser</p>
     </div>
   </section>
 
@@ -358,10 +363,10 @@
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Codex CLI</td>
-              <td class="py-3 pr-4 font-mono text-xs">Skill (SKILL.md)</td>
+              <td class="py-3 pr-4 font-mono text-xs">Skill + Stop hook</td>
               <td class="py-3 pr-4 text-terminal-green">&#10003; per commit</td>
-              <td class="py-3 pr-4 text-text-muted">&mdash; not exposed</td>
-              <td class="py-3 text-neon-amber">Agent-supplied</td>
+              <td class="py-3 pr-4 text-terminal-green">&#10003; automated</td>
+              <td class="py-3 text-terminal-green">&#10003; automated (model)</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-3 pr-4 text-text-primary font-medium">Cursor</td>
@@ -394,7 +399,7 @@
           </tbody>
         </table>
       </div>
-      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Automated</strong> = the plugin/hook captures the data itself; the agent doesn&rsquo;t need to do anything. <strong class="text-text-secondary">Agent-supplied</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with what it knows. Only Claude Code exposes transcripts and token usage to plugins today, so only Claude Code gets automated token/cost capture. You can always supplement any host with <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ... --input-tokens ... --output-tokens ...</code> manually.</p>
+      <p class="text-text-muted text-xs mt-4"><strong class="text-text-secondary">Automated</strong> = the plugin/hook captures the data itself; the agent doesn&rsquo;t need to do anything. <strong class="text-text-secondary">Agent-supplied</strong> = the agent calls <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add</code> with what it knows. Claude Code (transcript) and Codex (session rollouts at <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">~/.codex/sessions</code>) both expose token data on disk and get fully automated capture. Copilot and the rules-based hosts (Cursor/Cline/Windsurf) don&rsquo;t expose tokens, so cost is manual via <code class="text-terminal-green bg-terminal-green/10 px-1 rounded text-xs">worktale session add --cost ...</code>.</p>
     </div>
   </section>
 
@@ -466,19 +471,19 @@
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Provider / model</td>
               <td class="py-2 px-4 text-terminal-green">Auto</td>
-              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (turn_context)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Input / output tokens</td>
               <td class="py-2 px-4 text-terminal-green">Auto (transcript)</td>
-              <td class="py-2 px-4 text-text-muted">&mdash;</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (rollout JSONL)</td>
               <td class="py-2 px-4 text-text-muted">&mdash;</td>
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Cost in USD</td>
-              <td class="py-2 px-4 text-terminal-green">Auto (from rates)</td>
-              <td class="py-2 px-4 text-text-muted">Manual only</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (Anthropic rates)</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (OpenAI rates)</td>
               <td class="py-2 px-4 text-text-muted">Manual only</td>
             </tr>
             <tr class="border-b border-border-dim/50">
@@ -496,7 +501,7 @@
             <tr class="border-b border-border-dim/50">
               <td class="py-2 px-4 text-text-primary">Duration</td>
               <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
-              <td class="py-2 px-4 text-neon-amber">Agent</td>
+              <td class="py-2 px-4 text-terminal-green">Auto (timestamps)</td>
               <td class="py-2 px-4 text-neon-amber">Agent</td>
             </tr>
             <tr>

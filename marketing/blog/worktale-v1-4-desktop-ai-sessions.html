@@ -222,9 +222,9 @@
             </tr>
             <tr class="border-b border-border-dim/50">
               <td class="py-2.5 px-4 text-text-primary font-medium">OpenAI Codex</td>
-              <td class="py-2.5 px-4">Skill (SKILL.md)</td>
-              <td class="py-2.5 px-4 text-text-muted">&mdash;</td>
-              <td class="py-2.5 px-4 text-neon-amber">Provider, model, tools used, commits, narrative</td>
+              <td class="py-2.5 px-4">Skill + Stop hook</td>
+              <td class="py-2.5 px-4 text-terminal-green">Model, input/cached/output tokens, <strong>cost</strong>, duration</td>
+              <td class="py-2.5 px-4 text-text-muted">Per-commit narrative + tools used</td>
             </tr>
             <tr>
               <td class="py-2.5 px-4 text-text-primary font-medium">GitHub Copilot</td>
@@ -236,9 +236,10 @@
         </table>
       </div>
 
-      <div class="p-5 rounded-xl border border-neon-amber/20 bg-neon-amber/5 mb-6">
+      <div class="p-5 rounded-xl border border-cyber-cyan/20 bg-cyber-cyan/5 mb-6">
         <p class="text-text-secondary text-sm leading-relaxed">
-          <strong class="text-text-primary">Why only Claude Code captures tokens and cost automatically:</strong> Claude Code&rsquo;s <code class="text-text-muted text-xs">SessionEnd</code> hook hands your plugin the full session transcript. We parse it, sum the token usage blocks across every assistant turn, and compute cost from a built-in rate table. Codex and Copilot don&rsquo;t expose token or cost data to plugins today, so those fields rely on the agent supplying them&mdash;which it can&rsquo;t do accurately. Provider, model, tools, commits, and narrative all work on every host.
+          <strong class="text-text-primary">How automated capture works:</strong>
+          Claude Code&rsquo;s <code class="text-text-muted text-xs">SessionEnd</code> hook hands the plugin the full session transcript. Codex writes its own session rollouts to <code class="text-text-muted text-xs">~/.codex/sessions/YYYY/MM/DD/*.jsonl</code> on disk &mdash; the plugin&rsquo;s <code class="text-text-muted text-xs">Stop</code> hook parses those after each session goes idle. Both compute cost from built-in rate tables (Anthropic for Claude, OpenAI for Codex) so the recorded numbers match your invoices. Copilot doesn&rsquo;t expose comparable data to plugins, so cost on Copilot is manual via <code class="text-text-muted text-xs">worktale session add --cost ...</code>.
         </p>
       </div>
 
