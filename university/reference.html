@@ -114,7 +114,7 @@
                             </div>
                             <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="font-mono text-terminal-green text-sm">worktale session <span class="text-text-muted">&lt;add|list|stats&gt; [flags]</span></p>
-                                <p class="text-text-secondary text-sm mt-1">AI session management. <code>add</code> inserts; <code>list</code> and <code>stats</code> support <code>--format</code>.</p>
+                                <p class="text-text-secondary text-sm mt-1">AI session management. <code>add</code> inserts a session row; pass <code>--write-note</code> to also append the <code>--note</code> text to today's daily log in one call (v1.5.0+). <code>list</code> and <code>stats</code> support <code>--format</code>.</p>
                             </div>
                             <div class="p-4 rounded-lg border border-border-dim bg-surface-1/50">
                                 <p class="font-mono text-terminal-green text-sm">worktale config <span class="text-text-muted">&lt;get|set|unset&gt; [key] [value]</span></p>
@@ -173,6 +173,7 @@
                                 <thead class="bg-surface-2"><tr><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">KEY</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">TYPE</th><th class="text-left py-2 px-4 text-text-muted font-normal text-xs">DEFAULT / NOTES</th></tr></thead>
                                 <tbody class="divide-y divide-border-dim">
                                     <tr><td class="py-2 px-4 text-terminal-green">nudgeTime</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"17:00" HH:MM</td></tr>
+                                    <tr><td class="py-2 px-4 text-terminal-green">autoDigestOnNudge</td><td class="py-2 px-4 text-text-secondary">bool</td><td class="py-2 px-4 text-text-secondary">true &mdash; auto-generate digest when nudge fires (v1.5.0+)</td></tr>
                                     <tr><td class="py-2 px-4 text-terminal-green">timezone</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"auto" or IANA tz</td></tr>
                                     <tr><td class="py-2 px-4 text-terminal-green">ai.provider</td><td class="py-2 px-4 text-text-secondary">string</td><td class="py-2 px-4 text-text-secondary">"template" or "ollama"</td></tr>
                                     <tr><td class="py-2 px-4 text-terminal-green">ai.model</td><td class="py-2 px-4 text-text-secondary">string|null</td><td class="py-2 px-4 text-text-secondary">Ollama model name</td></tr>

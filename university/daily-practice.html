@@ -167,9 +167,9 @@
                             Open the TUI with <code>worktale</code>, press <code>2</code> for Daily Log, then <code>e</code> to edit. This drops you into your <code>$EDITOR</code> (defaults to nano or vim).
                         </p>
 
-                        <p class="font-mono text-xs text-terminal-green mt-6 mb-2">3. AI agent</p>
+                        <p class="font-mono text-xs text-terminal-green mt-6 mb-2">3. AI agent (automatic)</p>
                         <p class="text-text-secondary mb-4">
-                            If you're using an AI coding agent (Claude Code, Codex, OpenCode, Copilot) with the Worktale plugin installed, the agent appends context notes automatically after each session. Covered in Course 03.
+                            If you're using a Worktale plugin (Claude Code, Codex, OpenCode, Copilot), the agent runs one combined command per commit &mdash; <code>worktale session add --write-note</code> &mdash; which records the session metrics <em>and</em> appends the narrative to today's daily log in a single call. You get notes automatically, tagged with the tool that produced them (<code>[claude-code] ...</code>). Covered in Course 03.
                         </p>
 
                         <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">What to actually write</h3>
@@ -204,7 +204,10 @@
                         </div>
 
                         <p class="text-text-secondary mb-4">
-                            A nudge is a one-liner Worktale adds to your <code>.bashrc</code> or <code>.zshrc</code> that checks, once per shell load after your configured &ldquo;nudge time&rdquo;, whether you've committed today but haven't run <code>worktale digest</code>. If both are true, it prints a single-line reminder.
+                            A nudge is a one-liner Worktale adds to your <code>.bashrc</code> or <code>.zshrc</code> that checks, once per shell load after your configured &ldquo;nudge time&rdquo;, whether you've committed today but haven't run <code>worktale digest</code>. If both are true, <strong class="text-text-primary">Worktale auto-generates and saves a template digest for each pending repo</strong> and prints a one-line confirmation. You can review or edit later with <code>worktale digest</code>.
+                        </p>
+                        <p class="text-text-secondary mb-4">
+                            Want reminders only, no auto-save? <code>worktale config set autoDigestOnNudge false</code>.
                         </p>
 
                         <h3 class="text-xl font-bold text-text-primary mt-8 mb-3">Install</h3>
@@ -230,7 +233,8 @@
                         <div class="rounded-xl border border-border-dim bg-surface-1 overflow-hidden mb-4 font-mono text-sm">
                             <div class="p-4 space-y-1">
                                 <p class="text-text-muted"># You open a new terminal after 5pm</p>
-                                <p class="text-neon-amber">&#9889; Worktale: 7 commits today, no digest yet. Run `worktale digest`.</p>
+                                <p class="text-neon-amber">&#9889; Worktale &mdash; Auto-saved digest for acme-portal (815 lines shipped today).</p>
+                                <p class="text-text-secondary">Review or edit: <span class="text-terminal-green">worktale digest</span></p>
                                 <p class="text-text-muted mt-1">$</p>
                             </div>
                         </div>
