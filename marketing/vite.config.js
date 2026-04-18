@@ -52,6 +52,7 @@ export default defineConfig({
         blog: resolve(__dirname, 'blog.html'),
         plugin: resolve(__dirname, 'plugin.html'),
         thanks: resolve(__dirname, 'thanks.html'),
+        pricing: resolve(__dirname, 'pricing.html'),
         blogLaunch: resolve(__dirname, 'blog/worktale-v1-launch.html'),
         blogV11Agents: resolve(__dirname, 'blog/worktale-v1-1-ai-agents.html'),
         blogCloudBeta: resolve(__dirname, 'blog/worktale-cloud-beta.html'),

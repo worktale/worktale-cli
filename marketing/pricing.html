@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pricing — Worktale</title>
+  <meta name="description" content="The Worktale CLI is free forever. Cloud sync, public profile, and AI digests are $19/mo. Founding member lifetime access $149 (limited). Team tier waitlist open."/>
+  <meta property="og:title" content="Worktale Pricing — Free CLI, Pro Cloud, Founding Lifetime"/>
+  <meta property="og:description" content="Free CLI forever. $19/mo for Cloud features. $149 lifetime for founding members. Team tier on the waitlist."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://worktale.org/pricing"/>
+  <meta property="og:image" content="https://worktale.org/logo/worktale-screenshot.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Worktale Pricing"/>
+  <meta name="twitter:description" content="Free CLI forever. $19/mo Cloud. $149 lifetime."/>
+  <link rel="canonical" href="https://worktale.org/pricing.html"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-surface-0 text-text-primary font-sans antialiased selection:bg-terminal-green/20 selection:text-terminal-green">
+
+<%header%>
+
+<main class="pt-24 pb-16">
+
+  <!-- HERO -->
+  <section class="py-16 md:py-20">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-6">
+        <span class="w-2 h-2 rounded-full bg-terminal-green animate-pulse"></span>
+        <span class="font-mono text-xs text-terminal-green tracking-wider">PRICING</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
+        Free CLI. Honest cloud pricing.<br/>
+        <span class="text-text-secondary">Built for solo developers.</span>
+      </h1>
+      <p class="text-text-secondary text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+        The Worktale CLI is free forever. Pay only when you want the cloud profile,
+        AI-generated client reports, and weekly summaries.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRICING GRID -->
+  <section class="pb-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- ============================== FREE ============================== -->
+        <div class="rounded-2xl border border-border-dim bg-surface-1/30 p-6 flex flex-col">
+          <div class="mb-6">
+            <p class="font-mono text-xs text-text-muted tracking-widest uppercase mb-2">CLI</p>
+            <h2 class="text-xl font-bold text-text-primary mb-1">Free</h2>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-3xl font-bold text-text-primary">$0</span>
+              <span class="text-text-muted text-sm">forever</span>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">Everything you need on your own machine.</p>
+          </div>
+
+          <ul class="space-y-2.5 mb-6 text-sm">
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>All 17 CLI commands</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>Interactive TUI dashboard</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>Native Windows desktop app (macOS/Linux soon)</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>Local SQLite storage</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>Claude Code, Codex, Copilot, Cursor, Cline, Windsurf integrations</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>AI session tracking (tokens + cost on Claude Code)</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>Daily digest, history, streaks, heatmap</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-terminal-green mt-0.5">&#10003;</span>MIT licensed, open source</li>
+          </ul>
+
+          <div class="mt-auto">
+            <a href="/#install" class="block w-full text-center px-4 py-3 rounded-lg border border-terminal-green/30 bg-terminal-green/5 font-mono text-sm text-terminal-green hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-all">
+              npm install -g worktale
+            </a>
+          </div>
+        </div>
+
+        <!-- ============================== PRO ============================== -->
+        <div class="relative rounded-2xl border border-cyber-cyan/40 bg-cyber-cyan/[0.04] p-6 flex flex-col shadow-2xl shadow-cyber-cyan/[0.06]">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-cyber-cyan/15 border border-cyber-cyan/30 font-mono text-[10px] font-bold text-cyber-cyan tracking-widest uppercase">Most popular</div>
+          <div class="mb-6">
+            <p class="font-mono text-xs text-cyber-cyan tracking-widest uppercase mb-2">PRO</p>
+            <h2 class="text-xl font-bold text-text-primary mb-1">Pro Cloud</h2>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-3xl font-bold text-text-primary">$19</span>
+              <span class="text-text-muted text-sm">/ month</span>
+            </div>
+            <p class="text-text-muted text-xs">or <span class="text-cyber-cyan font-mono">$190/yr</span> &mdash; save $38</p>
+            <p class="text-text-muted text-sm leading-relaxed mt-3">Everything in Free, plus the cloud features built for client work.</p>
+          </div>
+
+          <ul class="space-y-2.5 mb-6 text-sm">
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Public profile at <code class="text-cyber-cyan/90 font-mono text-xs">worktale.dev/{you}</code></li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Cross-repo timeline + activity heatmap</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>AI-generated weekly digests</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span><code class="text-cyber-cyan/90 font-mono text-xs">worktale standup</code> &amp; <code class="text-cyber-cyan/90 font-mono text-xs">retro</code> AI generation</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Client-summary &amp; promotion-packet exports</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Optional weekly email summary</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Profile view analytics</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-cyber-cyan mt-0.5">&#10003;</span>Cancel anytime</li>
+          </ul>
+
+          <div class="mt-auto">
+            <button
+              type="button"
+              x-data
+              @click="$dispatch('worktale:waitlist', { tier: 'pro', label: 'Pro Cloud ($19/mo)' })"
+              class="w-full text-center px-4 py-3 rounded-lg border border-cyber-cyan/40 bg-cyber-cyan/15 font-mono text-sm text-cyber-cyan hover:bg-cyber-cyan/25 hover:border-cyber-cyan/60 transition-all cursor-pointer"
+            >
+              Get early access &rarr;
+            </button>
+            <p class="text-text-muted text-[10px] text-center mt-2">Stripe checkout opens to early-access list this month.</p>
+          </div>
+        </div>
+
+        <!-- ============================== LIFETIME ============================== -->
+        <div class="relative rounded-2xl border border-neon-amber/30 bg-neon-amber/[0.04] p-6 flex flex-col">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-neon-amber/15 border border-neon-amber/30 font-mono text-[10px] font-bold text-neon-amber tracking-widest uppercase">Limited &middot; 100 spots</div>
+          <div class="mb-6">
+            <p class="font-mono text-xs text-neon-amber tracking-widest uppercase mb-2">FOUNDING</p>
+            <h2 class="text-xl font-bold text-text-primary mb-1">Lifetime</h2>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-3xl font-bold text-text-primary">$149</span>
+              <span class="text-text-muted text-sm">once</span>
+            </div>
+            <p class="text-text-muted text-xs">~8 months of Pro &middot; locked in forever</p>
+            <p class="text-text-muted text-sm leading-relaxed mt-3">For early supporters. Pay once, never again.</p>
+          </div>
+
+          <ul class="space-y-2.5 mb-6 text-sm">
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span><strong class="text-text-primary">Everything in Pro Cloud</strong>, forever</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span>Founding-member badge on your public profile</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span>Direct line to the founder for feature requests</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span>All future Pro features included</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span>Lifetime price-lock &mdash; never increases</li>
+            <li class="flex items-start gap-2 text-text-secondary"><span class="text-neon-amber mt-0.5">&#10003;</span>14-day money-back guarantee</li>
+          </ul>
+
+          <div class="mt-auto">
+            <button
+              type="button"
+              x-data
+              @click="$dispatch('worktale:waitlist', { tier: 'lifetime', label: 'Founding Lifetime ($149)' })"
+              class="w-full text-center px-4 py-3 rounded-lg border border-neon-amber/40 bg-neon-amber/15 font-mono text-sm text-neon-amber hover:bg-neon-amber/25 hover:border-neon-amber/60 transition-all cursor-pointer"
+            >
+              Reserve your spot &rarr;
+            </button>
+            <p class="text-text-muted text-[10px] text-center mt-2">First 100 buyers. Stripe link goes out this month.</p>
+          </div>
+        </div>
+
+        <!-- ============================== TEAMS ============================== -->
+        <div class="rounded-2xl border border-border-dim bg-surface-1/30 p-6 flex flex-col opacity-90">
+          <div class="mb-6">
+            <p class="font-mono text-xs text-text-muted tracking-widest uppercase mb-2">TEAMS &middot; PREVIEW</p>
+            <h2 class="text-xl font-bold text-text-primary mb-1">Teams</h2>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-3xl font-bold text-text-primary">$39</span>
+              <span class="text-text-muted text-sm">/ seat / month</span>
+            </div>
+            <p class="text-text-muted text-xs">2&ndash;10 seats &middot; not yet built</p>
+            <p class="text-text-muted text-sm leading-relaxed mt-3">For agencies, dev studios, and small engineering teams that want shared visibility.</p>
+          </div>
+
+          <ul class="space-y-2.5 mb-6 text-sm">
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Everything in Pro Cloud, per seat</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Team admin dashboard</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Team-wide AI cost rollups</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Role-based access (admin / member)</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>SSO (Google + Microsoft) &mdash; planned</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Invoiced billing (annual)</li>
+            <li class="flex items-start gap-2 text-text-muted"><span class="text-text-muted mt-0.5">&middot;</span>Priority support</li>
+          </ul>
+
+          <div class="mt-auto">
+            <button
+              type="button"
+              x-data
+              @click="$dispatch('worktale:waitlist', { tier: 'teams', label: 'Teams ($39/seat/mo)' })"
+              class="w-full text-center px-4 py-3 rounded-lg border border-border-dim bg-surface-0 font-mono text-sm text-text-primary hover:border-terminal-green/30 hover:text-terminal-green transition-all cursor-pointer"
+            >
+              Join the waitlist &rarr;
+            </button>
+            <p class="text-text-muted text-[10px] text-center mt-2">When 50+ teams sign up, we&rsquo;ll build it.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compare row note -->
+      <p class="text-center text-text-muted text-xs mt-8">
+        All paid tiers include the free CLI &middot; All annual subscriptions can be cancelled within 14 days for a full refund.
+      </p>
+    </div>
+  </section>
+
+  <!-- WAITLIST MODAL -->
+  <div
+    x-data="worktaleWaitlist"
+    x-init="init"
+    x-show="open"
+    x-cloak
+    x-transition.opacity
+    @keydown.escape.window="close"
+    class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+    style="display:none;"
+  >
+    <div
+      @click.outside="close"
+      class="relative w-full max-w-md rounded-2xl border border-terminal-green/30 bg-surface-0 p-8 shadow-2xl shadow-terminal-green/10"
+    >
+      <button
+        type="button"
+        @click="close"
+        class="absolute top-3 right-3 w-8 h-8 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-1 transition-colors flex items-center justify-center"
+        aria-label="Close"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+        </svg>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="inline-flex w-14 h-14 rounded-xl bg-terminal-green/10 border border-terminal-green/20 items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terminal-green">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-text-primary">Reserve your spot</h3>
+        <p class="text-text-muted text-sm mt-2 leading-relaxed">
+          For: <span class="text-terminal-green font-mono" x-text="label"></span>
+        </p>
+      </div>
+
+      <form @submit.prevent="submit" class="space-y-3">
+        <input
+          type="email"
+          x-model="email"
+          x-ref="emailInput"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+          :disabled="loading"
+          class="w-full px-4 py-3 rounded-lg bg-surface-1 border border-border-dim focus:border-terminal-green/50 focus:outline-none font-mono text-sm text-text-primary placeholder:text-text-muted transition-colors"
+        />
+        <input
+          type="text"
+          x-model="note"
+          :disabled="loading"
+          placeholder="Anything specific you're looking for? (optional)"
+          maxlength="280"
+          class="w-full px-4 py-3 rounded-lg bg-surface-1 border border-border-dim focus:border-terminal-green/50 focus:outline-none text-sm text-text-primary placeholder:text-text-muted transition-colors"
+        />
+        <button
+          type="submit"
+          :disabled="loading"
+          class="w-full px-5 py-3 rounded-lg bg-terminal-green/15 border border-terminal-green/40 font-mono text-sm text-terminal-green hover:bg-terminal-green/25 hover:border-terminal-green/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+        >
+          <span x-show="!loading &amp;&amp; !success">Join the list</span>
+          <span x-show="loading" class="inline-flex items-center gap-2">
+            <svg class="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+            Submitting&hellip;
+          </span>
+          <span x-show="success" class="text-terminal-green">&#10003; You&rsquo;re on the list. Watch your inbox.</span>
+        </button>
+        <p x-show="error" x-text="error" class="text-red-400 text-xs text-center"></p>
+      </form>
+
+      <p class="text-[10px] text-text-muted text-center mt-5 leading-relaxed">
+        We&rsquo;ll email when this tier is ready to buy. No spam, no marketing blast.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('worktaleWaitlist', () => ({
+        open: false,
+        email: '',
+        note: '',
+        tier: '',
+        label: '',
+        loading: false,
+        success: false,
+        error: '',
+        init() {
+          window.addEventListener('worktale:waitlist', (e) => {
+            this.tier = (e && e.detail && e.detail.tier) || 'unknown';
+            this.label = (e && e.detail && e.detail.label) || this.tier;
+            this.success = false;
+            this.error = '';
+            this.open = true;
+            this.$nextTick(() => this.$refs.emailInput && this.$refs.emailInput.focus());
+          });
+        },
+        close() {
+          this.open = false;
+          this.error = '';
+          if (this.success) {
+            this.email = '';
+            this.note = '';
+            this.success = false;
+          }
+        },
+        async submit() {
+          if (!this.email || this.loading) return;
+          this.loading = true;
+          this.error = '';
+          try {
+            const res = await fetch('https://forms.noundry.com/f/worktale', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                source: 'pricing-waitlist',
+                tier: this.tier,
+                label: this.label,
+                email: this.email,
+                note: this.note,
+                referrer: document.referrer || '',
+                timestamp: new Date().toISOString(),
+              }),
+            });
+            if (!res.ok) throw new Error('submit-failed');
+            this.success = true;
+          } catch (err) {
+            this.error = 'Could not submit. Try again, or email hello@worktale.org.';
+          } finally {
+            this.loading = false;
+          }
+        },
+      }));
+    });
+  </script>
+
+  <!-- HONEST CONTEXT -->
+  <section class="py-16 border-t border-border-dim bg-surface-1/20">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3">Why this pricing?</h2>
+      <p class="text-text-secondary text-center mb-8 text-sm">Built and run by one person. Here&rsquo;s how it actually works.</p>
+
+      <div class="space-y-5 text-text-secondary text-sm leading-relaxed">
+        <p>
+          <strong class="text-text-primary">The CLI is genuinely free.</strong>
+          Open source, MIT licensed, npm-installable. It works on every git repo without any account or network access.
+          The TUI dashboard, all 17 commands, AI session tracking via the Claude Code plugin &mdash; all free, forever.
+        </p>
+        <p>
+          <strong class="text-text-primary">$19/mo Pro Cloud is what unlocks the cloud-side features.</strong>
+          AI-generated weekly digests, standup &amp; retro generation, the public profile at <code class="text-terminal-green font-mono text-xs">worktale.dev/{you}</code>,
+          cross-repo timeline, and client-ready exports. These exist because they require AI inference cost and hosting &mdash; both real expenses for a one-person company.
+        </p>
+        <p>
+          <strong class="text-text-primary">$149 lifetime is for the first 100 supporters.</strong>
+          You take a small bet on Worktale being around in 5 years; in exchange you get every Pro feature forever and a founding badge.
+          When the 100 spots are gone, the lifetime tier closes and Pro is monthly only.
+        </p>
+        <p>
+          <strong class="text-text-primary">Teams isn&rsquo;t built yet.</strong>
+          The team substrate (org accounts, RBAC, admin dashboards, SSO) is real engineering &mdash; weeks of work.
+          Joining the waitlist is the signal we need to prioritize it. When 50+ teams are on the list, we ship it.
+          Until then, all team-tier copy here is preview, not promise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">FAQ</h2>
+
+      <div class="space-y-3" x-data="{ open: '' }">
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden" @toggle="open = $event.target.open ? 'one' : ''">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            Can I use Worktale without paying?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            Yes. The CLI does everything locally and is free forever. You only pay if you want the cloud sync, public profile, AI weekly digests, or client-summary exports.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            What does the lifetime tier actually include?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            Every Pro Cloud feature, forever. New features added to Pro are also included for lifetime members. Limited to the first 100 buyers because the underlying AI inference cost is real.
+            Once 100 lifetime spots sell, that tier closes permanently.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            What happens if I cancel?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            Your local CLI keeps working forever. Your data stays on your machine in the SQLite database at <code class="text-terminal-green font-mono text-xs">~/.worktale/data.db</code>.
+            Cloud-side features stop &mdash; but your data was never trapped on the cloud to begin with.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            Why isn&rsquo;t Stripe checkout live yet?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            Stripe webhook handlers are wired into the cloud backend, but the checkout flow is still rolling out.
+            Joining the early-access list now means you get the first checkout email when it goes live this month.
+            No payment until then; nothing charged on signup.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            Do I need a credit card to try Worktale?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            No. The CLI installs from npm with no signup. The desktop app is a free download. Cloud accounts at worktale.dev are also free during the open beta &mdash; payment only kicks in when you pick a paid tier.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            What about teams &amp; agencies?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            The team tier is on the waitlist &mdash; substrate (org accounts, RBAC, admin dashboards) isn&rsquo;t built yet. Sign up if you&rsquo;d use it; we&rsquo;ll prioritize when 50+ teams have raised hands. In the meantime, every team member can use Pro Cloud individually.
+          </p>
+        </details>
+
+        <details class="group rounded-xl border border-border-dim bg-surface-1/30 overflow-hidden">
+          <summary class="px-5 py-4 cursor-pointer font-mono text-sm text-text-primary list-none flex items-center justify-between">
+            Is the CLI really MIT-licensed?
+            <span class="text-text-muted group-open:rotate-180 transition-transform">&darr;</span>
+          </summary>
+          <p class="px-5 pb-4 text-text-secondary text-sm leading-relaxed">
+            Yes &mdash; <a href="https://github.com/worktale/worktale-cli" class="text-terminal-green underline hover:text-terminal-green/80">github.com/worktale/worktale-cli</a>.
+            Fork it, contribute, or self-host. The cloud backend is a separate codebase used to power the worktale.dev side.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="py-16 border-t border-border-dim">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">Start with the free CLI.</h2>
+      <p class="text-text-secondary text-sm mb-6">Upgrade when you want the cloud features. Or never &mdash; the CLI does plenty on its own.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3" x-data="{ copied: false }">
+        <button
+          @click="navigator.clipboard.writeText('npm install -g worktale'); copied = true; setTimeout(() => copied = false, 2000)"
+          class="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-surface-1 border border-terminal-green/30 font-mono text-sm hover:border-terminal-green/60 transition-all cursor-pointer"
+        >
+          <span class="text-terminal-green/60">$</span>
+          <span class="text-terminal-green">npm install -g worktale</span>
+          <span class="text-text-muted ml-2 text-xs" x-text="copied ? 'copied!' : 'click to copy'" x-bind:class="copied &amp;&amp; 'text-terminal-green'"></span>
+        </button>
+        <a href="/lander-freelance.html" class="font-mono text-xs text-text-secondary hover:text-terminal-green transition-colors">
+          for freelancers &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%footer%>
+
+</body>
+</html>
