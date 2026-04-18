@@ -1172,75 +1172,45 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-16">
-                        <!-- Left: capture matrix -->
-                        <div>
-                            <div class="rounded-xl border border-cyber-cyan/30 bg-cyber-cyan/[0.03] overflow-hidden">
-                                <div class="px-5 py-3 border-b border-cyber-cyan/20 bg-cyber-cyan/[0.06] flex items-center justify-between">
-                                    <span class="font-mono text-[11px] text-cyber-cyan tracking-widest uppercase">Capture matrix</span>
-                                    <span class="font-mono text-[10px] text-text-muted">all automated</span>
+                        <!-- Left: benefit bullets -->
+                        <div class="space-y-5">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyber-cyan"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                                 </div>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-sm">
-                                        <thead>
-                                            <tr class="border-b border-border-dim/60">
-                                                <th class="text-left py-2 px-4 font-mono text-text-muted font-normal text-[10px] tracking-widest uppercase">Field</th>
-                                                <th class="text-center py-2 px-3 font-mono text-text-muted font-normal text-[10px]">Claude</th>
-                                                <th class="text-center py-2 px-3 font-mono text-text-muted font-normal text-[10px]">Codex</th>
-                                                <th class="text-center py-2 px-3 font-mono text-text-muted font-normal text-[10px]">OpenCode</th>
-                                                <th class="text-center py-2 px-3 font-mono text-text-muted font-normal text-[10px]">Copilot</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-text-secondary text-xs">
-                                            <tr class="border-b border-border-dim/40">
-                                                <td class="py-2 px-4 text-text-primary">Provider / model</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                            <tr class="border-b border-border-dim/40">
-                                                <td class="py-2 px-4 text-text-primary">Input / output tokens</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                            <tr class="border-b border-border-dim/40">
-                                                <td class="py-2 px-4 text-text-primary">Cost in USD</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                            <tr class="border-b border-border-dim/40">
-                                                <td class="py-2 px-4 text-text-primary">Tools used</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-text-muted">&middot;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                            <tr class="border-b border-border-dim/40">
-                                                <td class="py-2 px-4 text-text-primary">MCP servers</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-text-muted">&middot;</td>
-                                                <td class="py-2 px-3 text-center text-text-muted">&middot;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-2 px-4 text-text-primary">Duration</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                                <td class="py-2 px-3 text-center text-cyber-cyan">&#10003;</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div>
+                                    <h3 class="text-base font-bold text-text-primary mb-1">See spend by project</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed">Every session attributes to the repo it ran in. Know exactly what each client engagement is costing you in AI &mdash; pass it through, or factor it into your next rate.</p>
                                 </div>
                             </div>
-                            <p class="text-text-muted text-xs mt-3 leading-relaxed">
-                                Switch agents whenever you want. Your cost data, model history, and tool usage stay in one place &mdash; queryable from the CLI, browsable in the desktop app.
-                            </p>
-                            <p class="text-text-muted text-xs mt-3"><a href="/plugin.html" class="text-terminal-green hover:underline">Install instructions for all four hosts &rarr;</a></p>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyber-cyan"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-text-primary mb-1">Compare models, head to head</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed">Is Opus actually worth 5&times; what Sonnet costs you on routine work? See real numbers per model. Stop guessing.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyber-cyan"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-text-primary mb-1">Switch agents anytime</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed">Your data lives in one place regardless of which agent you used today. Browse in the desktop app, query from the CLI, sync to the cloud.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyber-cyan"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-text-primary mb-1">Local-first, private by default</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed">All capture happens on your machine. No telemetry, no third-party data sharing. Cloud sync is opt-in.</p>
+                                </div>
+                            </div>
+                            <p class="text-text-muted text-xs pt-2"><a href="/plugin.html" class="text-terminal-green hover:underline">Install for all four agents &rarr;</a></p>
                         </div>
 
                         <!-- Right: terminal mockup -->
