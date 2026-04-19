@@ -213,6 +213,65 @@
             <!-- ═══════════════════════════════════════════════════════ -->
             <section
                 class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20 md:pb-32"
+                x-data="{
+                    slide: 0,
+                    paused: false,
+                    timer: null,
+                    slides: [
+                        {
+                            pill: 'For freelancers &amp; contractors',
+                            link: '/lander-freelance.html',
+                            color: 'terminal-green',
+                            h1a: 'Bill with receipts,',
+                            h1b: 'not guesswork.',
+                            subtitle: 'Per-project hours, per-project AI cost, digest-ready.',
+                            body: 'Every commit and AI session attributes to the repo it ran in. Pass AI cost through to clients with a one-line invoice addendum; no more asking &ldquo;wait, what did I do last week?&rdquo;'
+                        },
+                        {
+                            pill: 'For developers under NDA',
+                            link: '/lander-nda.html',
+                            color: 'cyber-cyan',
+                            h1a: 'The record you keep',
+                            h1b: 'when the repo isn&rsquo;t yours.',
+                            subtitle: 'Metadata only. NDA-safe. Moves with you.',
+                            body: 'Worktale reads commit metadata &mdash; never file contents, never diffs, never source. Your work history survives NDAs, archived repos, and job changes.'
+                        },
+                        {
+                            pill: 'For cross-agent AI tracking',
+                            link: '/lander-ai.html',
+                            color: 'terminal-green',
+                            h1a: 'Track every AI session.',
+                            h1b: 'Across every agent.',
+                            subtitle: 'Cross-agent AI cost and context tracking.',
+                            body: 'Claude Code &middot; Codex &middot; OpenCode &middot; Copilot. All four captured automatically &mdash; tokens, cost, model, tools, duration &mdash; by SessionEnd hooks. One dashboard for all of it.'
+                        },
+                        {
+                            pill: 'For performance reviews',
+                            link: '/lander-proof.html',
+                            color: 'neon-amber',
+                            h1a: 'Walk into your review',
+                            h1b: 'with receipts.',
+                            subtitle: 'Exact dates. Real counts. Zero guessing.',
+                            body: 'Six months from now you&rsquo;ll remember the feature but not the week. Worktale remembers the week. Run <code>worktale digest --since 2026-01-01</code> and your self-review writes itself.'
+                        },
+                        {
+                            pill: 'For context you&rsquo;ll need back',
+                            link: '/lander-proof.html',
+                            color: 'cyber-cyan',
+                            h1a: 'Past-you becomes',
+                            h1b: 'a useful coworker.',
+                            subtitle: 'Commits, decisions, AI session notes &mdash; preserved.',
+                            body: 'Revisit code in six months and know exactly why you did it that way. Your AI agent&rsquo;s per-commit narrative lands in your daily log automatically. Less archaeology, more building.'
+                        }
+                    ],
+                    start() {
+                        this.timer = setInterval(() => { if (!this.paused) this.slide = (this.slide + 1) % this.slides.length; }, 6000);
+                    },
+                    pick(i) { this.slide = i; this.paused = true; setTimeout(() => this.paused = false, 12000); }
+                }"
+                x-init="start()"
+                @mouseenter="paused = true"
+                @mouseleave="paused = false"
             >
                 <!-- Scanline overlay -->
                 <div
@@ -250,17 +309,50 @@
                 ></div>
 
                 <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
-                    <!-- Announcement pill -->
-                    <a
-                        href="/lander-ai.html"
-                        class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-terminal-green/30 bg-terminal-green/5 mb-4 hover:bg-terminal-green/10 hover:border-terminal-green/50 transition-all group"
-                    >
-                        <span class="px-2 py-0.5 rounded-full bg-terminal-green/20 font-mono text-[10px] font-bold text-terminal-green tracking-widest uppercase">New</span>
-                        <span class="font-mono text-xs text-terminal-green/90 group-hover:text-terminal-green transition-colors">AI Sessions dashboard &mdash; cross-agent cost, tokens &amp; context</span>
-                        <span class="text-terminal-green/60 group-hover:text-terminal-green transition-colors">&rarr;</span>
-                    </a>
+                    <!-- ICP pill (rotates with slide) -->
+                    <template x-for="(s, i) in slides" :key="i">
+                        <a
+                            x-show="slide === i"
+                            x-transition:enter="transition ease-out duration-500"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            :href="s.link"
+                            class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border mb-4 transition-all group"
+                            :class="{
+                                'border-terminal-green/30 bg-terminal-green/5 hover:bg-terminal-green/10 hover:border-terminal-green/50': s.color === 'terminal-green',
+                                'border-cyber-cyan/30 bg-cyber-cyan/5 hover:bg-cyber-cyan/10 hover:border-cyber-cyan/50': s.color === 'cyber-cyan',
+                                'border-neon-amber/30 bg-neon-amber/5 hover:bg-neon-amber/10 hover:border-neon-amber/50': s.color === 'neon-amber'
+                            }"
+                        >
+                            <span
+                                class="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold tracking-widest uppercase"
+                                :class="{
+                                    'bg-terminal-green/20 text-terminal-green': s.color === 'terminal-green',
+                                    'bg-cyber-cyan/20 text-cyber-cyan': s.color === 'cyber-cyan',
+                                    'bg-neon-amber/20 text-neon-amber': s.color === 'neon-amber'
+                                }"
+                            >Use case</span>
+                            <span
+                                class="font-mono text-xs transition-colors"
+                                :class="{
+                                    'text-terminal-green/90 group-hover:text-terminal-green': s.color === 'terminal-green',
+                                    'text-cyber-cyan/90 group-hover:text-cyber-cyan': s.color === 'cyber-cyan',
+                                    'text-neon-amber/90 group-hover:text-neon-amber': s.color === 'neon-amber'
+                                }"
+                                x-html="s.pill"
+                            ></span>
+                            <span
+                                class="transition-colors"
+                                :class="{
+                                    'text-terminal-green/60 group-hover:text-terminal-green': s.color === 'terminal-green',
+                                    'text-cyber-cyan/60 group-hover:text-cyber-cyan': s.color === 'cyber-cyan',
+                                    'text-neon-amber/60 group-hover:text-neon-amber': s.color === 'neon-amber'
+                                }"
+                            >&rarr;</span>
+                        </a>
+                    </template>
 
-                    <!-- Terminal badge -->
+                    <!-- Terminal badge (stable across slides) -->
                     <div
                         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-terminal-green/20 bg-terminal-green/5 mb-8"
                     >
@@ -273,28 +365,62 @@
                         >
                     </div>
 
-                    <h1
-                        class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6"
-                    >
-                        <span class="text-text-primary">Track every AI session.</span
-                        ><br />
-                        <span
-                            class="bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green bg-clip-text text-transparent"
-                            >Across every agent.</span
-                        >
-                    </h1>
+                    <!-- Headline (rotates) -->
+                    <div class="min-h-[180px] md:min-h-[240px] lg:min-h-[300px] flex items-center justify-center">
+                        <template x-for="(s, i) in slides" :key="i">
+                            <h1
+                                x-show="slide === i"
+                                x-transition:enter="transition ease-out duration-500"
+                                x-transition:enter-start="opacity-0 translate-y-2"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                class="absolute text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6"
+                            >
+                                <span class="text-text-primary" x-text="s.h1a"></span><br />
+                                <span
+                                    class="bg-clip-text text-transparent"
+                                    :class="{
+                                        'bg-gradient-to-r from-terminal-green via-cyber-cyan to-terminal-green': s.color === 'terminal-green',
+                                        'bg-gradient-to-r from-cyber-cyan via-terminal-green to-cyber-cyan': s.color === 'cyber-cyan',
+                                        'bg-gradient-to-r from-neon-amber via-terminal-green to-neon-amber': s.color === 'neon-amber'
+                                    }"
+                                    x-text="s.h1b"
+                                ></span>
+                            </h1>
+                        </template>
+                    </div>
 
-                    <p
-                        class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed"
-                    >
-                        Cross-agent AI cost and context tracking for every developer.
-                    </p>
-                    <p
-                        class="text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
-                    >
-                        Claude Code &middot; OpenAI Codex &middot; OpenCode &middot; GitHub Copilot.
-                        All four captured automatically &mdash; tokens, cost, model, context &mdash; in a record that stays on your machine and moves with you.
-                    </p>
+                    <!-- Subtitle + body (rotates) -->
+                    <div class="min-h-[120px]">
+                        <template x-for="(s, i) in slides" :key="i">
+                            <div
+                                x-show="slide === i"
+                                x-transition:enter="transition ease-out duration-500 delay-100"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100"
+                            >
+                                <p
+                                    class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed"
+                                    x-text="s.subtitle"
+                                ></p>
+                                <p
+                                    class="text-base text-text-muted max-w-xl mx-auto leading-relaxed"
+                                    x-html="s.body"
+                                ></p>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Slide dots -->
+                    <div class="flex items-center justify-center gap-2 mt-6 mb-10">
+                        <template x-for="(s, i) in slides" :key="i">
+                            <button
+                                @click="pick(i)"
+                                class="h-1.5 rounded-full transition-all"
+                                :class="slide === i ? 'w-8 bg-terminal-green' : 'w-1.5 bg-text-muted/40 hover:bg-text-muted'"
+                                :aria-label="'Go to slide ' + (i + 1)"
+                            ></button>
+                        </template>
+                    </div>
 
                     <!-- Install CTA -->
                     <div
