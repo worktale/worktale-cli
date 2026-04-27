@@ -120,7 +120,6 @@ function main() {
     process.exit(0);
   }
 
-  const totalInput = parsed.inputTokens + parsed.cacheReadTokens + parsed.cacheWriteTokens;
   const cost = computeCost(parsed);
 
   const args = [
@@ -129,8 +128,10 @@ function main() {
     '--tool', 'claude-code',
   ];
   if (parsed.model) args.push('--model', parsed.model);
-  if (totalInput > 0) args.push('--input-tokens', String(totalInput));
+  if (parsed.inputTokens > 0) args.push('--input-tokens', String(parsed.inputTokens));
   if (parsed.outputTokens > 0) args.push('--output-tokens', String(parsed.outputTokens));
+  if (parsed.cacheReadTokens > 0) args.push('--cache-read-tokens', String(parsed.cacheReadTokens));
+  if (parsed.cacheWriteTokens > 0) args.push('--cache-write-tokens', String(parsed.cacheWriteTokens));
   if (cost > 0) args.push('--cost', cost.toFixed(4));
   if (parsed.durationSecs) args.push('--duration', String(parsed.durationSecs));
   if (parsed.tools.length > 0) args.push('--tools-used', parsed.tools.join(','));

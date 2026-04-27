@@ -77,23 +77,35 @@ export function getDb(): BetterSqlite3.Database {
     );
 
     CREATE TABLE IF NOT EXISTS ai_sessions (
-      id              INTEGER PRIMARY KEY AUTOINCREMENT,
-      repo_id         INTEGER REFERENCES repos(id),
-      date            TEXT NOT NULL,
-      provider        TEXT,
-      model           TEXT,
-      tool            TEXT,
-      cost_usd        REAL DEFAULT 0,
-      input_tokens    INTEGER DEFAULT 0,
-      output_tokens   INTEGER DEFAULT 0,
-      tools_used      TEXT,
-      mcp_servers     TEXT,
-      duration_secs   INTEGER DEFAULT 0,
-      commits         TEXT,
-      note            TEXT,
-      timestamp       TEXT NOT NULL
+      id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+      repo_id             INTEGER REFERENCES repos(id),
+      date                TEXT NOT NULL,
+      provider            TEXT,
+      model               TEXT,
+      tool                TEXT,
+      cost_usd            REAL DEFAULT 0,
+      input_tokens        INTEGER DEFAULT 0,
+      output_tokens       INTEGER DEFAULT 0,
+      cache_read_tokens   INTEGER DEFAULT 0,
+      cache_write_tokens  INTEGER DEFAULT 0,
+      tools_used          TEXT,
+      mcp_servers         TEXT,
+      duration_secs       INTEGER DEFAULT 0,
+      commits             TEXT,
+      note                TEXT,
+      timestamp           TEXT NOT NULL
     );
   `);
+
+  // Idempotent column adds for existing installs
+  const aiCols = db.prepare(`PRAGMA table_info(ai_sessions)`).all() as Array<{ name: string }>;
+  const have = new Set(aiCols.map((c) => c.name));
+  if (!have.has('cache_read_tokens')) {
+    db.exec(`ALTER TABLE ai_sessions ADD COLUMN cache_read_tokens INTEGER DEFAULT 0`);
+  }
+  if (!have.has('cache_write_tokens')) {
+    db.exec(`ALTER TABLE ai_sessions ADD COLUMN cache_write_tokens INTEGER DEFAULT 0`);
+  }
 
   // Create indexes
   db.exec(`

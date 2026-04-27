@@ -10,6 +10,8 @@ export interface AiSession {
   cost_usd: number;
   input_tokens: number;
   output_tokens: number;
+  cache_read_tokens: number;
+  cache_write_tokens: number;
   tools_used: string | null;   // JSON array
   mcp_servers: string | null;  // JSON array
   duration_secs: number;
@@ -27,6 +29,8 @@ export interface AiSessionInsert {
   cost_usd?: number;
   input_tokens?: number;
   output_tokens?: number;
+  cache_read_tokens?: number;
+  cache_write_tokens?: number;
   tools_used?: string[];
   mcp_servers?: string[];
   duration_secs?: number;
@@ -39,6 +43,8 @@ export interface AiSessionStats {
   total_cost: number;
   total_input_tokens: number;
   total_output_tokens: number;
+  total_cache_read_tokens: number;
+  total_cache_write_tokens: number;
   total_duration_secs: number;
   providers: Record<string, number>;
   models: Record<string, number>;
@@ -52,8 +58,8 @@ export function insertAiSession(session: AiSessionInsert): number {
   const now = new Date().toISOString();
 
   const result = db.prepare(`
-    INSERT INTO ai_sessions (repo_id, date, provider, model, tool, cost_usd, input_tokens, output_tokens, tools_used, mcp_servers, duration_secs, commits, note, timestamp)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO ai_sessions (repo_id, date, provider, model, tool, cost_usd, input_tokens, output_tokens, cache_read_tokens, cache_write_tokens, tools_used, mcp_servers, duration_secs, commits, note, timestamp)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     session.repo_id,
     session.date,
@@ -63,6 +69,8 @@ export function insertAiSession(session: AiSessionInsert): number {
     session.cost_usd ?? 0,
     session.input_tokens ?? 0,
     session.output_tokens ?? 0,
+    session.cache_read_tokens ?? 0,
+    session.cache_write_tokens ?? 0,
     session.tools_used ? JSON.stringify(session.tools_used) : null,
     session.mcp_servers ? JSON.stringify(session.mcp_servers) : null,
     session.duration_secs ?? 0,
@@ -103,6 +111,8 @@ export function getAiSessionStats(repoId: number, days: number = 30): AiSessionS
     total_cost: 0,
     total_input_tokens: 0,
     total_output_tokens: 0,
+    total_cache_read_tokens: 0,
+    total_cache_write_tokens: 0,
     total_duration_secs: 0,
     providers: {},
     models: {},
@@ -115,6 +125,8 @@ export function getAiSessionStats(repoId: number, days: number = 30): AiSessionS
     stats.total_cost += s.cost_usd;
     stats.total_input_tokens += s.input_tokens;
     stats.total_output_tokens += s.output_tokens;
+    stats.total_cache_read_tokens += s.cache_read_tokens ?? 0;
+    stats.total_cache_write_tokens += s.cache_write_tokens ?? 0;
     stats.total_duration_secs += s.duration_secs;
 
     if (s.provider) stats.providers[s.provider] = (stats.providers[s.provider] ?? 0) + 1;

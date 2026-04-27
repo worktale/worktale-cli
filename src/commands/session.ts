@@ -15,6 +15,8 @@ interface SessionOptions {
   cost?: string;
   inputTokens?: string;
   outputTokens?: string;
+  cacheReadTokens?: string;
+  cacheWriteTokens?: string;
   toolsUsed?: string;
   mcpServers?: string;
   duration?: string;
@@ -92,6 +94,8 @@ async function addSession(options: SessionOptions): Promise<void> {
     cost_usd: options.cost ? parseFloat(options.cost) : undefined,
     input_tokens: options.inputTokens ? parseInt(options.inputTokens, 10) : undefined,
     output_tokens: options.outputTokens ? parseInt(options.outputTokens, 10) : undefined,
+    cache_read_tokens: options.cacheReadTokens ? parseInt(options.cacheReadTokens, 10) : undefined,
+    cache_write_tokens: options.cacheWriteTokens ? parseInt(options.cacheWriteTokens, 10) : undefined,
     tools_used: options.toolsUsed ? options.toolsUsed.split(',').map((t) => t.trim()) : undefined,
     mcp_servers: options.mcpServers ? options.mcpServers.split(',').map((s) => s.trim()) : undefined,
     duration_secs: options.duration ? parseInt(options.duration, 10) : undefined,
@@ -150,7 +154,7 @@ async function listSessions(options: SessionOptions): Promise<void> {
     return;
   }
   if (options.format === 'csv') {
-    const headers = ['date', 'tool', 'provider', 'model', 'input_tokens', 'output_tokens', 'cost_usd', 'duration_secs', 'tools_used', 'mcp_servers', 'commits', 'note'];
+    const headers = ['date', 'tool', 'provider', 'model', 'input_tokens', 'output_tokens', 'cache_read_tokens', 'cache_write_tokens', 'cost_usd', 'duration_secs', 'tools_used', 'mcp_servers', 'commits', 'note'];
     console.log(headers.join(','));
     for (const s of sessions) {
       console.log([
@@ -160,6 +164,8 @@ async function listSessions(options: SessionOptions): Promise<void> {
         s.model ?? '',
         s.input_tokens,
         s.output_tokens,
+        s.cache_read_tokens ?? 0,
+        s.cache_write_tokens ?? 0,
         s.cost_usd,
         s.duration_secs,
         Array.isArray(s.tools_used) ? s.tools_used.join('|') : '',
@@ -239,6 +245,8 @@ async function showStats(options: SessionOptions): Promise<void> {
     console.log(`total_cost_usd,${stats.total_cost.toFixed(4)}`);
     console.log(`total_input_tokens,${stats.total_input_tokens}`);
     console.log(`total_output_tokens,${stats.total_output_tokens}`);
+    console.log(`total_cache_read_tokens,${stats.total_cache_read_tokens}`);
+    console.log(`total_cache_write_tokens,${stats.total_cache_write_tokens}`);
     console.log(`total_duration_secs,${stats.total_duration_secs}`);
     console.log('');
     console.log('category,key,count');
@@ -261,11 +269,18 @@ async function showStats(options: SessionOptions): Promise<void> {
     return;
   }
 
-  console.log('  ' + dimText('Sessions:') + '       ' + chalk.bold(String(stats.total_sessions)));
-  console.log('  ' + dimText('Total Cost:') + '     ' + streakText(`$${stats.total_cost.toFixed(4)}`));
-  console.log('  ' + dimText('Input Tokens:') + '   ' + formatNumber(stats.total_input_tokens));
-  console.log('  ' + dimText('Output Tokens:') + '  ' + formatNumber(stats.total_output_tokens));
-  console.log('  ' + dimText('Total Time:') + '     ' + formatDuration(Math.round(stats.total_duration_secs / 60)));
+  const cacheTotal = stats.total_cache_read_tokens + stats.total_cache_write_tokens;
+  const cacheReadRatio = cacheTotal > 0
+    ? Math.round((stats.total_cache_read_tokens / cacheTotal) * 100)
+    : 0;
+
+  console.log('  ' + dimText('Sessions:') + '         ' + chalk.bold(String(stats.total_sessions)));
+  console.log('  ' + dimText('Total Cost:') + '       ' + streakText(`$${stats.total_cost.toFixed(4)}`));
+  console.log('  ' + dimText('Input Tokens:') + '     ' + formatNumber(stats.total_input_tokens));
+  console.log('  ' + dimText('Output Tokens:') + '    ' + formatNumber(stats.total_output_tokens));
+  console.log('  ' + dimText('Cache Read:') + '       ' + formatNumber(stats.total_cache_read_tokens) + (cacheTotal > 0 ? dimText(`  (${cacheReadRatio}% of cache)`) : ''));
+  console.log('  ' + dimText('Cache Write:') + '      ' + formatNumber(stats.total_cache_write_tokens));
+  console.log('  ' + dimText('Total Time:') + '       ' + formatDuration(Math.round(stats.total_duration_secs / 60)));
   console.log('');
 
   if (Object.keys(stats.tools).length > 0) {
@@ -324,8 +339,10 @@ function showHelp(): void {
   console.log('    --model <name>          ' + dimText('Model (claude-opus-4-6, gpt-4o, o3)'));
   console.log('    --tool <name>           ' + dimText('Tool (claude-code, codex, copilot)'));
   console.log('    --cost <usd>            ' + dimText('Session cost in USD'));
-  console.log('    --input-tokens <n>      ' + dimText('Input token count'));
+  console.log('    --input-tokens <n>      ' + dimText('Input token count (raw, excluding cache)'));
   console.log('    --output-tokens <n>     ' + dimText('Output token count'));
+  console.log('    --cache-read-tokens <n> ' + dimText('Cache-read input token count'));
+  console.log('    --cache-write-tokens <n>' + dimText('Cache-write input token count'));
   console.log('    --tools-used <list>     ' + dimText('Comma-separated agent tools'));
   console.log('    --mcp-servers <list>    ' + dimText('Comma-separated MCP servers'));
   console.log('    --duration <secs>       ' + dimText('Session duration in seconds'));
