@@ -46,6 +46,7 @@ function parseTranscript(path) {
   const mcpServers = new Set();
   let firstTs = null;
   let lastTs = null;
+  let cwdFromTranscript = null;
 
   for (const line of lines) {
     let msg;
@@ -55,6 +56,10 @@ function parseTranscript(path) {
     if (ts) {
       if (firstTs === null || ts < firstTs) firstTs = ts;
       if (lastTs === null || ts > lastTs) lastTs = ts;
+    }
+
+    if (!cwdFromTranscript && typeof msg.cwd === 'string' && msg.cwd) {
+      cwdFromTranscript = msg.cwd;
     }
 
     const message = msg.message ?? msg;
@@ -93,7 +98,23 @@ function parseTranscript(path) {
     tools: [...tools],
     mcpServers: [...mcpServers],
     durationSecs,
+    firstTs,
+    lastTs,
+    cwdFromTranscript,
   };
+}
+
+function commitsInWindow(cwd, firstTs, lastTs) {
+  if (!firstTs || !lastTs) return [];
+  const since = new Date(firstTs - 60_000).toISOString();
+  const until = new Date(lastTs + 60_000).toISOString();
+  const result = spawnSync(
+    'git',
+    ['log', `--since=${since}`, `--until=${until}`, '--pretty=format:%H', '--no-merges'],
+    { cwd, encoding: 'utf-8', shell: process.platform === 'win32' },
+  );
+  if (result.status !== 0 || !result.stdout) return [];
+  return result.stdout.split('\n').map((s) => s.trim()).filter(Boolean).slice(0, 50);
 }
 
 function computeCost(t) {
@@ -113,14 +134,15 @@ function main() {
   try { payload = JSON.parse(raw); } catch { /* ignore */ }
 
   const transcriptPath = payload.transcript_path;
-  const cwd = payload.cwd || process.cwd();
   const parsed = parseTranscript(transcriptPath);
 
   if (!parsed) {
     process.exit(0);
   }
 
+  const cwd = payload.cwd || parsed.cwdFromTranscript || process.cwd();
   const cost = computeCost(parsed);
+  const commits = commitsInWindow(cwd, parsed.firstTs, parsed.lastTs);
 
   const args = [
     'session', 'add',
@@ -136,6 +158,7 @@ function main() {
   if (parsed.durationSecs) args.push('--duration', String(parsed.durationSecs));
   if (parsed.tools.length > 0) args.push('--tools-used', parsed.tools.join(','));
   if (parsed.mcpServers.length > 0) args.push('--mcp-servers', parsed.mcpServers.join(','));
+  if (commits.length > 0) args.push('--commits', commits.join(','));
 
   if (process.env.WORKTALE_HOOK_DRY_RUN === '1') {
     console.log(JSON.stringify({ cwd, args }));
