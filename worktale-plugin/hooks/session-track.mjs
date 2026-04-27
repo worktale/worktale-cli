@@ -1,7 +1,27 @@
 #!/usr/bin/env node
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdirSync, appendFileSync } from 'node:fs';
 import { dirname, basename, join } from 'node:path';
+import { homedir } from 'node:os';
 import { spawnSync } from 'node:child_process';
+
+const LOG_DIR = join(homedir(), '.worktale');
+const LOG_PATH = join(LOG_DIR, 'hook.log');
+
+function log(level, message, extra) {
+  if (process.env.WORKTALE_HOOK_DRY_RUN === '1') return;
+  try {
+    if (!existsSync(LOG_DIR)) mkdirSync(LOG_DIR, { recursive: true });
+    const line = JSON.stringify({
+      ts: new Date().toISOString(),
+      level,
+      message,
+      ...(extra || {}),
+    });
+    appendFileSync(LOG_PATH, line + '\n');
+  } catch {
+    // Logging is best-effort; never let it propagate.
+  }
+}
 
 const PRICE_PER_MTOK = {
   'claude-opus-4': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
@@ -166,12 +186,24 @@ function commitsInWindow(cwd, firstTs, lastTs) {
 function main() {
   const raw = readStdin();
   let payload = {};
-  try { payload = JSON.parse(raw); } catch { /* ignore */ }
+  try { payload = JSON.parse(raw); } catch (err) {
+    log('warn', 'failed to parse SessionEnd payload', { error: String(err) });
+  }
 
   const transcriptPath = payload.transcript_path;
+  if (!transcriptPath) {
+    log('warn', 'no transcript_path in payload — nothing to record');
+    process.exit(0);
+  }
+  if (!existsSync(transcriptPath)) {
+    log('warn', 'transcript_path does not exist', { transcriptPath });
+    process.exit(0);
+  }
+
   const agg = buildAggregate(transcriptPath);
 
   if (!agg) {
+    log('warn', 'parser returned no aggregate', { transcriptPath });
     process.exit(0);
   }
 
@@ -208,8 +240,37 @@ function main() {
     console.log(JSON.stringify(debug));
     process.exit(0);
   }
-  const result = spawnSync('worktale', args, { cwd, stdio: 'ignore', shell: process.platform === 'win32' });
-  process.exit(result.status ?? 0);
+  const result = spawnSync('worktale', args, {
+    cwd,
+    encoding: 'utf-8',
+    shell: process.platform === 'win32',
+  });
+  if (result.error) {
+    log('error', 'worktale CLI failed to spawn', {
+      error: String(result.error),
+      hint: 'is `worktale` installed and on PATH? `npm install -g worktale`',
+    });
+    process.exit(0);
+  }
+  if ((result.status ?? 0) !== 0) {
+    log('error', 'worktale CLI exited non-zero', {
+      status: result.status,
+      stdout: (result.stdout || '').trim().slice(0, 500),
+      stderr: (result.stderr || '').trim().slice(0, 500),
+      args,
+    });
+  } else {
+    log('info', 'session recorded', {
+      cost: cost.toFixed(4),
+      input: t.input,
+      output: t.output,
+      cacheRead: t.cacheRead,
+      cacheWrite: t.cacheWrite,
+      durationSecs,
+      subagentCount: findSubagentTranscripts(transcriptPath).length,
+    });
+  }
+  process.exit(0);
 }
 
 main();
