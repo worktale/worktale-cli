@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { dirname, basename, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const PRICE_PER_MTOK = {
@@ -32,21 +33,30 @@ function readStdin() {
   }
 }
 
-function parseTranscript(path) {
-  if (!path || !existsSync(path)) return null;
+function emptyAggregate() {
+  return {
+    perModel: new Map(),
+    tools: new Set(),
+    mcpServers: new Set(),
+    firstTs: null,
+    lastTs: null,
+    cwdFromTranscript: null,
+    primaryModel: null,
+  };
+}
+
+function bucketFor(agg, model) {
+  const key = model || '_unknown';
+  if (!agg.perModel.has(key)) {
+    agg.perModel.set(key, { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 });
+  }
+  return agg.perModel.get(key);
+}
+
+function parseInto(agg, path, isPrimary) {
+  if (!path || !existsSync(path)) return;
   const raw = readFileSync(path, 'utf-8');
   const lines = raw.split('\n').filter((l) => l.trim());
-
-  let inputTokens = 0;
-  let outputTokens = 0;
-  let cacheReadTokens = 0;
-  let cacheWriteTokens = 0;
-  let model = null;
-  const tools = new Set();
-  const mcpServers = new Set();
-  let firstTs = null;
-  let lastTs = null;
-  let cwdFromTranscript = null;
 
   for (const line of lines) {
     let msg;
@@ -54,54 +64,90 @@ function parseTranscript(path) {
 
     const ts = msg.timestamp ? Date.parse(msg.timestamp) : null;
     if (ts) {
-      if (firstTs === null || ts < firstTs) firstTs = ts;
-      if (lastTs === null || ts > lastTs) lastTs = ts;
+      if (agg.firstTs === null || ts < agg.firstTs) agg.firstTs = ts;
+      if (agg.lastTs === null || ts > agg.lastTs) agg.lastTs = ts;
     }
 
-    if (!cwdFromTranscript && typeof msg.cwd === 'string' && msg.cwd) {
-      cwdFromTranscript = msg.cwd;
+    if (!agg.cwdFromTranscript && typeof msg.cwd === 'string' && msg.cwd) {
+      agg.cwdFromTranscript = msg.cwd;
     }
 
     const message = msg.message ?? msg;
-    if (message?.role === 'assistant') {
-      if (message.model) model = message.model;
-      const u = message.usage ?? {};
-      inputTokens += u.input_tokens ?? 0;
-      outputTokens += u.output_tokens ?? 0;
-      cacheReadTokens += u.cache_read_input_tokens ?? 0;
-      cacheWriteTokens += u.cache_creation_input_tokens ?? 0;
+    if (message?.role !== 'assistant') continue;
 
-      const content = Array.isArray(message.content) ? message.content : [];
-      for (const block of content) {
-        if (block?.type === 'tool_use' && block.name) {
-          const name = block.name;
-          if (name.startsWith('mcp__')) {
-            const parts = name.split('__');
-            if (parts[1]) mcpServers.add(parts[1]);
-            tools.add(name);
-          } else {
-            tools.add(name);
-          }
+    const model = message.model || null;
+    if (isPrimary && model) agg.primaryModel = model;
+
+    const u = message.usage ?? {};
+    const bucket = bucketFor(agg, model);
+    bucket.input += u.input_tokens ?? 0;
+    bucket.output += u.output_tokens ?? 0;
+    bucket.cacheRead += u.cache_read_input_tokens ?? 0;
+    bucket.cacheWrite += u.cache_creation_input_tokens ?? 0;
+
+    const content = Array.isArray(message.content) ? message.content : [];
+    for (const block of content) {
+      if (block?.type === 'tool_use' && block.name) {
+        const name = block.name;
+        if (name.startsWith('mcp__')) {
+          const parts = name.split('__');
+          if (parts[1]) agg.mcpServers.add(parts[1]);
+          agg.tools.add(name);
+        } else {
+          agg.tools.add(name);
         }
       }
     }
   }
+}
 
-  const durationSecs = firstTs && lastTs ? Math.max(1, Math.round((lastTs - firstTs) / 1000)) : null;
+function findSubagentTranscripts(primaryPath) {
+  if (!primaryPath) return [];
+  const sessionId = basename(primaryPath, '.jsonl');
+  const subDir = join(dirname(primaryPath), sessionId, 'subagents');
+  if (!existsSync(subDir)) return [];
+  try {
+    return readdirSync(subDir)
+      .filter((f) => f.endsWith('.jsonl'))
+      .map((f) => join(subDir, f));
+  } catch {
+    return [];
+  }
+}
 
-  return {
-    inputTokens,
-    outputTokens,
-    cacheReadTokens,
-    cacheWriteTokens,
-    model,
-    tools: [...tools],
-    mcpServers: [...mcpServers],
-    durationSecs,
-    firstTs,
-    lastTs,
-    cwdFromTranscript,
-  };
+function buildAggregate(primaryPath) {
+  if (!primaryPath || !existsSync(primaryPath)) return null;
+  const agg = emptyAggregate();
+  parseInto(agg, primaryPath, true);
+  for (const sub of findSubagentTranscripts(primaryPath)) {
+    parseInto(agg, sub, false);
+  }
+  return agg;
+}
+
+function totals(agg) {
+  let input = 0, output = 0, cacheRead = 0, cacheWrite = 0;
+  for (const b of agg.perModel.values()) {
+    input += b.input;
+    output += b.output;
+    cacheRead += b.cacheRead;
+    cacheWrite += b.cacheWrite;
+  }
+  return { input, output, cacheRead, cacheWrite };
+}
+
+function computeCost(agg) {
+  let cost = 0;
+  for (const [model, b] of agg.perModel.entries()) {
+    const price = resolvePrice(model === '_unknown' ? agg.primaryModel : model);
+    if (!price) continue;
+    cost +=
+      (b.input / 1_000_000) * price.in +
+      (b.output / 1_000_000) * price.out +
+      (b.cacheRead / 1_000_000) * price.cacheRead +
+      (b.cacheWrite / 1_000_000) * price.cacheWrite;
+  }
+  return Math.round(cost * 10000) / 10000;
 }
 
 function commitsInWindow(cwd, firstTs, lastTs) {
@@ -117,32 +163,23 @@ function commitsInWindow(cwd, firstTs, lastTs) {
   return result.stdout.split('\n').map((s) => s.trim()).filter(Boolean).slice(0, 50);
 }
 
-function computeCost(t) {
-  const price = resolvePrice(t.model);
-  if (!price) return 0;
-  const cost =
-    (t.inputTokens / 1_000_000) * price.in +
-    (t.outputTokens / 1_000_000) * price.out +
-    (t.cacheReadTokens / 1_000_000) * price.cacheRead +
-    (t.cacheWriteTokens / 1_000_000) * price.cacheWrite;
-  return Math.round(cost * 10000) / 10000;
-}
-
 function main() {
   const raw = readStdin();
   let payload = {};
   try { payload = JSON.parse(raw); } catch { /* ignore */ }
 
   const transcriptPath = payload.transcript_path;
-  const parsed = parseTranscript(transcriptPath);
+  const agg = buildAggregate(transcriptPath);
 
-  if (!parsed) {
+  if (!agg) {
     process.exit(0);
   }
 
-  const cwd = payload.cwd || parsed.cwdFromTranscript || process.cwd();
-  const cost = computeCost(parsed);
-  const commits = commitsInWindow(cwd, parsed.firstTs, parsed.lastTs);
+  const t = totals(agg);
+  const cwd = payload.cwd || agg.cwdFromTranscript || process.cwd();
+  const cost = computeCost(agg);
+  const durationSecs = agg.firstTs && agg.lastTs ? Math.max(1, Math.round((agg.lastTs - agg.firstTs) / 1000)) : null;
+  const commits = commitsInWindow(cwd, agg.firstTs, agg.lastTs);
 
   const args = [
     'session', 'add',
@@ -150,19 +187,25 @@ function main() {
     '--tool', 'claude-code',
     '--notes-from-today',
   ];
-  if (parsed.model) args.push('--model', parsed.model);
-  if (parsed.inputTokens > 0) args.push('--input-tokens', String(parsed.inputTokens));
-  if (parsed.outputTokens > 0) args.push('--output-tokens', String(parsed.outputTokens));
-  if (parsed.cacheReadTokens > 0) args.push('--cache-read-tokens', String(parsed.cacheReadTokens));
-  if (parsed.cacheWriteTokens > 0) args.push('--cache-write-tokens', String(parsed.cacheWriteTokens));
+  if (agg.primaryModel) args.push('--model', agg.primaryModel);
+  if (t.input > 0) args.push('--input-tokens', String(t.input));
+  if (t.output > 0) args.push('--output-tokens', String(t.output));
+  if (t.cacheRead > 0) args.push('--cache-read-tokens', String(t.cacheRead));
+  if (t.cacheWrite > 0) args.push('--cache-write-tokens', String(t.cacheWrite));
   if (cost > 0) args.push('--cost', cost.toFixed(4));
-  if (parsed.durationSecs) args.push('--duration', String(parsed.durationSecs));
-  if (parsed.tools.length > 0) args.push('--tools-used', parsed.tools.join(','));
-  if (parsed.mcpServers.length > 0) args.push('--mcp-servers', parsed.mcpServers.join(','));
+  if (durationSecs) args.push('--duration', String(durationSecs));
+  if (agg.tools.size > 0) args.push('--tools-used', [...agg.tools].join(','));
+  if (agg.mcpServers.size > 0) args.push('--mcp-servers', [...agg.mcpServers].join(','));
   if (commits.length > 0) args.push('--commits', commits.join(','));
 
   if (process.env.WORKTALE_HOOK_DRY_RUN === '1') {
-    console.log(JSON.stringify({ cwd, args }));
+    const debug = {
+      cwd,
+      args,
+      perModel: Object.fromEntries(agg.perModel),
+      subagentCount: findSubagentTranscripts(transcriptPath).length,
+    };
+    console.log(JSON.stringify(debug));
     process.exit(0);
   }
   const result = spawnSync('worktale', args, { cwd, stdio: 'ignore', shell: process.platform === 'win32' });
