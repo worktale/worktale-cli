@@ -1,6 +1,6 @@
 {
   "name": "worktale",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Zero-friction, local-first developer work journal. Turn your git history into a beautiful, personal record of what you actually built.",
   "type": "module",
   "bin": {
