@@ -148,6 +148,7 @@ function main() {
     'session', 'add',
     '--provider', 'anthropic',
     '--tool', 'claude-code',
+    '--notes-from-today',
   ];
   if (parsed.model) args.push('--model', parsed.model);
   if (parsed.inputTokens > 0) args.push('--input-tokens', String(parsed.inputTokens));

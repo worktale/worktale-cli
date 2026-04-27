@@ -5,7 +5,7 @@ import { brandText, dimText, positiveText, streakText, negativeText } from '../t
 import { getRepo, addRepo } from '../db/repos.js';
 import { closeDb } from '../db/index.js';
 import { insertAiSession, getAiSessionsByDate, getAiSessionStats } from '../db/ai-sessions.js';
-import { appendUserNotes } from '../db/daily-summaries.js';
+import { appendUserNotes, getDailySummary } from '../db/daily-summaries.js';
 import { formatNumber, formatDuration, getDateString } from '../utils/formatting.js';
 
 interface SessionOptions {
@@ -23,6 +23,7 @@ interface SessionOptions {
   commits?: string;
   note?: string;
   writeNote?: boolean;
+  notesFromToday?: boolean;
   format?: string;
   days?: string;
 }
@@ -85,6 +86,17 @@ async function addSession(options: SessionOptions): Promise<void> {
 
   const today = getDateString();
 
+  // If no explicit --note but --notes-from-today is set, snapshot today's
+  // user_notes from daily_summaries. This lets the SessionEnd hook attach the
+  // narrative the user (or skill via `worktale note`) accumulated during the
+  // session, without the agent having to round-trip back through the CLI.
+  let resolvedNote = options.note;
+  if (!resolvedNote && options.notesFromToday) {
+    const summary = getDailySummary(repo.id, today);
+    const notes = summary?.user_notes?.trim();
+    if (notes) resolvedNote = notes;
+  }
+
   const sessionId = insertAiSession({
     repo_id: repo.id,
     date: today,
@@ -100,7 +112,7 @@ async function addSession(options: SessionOptions): Promise<void> {
     mcp_servers: options.mcpServers ? options.mcpServers.split(',').map((s) => s.trim()) : undefined,
     duration_secs: options.duration ? parseInt(options.duration, 10) : undefined,
     commits: options.commits ? options.commits.split(',').map((s) => s.trim()) : undefined,
-    note: options.note,
+    note: resolvedNote,
   });
 
   // Auto-note path: when --write-note is passed, also append the narrative to
@@ -349,5 +361,6 @@ function showHelp(): void {
   console.log('    --commits <shas>        ' + dimText('Comma-separated commit SHAs'));
   console.log('    --note <text>           ' + dimText('Session note'));
   console.log('    --write-note            ' + dimText('Also append --note text to today\'s daily log'));
+  console.log('    --notes-from-today      ' + dimText('Snapshot today\'s user_notes onto the row (when --note is omitted)'));
   console.log('');
 }

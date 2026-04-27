@@ -195,6 +195,7 @@ program
   .option('--commits <shas>', 'Comma-separated commit SHAs')
   .option('--note <text>', 'Session note')
   .option('--write-note', 'Also append --note text to today\'s daily log')
+  .option('--notes-from-today', 'Snapshot today\'s user_notes onto the session row when --note is omitted')
   .option('-d, --days <n>', 'Days to show (for list/stats)')
   .option('-f, --format <fmt>', 'Output format: text | json | csv (for list/stats)', 'text')
   .action(async (action?: string, options?: Record<string, unknown>) => {
