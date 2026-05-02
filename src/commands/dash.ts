@@ -2,33 +2,62 @@ import chalk from 'chalk';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { brandText, dimText } from '../tui/theme.js';
-import { getRepo } from '../db/repos.js';
+import { getRepo, getAllRepos } from '../db/repos.js';
+import type { Repo } from '../db/repos.js';
 import { closeDb } from '../db/index.js';
 
-export async function dashCommand(): Promise<void> {
+const SYNTHETIC_ALL_REPOS: Repo = {
+  id: 0,
+  path: '__all__',
+  name: 'All Repos',
+  first_seen: null,
+  last_synced: null,
+};
+
+export async function dashCommand(options: { allRepos?: boolean } = {}): Promise<void> {
   try {
-    const repoPath = process.cwd();
+    const allRepos = Boolean(options.allRepos);
+    let repo: Repo;
+    let repoPath: string;
 
-    // Check if repo is initialized
-    if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
-      console.log('  Run ' + brandText('worktale init') + ' to get started.');
-      console.log('');
-      closeDb();
-      process.exit(0);
-      return;
-    }
+    if (allRepos) {
+      const tracked = getAllRepos();
+      if (tracked.length === 0) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' no tracked repos found.');
+        console.log('  Run ' + brandText('worktale init') + ' in any project to start tracking.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+      repo = { ...SYNTHETIC_ALL_REPOS, name: `All Repos (${tracked.length})` };
+      repoPath = SYNTHETIC_ALL_REPOS.path;
+    } else {
+      repoPath = process.cwd();
 
-    const repo = getRepo(repoPath);
-    if (!repo) {
-      console.log('');
-      console.log('  ' + dimText('worktale:') + ' repo not found in database.');
-      console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
-      console.log('');
-      closeDb();
-      process.exit(0);
-      return;
+      if (!existsSync(join(repoPath, '.worktale', 'config.json'))) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' not initialized in this repo.');
+        console.log('  Run ' + brandText('worktale init') + ' to get started.');
+        console.log('  ' + dimText('Tip:') + ' use ' + brandText('worktale dash -a') + ' for a consolidated view across all tracked repos.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+
+      const found = getRepo(repoPath);
+      if (!found) {
+        console.log('');
+        console.log('  ' + dimText('worktale:') + ' repo not found in database.');
+        console.log('  Run ' + brandText('worktale init') + ' to re-initialize.');
+        console.log('');
+        closeDb();
+        process.exit(0);
+        return;
+      }
+      repo = found;
     }
 
     // Try to load and render the Ink TUI app
@@ -44,6 +73,7 @@ export async function dashCommand(): Promise<void> {
       const { waitUntilExit } = render(
         React.createElement(App, {
           repoPath,
+          allRepos,
           onAction: (action: 'digest' | 'publish') => { pendingAction = action; },
         }),
       );
@@ -51,7 +81,7 @@ export async function dashCommand(): Promise<void> {
 
       if (pendingAction === 'digest') {
         const { digestCommand } = await import('./digest.js');
-        await digestCommand();
+        await digestCommand(allRepos ? { allRepos: true } : {});
         return;
       }
       if (pendingAction === 'publish') {

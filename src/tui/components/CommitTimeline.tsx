@@ -7,6 +7,7 @@ interface TimelineCommit {
   sha: string;
   message: string;
   timestamp: string;
+  repoName?: string;
 }
 
 interface CommitTimelineProps {
@@ -27,15 +28,22 @@ export default function CommitTimeline({ commits }: CommitTimelineProps) {
       {commits.map((commit, index) => {
         const timeStr = formatRelativeTime(commit.timestamp);
         const msg = commit.message ?? '(no message)';
-        // Truncate long messages
-        const truncated = msg.length > 60 ? msg.slice(0, 57) + '...' : msg;
+        // Truncate long messages (leave room for repo prefix when present)
+        const maxLen = commit.repoName ? 50 : 60;
+        const truncated = msg.length > maxLen ? msg.slice(0, maxLen - 3) + '...' : msg;
 
         return (
           <Box key={commit.sha || index}>
-            <Text color={colors.brand}>{'\u25CF'} </Text>
+            <Text color={colors.brand}>{'●'} </Text>
             <Box width={12}>
               <Text color={colors.textSecondary}>{timeStr.padEnd(12)}</Text>
             </Box>
+            {commit.repoName && (
+              <Box width={Math.min(commit.repoName.length + 3, 22)}>
+                <Text color={colors.streak}>[{commit.repoName}]</Text>
+                <Text> </Text>
+              </Box>
+            )}
             <Text color={colors.textPrimary}>{truncated}</Text>
           </Box>
         );

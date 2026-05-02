@@ -46,10 +46,12 @@ This recursively finds every git repo under the current directory and imports th
 | `worktale init` | Initialize in current repo — hooks, history scan, config |
 | `worktale batch` | Recursively scan for repos, import history, and optionally annotate (no hooks) |
 | `worktale dash` | Interactive TUI dashboard |
+| `worktale dash -a` | Consolidated dashboard across all tracked repositories |
 | `worktale today` | Today's commits, lines, files, coding time |
 | `worktale status` | One-line summary with streak |
 | `worktale log` | Multi-day history (default 7 days) |
 | `worktale digest` | Generate a work summary (template or AI) |
+| `worktale digest -a` | Consolidated digest across all tracked repos (supports `--since`, `--days`, `--all-time`, `--repos`) |
 | `worktale note` | Append a note to today's work narrative |
 | `worktale repos` | List all tracked repositories |
 | `worktale config` | View or modify settings |
@@ -255,12 +257,38 @@ That's the whole list.
 ```bash
 git clone https://github.com/worktale/worktale-cli.git
 cd worktale-cli
-npm install
-npm run build    # tsup dual build (CLI + worker)
-npm test         # vitest — 471 tests
+npm install --legacy-peer-deps   # @testing-library/react@16 vs react-dom@19 peer mismatch
+npm run build                    # tsup dual build (CLI + worker)
+npm test                         # vitest — 532 tests
 ```
 
 The project is TypeScript compiled to ESM. The TUI is built with Ink 5 (React 18 for terminals). The database uses better-sqlite3 with native bindings.
+
+### Cross-repo views
+
+To see a consolidated picture across every repo you've registered with `worktale init` or `worktale batch`, pass `-a` (`--all-repos`) to `dash` or `digest`:
+
+```bash
+worktale dash -a                              # consolidated TUI: heatmap, all-time stats, per-repo AI cost
+worktale digest -a                            # today across all repos
+worktale digest -a --all-time --format md     # since each repo's first commit (caps at 50 commits/repo)
+worktale digest -a --since 2025-01-01         # custom date range
+worktale digest -a --repos repo-a,repo-b      # subset of repos
+worktale digest -a --format json | jq         # structured payload for tooling
+```
+
+In all-repos mode, DailyLog notes are read-only (notes are scoped per-repo by design — switch to a single-repo view to edit). The streak counter shows a "global streak" that counts a day if any repo had a commit (matches GitHub's contribution-graph semantics).
+
+### Pre-PR checks
+
+Before opening a PR, run the local sanity script:
+
+```bash
+scripts/pre-pr-check.sh           # typecheck, build, full test suite
+scripts/pre-pr-check.sh --ci      # also run a Docker repro of the GitHub Actions environment
+```
+
+The script knows about one quirk: `tests/git/log.test.ts` has 4 cases that assert `master` as the default branch. On macOS (where git defaults to `main`), they fail locally; on Ubuntu CI runners they pass. The script ignores those if they're the only failures so the local exit code matches CI.
 
 ---
 
