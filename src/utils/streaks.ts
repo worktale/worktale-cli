@@ -102,6 +102,24 @@ export function getStreakInfo(
   };
 }
 
+export function getStreakInfoGlobal(): { current: number; best: number; bestStart: string; bestEnd: string } {
+  const db = getDb();
+  const rows = db.prepare(`
+    SELECT DISTINCT date(timestamp) AS d
+    FROM commits
+    ORDER BY d ASC
+  `).all() as Array<{ d: string }>;
+  const dates = rows.map((r) => r.d);
+  const current = calculateCurrentStreak(dates);
+  const best = calculateBestStreak(dates);
+  return {
+    current,
+    best: best.length,
+    bestStart: best.startDate,
+    bestEnd: best.endDate,
+  };
+}
+
 export interface HourDistribution {
   hour: number;  // 0-23
   commits: number;

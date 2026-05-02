@@ -4,19 +4,30 @@ import { colors } from '../theme.js';
 import { getCommitCount } from '../../db/commits.js';
 import { getDailySummariesRange } from '../../db/daily-summaries.js';
 import { getTopModules } from '../../db/file-activity.js';
-import { getStreakInfo, getMostActiveMonth, getActiveDates } from '../../utils/streaks.js';
+import { getStreakInfo, getStreakInfoGlobal, getMostActiveMonth, getActiveDates } from '../../utils/streaks.js';
 import { formatNumber, getDateString } from '../../utils/formatting.js';
 import { getDb } from '../../db/index.js';
 import HeatmapGrid from './HeatmapGrid.js';
 import StatBar from './StatBar.js';
-import type { DailySummary } from '../../db/daily-summaries.js';
 import type { ModuleActivity } from '../../db/file-activity.js';
+import {
+  getCombinedTopModules,
+  getGlobalHeatmap,
+  getAllTimeStats,
+  getActiveDatesGlobal,
+} from '../../db/aggregates.js';
 
 interface HistoryProps {
   repoId: number;
+  allRepos?: boolean;
 }
 
-export default function History({ repoId }: HistoryProps) {
+interface RepoModuleEntry {
+  module: string;
+  changes: number;
+}
+
+export default function History({ repoId, allRepos }: HistoryProps) {
   const [heatmapData, setHeatmapData] = useState<Map<string, number>>(new Map());
   const [totalCommits, setTotalCommits] = useState(0);
   const [totalAdded, setTotalAdded] = useState(0);
@@ -24,11 +35,59 @@ export default function History({ repoId }: HistoryProps) {
   const [daysActive, setDaysActive] = useState(0);
   const [streakInfo, setStreakInfo] = useState({ current: 0, best: 0, bestStart: '', bestEnd: '' });
   const [mostActive, setMostActive] = useState({ month: '', commits: 0 });
-  const [topModules, setTopModules] = useState<ModuleActivity[]>([]);
-  const [milestones, setMilestones] = useState<Array<{ tag: string; date: string }>>([]);
+  const [topModules, setTopModules] = useState<Array<ModuleActivity & { repo_name?: string }>>([]);
+  const [milestones, setMilestones] = useState<Array<{ tag: string; date: string; repo_name?: string }>>([]);
+  const [repoCount, setRepoCount] = useState(0);
+  const [firstCommit, setFirstCommit] = useState<string | null>(null);
 
   useEffect(() => {
     try {
+      if (allRepos) {
+        const heatMap = getGlobalHeatmap(365);
+        setHeatmapData(heatMap);
+
+        const stats = getAllTimeStats();
+        setTotalCommits(stats.total_commits);
+        setTotalAdded(stats.total_added);
+        setTotalRemoved(stats.total_removed);
+        setRepoCount(stats.repo_count);
+        setFirstCommit(stats.first_commit);
+
+        const activeDates = getActiveDatesGlobal();
+        setDaysActive(activeDates.length);
+
+        const streak = getStreakInfoGlobal();
+        setStreakInfo(streak);
+
+        const modules = getCombinedTopModules(8);
+        setTopModules(modules.map((m) => ({ module: m.module, changes: m.changes, percentage: m.percentage, repo_name: m.repo_name })));
+
+        // Milestones: tags joined with repo name
+        try {
+          const db = getDb();
+          const tagRows = db.prepare(`
+            SELECT c.tags, date(c.timestamp) as d, r.name as repo_name FROM commits c
+            JOIN repos r ON r.id = c.repo_id
+            WHERE c.tags IS NOT NULL AND c.tags != ''
+            ORDER BY c.timestamp DESC
+            LIMIT 10
+          `).all() as Array<{ tags: string; d: string; repo_name: string }>;
+
+          const ms: Array<{ tag: string; date: string; repo_name: string }> = [];
+          for (const row of tagRows) {
+            const tagList = row.tags.split(',').map((t: string) => t.trim()).filter(Boolean);
+            for (const tag of tagList) {
+              ms.push({ tag, date: row.d, repo_name: row.repo_name });
+            }
+          }
+          setMilestones(ms);
+        } catch { /* tags not available */ }
+
+        // Most-active-month not aggregated globally; leave blank in this view.
+        setMostActive({ month: '', commits: 0 });
+        return;
+      }
+
       // Build heatmap data: last 52 weeks of daily summaries
       const today = getDateString();
       const yearAgo = new Date();
@@ -92,7 +151,7 @@ export default function History({ repoId }: HistoryProps) {
     } catch {
       // DB not ready
     }
-  }, [repoId]);
+  }, [repoId, allRepos]);
 
   const avgCommitsPerDay = daysActive > 0 ? (totalCommits / daysActive).toFixed(1) : '0';
   const maxModuleChanges = topModules.length > 0 ? topModules[0].changes : 1;
@@ -114,6 +173,7 @@ export default function History({ repoId }: HistoryProps) {
               <Text color={colors.streak}>{'\uD83C\uDFF7\uFE0F'}  </Text>
               <Text color={colors.textPrimary} bold>{m.tag}</Text>
               <Text color={colors.textSecondary}>  {m.date}</Text>
+              {m.repo_name && <Text color={colors.dim}>  {m.repo_name}</Text>}
             </Box>
           ))}
         </Box>
@@ -153,16 +213,29 @@ export default function History({ repoId }: HistoryProps) {
               <Text color={colors.streak}>{streakInfo.best} days</Text>
             </Box>
           </Box>
-          <Box>
-            <Box width={28}>
-              <Text color={colors.textSecondary}>Most active month: </Text>
-              <Text color={colors.brand}>{mostActive.month || '--'}</Text>
+          {allRepos ? (
+            <Box>
+              <Box width={28}>
+                <Text color={colors.textSecondary}>Repos tracked:     </Text>
+                <Text color={colors.brand} bold>{formatNumber(repoCount)}</Text>
+              </Box>
+              <Box width={28}>
+                <Text color={colors.textSecondary}>First commit:      </Text>
+                <Text color={colors.brand}>{firstCommit ?? '--'}</Text>
+              </Box>
             </Box>
-            <Box width={28}>
-              <Text color={colors.textSecondary}>                   </Text>
-              <Text color={colors.textSecondary}>{mostActive.commits > 0 ? `${formatNumber(mostActive.commits)} commits` : ''}</Text>
+          ) : (
+            <Box>
+              <Box width={28}>
+                <Text color={colors.textSecondary}>Most active month: </Text>
+                <Text color={colors.brand}>{mostActive.month || '--'}</Text>
+              </Box>
+              <Box width={28}>
+                <Text color={colors.textSecondary}>                   </Text>
+                <Text color={colors.textSecondary}>{mostActive.commits > 0 ? `${formatNumber(mostActive.commits)} commits` : ''}</Text>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
 
@@ -174,7 +247,7 @@ export default function History({ repoId }: HistoryProps) {
             {topModules.map((mod, i) => (
               <StatBar
                 key={i}
-                label={mod.module}
+                label={mod.repo_name ? `${mod.repo_name}:${mod.module}` : mod.module}
                 value={mod.changes}
                 maxValue={maxModuleChanges}
                 width={25}
