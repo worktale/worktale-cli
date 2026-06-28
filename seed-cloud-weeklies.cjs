@@ -15,8 +15,14 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const os = require('os');
 
-const PG_URL = 'postgresql://postgres:***REMOVED***@caboose.proxy.rlwy.net:30167/railway';
-const USER_ID = '2cccea1c-ed73-4240-acbd-673c9b88898b';   // plsft
+// Read the cloud Postgres connection string from the environment. Never commit credentials.
+//   export DATABASE_URL='postgresql://user:pass@host:port/db'
+const PG_URL = process.env.DATABASE_URL || process.env.PG_URL;
+if (!PG_URL) {
+  console.error('Missing DATABASE_URL (or PG_URL) env var with the cloud Postgres connection string.');
+  process.exit(1);
+}
+const USER_ID = process.env.WORKTALE_USER_ID || '2cccea1c-ed73-4240-acbd-673c9b88898b';   // plsft
 const REPO_ID_LOCAL = 10;                                  // worktaleDemo in local SQLite
 const SQLITE = path.join(os.homedir(), '.worktale', 'data.db');
 
