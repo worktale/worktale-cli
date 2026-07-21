@@ -23,24 +23,73 @@ function log(level, message, extra) {
   }
 }
 
+// Anthropic rate table (USD per 1M tokens). Cache read is 0.1x input,
+// cache write (5m TTL) is 1.25x input.
 const PRICE_PER_MTOK = {
-  'claude-opus-4': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
+  'claude-fable-5': { in: 10, out: 50, cacheRead: 1, cacheWrite: 12.5 },
+  'claude-mythos-5': { in: 10, out: 50, cacheRead: 1, cacheWrite: 12.5 },
+  'claude-opus-4-8': { in: 5, out: 25, cacheRead: 0.5, cacheWrite: 6.25 },
+  'claude-opus-4-7': { in: 5, out: 25, cacheRead: 0.5, cacheWrite: 6.25 },
+  'claude-opus-4-6': { in: 5, out: 25, cacheRead: 0.5, cacheWrite: 6.25 },
+  'claude-opus-4-5': { in: 5, out: 25, cacheRead: 0.5, cacheWrite: 6.25 },
   'claude-opus-4-1': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
-  'claude-opus-4-5': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
-  'claude-opus-4-6': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
-  'claude-opus-4-7': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
-  'claude-sonnet-4': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
-  'claude-sonnet-4-5': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
+  'claude-opus-4': { in: 15, out: 75, cacheRead: 1.5, cacheWrite: 18.75 },
+  'claude-sonnet-5': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
   'claude-sonnet-4-6': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
+  'claude-sonnet-4-5': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
+  'claude-sonnet-4': { in: 3, out: 15, cacheRead: 0.3, cacheWrite: 3.75 },
   'claude-haiku-4-5': { in: 1, out: 5, cacheRead: 0.1, cacheWrite: 1.25 },
+  'claude-haiku-4': { in: 1, out: 5, cacheRead: 0.1, cacheWrite: 1.25 },
 };
+
+// Tier fallback so a model released after this table was written still gets
+// priced instead of silently costing $0.
+const TIER_FALLBACK = [
+  [/\b(fable|mythos)\b/, PRICE_PER_MTOK['claude-fable-5']],
+  [/\bopus\b/, PRICE_PER_MTOK['claude-opus-4-8']],
+  [/\bsonnet\b/, PRICE_PER_MTOK['claude-sonnet-5']],
+  [/\bhaiku\b/, PRICE_PER_MTOK['claude-haiku-4-5']],
+];
+
+function normalizeModel(model) {
+  let n = String(model).toLowerCase().trim();
+  n = n.replace(/\[.*?\]/g, '');          // context-window suffix: [1m]
+  n = n.replace(/@.*$/, '');              // vertex version separator
+  n = n.replace(/^(us|eu|apac)\./, '');   // bedrock inference-profile region
+  n = n.replace(/^anthropic[./]/, '');    // bedrock/openrouter provider prefix
+  n = n.replace(/-v\d+:\d+$/, '');        // bedrock ARN version: -v2:0
+  n = n.replace(/-(preview|latest|fast)$/, '');
+  n = n.replace(/-\d{8}$/, '');           // date snapshot: -20251101
+  n = n.replace(/\./g, '-');              // opus-4.8 -> opus-4-8
+  n = n.replace(/[\s-]+/g, '-').replace(/^-|-$/g, '');
+  // Shorthand major/minor: opus-48 -> opus-4-8
+  n = n.replace(/(opus|sonnet|haiku|fable|mythos)-(\d)(\d)\b/, '$1-$2-$3');
+  if (n && !n.startsWith('claude-')) n = `claude-${n}`;
+  return n;
+}
+
+// Legacy keys whose longer suffixes mean a *newer* model, not a variant, so
+// they must not prefix-match (claude-opus-4-9 is not claude-opus-4 pricing).
+const EXACT_ONLY = new Set([
+  'claude-opus-4',
+  'claude-opus-4-1',
+  'claude-sonnet-4',
+  'claude-haiku-4',
+]);
 
 function resolvePrice(model) {
   if (!model) return null;
-  const normalized = model.toLowerCase().replace(/\[.*?\]/g, '').replace(/-\d{8}$/, '');
+  const normalized = normalizeModel(model);
   if (PRICE_PER_MTOK[normalized]) return PRICE_PER_MTOK[normalized];
-  for (const key of Object.keys(PRICE_PER_MTOK)) {
+  // Longest key first so claude-opus-4-8 wins over claude-opus-4.
+  const keys = Object.keys(PRICE_PER_MTOK)
+    .filter((k) => !EXACT_ONLY.has(k))
+    .sort((a, b) => b.length - a.length);
+  for (const key of keys) {
     if (normalized.startsWith(key)) return PRICE_PER_MTOK[key];
+  }
+  for (const [pattern, price] of TIER_FALLBACK) {
+    if (pattern.test(normalized)) return price;
   }
   return null;
 }

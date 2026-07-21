@@ -1,7 +1,7 @@
 {
   "name": "worktale-codex",
   "description": "Worktale AI session tracking for OpenAI Codex — automatic token + cost capture from session rollouts plus per-commit narrative",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "George Rios",
     "url": "https://plurral.com"

@@ -1,6 +1,6 @@
 {
   "name": "@worktale/opencode-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenCode plugin that records per-session tokens, cost, model, and tool usage to Worktale (worktale.org)",
   "type": "module",
   "main": "src/index.ts",

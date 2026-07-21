@@ -30,38 +30,77 @@ const SCAN_DAYS = 7;       // how many recent days of session dirs to consider
 const MIN_TOKENS = 100;    // ignore tiny sessions (probably aborted)
 const DRY_RUN = process.env.WORKTALE_HOOK_DRY_RUN === '1';
 
-// OpenAI rate table (USD per 1M tokens). Cached input is read at 50% of input.
+// OpenAI rate table (USD per 1M tokens). Cached input reads at 10% of input
+// on the gpt-5.x family. NOTE: `cached` is a SUBSET of `input_tokens` in the
+// Codex log format, so cost math must bill (input - cached) at `in`.
 const PRICE_PER_MTOK = {
-  'gpt-5':                 { in: 15,    out: 60,   cacheRead: 7.5  },
-  'gpt-5-mini':            { in: 0.30,  out: 2.40, cacheRead: 0.15 },
-  'gpt-5-nano':            { in: 0.10,  out: 0.80, cacheRead: 0.05 },
-  'o3':                    { in: 15,    out: 60,   cacheRead: 7.5  },
-  'o3-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.55 },
-  'o3-pro':                { in: 25,    out: 100,  cacheRead: 12.5 },
-  'o1':                    { in: 15,    out: 60,   cacheRead: 7.5  },
-  'o1-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.55 },
-  'o4':                    { in: 15,    out: 60,   cacheRead: 7.5  },
-  'o4-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.55 },
-  'gpt-4o':                { in: 2.50,  out: 10,   cacheRead: 1.25 },
+  // Current families (verified against developers.openai.com/api/docs/pricing)
+  'gpt-5.6-sol':           { in: 5.00,  out: 30,   cacheRead: 0.50  },
+  'gpt-5.6-terra':         { in: 2.50,  out: 15,   cacheRead: 0.25  },
+  'gpt-5.6-luna':          { in: 1.00,  out: 6,    cacheRead: 0.10  },
+  'gpt-5.5-pro':           { in: 30.00, out: 180,  cacheRead: 30.00 },
+  'gpt-5.5':               { in: 5.00,  out: 30,   cacheRead: 0.50  },
+  'gpt-5.4-pro':           { in: 30.00, out: 180,  cacheRead: 30.00 },
+  'gpt-5.4-mini':          { in: 0.75,  out: 4.50, cacheRead: 0.075 },
+  'gpt-5.4-nano':          { in: 0.20,  out: 1.25, cacheRead: 0.02  },
+  'gpt-5.4':               { in: 2.50,  out: 15,   cacheRead: 0.25  },
+  'gpt-5.3-codex':         { in: 1.75,  out: 14,   cacheRead: 0.175 },
+  'chat-latest':           { in: 5.00,  out: 30,   cacheRead: 0.50  },
+  // Legacy families, retained for historical transcripts.
+  'gpt-5-mini':            { in: 0.25,  out: 2.00, cacheRead: 0.025 },
+  'gpt-5-nano':            { in: 0.05,  out: 0.40, cacheRead: 0.005 },
+  'gpt-5':                 { in: 1.25,  out: 10,   cacheRead: 0.125 },
+  'gpt-4.1-mini':          { in: 0.40,  out: 1.60, cacheRead: 0.10  },
+  'gpt-4.1-nano':          { in: 0.10,  out: 0.40, cacheRead: 0.025 },
+  'gpt-4.1':               { in: 2.00,  out: 8,    cacheRead: 0.50  },
   'gpt-4o-mini':           { in: 0.15,  out: 0.60, cacheRead: 0.075 },
-  'gpt-4.1':               { in: 2.00,  out: 8,    cacheRead: 1.00 },
-  'gpt-4.1-mini':          { in: 0.40,  out: 1.60, cacheRead: 0.20 },
-  'gpt-4.1-nano':          { in: 0.10,  out: 0.40, cacheRead: 0.05 },
-  'codex-mini':            { in: 1.50,  out: 6,    cacheRead: 0.75 },
+  'gpt-4o':                { in: 2.50,  out: 10,   cacheRead: 1.25  },
+  'o3-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.55  },
+  'o3-pro':                { in: 20.00, out: 80,   cacheRead: 20.00 },
+  'o3':                    { in: 2.00,  out: 8,    cacheRead: 0.50  },
+  'o4-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.275 },
+  'o1-mini':               { in: 1.10,  out: 4.40, cacheRead: 0.55  },
+  'o1':                    { in: 15.00, out: 60,   cacheRead: 7.50  },
+  'codex-mini':            { in: 1.50,  out: 6,    cacheRead: 0.375 },
 };
+
+// Bare family keys whose longer suffixes denote a NEWER model rather than a
+// variant — these must not prefix-match (gpt-5.7 is not gpt-5 pricing).
+const EXACT_ONLY = new Set(['gpt-5', 'gpt-4o', 'gpt-4.1', 'o1', 'o3']);
+
+// Tier fallback so a model released after this table was written still gets
+// priced instead of silently costing $0.
+const TIER_FALLBACK = [
+  [/codex/, PRICE_PER_MTOK['gpt-5.3-codex']],
+  [/-pro\b/, PRICE_PER_MTOK['gpt-5.5-pro']],
+  [/nano/, PRICE_PER_MTOK['gpt-5.4-nano']],
+  [/mini|luna/, PRICE_PER_MTOK['gpt-5.6-luna']],
+  [/^(gpt|o)[-\d]/, PRICE_PER_MTOK['gpt-5.6-terra']],
+];
+
+function normalizeModel(model) {
+  // Dots are significant in OpenAI ids (gpt-4.1, gpt-5.6) — do not strip them.
+  return String(model).toLowerCase().trim()
+    .replace(/^openai\//, '')
+    .replace(/@.*$/, '')
+    .replace(/-\d{8}$/, '')      // date snapshot: -20250805
+    .replace(/-(preview|latest)$/, '')
+    .replace(/[\s_]+/g, '-');
+}
 
 function resolvePrice(model) {
   if (!model) return null;
-  const norm = model.toLowerCase()
-    .replace(/^openai\//, '')
-    .replace(/-\d{8}$/, '')   // strip date suffix like -20250805
-    .replace(/-preview$/, '')
-    .replace(/@.*$/, '');
+  const norm = normalizeModel(model);
   if (PRICE_PER_MTOK[norm]) return PRICE_PER_MTOK[norm];
-  // Prefix match (longest first) so gpt-4.1-mini wins over gpt-4
-  const keys = Object.keys(PRICE_PER_MTOK).sort((a, b) => b.length - a.length);
+  // Prefix match (longest first) so gpt-4.1-mini wins over gpt-4.1
+  const keys = Object.keys(PRICE_PER_MTOK)
+    .filter((k) => !EXACT_ONLY.has(k))
+    .sort((a, b) => b.length - a.length);
   for (const key of keys) {
     if (norm.startsWith(key)) return PRICE_PER_MTOK[key];
+  }
+  for (const [pattern, price] of TIER_FALLBACK) {
+    if (pattern.test(norm)) return price;
   }
   return null;
 }
@@ -111,17 +150,38 @@ function pickField(obj, names) {
   return undefined;
 }
 
+// Bucket shape matches the Anthropic tracker so both hooks aggregate and
+// price identically. `input` is the NON-cached remainder; cached reads live
+// in `cacheRead`. OpenAI has no cache-write charge, so `cacheWrite` stays 0.
+function bucketFor(acc, model) {
+  const key = model || '_unknown';
+  if (!acc.perModel.has(key)) {
+    acc.perModel.set(key, { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 });
+  }
+  return acc.perModel.get(key);
+}
+
+// Attribute a turn's token delta to whichever model was active for that turn.
+function addDelta(acc, dInput, dCached, dOutput) {
+  const cached = Math.max(0, dCached);
+  const uncached = Math.max(0, dInput - cached);
+  const bucket = bucketFor(acc, acc.currentModel);
+  bucket.input += uncached;
+  bucket.cacheRead += cached;
+  bucket.output += Math.max(0, dOutput);
+}
+
 function parseSessionFile(path) {
   const acc = {
-    input: 0,
-    cached: 0,
-    output: 0,
-    model: null,
+    perModel: new Map(),
+    currentModel: null,  // model active for the turn being read
+    model: null,         // primary/last-seen model, used as the session label
     cwd: null,
     sessionId: null,
     firstTs: null,
     lastTs: null,
     previousTotals: null, // for delta math
+    sawPerTurn: false,    // saw last_token_usage entries (already banked)
   };
 
   let raw;
@@ -154,7 +214,11 @@ function parseSessionFile(path) {
 
     if (type === 'turn_context') {
       const model = pickField(payload, ['model']) || pickField(payload?.info, ['model']);
-      if (model) acc.model = String(model);
+      if (model) {
+        // Switches the bucket that subsequent token deltas are charged to.
+        acc.currentModel = String(model);
+        acc.model = String(model);
+      }
       continue;
     }
 
@@ -162,32 +226,41 @@ function parseSessionFile(path) {
       const info = payload.info ?? payload;
       const total = info.total_token_usage ?? info.totalTokenUsage;
       const last = info.last_token_usage ?? info.lastTokenUsage;
+      // A model named on the token_count itself is the most precise
+      // attribution available for this turn's tokens.
       const m = pickField(info, ['model']);
-      if (m && !acc.model) acc.model = String(m);
+      if (m) {
+        acc.currentModel = String(m);
+        if (!acc.model) acc.model = String(m);
+      }
 
       if (total) {
         const tIn  = pickField(total, ['input_tokens', 'inputTokens']) ?? 0;
         const tCache = pickField(total, ['cached_input_tokens', 'cachedInputTokens', 'cache_read_input_tokens', 'cacheReadInputTokens']) ?? 0;
         const tOut = pickField(total, ['output_tokens', 'outputTokens']) ?? 0;
-        if (acc.previousTotals) {
-          acc.input  += Math.max(0, tIn  - acc.previousTotals.input);
-          acc.cached += Math.max(0, tCache - acc.previousTotals.cached);
-          acc.output += Math.max(0, tOut - acc.previousTotals.output);
+        const prev = acc.previousTotals;
+        // A cumulative counter that moved backwards means Codex reset it
+        // (compaction, or a new conversation in the same file). Treat the new
+        // reading as a fresh baseline and bank it whole rather than clamping
+        // the delta to 0, which silently discarded the turn.
+        const isReset = prev && (tIn < prev.input || tCache < prev.cached || tOut < prev.output);
+        if (prev && !isReset) {
+          addDelta(acc, tIn - prev.input, tCache - prev.cached, tOut - prev.output);
+        } else if (!prev && acc.sawPerTurn) {
+          // Per-turn entries already banked these tokens; adopt this reading as
+          // the baseline without re-adding it.
         } else {
-          acc.input  += tIn;
-          acc.cached += tCache;
-          acc.output += tOut;
+          addDelta(acc, tIn, tCache, tOut);
         }
         acc.previousTotals = { input: tIn, cached: tCache, output: tOut };
       } else if (last) {
+        // Per-turn deltas: add directly, and leave previousTotals untouched so
+        // a later cumulative reading still diffs against the right baseline.
         const dIn  = pickField(last, ['input_tokens', 'inputTokens']) ?? 0;
         const dCache = pickField(last, ['cached_input_tokens', 'cachedInputTokens', 'cache_read_input_tokens', 'cacheReadInputTokens']) ?? 0;
         const dOut = pickField(last, ['output_tokens', 'outputTokens']) ?? 0;
-        acc.input  += dIn;
-        acc.cached += dCache;
-        acc.output += dOut;
-        // Mark as if we'd seen totals = current sum so subsequent total entries don't double count
-        acc.previousTotals = { input: acc.input, cached: acc.cached, output: acc.output };
+        addDelta(acc, dIn, dCache, dOut);
+        acc.sawPerTurn = true;
       }
     }
   }
@@ -195,13 +268,32 @@ function parseSessionFile(path) {
   return acc;
 }
 
-function computeCost(parsed) {
-  const price = resolvePrice(parsed.model);
-  if (!price) return 0;
-  const cost =
-    (parsed.input  / 1_000_000) * price.in +
-    (parsed.cached / 1_000_000) * price.cacheRead +
-    (parsed.output / 1_000_000) * price.out;
+function totals(acc) {
+  let input = 0, output = 0, cacheRead = 0, cacheWrite = 0;
+  for (const b of acc.perModel.values()) {
+    input += b.input;
+    output += b.output;
+    cacheRead += b.cacheRead;
+    cacheWrite += b.cacheWrite;
+  }
+  return { input, output, cacheRead, cacheWrite };
+}
+
+// Each model's tokens are priced at that model's own rate. Buckets are already
+// cache-split by addDelta, so `input` here is the non-cached remainder.
+function computeCost(acc) {
+  let cost = 0;
+  for (const [model, b] of acc.perModel.entries()) {
+    const price = resolvePrice(model === '_unknown' ? acc.model : model);
+    if (!price) continue;
+    cost +=
+      (b.input / 1_000_000) * price.in +
+      (b.output / 1_000_000) * price.out +
+      (b.cacheRead / 1_000_000) * (price.cacheRead ?? 0) +
+      // OpenAI has no cache-write charge; guard so a missing rate can't turn
+      // the whole cost into NaN.
+      (b.cacheWrite / 1_000_000) * (price.cacheWrite ?? 0);
+  }
   return Math.round(cost * 10000) / 10000;
 }
 
@@ -238,9 +330,12 @@ function main() {
       state.processed[f.path] = { recordedAt: now, status: 'unreadable' };
       continue;
     }
-    const totalIn = parsed.input + parsed.cached;
-    if (totalIn + parsed.output < MIN_TOKENS) {
-      state.processed[f.path] = { recordedAt: now, status: 'too-small', tokens: totalIn + parsed.output };
+    // Buckets are already cache-split, so `t.input` is the non-cached
+    // remainder — the same meaning `input_tokens` has in the Anthropic tracker.
+    const t = totals(parsed);
+    const grandTotal = t.input + t.cacheRead + t.output;
+    if (grandTotal < MIN_TOKENS) {
+      state.processed[f.path] = { recordedAt: now, status: 'too-small', tokens: grandTotal };
       continue;
     }
 
@@ -255,8 +350,10 @@ function main() {
       '--tool', 'codex',
     ];
     if (parsed.model) args.push('--model', parsed.model);
-    if (totalIn > 0) args.push('--input-tokens', String(totalIn));
-    if (parsed.output > 0) args.push('--output-tokens', String(parsed.output));
+    if (t.input > 0) args.push('--input-tokens', String(t.input));
+    if (t.output > 0) args.push('--output-tokens', String(t.output));
+    if (t.cacheRead > 0) args.push('--cache-read-tokens', String(t.cacheRead));
+    if (t.cacheWrite > 0) args.push('--cache-write-tokens', String(t.cacheWrite));
     if (cost > 0) args.push('--cost', cost.toFixed(4));
     if (durationSecs) args.push('--duration', String(durationSecs));
 
@@ -265,10 +362,12 @@ function main() {
       recordedAt: now,
       status: exit === 0 ? 'ok' : 'failed',
       model: parsed.model,
-      input: totalIn,
-      output: parsed.output,
+      input: t.input,
+      cacheRead: t.cacheRead,
+      output: t.output,
       cost,
       sessionId: parsed.sessionId,
+      perModel: Object.fromEntries(parsed.perModel),
     };
     if (exit === 0) recorded += 1;
   }

@@ -18,7 +18,8 @@ const DRY_RUN = process.env.WORKTALE_PLUGIN_DRY_RUN === "1"
 interface MessageState {
   cost: number
   input: number
-  cached: number
+  cacheRead: number
+  cacheWrite: number
   output: number
   reasoning: number
   model: string
@@ -51,26 +52,29 @@ function getSession(sessionID: string): SessionState {
 }
 
 function aggregateTotals(s: SessionState) {
-  let input = 0, cached = 0, output = 0, reasoning = 0, cost = 0
+  let input = 0, cacheRead = 0, cacheWrite = 0, output = 0, reasoning = 0, cost = 0
   let model = "", provider = ""
   for (const m of s.messages.values()) {
     input += m.input
-    cached += m.cached
+    cacheRead += m.cacheRead
+    cacheWrite += m.cacheWrite
     output += m.output
     reasoning += m.reasoning
     cost += m.cost
     if (m.model) model = m.model
     if (m.provider) provider = m.provider
   }
-  return { input, cached, output, reasoning, cost, model, provider }
+  return { input, cacheRead, cacheWrite, output, reasoning, cost, model, provider }
 }
 
 function flush(sessionID: string, cwd: string) {
   const s = sessions.get(sessionID)
   if (!s) return
   const t = aggregateTotals(s)
-  const totalIn = t.input + t.cached
-  if (totalIn + t.output < MIN_TOKENS) {
+  // `input` is fresh (non-cached) input; cache gets its own columns, matching
+  // the Anthropic, Codex, and Copilot trackers.
+  const grandTotal = t.input + t.cacheRead + t.cacheWrite + t.output + t.reasoning
+  if (grandTotal < MIN_TOKENS) {
     sessions.delete(sessionID)
     return
   }
@@ -81,7 +85,11 @@ function flush(sessionID: string, cwd: string) {
     "--tool", "opencode",
   ]
   if (t.model) args.push("--model", t.model)
-  if (totalIn > 0) args.push("--input-tokens", String(totalIn))
+  if (t.input > 0) args.push("--input-tokens", String(t.input))
+  if (t.cacheRead > 0) args.push("--cache-read-tokens", String(t.cacheRead))
+  if (t.cacheWrite > 0) args.push("--cache-write-tokens", String(t.cacheWrite))
+  // Reasoning tokens are billed at the output rate, so they belong in the
+  // output total rather than a column of their own.
   const totalOut = t.output + t.reasoning
   if (totalOut > 0) args.push("--output-tokens", String(totalOut))
   if (t.cost > 0) args.push("--cost", t.cost.toFixed(4))
@@ -110,12 +118,31 @@ function scheduleFlush(sessionID: string, cwd: string) {
     timers.delete(sessionID)
     flush(sessionID, cwd)
   }, FLUSH_DELAY_MS)
-  if (typeof t.unref === "function") t.unref()
+  // NOTE: deliberately not unref'd. An unref'd timer does not hold the event
+  // loop open, so any session ending within FLUSH_DELAY_MS of the last
+  // assistant message — the common case — was never recorded at all.
   timers.set(sessionID, t)
+}
+
+// Belt-and-braces: if the host exits before a pending timer fires, flush
+// everything still buffered rather than dropping those sessions.
+let exitHooked = false
+function ensureExitFlush(cwd: string) {
+  if (exitHooked) return
+  exitHooked = true
+  const flushAll = () => {
+    for (const t of timers.values()) clearTimeout(t)
+    timers.clear()
+    for (const sessionID of [...sessions.keys()]) flush(sessionID, cwd)
+  }
+  process.once("beforeExit", flushAll)
+  process.once("SIGINT", flushAll)
+  process.once("SIGTERM", flushAll)
 }
 
 export const Worktale: Plugin = async (input) => {
   const cwd = input.directory || input.worktree || process.cwd()
+  ensureExitFlush(cwd)
 
   return {
     /**
@@ -139,9 +166,8 @@ export const Worktale: Plugin = async (input) => {
       state.messages.set(messageID, {
         cost: typeof info.cost === "number" ? info.cost : 0,
         input: typeof tokens.input === "number" ? tokens.input : 0,
-        cached:
-          (typeof cache.read === "number" ? cache.read : 0) +
-          (typeof cache.write === "number" ? cache.write : 0),
+        cacheRead: typeof cache.read === "number" ? cache.read : 0,
+        cacheWrite: typeof cache.write === "number" ? cache.write : 0,
         output: typeof tokens.output === "number" ? tokens.output : 0,
         reasoning: typeof tokens.reasoning === "number" ? tokens.reasoning : 0,
         model: typeof info.modelID === "string" ? info.modelID : "",
