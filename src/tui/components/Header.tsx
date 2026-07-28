@@ -6,6 +6,7 @@ interface HeaderProps {
   repoName: string;
   streak: number;
   activeView: 1 | 2 | 3 | 4;
+  allRepos?: boolean;
 }
 
 const tabs = [
@@ -15,7 +16,8 @@ const tabs = [
   { key: 4 as const, label: 'AI Sessions' },
 ];
 
-export default function Header({ repoName, streak, activeView }: HeaderProps) {
+export default function Header({ repoName, streak, activeView, allRepos }: HeaderProps) {
+  const streakLabel = allRepos ? 'Global streak' : 'Streak';
   return (
     <Box
       flexDirection="column"
@@ -33,7 +35,7 @@ export default function Header({ repoName, streak, activeView }: HeaderProps) {
         </Box>
         <Box>
           <Text color={colors.streak}>
-            {'\u26A1'} Streak: {streak} day{streak !== 1 ? 's' : ''}
+            {'\u26A1'} {streakLabel}: {streak} day{streak !== 1 ? 's' : ''}
           </Text>
         </Box>
       </Box>

@@ -46,8 +46,9 @@ program
 program
   .command('dash')
   .description('Open the interactive dashboard')
-  .action(async () => {
-    await dashCommand();
+  .option('-a, --all-repos', 'Show consolidated dashboard across all tracked repositories')
+  .action(async (options: { allRepos?: boolean }) => {
+    await dashCommand(options);
   });
 
 program
@@ -71,7 +72,22 @@ program
   .command('digest')
   .description("Generate today's work digest")
   .option('-f, --format <fmt>', 'Output format: text | json | markdown', 'text')
-  .action(async (options: { format?: string }) => {
+  .option('-a, --all-repos', 'Aggregate digest across all tracked repositories')
+  .option('--since <date>', 'Start date (YYYY-MM-DD) — implies --all-repos')
+  .option('--days <n>', 'Last N days — implies --all-repos when used outside a repo')
+  .option('--all-time', 'Since each repo\'s first commit — implies --all-repos')
+  .option('--per-repo', 'Render per-repo subsections (default true in --all-repos mode)')
+  .option('--no-per-repo', 'Flatten output without per-repo subsections')
+  .option('--repos <list>', 'Comma-separated repo names to include (implies --all-repos)')
+  .action(async (options: {
+    format?: string;
+    allRepos?: boolean;
+    since?: string;
+    days?: string;
+    allTime?: boolean;
+    perRepo?: boolean;
+    repos?: string;
+  }) => {
     await digestCommand(options);
   });
 

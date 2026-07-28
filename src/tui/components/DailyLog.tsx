@@ -12,15 +12,32 @@ import {
 import CommitTimeline from './CommitTimeline.js';
 import type { Commit } from '../../db/commits.js';
 import type { DailySummary } from '../../db/daily-summaries.js';
+import {
+  getCommitsByDateAcrossRepos,
+  getAggregatedDailySummary,
+  getPerRepoDailySummary,
+  type CommitWithRepo,
+  type DailySummaryWithRepo,
+} from '../../db/aggregates.js';
 
 interface DailyLogProps {
   repoId: number;
+  allRepos?: boolean;
   onEditingChange?: (editing: boolean) => void;
 }
 
-export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
+interface PerRepoBucket {
+  repo_name: string;
+  commits: CommitWithRepo[];
+  summary: DailySummaryWithRepo;
+}
+
+export default function DailyLog({ repoId, allRepos, onEditingChange }: DailyLogProps) {
   const [currentDate, setCurrentDate] = useState(() => new Date());
   const [commits, setCommits] = useState<Commit[]>([]);
+  const [crossRepoCommits, setCrossRepoCommits] = useState<CommitWithRepo[]>([]);
+  const [perRepo, setPerRepo] = useState<PerRepoBucket[]>([]);
+  const [aggregate, setAggregate] = useState<{ commits_count: number; lines_added: number; lines_removed: number; files_touched: number; repo_count: number } | null>(null);
   const [summary, setSummary] = useState<DailySummary | undefined>(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [notesDraft, setNotesDraft] = useState('');
@@ -33,6 +50,25 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
 
   const loadData = useCallback(() => {
     try {
+      if (allRepos) {
+        const all = getCommitsByDateAcrossRepos(dateStr);
+        setCrossRepoCommits(all);
+
+        const perRepoSummaries = getPerRepoDailySummary(dateStr);
+        const buckets: PerRepoBucket[] = perRepoSummaries.map((s) => ({
+          repo_name: s.repo_name,
+          summary: s,
+          commits: all.filter((c) => c.repo_id === s.repo_id),
+        }));
+        setPerRepo(buckets);
+
+        setAggregate(getAggregatedDailySummary(dateStr));
+        setCommits([]);
+        setSummary(undefined);
+        setNotesDraft('');
+        return;
+      }
+
       const dayCommits = getCommitsByDate(repoId, dateStr);
       setCommits(dayCommits);
 
@@ -42,10 +78,13 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
       setNotesDraft(daySummary?.user_notes ?? '');
     } catch {
       setCommits([]);
+      setCrossRepoCommits([]);
+      setPerRepo([]);
+      setAggregate(null);
       setSummary(undefined);
       setNotesDraft('');
     }
-  }, [repoId, dateStr]);
+  }, [repoId, dateStr, allRepos]);
 
   useEffect(() => {
     loadData();
@@ -76,7 +115,7 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
         return d;
       });
     }
-    if (input === 'e' || input === 'E') {
+    if ((input === 'e' || input === 'E') && !allRepos) {
       setIsEditing(true);
     }
   });
@@ -95,31 +134,41 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
   const todayStr = getDateString();
   const isToday = dateStr === todayStr;
 
-  const totalAdded = summary?.lines_added ?? commits.reduce((s, c) => s + c.lines_added, 0);
-  const totalRemoved = summary?.lines_removed ?? commits.reduce((s, c) => s + c.lines_removed, 0);
-  const totalFiles = summary?.files_touched ?? commits.reduce((s, c) => s + c.files_changed, 0);
+  const totalCount = allRepos ? aggregate?.commits_count ?? 0 : commits.length;
+  const totalAdded = allRepos
+    ? aggregate?.lines_added ?? 0
+    : summary?.lines_added ?? commits.reduce((s, c) => s + c.lines_added, 0);
+  const totalRemoved = allRepos
+    ? aggregate?.lines_removed ?? 0
+    : summary?.lines_removed ?? commits.reduce((s, c) => s + c.lines_removed, 0);
+  const totalFiles = allRepos
+    ? aggregate?.files_touched ?? 0
+    : summary?.files_touched ?? commits.reduce((s, c) => s + c.files_changed, 0);
 
   return (
     <Box flexDirection="column" paddingX={1}>
       {/* Date navigation */}
       <Box marginBottom={1}>
-        <Text color={colors.dim}>{'\u25C0'} </Text>
+        <Text color={colors.dim}>{'◀'} </Text>
         <Text color={colors.textPrimary} bold>
           {formatDate(dateStr)}
         </Text>
-        <Text color={colors.dim}> {'\u25B6'}</Text>
+        <Text color={colors.dim}> {'▶'}</Text>
         {isToday && <Text color={colors.streak}>  (today)</Text>}
+        {allRepos && aggregate && aggregate.repo_count > 0 && (
+          <Text color={colors.textSecondary}>  {aggregate.repo_count} repo{aggregate.repo_count !== 1 ? 's' : ''} active</Text>
+        )}
       </Box>
 
       {/* Day stats */}
       <Box borderStyle="round" borderColor={colors.dim} flexDirection="column" paddingX={1}>
         <Text color={colors.textSecondary} bold> Activity </Text>
-        {commits.length === 0 ? (
+        {totalCount === 0 ? (
           <Text color={colors.textSecondary}>No commits on this day.</Text>
         ) : (
           <Box>
             <Box width={20}>
-              <Text color={colors.brand} bold>{formatNumber(commits.length)}</Text>
+              <Text color={colors.brand} bold>{formatNumber(totalCount)}</Text>
               <Text color={colors.textSecondary}> commits</Text>
             </Box>
             <Box width={24}>
@@ -135,37 +184,45 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
         )}
       </Box>
 
-      {/* User notes */}
-      <Box marginTop={1} flexDirection="column">
-        <Box>
-          <Text color={colors.textSecondary} bold>Notes </Text>
-          {!isEditing && (
-            <Text color={colors.dim}>[E to edit]</Text>
-          )}
-        </Box>
-        {isEditing ? (
-          <Box borderStyle="round" borderColor={colors.brand} paddingX={1}>
-            <TextInput
-              value={notesDraft}
-              onChange={setNotesDraft}
-              onSubmit={handleNotesSubmit}
-              placeholder="Write your notes for the day... (Enter to save, Esc to cancel)"
-              focus={true}
-            />
-          </Box>
-        ) : (
-          <Box paddingLeft={1}>
-            {notesDraft ? (
-              <Text color={colors.textPrimary}>{notesDraft}</Text>
-            ) : (
-              <Text color={colors.dim} italic>No notes yet. Press E to add notes.</Text>
+      {/* User notes (single-repo only) */}
+      {!allRepos && (
+        <Box marginTop={1} flexDirection="column">
+          <Box>
+            <Text color={colors.textSecondary} bold>Notes </Text>
+            {!isEditing && (
+              <Text color={colors.dim}>[E to edit]</Text>
             )}
           </Box>
-        )}
-      </Box>
+          {isEditing ? (
+            <Box borderStyle="round" borderColor={colors.brand} paddingX={1}>
+              <TextInput
+                value={notesDraft}
+                onChange={setNotesDraft}
+                onSubmit={handleNotesSubmit}
+                placeholder="Write your notes for the day... (Enter to save, Esc to cancel)"
+                focus={true}
+              />
+            </Box>
+          ) : (
+            <Box paddingLeft={1}>
+              {notesDraft ? (
+                <Text color={colors.textPrimary}>{notesDraft}</Text>
+              ) : (
+                <Text color={colors.dim} italic>No notes yet. Press E to add notes.</Text>
+              )}
+            </Box>
+          )}
+        </Box>
+      )}
 
-      {/* AI Draft */}
-      {summary?.ai_draft && (
+      {allRepos && (
+        <Box marginTop={1} flexDirection="column">
+          <Text color={colors.dim} italic>Notes are per-repo — switch to a single-repo view to edit.</Text>
+        </Box>
+      )}
+
+      {/* AI Draft (single-repo only) */}
+      {!allRepos && summary?.ai_draft && (
         <Box marginTop={1} flexDirection="column">
           <Text color={colors.textSecondary} bold>AI Summary</Text>
           <Box paddingLeft={1}>
@@ -179,19 +236,44 @@ export default function DailyLog({ repoId, onEditingChange }: DailyLogProps) {
         <Box marginBottom={0}>
           <Text color={colors.textSecondary} bold>Commits</Text>
         </Box>
-        <CommitTimeline
-          commits={commits.map((c) => ({
-            sha: c.sha,
-            message: c.message ?? '',
-            timestamp: c.timestamp,
-          }))}
-        />
+        {allRepos ? (
+          perRepo.length === 0 ? (
+            <CommitTimeline commits={[]} />
+          ) : (
+            perRepo.map((bucket) => (
+              <Box key={bucket.repo_name} flexDirection="column" marginTop={1}>
+                <Box>
+                  <Text color={colors.streak} bold>{bucket.repo_name}</Text>
+                  <Text color={colors.textSecondary}>  {bucket.summary.commits_count} commit{bucket.summary.commits_count !== 1 ? 's' : ''}, </Text>
+                  <Text color={colors.positive}>+{formatNumber(bucket.summary.lines_added)}</Text>
+                  <Text color={colors.textSecondary}> / </Text>
+                  <Text color={colors.negative}>-{formatNumber(bucket.summary.lines_removed)}</Text>
+                </Box>
+                <CommitTimeline
+                  commits={bucket.commits.map((c) => ({
+                    sha: c.sha,
+                    message: c.message ?? '',
+                    timestamp: c.timestamp,
+                  }))}
+                />
+              </Box>
+            ))
+          )
+        ) : (
+          <CommitTimeline
+            commits={commits.map((c) => ({
+              sha: c.sha,
+              message: c.message ?? '',
+              timestamp: c.timestamp,
+            }))}
+          />
+        )}
       </Box>
 
       {/* Footer hints */}
       <Box marginTop={1}>
         <Text color={colors.dim}>
-          [{'\u2190'}/{'\u2192'}] Navigate days    [E] Edit notes    [Tab] Switch view
+          [{'←'}/{'→'}] Navigate days    {allRepos ? '' : '[E] Edit notes    '}[Tab] Switch view
         </Text>
       </Box>
     </Box>

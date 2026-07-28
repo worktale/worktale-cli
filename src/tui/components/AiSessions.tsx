@@ -4,9 +4,15 @@ import { colors } from '../theme.js';
 import { getAiSessionStats, getDailyAiSummary } from '../../db/ai-sessions.js';
 import type { AiSessionStats } from '../../db/ai-sessions.js';
 import { formatNumber, getDateString } from '../../utils/formatting.js';
+import {
+  getCombinedAiSessionStats,
+  getDailyAiSummaryAcrossRepos,
+  type CombinedAiSessionStats,
+} from '../../db/aggregates.js';
 
 interface AiSessionsProps {
   repoId: number;
+  allRepos?: boolean;
 }
 
 interface DailyPoint {
@@ -57,21 +63,32 @@ function topEntries(map: Record<string, number>, limit = 5): Array<[string, numb
     .slice(0, limit);
 }
 
-export default function AiSessions({ repoId }: AiSessionsProps): React.ReactElement {
-  const [stats, setStats] = useState<AiSessionStats | null>(null);
+export default function AiSessions({ repoId, allRepos }: AiSessionsProps): React.ReactElement {
+  const [stats, setStats] = useState<AiSessionStats | CombinedAiSessionStats | null>(null);
   const [daily, setDaily] = useState<DailyPoint[]>([]);
   const [days] = useState<number>(30);
+  const [perRepo, setPerRepo] = useState<Array<{ repo_name: string; sessions: number; cost: number; tokens: number }>>([]);
 
   useEffect(() => {
     try {
-      const s = getAiSessionStats(repoId, days);
+      let s: AiSessionStats | CombinedAiSessionStats;
+      if (allRepos) {
+        const combined = getCombinedAiSessionStats(days);
+        s = combined;
+        setPerRepo(combined.per_repo);
+      } else {
+        s = getAiSessionStats(repoId, days);
+        setPerRepo([]);
+      }
       setStats(s);
 
       const end = getDateString();
       const since = new Date();
       since.setDate(since.getDate() - (days - 1));
       const start = getDateString(since);
-      const daily = getDailyAiSummary(repoId, start, end);
+      const daily = allRepos
+        ? getDailyAiSummaryAcrossRepos(start, end)
+        : getDailyAiSummary(repoId, start, end);
 
       // Fill gaps with zeros so the sparkline renders a smooth series
       const dayMap = new Map(daily.map((d) => [d.date, d]));
@@ -88,7 +105,7 @@ export default function AiSessions({ repoId }: AiSessionsProps): React.ReactElem
     } catch {
       // no ai sessions yet — leave defaults
     }
-  }, [repoId, days]);
+  }, [repoId, days, allRepos]);
 
   if (!stats || stats.total_sessions === 0) {
     return (
@@ -175,6 +192,21 @@ export default function AiSessions({ repoId }: AiSessionsProps): React.ReactElem
           <Text color={colors.dim}>  peak {formatTokens(maxTokens)}</Text>
         </Box>
       </Box>
+
+      {/* Per repo (all-repos mode only) */}
+      {allRepos && perRepo.length > 0 && (
+        <Box marginTop={1} flexDirection="column">
+          <Text color={colors.textSecondary} bold>Per repo</Text>
+          {perRepo.slice(0, 6).map((r) => (
+            <Box key={r.repo_name}>
+              <Box width={24}><Text color={colors.textPrimary}>{r.repo_name}</Text></Box>
+              <Box width={12}><Text color={colors.streak}>{formatUsd(r.cost)}</Text></Box>
+              <Box width={14}><Text color={colors.dim}>{r.sessions} sessions</Text></Box>
+              <Text color={colors.dim}>{formatTokens(r.tokens)} tokens</Text>
+            </Box>
+          ))}
+        </Box>
+      )}
 
       {/* Two-column breakdown: agents + models */}
       <Box marginTop={1}>

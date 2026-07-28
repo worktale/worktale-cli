@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, useApp, useInput, useStdout } from 'ink';
-import { getRepo } from '../db/repos.js';
-import { getStreakInfo } from '../utils/streaks.js';
+import { getRepo, getAllRepos } from '../db/repos.js';
+import { getStreakInfo, getStreakInfoGlobal } from '../utils/streaks.js';
 import { colors } from './theme.js';
 import Header from './components/Header.js';
 import Overview from './components/Overview.js';
@@ -12,10 +12,19 @@ import type { Repo } from '../db/repos.js';
 
 interface AppProps {
   repoPath: string;
+  allRepos?: boolean;
   onAction?: (action: 'digest' | 'publish') => void;
 }
 
-export default function App({ repoPath, onAction }: AppProps) {
+const SYNTHETIC_ALL_REPOS: Repo = {
+  id: 0,
+  path: '__all__',
+  name: 'All Repos',
+  first_seen: null,
+  last_synced: null,
+};
+
+export default function App({ repoPath, allRepos, onAction }: AppProps) {
   const { exit } = useApp();
   const [activeView, setActiveView] = useState<1 | 2 | 3 | 4>(1);
   const [repo, setRepo] = useState<Repo | undefined>(undefined);
@@ -25,6 +34,15 @@ export default function App({ repoPath, onAction }: AppProps) {
 
   useEffect(() => {
     try {
+      if (allRepos) {
+        const tracked = getAllRepos();
+        const synthetic: Repo = { ...SYNTHETIC_ALL_REPOS, name: `All Repos (${tracked.length})` };
+        setRepo(synthetic);
+        const info = getStreakInfoGlobal();
+        setStreak(info.current);
+        return;
+      }
+
       const r = getRepo(repoPath);
       if (!r) {
         setError(`Repository not found: ${repoPath}\nRun "worktale init" first.`);
@@ -37,7 +55,7 @@ export default function App({ repoPath, onAction }: AppProps) {
     } catch (err) {
       setError(`Failed to load repository data: ${err instanceof Error ? err.message : String(err)}`);
     }
-  }, [repoPath]);
+  }, [repoPath, allRepos]);
 
   useInput((input, key) => {
     if (isEditing) return;
@@ -87,12 +105,12 @@ export default function App({ repoPath, onAction }: AppProps) {
 
   return (
     <Box flexDirection="column" height={termHeight}>
-      <Header repoName={repo.name} streak={streak} activeView={activeView} />
+      <Header repoName={repo.name} streak={streak} activeView={activeView} allRepos={Boolean(allRepos)} />
       <Box flexGrow={1}>
-        {activeView === 1 && <Overview repoId={repo.id} />}
-        {activeView === 2 && <DailyLog repoId={repo.id} onEditingChange={setIsEditing} />}
-        {activeView === 3 && <History repoId={repo.id} />}
-        {activeView === 4 && <AiSessions repoId={repo.id} />}
+        {activeView === 1 && <Overview repoId={repo.id} allRepos={Boolean(allRepos)} />}
+        {activeView === 2 && <DailyLog repoId={repo.id} allRepos={Boolean(allRepos)} onEditingChange={setIsEditing} />}
+        {activeView === 3 && <History repoId={repo.id} allRepos={Boolean(allRepos)} />}
+        {activeView === 4 && <AiSessions repoId={repo.id} allRepos={Boolean(allRepos)} />}
       </Box>
     </Box>
   );
